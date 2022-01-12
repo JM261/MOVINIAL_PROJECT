@@ -7,6 +7,8 @@
 <title>메인화면</title>
 </head>
 <body>
-	<h1 align="center"> 이건 메인화면이야 </h1>
+	<h1 align="center"> 이건 메인화면이야 
+	
+	야호야호야호!! </h1>
 </body>
 </html>
