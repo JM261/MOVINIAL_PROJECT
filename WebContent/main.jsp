@@ -8,6 +8,6 @@
 </head>
 <body>
 	<%@ include file="views/common/header.jsp" %>
-	errgsd
+	errgsdfdsdf
 </body>
 </html>
