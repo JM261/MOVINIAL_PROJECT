@@ -8,6 +8,5 @@
 </head>
 <body>
 	<h1 align="center"> 이건 메인화면이야 </h1>
-	<br><br>
 </body>
 </html>
