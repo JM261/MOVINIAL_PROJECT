@@ -7,22 +7,11 @@
 <title>main</title>
 </head>
 <body>
-	<h1>이건 헤더야 헤이맨dsd112</h1>sdfd
- 		
+	<h1>헤더....</h1>sdfd
+ 		dssddsdsdsdsdsdsdsds
  		ㅇㄹㄴ
  		ㅇㄹㄴㄹㅇㄴ
- 		ㄹㅇㄴ
- 		ㅇㄹㄴㅇㄴㄹㄴㅇㄹ
- 		ㄴㅇㄹㄹㅇㄴ
- 		ㄴㅇㄹㄴ
- 		ㄴㄹㅇㄹㅇㄴㅇㄴㄹ
- 		\
- 		ㄴㅁㅁㄴㅇㅇㅁㄴ
  		
- 		ㄴㅇ
- 		ㅇㄴㄹ
- 		ㅇㄹㄴ
- 		ㅇㄹㄴ
- 		ㅇㄹㄴ
+		dsfsf
 </body>
 </html>
