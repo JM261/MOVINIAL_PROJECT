@@ -8,9 +8,7 @@
 </head>
 <body>
 	<h1 align="center"> 이건 메인화면이야 </h1>
-	<h2>나는 머지한다</h2>
-	<h3></h3>
-	<h4>머지</h4>
+	<h2>또 수정</h2>
 	
 </body>
 </html>
