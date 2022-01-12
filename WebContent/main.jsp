@@ -7,6 +7,6 @@
 <title>메인화면</title>
 </head>
 <body>
-	<h1 align="center"> 이건 메인화면이야 </h1>
+	<%@ include file="views/common/header.jsp" %>
 </body>
 </html>
