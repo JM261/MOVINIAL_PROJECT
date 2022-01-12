@@ -8,5 +8,6 @@
 </head>
 <body>
 	<%@ include file="views/common/header.jsp" %>
+	errgsd
 </body>
 </html>
