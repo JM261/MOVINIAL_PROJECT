@@ -9,7 +9,7 @@
 <body>
 	<%@ include file="views/common/header.jsp" %>
 	errgsdfdsdfdfg
-	ㅁㄴㅇㄴㅁ
+	ㅁㄴㅇㄴㅁㅇㄴㄹ
 	
 </body>
 </html>
