@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
@@ -8,6 +7,7 @@
     <title>CSS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+
       #container {
         width: 940px;
         width :98%;
@@ -29,6 +29,7 @@
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
+
       #content2 {
         width: 900px;
         width: 98%;
@@ -36,6 +37,7 @@
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
+
       #div1 {
         width: 450px;
         width: 47%;
@@ -44,6 +46,7 @@
         float: left;
         border: 1px solid #bcbcbc;
       }
+
       #div2 {
         width: 450px;
         width: 47%;
@@ -52,6 +55,7 @@
         float: right;
         border: 1px solid #bcbcbc;
       }
+
       #content3 {
         width: 900px;
         width: 98%;
@@ -60,12 +64,14 @@
         border: 1px solid #bcbcbc;
         float:left;
       }
+
       #footer {
         clear: both;
         padding: 20px;
         border: 1px solid #bcbcbc;
         padding-right:3%;
       }
+
       #footer>h1{
         float:right;
         margin:auto;
@@ -75,13 +81,16 @@
         padding-left:10px;
         line-height: 20px;
       }
+
       #header>ul>li{
         list-style: none;
         display: inline-block;
         margin-right: 35px;
        
+
         
       }
+
       #header>ul{
         margin-left:760px;
         font-size:20pt;
@@ -94,9 +103,11 @@
         /* width: 3px; */
         
       }
+
       #header>h1{
         font-size: 60pt;
       }
+
       #header_search{
         border-left:none;
         border-right:none;
@@ -106,6 +117,7 @@
         font-size:14pt;
         
       }
+
       #header_search_btn{
         border:none;
         background:url(views/resources/searchbtn.png);
@@ -117,7 +129,9 @@
      
       #header_search{
         margin-left:12%;
+
       }
+
       #footer1>ul{
         list-style: none;
         display: inline-block;
@@ -130,21 +144,26 @@
         
         
       }
+
       #footer1>ul>li>a{
         color:black;
         text-decoration: none;
         /* width:20px; */
         margin-left:40px;
       }
+
       #footer>p{
         padding-left:40px;
       }
+
       #header>ul>li>a:hover{
         color:coral;
       }
+
       #footer1>ul>li>a:hover{
         color:coral;
       }
+
     </style>
   </head>
   <body>
