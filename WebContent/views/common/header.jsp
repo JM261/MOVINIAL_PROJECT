@@ -102,7 +102,7 @@
       
       #header_search_btn{
         border:none;
-        background: url("../../resources/images/searchbtn.png");
+        background: url("../../resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
         background-repeat: no-repeat;
         width:50px;
         height:32px;
@@ -123,7 +123,7 @@
   <body>
     <div id="container">
       <div id="header">
-        <h1><a href="#"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1>
+        <h1><a href="#"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
         <ul>
           <li><a href="#">LOGOUT</a></li>
           <li><a href="#">MY PAGE</a></li>
