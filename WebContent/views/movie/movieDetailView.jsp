@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.movinial.movie.model.vo.Movie" %>
+<%
+	Movie m = (Movie)request.getAttribute("m");
+
+	int mno = m.getMovieNo();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +16,6 @@
 
 	<%@ include file="../common/header.jsp" %>
 
-	<div id="container">
 		<div id="content1">
 
 			<!-- 영화 상세 정보 -->
@@ -195,7 +200,6 @@
 				</table>
 			</div>
 		</div>
-	</div>
 	
 	<%@ include file="../common/footer.jsp" %>
 

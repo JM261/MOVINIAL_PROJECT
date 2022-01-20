@@ -137,7 +137,9 @@
   <div id="container">
   <div id="header">
 
-<% if(loginUser == null) { %>  
+
+<!-- loginUser 임시 주석처리: 세현 -->
+<% //if(loginUser == null) { %>
   <!-- 로그인 전에 보여지는 페이지  -->
     <div class="login">
 	  <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
@@ -151,7 +153,7 @@
 	        </ul>
 	</div>
   
-  <% } else { %>  
+  <%// } else { %>  
   <!-- 로그인 후 보여지는 페이지 -->
 	<div class="logout">
         <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
@@ -164,7 +166,7 @@
           <li><button id="header_search_btn"></button></li>
         </ul>
    	 </div>
-   	 <% } %>
+   	 <%// } %>
    	 </div>
    	</div>
   </body>
