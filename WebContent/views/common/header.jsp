@@ -17,29 +17,36 @@
 <!doctype html>
 <html lang="ko">
   <head>
+  	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+	<!-- jQuery & ajax library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+	<!-- Popper JS -->
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  
     <meta charset="utf-8">
     <title>header</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
       #container {
-        width: 940px;
-        width :98%;
+        width: 1850px;
         margin: 10px auto;
         padding: 20px;
         border: 1px solid #bcbcbc;
       }
       #header {
-        width: 900px;
-        width :98%;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
       
       #content1 {
-        width: 900px;
-        width : 98%;
+       /*  width: 1810px; */
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
@@ -47,16 +54,12 @@
       
       /*
       #content2 {
-        width: 900px;
-        width: 98%;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
 
       #div1 {
-        width: 450px;
-        width: 47%;
         padding: 20px;
         margin-bottom: 20px;
         float: left;
@@ -65,16 +68,12 @@
 
       #div2 {
         width: 450px;
-        width: 47%;
-        padding: 20px;
         margin-bottom: 20px;
         float: right;
         border: 1px solid #bcbcbc;
       }
 
       #content3 {
-        width: 900px;
-        width: 98%;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
@@ -111,7 +110,6 @@
         width:200px;
         height:50px;
         font-size:14pt;
-        
       }
       
       #header_search_btn{
@@ -167,8 +165,6 @@
         </ul>
    	 </div>
    	 <% } %>
-   	 
-   	 
    	 </div>
    	</div>
   </body>

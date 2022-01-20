@@ -5,66 +5,9 @@
   <head>
     <meta charset="utf-8">
     <title>footer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
-      /* #container {
-        width: 940px;
-        width :98%;
-        margin: 10px auto;
-        padding: 20px;
-        border: 1px solid #bcbcbc;
-      } */
-      /* #header {
-        width: 900px;
-        width :98%;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-      }
-      #content1 {
-        width: 900px;
-        width : 98%;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-      }
-
-      #content2 {
-        width: 900px;
-        width: 98%;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-      }
-
-      #div1 {
-        width: 450px;
-        width: 47%;
-        padding: 20px;
-        margin-bottom: 20px;
-        float: left;
-        border: 1px solid #bcbcbc;
-      }
-
-      #div2 {
-        width: 450px;
-        width: 47%;
-        padding: 20px;
-        margin-bottom: 20px;
-        float: right;
-        border: 1px solid #bcbcbc;
-      }
-
-      #content3 {
-        width: 900px;
-        width: 98%;
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-        float:left;
-      } */
-
+     
       #footer {
         clear: both;
         padding: 20px;
@@ -117,7 +60,7 @@
     </style>
   </head>
   <body>
-    <!-- <div id="container"> -->
+   <!-- <div id="container"> -->
       <div id="footer">
         <div id="footer1">
           <ul>
@@ -136,6 +79,6 @@
           1992-2022 MOVINIAL corp. All rights reserved. <br>  
         </p>
       </div>
-    <!-- </div> -->
+    </div>
   </body>
 </html>
