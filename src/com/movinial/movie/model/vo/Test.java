@@ -1,4 +1,4 @@
-package com.movinial.movie.vo;
+package com.movinial.movie.model.vo;
 
 import java.io.BufferedReader;
 import java.io.IOException;

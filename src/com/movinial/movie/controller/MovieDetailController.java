@@ -29,7 +29,7 @@ public class MovieDetailController extends HttpServlet {
 		
 		// request 값 출력
 		// int movieNo = Integer.parseInt(request.getParameter("mno"));
-		int 
+		
 		
 		
 		

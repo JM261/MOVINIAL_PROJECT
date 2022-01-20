@@ -1,4 +1,4 @@
-package com.movinial.movie.vo;
+package com.movinial.movie.model.vo;
 
 public class Movie {
 	
