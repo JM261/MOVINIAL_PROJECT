@@ -6,7 +6,7 @@ public class Review {
 	
 	// 필드부
 	private int reviewNo;			// REVIEW_NO	NUMBER
-	private int reviewWriter;		// REVIEW_WRITER	NUMBER
+	private String reviewWriter;		// REVIEW_WRITER	NUMBER
 	private String reviewTitle;		// REVIEW_TITLE	VARCHAR2(400 BYTE)
 	private String reviewContent;	// REVIEW_CONTENT	VARCHAR2(4000 BYTE)
 	private Date createDate;		// CREATE_DATE	DATE
@@ -20,8 +20,23 @@ public class Review {
 	public Review() {
 		super();
 	}
+	
+	/**
+	 * 영화 상세정보 - 리뷰 조회용 생성자
+	 * @param reviewNo
+	 * @param reviewWriter
+	 * @param reviewContent
+	 * @param createDate
+	 */
+	public Review(int reviewNo, String reviewWriter, String reviewContent, Date createDate) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriter = reviewWriter;
+		this.reviewContent = reviewContent;
+		this.createDate = createDate;
+	}
 
-	public Review(int reviewNo, int reviewWriter, String reviewTitle, String reviewContent, Date createDate,
+	public Review(int reviewNo, String reviewWriter, String reviewTitle, String reviewContent, Date createDate,
 			Date modifyDate, String publicStatus, int likes, int reportCount, String status) {
 		super();
 		this.reviewNo = reviewNo;
@@ -45,11 +60,11 @@ public class Review {
 		this.reviewNo = reviewNo;
 	}
 	
-	public int getReviewWriter() {
+	public String getReviewWriter() {
 		return reviewWriter;
 	}
 	
-	public void setReviewWriter(int reviewWriter) {
+	public void setReviewWriter(String reviewWriter) {
 		this.reviewWriter = reviewWriter;
 	}
 	

@@ -88,7 +88,7 @@
 						<h2>리뷰</h2>
 					</td>
 					<td align="right">
-						<a href="<%= contextPath %>/reviewList.mo">MORE</a>
+						<a href="<%= contextPath %>/reviewList.mo?currentPage=1">MORE</a>
 					</td>
 				</tr>
 
