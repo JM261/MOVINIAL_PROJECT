@@ -1,5 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.movinial.member.model.vo.Member" %>    
+<%
+	String contextPath = request.getContextPath();
+
+	//Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
+	// 로그인 전 : menubar.jsp가 로딩될 때 null
+	// 로그인 후 : manubar.jsp가 로딩될 때 로그인한 회원의 정보가 담겨있음
+	
+	//String alertMsg = (String)session.getAttribute("alertMsg"); // : Object
+	// 서비스 요청 전 : alertMsg = null
+	// 서비스 요청 후 성공 시 : alertMsg = 메시지문구
+
+%>    
+    
 <!doctype html>
 <html lang="ko">
   <head>
@@ -118,19 +132,40 @@
 
     </style>
   </head>
-  <body>
-    <div id="container">
-      <div id="header">
-        <h1><a href="#"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+  
+  <body> 
+  <div id="container">
+  <div id="header">
+
+<% if(loginUser == null) { %>  
+  <!-- 로그인 전에 보여지는 페이지  -->
+    <div class="login">
+	  <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+	        <ul>
+	          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
+	          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
+	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
+	          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+	          <li><input type="search" name="search" id="header_search"></li>
+	          <li><button id="header_search_btn"></button></li>
+	        </ul>
+	</div>
+  
+  <% } else { %>  
+  <!-- 로그인 후 보여지는 페이지 -->
+	<div class="logout">
+        <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
         <ul>
-          <li><a href="#">LOGOUT</a></li>
-          <li><a href="#">MY PAGE</a></li>
-          <li><a href="#">MOVIE</a></li>
-          <li><a href="#">COMMUNITY</a></li>
+          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
+          <li><a href="<%= contextPath %>/myPage.me">MY PAGE</a></li>
+          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
+          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
           <li><input type="search" name="search" id="header_search"></li>
           <li><button id="header_search_btn"></button></li>
         </ul>
    	 </div>
-   	
+   	 <% } %>
+   	 </div>
+   	</div>
   </body>
 </html>
