@@ -197,11 +197,6 @@
 		</div>
 	</div>
 	
-	<form action="/test.do">
-		<input type="hidden" name="url" value="https://api.themoviedb.org/3/search/movie?api_key=52152df357951bfbb3c7b3f260987ac4&query=돈+룩+업">
-		<button>ㄱ</button>
-	</form>
-	
 	<%@ include file="../common/footer.jsp" %>
 
 </body>
