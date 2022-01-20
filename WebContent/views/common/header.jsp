@@ -96,7 +96,6 @@
         width:200px;
         height:50px;
         font-size:14pt;
-        
       }
       
       #header_search_btn{
