@@ -5,27 +5,22 @@
   <head>
     <meta charset="utf-8">
     <title>header</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 
       #container {
-        width: 940px;
-        width :98%;
+        width: 1850px;
         margin: 10px auto;
         padding: 20px;
         border: 1px solid #bcbcbc;
       }
       #header {
-        width: 900px;
-        width :98%;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
       
       #content1 {
-        width: 900px;
-        width : 98%;
+       /*  width: 1810px; */
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
@@ -33,16 +28,12 @@
       
       /*
       #content2 {
-        width: 900px;
-        width: 98%;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
 
       #div1 {
-        width: 450px;
-        width: 47%;
         padding: 20px;
         margin-bottom: 20px;
         float: left;
@@ -51,16 +42,12 @@
 
       #div2 {
         width: 450px;
-        width: 47%;
-        padding: 20px;
         margin-bottom: 20px;
         float: right;
         border: 1px solid #bcbcbc;
       }
 
       #content3 {
-        width: 900px;
-        width: 98%;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
@@ -133,6 +120,6 @@
           <li><button id="header_search_btn"></button></li>
         </ul>
    	 </div>
-   	</div>
+   	
   </body>
 </html>
