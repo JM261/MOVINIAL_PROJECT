@@ -3,6 +3,10 @@
 <properties>
 	<comment>영화 관련 쿼리문들</comment>
 	
-	
+	<entry key="selectMovieDetail">
+		SELECT *
+		  FROM MOVIE
+		 WHERE MOVIE_NO = ?
+	</entry>
 	
 </properties>

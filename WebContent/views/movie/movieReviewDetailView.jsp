@@ -14,11 +14,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>리뷰 상세보기</title>
 <style>
+	.enroll-form>textarea {
+		resize: none;
+	}
     .enroll-form>div {
         display: inline-block;
     }
+	.paging-area>a:hover {
+		cursor: pointer;
+	}
+
 </style>
 </head>
 <body>
@@ -116,6 +123,35 @@
                     <button type="submit" class="btn btn-sm btn-secondary" align="right">등록</button>
 
             </form>
+
+
+
+			<!-- 페이징바 -->
+			<div class="paging-area" align="center">
+
+				<!-- 페이징 버튼 -->
+				<!-- 페이징바에서 < 를 담당: 이전페이지 이동 -->
+				<% if(currentPage != 1) { %>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>'">&lt;</a>
+				<% } %>
+				
+				<% for(int i = startPage; i <= endPage; i++) { %>
+					<% if(i != currentPage) { %>
+						<!-- http://localhost:8001/jsp/list.bo?currentPage=8 -->
+						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>'"><%= i %></a>
+					<% } else { %>
+						<a class="btn-secondary btn-sm" disabled><%= i %></a>
+					<% } %>
+				<% } %>
+				
+				<!-- 페이징바에서 > 를 담당: 다음페이지 이동 -->
+				<% if(currentPage != maxPage) { %>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>'">&gt;</a>
+				<% } %>
+
+			</div>
+
+
 
         </div>
 

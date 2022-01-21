@@ -1,6 +1,6 @@
 package com.movinial.review.model.dao;
 
-import static com.movinial.common.JDBCTemplate.close;
+import static com.movinial.common.JDBCTemplate.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;

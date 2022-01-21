@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.movinial.movie.model.vo.Movie" %>
 <%
-	// Movie m = (Movie)request.getAttribute("m");
-
-	// int mno = m.getMovieNo();
+	Movie m = (Movie)request.getAttribute("m");
 %>
 <!DOCTYPE html>
 <html>
@@ -32,7 +30,8 @@
 						<img src="영화이미지" alt="영화 포스터">
 					</td>
 					<td>
-						<h2>영화제목</h2>
+						<h2><%= m.getMovieNameEn() %></h2>
+						<h2><%= m.getMovieNameKr() %></h2>
 					</td>
 					<td>
 						<h3>이 영화 보셨나요?</h3>
