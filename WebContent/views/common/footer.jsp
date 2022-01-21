@@ -72,7 +72,7 @@
             <li><a href="#">공지사항</a></li>
           </ul>
         </div>
-        <h1><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</h1> <!-- 이미지 경로 상대 경로 -->
+        <h1><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</h1> <!-- 이미지 경로 상대 경로 -->
         <p>   
           (주)무비니얼 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F <br>
        	   통신판매업신고 2021-서울서초-40024 고객센터 02-1511-1234 <br>

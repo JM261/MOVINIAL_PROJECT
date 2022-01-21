@@ -62,7 +62,8 @@ public class MemberDao {
 						  ,rset.getString("MEMBER_TYPE")
 						  ,rset.getString("STATUS")
 						  ,rset.getDate("ENROLL_DATE")
-						  ,rset.getDate("MODIFY_DATE"));
+						  ,rset.getDate("MODIFY_DATE")
+						  ,rset.getString("preferGenre"));
 			}	
 		} catch (SQLException e) {
 			e.printStackTrace();

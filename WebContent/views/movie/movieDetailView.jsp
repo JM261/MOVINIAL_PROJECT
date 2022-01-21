@@ -37,7 +37,7 @@
 						<h3>이 영화 보셨나요?</h3>
 					</td>
 					<td>
-						<img src="../../resources/images/movie_seen_icon.png" alt="봤어요 아이콘"> 봤어요 숫자 2222
+						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘"> 봤어요 숫자 2222
 					</td>
 					<td>
 						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222

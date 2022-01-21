@@ -52,6 +52,9 @@ public class Member {
 		this.phone = phone;
 		this.preferGenre = preferGenre;
 	}
+	
+	
+	
 
 	public int getMemberNo() {
 		return memberNo;

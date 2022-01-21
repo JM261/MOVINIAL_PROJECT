@@ -107,7 +107,7 @@
       
       #header_search_btn{
         border:none;
-        background: url("../../resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
+        background: url("<%= contextPath %>/resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
         background-repeat: no-repeat;
         width:50px;
         height:32px;
@@ -137,7 +137,7 @@
 	  <!-- 로그인 전에 보여지는 페이지  -->
 	  
 	    <div class="login">
-		  <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+		  <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 		        <ul>
 		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
@@ -152,7 +152,7 @@
 	  <% } else { %>  
 	  <!-- 로그인 후 보여지는 페이지 -->
 		<div class="logout">
-	        <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+	        <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 	        <ul>
 	          <li><a href="<%=contextPath %>/myPage.me"></a>NICKNAME</li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
