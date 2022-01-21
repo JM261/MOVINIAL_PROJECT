@@ -29,7 +29,7 @@
     <title>header</title>
     
 
-    <style>
+<style>
     
 	  	/* header, body, footer {
 	    font-family: 'NanumSquare', sans-serif !important;
@@ -118,6 +118,7 @@
         color:coral;
       }
       .logout>ul>li>a:hover{
+        color:coral;
       }
       
       /* .content {
