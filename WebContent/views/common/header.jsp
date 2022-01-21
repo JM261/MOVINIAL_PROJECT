@@ -4,13 +4,9 @@
 <%
 	String contextPath = request.getContextPath();
 
-	//Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
+	Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
 	// 로그인 전 : menubar.jsp가 로딩될 때 null
 	// 로그인 후 : manubar.jsp가 로딩될 때 로그인한 회원의 정보가 담겨있음
-	
-	//String alertMsg = (String)session.getAttribute("alertMsg"); // : Object
-	// 서비스 요청 전 : alertMsg = null
-	// 서비스 요청 후 성공 시 : alertMsg = 메시지문구
 
 %>    
     
@@ -31,7 +27,13 @@
   
     <meta charset="utf-8">
     <title>header</title>
+    
+
     <style>
+    
+	  	/* header, body, footer {
+	    font-family: 'NanumSquare', sans-serif !important;
+		} */
 
       #container {
         width: 1850px;
@@ -39,55 +41,36 @@
         padding: 20px;
         border: 1px solid #bcbcbc;
       }
+      
       #header {
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-      }
-      
-      #content1 {
-       /*  width: 1810px; */
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-      }
-      
-      /*
-      #content2 {
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
+        margin-bottom:30px;
+        padding-top: 70px;
+        padding-bottom : 70px;
+        padding-left: 30px; 
+        border: 1px solid #bcbcbc; 
+
       }
 
-      #div1 {
-        padding: 20px;
-        margin-bottom: 20px;
-        float: left;
-        border: 1px solid #bcbcbc;
-      }
-
-      #div2 {
-        width: 450px;
-        margin-bottom: 20px;
-        float: right;
-        border: 1px solid #bcbcbc;
-      }
-
-      #content3 {
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
-        float:left;
-      } */
-
-      #header>ul>li{
+      .login>ul>li{
         list-style: none;
         display: inline-block;
-        margin-right: 35px;
+        margin-right: 25px;
+      }
+      
+       .logout>ul>li{
+        list-style: none;
+        display: inline-block;
+        margin-right: 25px;
       }
 
-      #header>ul{
-        margin-left:760px;
+      .login>ul{
+        margin-left:900px;
+        font-size:20pt;
+        margin-top:-70px;
+      }
+      
+      .logout>ul{
+        margin-left:810px;
         font-size:20pt;
         margin-top:-70px;
       }
@@ -95,12 +78,22 @@
       #header a{
         color:black;
         text-decoration: none;
-        /* width: 3px; */
-        
+      
+        /* width: 3px; */   
+      }
+      
+      #header a:hover{
+        color:coral;   
       }
 
-      #header>h1{
-        font-size: 60pt;
+      .login>h1{
+        font-size: 50pt;
+        
+      }
+      
+      .logout>h1{
+        font-size: 50pt;
+       
       }
 
       #header_search{
@@ -110,6 +103,7 @@
         width:200px;
         height:50px;
         font-size:14pt;
+        margin-left:12%;
       }
       
       #header_search_btn{
@@ -118,54 +112,58 @@
         background-repeat: no-repeat;
         width:50px;
         height:32px;
-        
       }
-     
-      #header_search{
-        margin-left:12%;
-
-      }
-
-      #header>ul>li>a:hover{
+      
+      .login>ul>li>a:hover{
         color:coral;
       }
-
+      .logout>ul>li>a:hover{
+      }
+      
+      /* .content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      } */
+	
+	
     </style>
   </head>
   
   <body> 
+  
   <div id="container">
   <div id="header">
-
-<% if(loginUser == null) { %>  
-  <!-- 로그인 전에 보여지는 페이지  -->
-    <div class="login">
-	  <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+	<% if(loginUser == null) { %>  
+	  <!-- 로그인 전에 보여지는 페이지  -->
+	  
+	    <div class="login">
+		  <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+		        <ul>
+		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
+		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
+		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
+		          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+		          <li><input type="search" name="search" id="header_search"></li>
+		          <li><button id="header_search_btn"></button></li>
+		        </ul>
+		</div>
+		
+	  
+	  <% } else { %>  
+	  <!-- 로그인 후 보여지는 페이지 -->
+		<div class="logout">
+	        <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 	        <ul>
-	          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
-	          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
+	          <li><a href="<%=contextPath %>/myPage.me"></a>NICKNAME</li>
+	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
 	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
 	          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
 	          <li><input type="search" name="search" id="header_search"></li>
 	          <li><button id="header_search_btn"></button></li>
 	        </ul>
-	</div>
-  
-  <% } else { %>  
-  <!-- 로그인 후 보여지는 페이지 -->
-	<div class="logout">
-        <h1><a href="<%= contextPath %>/main.me"><img src="../../resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
-        <ul>
-          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
-          <li><a href="<%= contextPath %>/myPage.me">MY PAGE</a></li>
-          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
-          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
-          <li><input type="search" name="search" id="header_search"></li>
-          <li><button id="header_search_btn"></button></li>
-        </ul>
+	   	 </div>
+	   	 <% } %>
    	 </div>
-   	 <% } %>
-   	 </div>
-   	</div>
   </body>
 </html>
