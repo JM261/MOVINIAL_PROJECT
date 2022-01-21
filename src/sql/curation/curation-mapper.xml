@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>큐레이션 관련 쿼리문들</comment>
+	
+	<entry key="searchMovie">
+		SELECT *
+		FROM MOVIE
+		WHERE MOVIE_NAME_KR LIKE '%'+ ? +'%' OR MOVIE_NAME_EN LIKE '%'+ ? +'%';	
+	</entry>
+	
+	
+</properties>
