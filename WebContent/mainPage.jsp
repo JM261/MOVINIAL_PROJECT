@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>MOVINIAL</title>
+    <title>CSS</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    
-    #container {
+
+      #container {
         width: 940px;
         width :98%;
         margin: 10px auto;
@@ -117,7 +117,7 @@
 
       #header_search_btn{
         border:none;
-        background:url("resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
+        background:url(views/resources/searchbtn.png);
         background-repeat: no-repeat;
         width:50px;
         height:32px;
@@ -166,7 +166,7 @@
   <body>
     <div id="container">
       <div id="header">
-        <h1><a href="#"><img src="resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+        <h1><a href="#"><img src="views/resources/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1>
         <ul>
           <li><a href="#">LOGOUT</a></li>
           <li><a href="#">MY PAGE</a></li>
@@ -179,8 +179,7 @@
       </div>
       <div id="content1">
         <h2>Content</h2>
-       
-        <p> Lorem ipsum dolorawejfio sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
       </div>
       <div id="content2">
         <h2>Content</h2>
@@ -191,7 +190,7 @@
       <div id="div1">
         <h2>content</h2>
         <ul>
-          <li>AWEFAWEFAWEFAWE</li>
+          <li>Lorem</li>
           <li>Ipsum</li>
           <li>Dolor</li>
         </ul>
@@ -224,7 +223,7 @@
             <li><a href="#">공지사항</a></li>
           </ul>
         </div>
-        <h1><img src="resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</h1> <!-- 이미지 경로 상대 경로 -->
+        <h1><img src="views/resources/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</h1>
         <p>   
           (주)무비니얼 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F <br>
        	   통신판매업신고 2021-서울서초-40024 고객센터 02-1511-1234 <br>

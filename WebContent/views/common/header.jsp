@@ -27,13 +27,12 @@
   
     <meta charset="utf-8">
     <title>header</title>
-    
 
-    <style>
+<style>
     
-	  /*header, body, footer {
+	  	/* header, body, footer {
 	    font-family: 'NanumSquare', sans-serif !important;
-		}*/
+		} */
 
       #container {
         width: 1850px;
@@ -121,12 +120,11 @@
         color:coral;
       }
       
-      .content {
+      /* .content {
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
-      }
-	
+      } */
 	
     </style>
   </head>
