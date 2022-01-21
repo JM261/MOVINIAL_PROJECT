@@ -4,112 +4,166 @@ import java.sql.Date;
 
 public class Member {
 	
-	private int userNo;
-	private String userId;
-	private String userPwd;
-	private String userName;
-	private String userNickName;
+	private int memberNo;
+	private String memberId;
+	private String memberPwd;
+	private String memberName;
+	private String memberNickname;
 	private String email;
 	private String phone;
-	private String usertype;
-	private String staus;
+	private String memberType;
+	private String status;
 	private Date enrollDate;
 	private Date modifyDate;
+	private String preferGenre;
+	
+	//기본 생성자
 	public Member() {
 		super();
 	}
-	public Member(int userNo, String userId, String userPwd, String userName, String userNickName, String email,
-			String phone, String usertype, String staus, Date enrollDate, Date modifyDate) {
+	
+	//전체 생성자
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String memberNickname,
+			String email, String phone, String memberType, String status, Date enrollDate, Date modifyDate,
+			String preferGenre) {
 		super();
-		this.userNo = userNo;
-		this.userId = userId;
-		this.userPwd = userPwd;
-		this.userName = userName;
-		this.userNickName = userNickName;
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.memberNickname = memberNickname;
 		this.email = email;
 		this.phone = phone;
-		this.usertype = usertype;
-		this.staus = staus;
+		this.memberType = memberType;
+		this.status = status;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
+		this.preferGenre = preferGenre;
 	}
-	public int getUserNo() {
-		return userNo;
+	
+	//주현 : 회원정보 수정
+	public Member(String memberId, String memberName, String memberNickname, String email, String phone,
+			String preferGenre) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.memberNickname = memberNickname;
+		this.email = email;
+		this.phone = phone;
+		this.preferGenre = preferGenre;
 	}
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+
+	public int getMemberNo() {
+		return memberNo;
 	}
-	public String getUserId() {
-		return userId;
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+	public String getMemberId() {
+		return memberId;
 	}
-	public String getUserPwd() {
-		return userPwd;
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
+
+	public String getMemberPwd() {
+		return memberPwd;
 	}
-	public String getUserName() {
-		return userName;
+
+	public void setMemberPwd(String memberPwd) {
+		this.memberPwd = memberPwd;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public String getMemberName() {
+		return memberName;
 	}
-	public String getUserNickName() {
-		return userNickName;
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
 	}
-	public void setUserNickName(String userNickName) {
-		this.userNickName = userNickName;
+
+	public String getMemberNickname() {
+		return memberNickname;
 	}
+
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getPhone() {
 		return phone;
 	}
+
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getUsertype() {
-		return usertype;
+
+	public String getMemberType() {
+		return memberType;
 	}
-	public void setUsertype(String usertype) {
-		this.usertype = usertype;
+
+	public void setMemberType(String memberType) {
+		this.memberType = memberType;
 	}
-	public String getStaus() {
-		return staus;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setStaus(String staus) {
-		this.staus = staus;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
+
 	public Date getEnrollDate() {
 		return enrollDate;
 	}
+
 	public void setEnrollDate(Date enrollDate) {
 		this.enrollDate = enrollDate;
 	}
+
 	public Date getModifyDate() {
 		return modifyDate;
 	}
+
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
 	}
-	
-	@Override
-	public String toString() {
-		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
-				+ ", userNickName=" + userNickName + ", email=" + email + ", phone=" + phone + ", usertype=" + usertype
-				+ ", staus=" + staus + ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + "]";
+
+	public String getPreferGenre() {
+		return preferGenre;
+	}
+
+	public void setPreferGenre(String preferGenre) {
+		this.preferGenre = preferGenre;
 	}
 
 	
+	@Override
+	public String toString() {
+		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
+				+ memberName + ", memberNickname=" + memberNickname + ", email=" + email + ", phone=" + phone
+				+ ", memberType=" + memberType + ", status=" + status + ", enrollDate=" + enrollDate + ", modifyDate="
+				+ modifyDate + ", preferGenre=" + preferGenre + "]";
+	}
+
+}
+	
+
+	
 	
 	
 	
 
-}
+	
