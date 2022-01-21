@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>고객센터 관련 쿼리문들</comment>
+	
+	<entry key="selectCategory">
+		SELECT * FROM CATEGORY
+	</entry>
+	
+</properties>
