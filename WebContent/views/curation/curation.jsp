@@ -162,7 +162,7 @@
         <!-- The Modal : 큐레이션 추가 -->
 		<div class="modal" id="insertMovie">
             <div class="modal-dialog">
-              <div class="modal-content" style="width: 600px;">
+              <div class="modal-content" style="width: 600px; height:800px">
           
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -175,7 +175,7 @@
                     
 
                         검색할 영화명 <input type="text" id="searchMovie">
-                        <button onclick="selectMovie();">검색</button>
+                        <button onclick="selectMovie();">검색</button><br><br>
                         <div id="selectResult">
                             <!-- 검색 결과가 존재하면 출력 없으면 "검색 조회 결과가 없습니다." -->
                         </div>
@@ -195,7 +195,7 @@
             	console.log($keyword);
             	
                 $.ajax({
-                url : "search.cu",
+                url : "<%= contextPath %>/search.cu",
                 data : {
                     movieKeyword : $keyword
                 },
@@ -205,18 +205,15 @@
                     var result = "";
 					                    
                 	for(var i in list){
-                		result += list[i].movieNameKr + "("+list[i].movieNameEn+")<br>"
+                		result += list[i].movieNameKr + "("+list[i].movieNameEn+")<br><hr>"
                         /* 영화명을 검색하여 해당되는 영화들을 불러와서 영화 정보(제목, 감독, 장르 등만 불러온다.) */    
                     }
-                	$("#selectResult").html(result);
-                	
+                	$("#selectResult").html(result);                	
                 },
                 error : function(){
-                	
                     $("#selectResult").html("조회 결과가 없습니다.");
                 }
-
-                })
+                });
                 
             }
     
