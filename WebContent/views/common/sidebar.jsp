@@ -13,7 +13,7 @@
 	        float: right;
 	        border: 1px solid #bcbcbc;
 	      }
-		
+	      
 	  #dt-sidebar {
         width: 350px;
         padding: 20px;
