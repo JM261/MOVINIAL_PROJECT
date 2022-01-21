@@ -29,7 +29,7 @@
     <title>header</title>
     
 
-    <style>
+<style>
     
 	  	/* header, body, footer {
 	    font-family: 'NanumSquare', sans-serif !important;
