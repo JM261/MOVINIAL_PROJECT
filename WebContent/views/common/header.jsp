@@ -118,7 +118,6 @@
         color:coral;
       }
       .logout>ul>li>a:hover{
-        color:coral;
       }
       
       /* .content {
