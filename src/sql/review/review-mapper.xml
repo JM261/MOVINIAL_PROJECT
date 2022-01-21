@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>리뷰 관련 쿼리문들</comment>
+	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		  FROM REVIEW
+		 WHERE PUBLIC_STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectList">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE
+		                  FROM REVIEW R
+		                  JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
+		                 WHERE PUBLIC_STATUS = 'Y'
+		                   AND REPORT_COUNT &lt;= 15
+		                 ORDER
+		                    BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	
+	
+</properties>

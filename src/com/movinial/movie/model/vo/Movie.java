@@ -20,6 +20,20 @@ public class Movie {
 	public Movie() {
 		super();
 	}
+  
+  // 영화 제목 검색용
+	public Movie(int movieNo, String movieNameKr, String movieNameEn, String releaseYear, String national,
+			String genreName, String director, String movieImage) {
+		super();
+		this.movieNo = movieNo;
+		this.movieNameKr = movieNameKr;
+		this.movieNameEn = movieNameEn;
+		this.releaseYear = releaseYear;
+		this.national = national;
+		this.genreName = genreName;
+		this.director = director;
+		this.movieImage = movieImage;
+	}
 
 	public Movie(int movieNo, String movieNameKr, String movieNameEn, String releaseYear, String national,
 			String genreName, String director, String company, String movieImage, int movieLikes, int movieSeen) {
@@ -35,21 +49,9 @@ public class Movie {
 		this.movieImage = movieImage;
 		this.movieLikes = movieLikes;
 		this.movieSeen = movieSeen;
-	}	
-	
-	public Movie(int movieNo, String movieNameKr, String movieNameEn, String releaseYear, String national,
-			String genreName, String director, String movieImage) {
-		super();
-		this.movieNo = movieNo;
-		this.movieNameKr = movieNameKr;
-		this.movieNameEn = movieNameEn;
-		this.releaseYear = releaseYear;
-		this.national = national;
-		this.genreName = genreName;
-		this.director = director;
-		this.movieImage = movieImage;
-	}
+  }
 
+    
 	// 메소드부
 	public int getMovieNo() {
 		return movieNo;
