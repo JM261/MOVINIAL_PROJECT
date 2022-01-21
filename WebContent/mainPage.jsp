@@ -1,46 +1,41 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>CSS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>MOVINIAL</title>
+    
     <style>
-
-      #container {
-        width: 940px;
-        width :98%;
-        margin: 10px auto;
-        padding: 20px;
-        border: 1px solid #bcbcbc;
-      }
-      #header {
-        width: 900px;
-        width :98%;
+    
+      #content0 {
+      	width: 1805px;
+        height: 600px;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
+
       #content1 {
-        width: 900px;
-        width : 98%;
+        width: 1805px;
+        height: 500px;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
 
       #content2 {
-        width: 900px;
-        width: 98%;
+        width: 1805px;
+        height: 500px;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
       }
 
       #div1 {
-        width: 450px;
-        width: 47%;
+        width: 890px;
+        height: 300px;
         padding: 20px;
         margin-bottom: 20px;
         float: left;
@@ -48,189 +43,126 @@
       }
 
       #div2 {
-        width: 450px;
-        width: 47%;
+        width: 890px;
+        height: 300px;
         padding: 20px;
         margin-bottom: 20px;
         float: right;
         border: 1px solid #bcbcbc;
       }
 
+      #div34{
+      
+        clear:both;
+        float: left;
+      }
+      #div3 {
+        width: 890px;
+        height: 640px;
+        padding: 20px;
+        margin-bottom: 20px; 
+         
+        border: 1px solid #bcbcbc;
+      }
+
+      #div4 {
+        width: 890px;
+        height: 640px;
+        padding: 20px;
+        margin-bottom: 20px;   
+          
+        border: 1px solid #bcbcbc;
+      }
+
+      #div5 {
+        width: 890px;
+        height: 1330px;
+        padding: 20px;
+        margin-bottom: 20px;
+        float : right;
+        border: 1px solid #bcbcbc;
+      }
+
+      #div6{
+        clear: both;
+      }
+
       #content3 {
-        width: 900px;
-        width: 98%;
+        width: 1800px;
+        height: 500px;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
         float:left;
       }
 
-      #footer {
-        clear: both;
-        padding: 20px;
-        border: 1px solid #bcbcbc;
-        padding-right:4%; 
-      }
-
-      #footer>h1{
-        float:right;
-        margin:auto;
-      }
-      
-      #footer>p{
-        padding-left:10px;
-        line-height: 20px;
-      }
-
-      #header>ul>li{
-        list-style: none;
-        display: inline-block;
-        margin-right: 35px;
-      }
-
-      #header>ul{
-        margin-left:760px;
-        font-size:20pt;
-        margin-top:-70px;
-      }
-      
-      #header a{
-        color:black;
+      .title{
         text-decoration: none;
-        /* width: 3px; */
-        
+        color: black;
+        font-size: x-large; 
+        font-weight: bold;
       }
 
-      #header>h1{
-        font-size: 60pt;
-      }
 
-      #header_search{
-        border-left:none;
-        border-right:none;
-        border-top:none;
-        width:200px;
-        height:50px;
-        font-size:14pt;
-        
-      }
-
-      #header_search_btn{
-        border:none;
-        background:url(views/resources/searchbtn.png);
-        background-repeat: no-repeat;
-        width:50px;
-        height:32px;
-        
-      }
-     
-      #header_search{
-        margin-left:12%;
-
-      }
-
-      #footer1>ul{
-        list-style: none;
-        display: inline-block;
-        
-       
-      }
-      
-      #footer1>ul>li{
-        display:inline-block;
-        
-        
-      }
-
-      #footer1>ul>li>a{
-        color:black;
-        text-decoration: none;
-        /* width:20px; */
-        margin-left:40px;
-      }
-
-      #footer>p{
-        padding-left:40px;
-      }
-
-      #header>ul>li>a:hover{
-        color:coral;
-      }
-
-      #footer1>ul>li>a:hover{
-        color:coral;
-      }
-
-    </style>
+      </style>
   </head>
   <body>
-    <div id="container">
-      <div id="header">
-        <h1><a href="#"><img src="views/resources/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1>
-        <ul>
-          <li><a href="#">LOGOUT</a></li>
-          <li><a href="#">MY PAGE</a></li>
-          <li><a href="#">MOVIE</a></li>
-          <li><a href="#">COMMUNITY</a></li>
-          <li><input type="search" name="search" id="header_search"></li>
-          <li><button id="header_search_btn"></button></li>
-        </ul>
+  
+ <%@ include file="../common/header.jsp" %>
+
+      
+
+      <div id="content0">
+        <!-- 이미지 포스터? -->
+        <!--<a href=""><img src="" alt=""></a>-->
+      </div>
+    
+      <!-- 로그인한 회원만 보이는 부분 -->
+      <% if(loginUser != null){ %>   
+      <a href="" class="title">NICKNAME님을 위한 추천영화</a>
+      <div id="content1">
+        
+      </div>
+      <% } %>
+
+
+
+      <a href="" class="title">최신 개봉 영화</a>
+      <div id="content2">
        
       </div>
-      <div id="content1">
-        <h2>Content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
-      </div>
-      <div id="content2">
-        <h2>Content</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
-      </div>
   
-
+      <div><a href="" class="title">MOVINIAL 추천 영화 <br></a></div>
       <div id="div1">
-        <h2>content</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
+        <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
+        
       </div>
 
       <div id="div2">
-        <h2>content</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
-      </div>
-
-      <div id="content3">
-        <h2>Content</h2>
-        <p>
+        <a href="" class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
         
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
       </div>
 
-      <div id="footer">
-        <div id="footer1">
-          <ul>
-            <li><b><em>Copyright©</em></b></li>
-          
-            <li><a href="#">개인정보처리방침</a></li>
-            <li><a href="#">청소년보호정책</a></li>
-            <li><a href="#">고객센터</a></li>
-            <li><a href="#">공지사항</a></li>
-          </ul>
+      <div id="div34">
+        <a href="" class="title">리뷰어 랭킹</a>
+        <div id="div3">리뷰어 랭킹</div>
+        <a href="" class="title">베스트리뷰</a>
+        <div id="div4">베스트 리뷰</div>
+      </div>
+
+      <a href="" class="title">&nbsp;&nbsp;&nbsp;&nbsp;이번주 인기 영화 TOP 10</a>
+      <div id="div5">이번주 인기 영화 TOP 10</div>
+
+
+      <div id="div6"><a href="" class="title">COMMUNITY</a></div>  
+
+        <div id="content3">
+        
         </div>
-        <h1><img src="views/resources/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</h1>
-        <p>   
-          (주)무비니얼 서울특별시 중구 남대문로 120 대일빌딩 2F, 3F <br>
-       	   통신판매업신고 2021-서울서초-40024 고객센터 02-1511-1234 <br>
-          1992-2022 MOVINIAL corp. All rights reserved. <br>  
-        </p>
-
-      </div>
-    </div>
+    
+      
+   
+    <%@ include file="../common/footer.jsp" %>
+    
   </body>
 </html>
