@@ -27,7 +27,13 @@
   
     <meta charset="utf-8">
     <title>header</title>
-    <style>
+    
+
+<style>
+    
+	  	/* header, body, footer {
+	    font-family: 'NanumSquare', sans-serif !important;
+		} */
 
       #container {
         width: 1850px;
@@ -35,10 +41,14 @@
         padding: 20px;
         border: 1px solid #bcbcbc;
       }
+      
       #header {
-        padding: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #bcbcbc;
+        margin-bottom:30px;
+        padding-top: 70px;
+        padding-bottom : 70px;
+        padding-left: 30px; 
+        border: 1px solid #bcbcbc; 
+
       }
 
       .login>ul>li{
@@ -68,6 +78,7 @@
       #header a{
         color:black;
         text-decoration: none;
+      
         /* width: 3px; */   
       }
       
@@ -77,10 +88,12 @@
 
       .login>h1{
         font-size: 50pt;
+        
       }
       
       .logout>h1{
         font-size: 50pt;
+       
       }
 
       #header_search{
@@ -107,7 +120,14 @@
       .logout>ul>li>a:hover{
         color:coral;
       }
-
+      
+      /* .content {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      } */
+	
+	
     </style>
   </head>
   

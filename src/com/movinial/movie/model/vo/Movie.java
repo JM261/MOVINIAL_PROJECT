@@ -1,4 +1,4 @@
-package com.movinial.movie.vo;
+package com.movinial.movie.model.vo;
 
 public class Movie {
 	
@@ -35,9 +35,21 @@ public class Movie {
 		this.movieImage = movieImage;
 		this.movieLikes = movieLikes;
 		this.movieSeen = movieSeen;
+	}	
+	
+	public Movie(int movieNo, String movieNameKr, String movieNameEn, String releaseYear, String national,
+			String genreName, String director, String movieImage) {
+		super();
+		this.movieNo = movieNo;
+		this.movieNameKr = movieNameKr;
+		this.movieNameEn = movieNameEn;
+		this.releaseYear = releaseYear;
+		this.national = national;
+		this.genreName = genreName;
+		this.director = director;
+		this.movieImage = movieImage;
 	}
 
-	
 	// 메소드부
 	public int getMovieNo() {
 		return movieNo;
