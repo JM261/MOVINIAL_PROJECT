@@ -27,6 +27,12 @@ public class QuestionListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 쿼리스트링으로 요청 => get=> 인코딩 X
+		// 2) request로 부터 값뽑기
+		// --- 페이징 처리
+		// 필요한 변수들
+		int listCount; // 현재 게시판의 게시글 총 개수 => QU
+		
 		
 		// views/notice/QuestionListView.jsp 포워딩
 		request.getRequestDispatcher("views/notice/QuestionListView.jsp").forward(request, response);
