@@ -52,15 +52,15 @@ public class MemberDao {
 			
 			if(rset.next()) {
 				
-				m = new Member(rset.getInt("USER_NO")
-						  ,rset.getString("USER_ID")
-						  ,rset.getString("USER_PWD")
-						  ,rset.getString("USER_NAME")
-						  ,rset.getString("USER_NICKNAME")
+				m = new Member(rset.getInt("MEMBER_NO")
+						  ,rset.getString("MEMBER_ID")
+						  ,rset.getString("MEMBER_PWD")
+						  ,rset.getString("MEMBER_NAME")
+						  ,rset.getString("NICKNAME")
 						  ,rset.getString("EMAIL")
 						  ,rset.getString("PHONE")
-						  ,rset.getString("USERTYPE")
-						  ,rset.getString("STAUS")
+						  ,rset.getString("MEMBER_TYPE")
+						  ,rset.getString("STATUS")
 						  ,rset.getDate("ENROLL_DATE")
 						  ,rset.getDate("MODIFY_DATE"));
 			}	

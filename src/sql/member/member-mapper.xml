@@ -6,8 +6,8 @@
 	<entry key="loginMember">
 		SELECT *
   		  FROM MEMBER
- 		 WHERE USER_ID = ?
-   		   AND USER_PWD = ?
+ 		 WHERE MEMBER_ID = ?
+   		   AND MEMBER_PWD = ?
    	 	   AND STATUS = 'Y'
 	</entry>
 	
