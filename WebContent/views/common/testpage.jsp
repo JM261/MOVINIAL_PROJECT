@@ -10,7 +10,7 @@
 
 	<%@ include file="header.jsp" %>
 	
-	<a href="<%= contextPath %>/detail.mo?mno=4">MORE</a>
+	<a href="<%= contextPath %>/detail.mo?mno=2">MORE</a>
 	
 	<%@ include file="footer.jsp" %>
 	

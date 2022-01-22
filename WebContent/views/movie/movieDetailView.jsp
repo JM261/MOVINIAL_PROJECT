@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.movinial.movie.model.vo.Movie" %>
+<%@ page import="java.util.ArrayList, com.movinial.review.model.vo.Review, com.movinial.movie.model.vo.Movie" %>
 <%
 	Movie m = (Movie)request.getAttribute("m");
+	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
+	
+	int movieNo = ((Movie)request.getAttribute("m")).getMovieNo();
 %>
 <!DOCTYPE html>
 <html>
@@ -10,6 +13,11 @@
 <meta charset="UTF-8">
 <title>영화 상세 페이지</title>
 <style>
+	.content {
+		padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+    }
 	table {
 		border: solid 1px black;
 	}
@@ -27,7 +35,7 @@
 			<table>
 				<tr>
 					<td rowspan="7">
-						<img src="영화이미지" alt="영화 포스터">
+						<img src="<%= m.getMovieImage() %>영화이미지" alt="영화 포스터">
 					</td>
 					<td>
 						<h2><%= m.getMovieNameEn() %></h2>
@@ -37,10 +45,10 @@
 						<h3>이 영화 보셨나요?</h3>
 					</td>
 					<td>
-						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘"> 봤어요 숫자 2222
+						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘"> 봤어요 <%= m.getMovieSeen() %>
 					</td>
 					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222
+						<img src="" alt="좋아요 아이콘"> 좋아요 <%= m.getMovieLikes() %>
 					</td>
 				</tr>
 				<tr>
@@ -51,26 +59,22 @@
 				</tr>
 				<tr>
 					<td colspan="5">
-						개봉년도 2222
-						
+						개봉년도 <%= m.getReleaseYear() %>						
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						제작국가
-						미국
+						제작국가 <%= m.getNational() %>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						감독
-						내가 감독
+						감독 <%= m.getDirector() %>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						제작사
-						내가 만듦
+						제작사 <%= m.getCompany() %>
 					</td>
 				</tr>
 			</table>
@@ -87,121 +91,49 @@
 						<h2>리뷰</h2>
 					</td>
 					<td align="right">
-						<a href="<%= contextPath %>/reviewList.mo?currentPage=1">MORE</a>
+						<a href="<%= contextPath %>/reviewList.mo?currentPage=1&mno=<%= movieNo %>">MORE</a>
 					</td>
 				</tr>
 
 				<!-- 리뷰 게시글 한 개당 목록 -->
-				<!-- 영화 상세 페이지에서 5개만 출력 -->
-				<tr>
-					<td>
-						유저 닉네임
-					</td>
-					<td>
-						작성일 2222/11/22 12:34:56<a type="button" class="btn btn-info" data-toggle="modal" data-target="#reportForm">신고하기</a>
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="2">
-						<img src="" alt="유저 프로필 이미지 경로">
-					</td>
-					<td>
-						듣기만 하여도 가슴이 설레는 말이다 청춘! 너의 두손을 가슴에 대고 물방아 같은 심장의 고동을 들어 보라 청춘의 피는 끓는다 끓는 피에 뛰노는 심장은 거선의 기관과 같이 힘있다 이것이다 인류의 역사를 꾸며 내려온
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						유저 닉네임
-					</td>
-					<td>
-						작성일 2222/11/22 12:34:56<a href="">신고하기</a> <!-- MODAL -->
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="2">
-						<img src="" alt="유저 프로필 이미지 경로">
-					</td>
-					<td>
-						듣기만 하여도 가슴이 설레는 말이다 청춘! 너의 두손을 가슴에 대고 물방아 같은 심장의 고동을 들어 보라 청춘의 피는 끓는다 끓는 피에 뛰노는 심장은 거선의 기관과 같이 힘있다 이것이다 인류의 역사를 꾸며 내려온
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						유저 닉네임
-					</td>
-					<td>
-						작성일 2222/11/22 12:34:56<a href="">신고하기</a> <!-- MODAL -->
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="2">
-						<img src="" alt="유저 프로필 이미지 경로">
-					</td>
-					<td>
-						듣기만 하여도 가슴이 설레는 말이다 청춘! 너의 두손을 가슴에 대고 물방아 같은 심장의 고동을 들어 보라 청춘의 피는 끓는다 끓는 피에 뛰노는 심장은 거선의 기관과 같이 힘있다 이것이다 인류의 역사를 꾸며 내려온
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						유저 닉네임
-					</td>
-					<td>
-						작성일 2222/11/22 12:34:56<a href="">신고하기</a> <!-- MODAL -->
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="2">
-						<img src="" alt="유저 프로필 이미지 경로">
-					</td>
-					<td>
-						듣기만 하여도 가슴이 설레는 말이다 청춘! 너의 두손을 가슴에 대고 물방아 같은 심장의 고동을 들어 보라 청춘의 피는 끓는다 끓는 피에 뛰노는 심장은 거선의 기관과 같이 힘있다 이것이다 인류의 역사를 꾸며 내려온
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222
-					</td>
-				</tr>
-
-				<tr>
-					<td>
-						유저 닉네임
-					</td>
-					<td>
-						작성일 2222/11/22 12:34:56<a href="">신고하기</a> <!-- MODAL -->
-					</td>
-				</tr>
-				<tr>
-					<td rowspan="2">
-						<img src="" alt="유저 프로필 이미지 경로">
-					</td>
-					<td>
-						듣기만 하여도 가슴이 설레는 말이다 청춘! 너의 두손을 가슴에 대고 물방아 같은 심장의 고동을 들어 보라 청춘의 피는 끓는다 끓는 피에 뛰노는 심장은 거선의 기관과 같이 힘있다 이것이다 인류의 역사를 꾸며 내려온
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 숫자 2222
-					</td>
-				</tr>
+				<!-- 영화 상세 페이지에서는 지정된 개수만큼 출력 -->
+				<!-- 조회된 리뷰가 없을 때 -->
+            	<% if(list.isEmpty()) { %>
+            	
+	            	<tr>
+	            	    <td colspan="6">조회된 리뷰가 없습니다.</td>
+	            	</tr>
+	            	
+            	<% } else {%>
+            	
+            		 <!-- 리뷰 n개 출력 -->
+            		<% for(Review r: list) { %>
+		                <tr>
+		                    <td>
+		                    	<%= r.getReviewWriter() %>
+		                    </td>
+		                    <td>
+                                작성일 <%= r.getCreateDate() %> <a type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL -->
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td rowspan="2">
+		                        <img src="" alt="유저 프로필 이미지 경로">
+		                    </td>
+		                    <td>
+		                    	<p>
+		                    		<%= r.getReviewContent() %>
+		                    	</p>
+		                    </td>
+		                </tr>
+		                <tr>
+		                    <td>
+		                        <img src="" alt="좋아요 아이콘"> 좋아요 <%= r.getLikes() %>
+		                    </td>
+		                </tr>
+	                <% } %>
+	                
+                <% } %>
 			</table>
 		</div>
 

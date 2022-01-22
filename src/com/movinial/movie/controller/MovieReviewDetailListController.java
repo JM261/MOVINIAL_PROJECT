@@ -33,6 +33,8 @@ public class MovieReviewDetailListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int movieNo; // 조회하고자 하는 영화번호
+		
 		int listCount; // 현재 공개된 리뷰의 총 갯수
 		int currentPage; // 리뷰 첫 페이지
 		int pageLimit; // 페이지 하단에 보여줄 페이징바의 최대 갯수 => 10개
@@ -41,6 +43,8 @@ public class MovieReviewDetailListController extends HttpServlet {
 		int maxPage; // 가장 마지막 페이지가 몇 번 페이지인지 (== 총 페이지의 갯수) 
 		int startPage; // 페이지 하단에 보여질 첫번째 페이징바
 		int endPage; // 페이지 하단에 보여질 마지막 페이징바
+		
+		movieNo = Integer.parseInt(request.getParameter("mno"));
 		
 		listCount = new ReviewService().selectListCount();
 		
@@ -60,7 +64,7 @@ public class MovieReviewDetailListController extends HttpServlet {
 		// 페이징바 정보 PageInfo로 가공
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Review> list = new ReviewService().selectList(pi);
+		ArrayList<Review> list = new ReviewService().selectMovieReviewList(movieNo, pi);
 		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);

@@ -8,11 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.movie.model.vo.Movie;
-import com.movinial.review.model.vo.Review;
 
 public class MovieDao {
 	

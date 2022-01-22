@@ -28,15 +28,32 @@ public class ReviewService {
 	}
 
 	/**
-	 * 해당페이지의 최신 리뷰부터 뽑아오기
+	 * 해당 영화 리뷰 상세보기 페이지 출력
 	 * @param pi
 	 * @return
 	 */
-	public ArrayList<Review> selectList(PageInfo pi) {
+	public ArrayList<Review> selectMovieReviewList(int movieNo, PageInfo pi) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Review> list = new ReviewDao().selectList(conn, pi);
+		ArrayList<Review> list = new ReviewDao().selectMovieReviewList(conn, movieNo, pi);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+
+	/**
+	 * 해당 영화의 리뷰 정보 받아오기
+	 * @param reviewNum
+	 * @return
+	 */
+	public ArrayList<Review> selectMovieReview(int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> list = new ReviewDao().selectMovieReview(conn, movieNo);
 		
 		close(conn);
 		
