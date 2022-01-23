@@ -138,50 +138,40 @@ h2 {
 </head>
 
 <body>
-
-	 <form action="<%= contextPath %>/login.me" method="post">
+<!--  로그인페이지 매핑값 views/common/login.jsp -->
+	<form action="<%= contextPath %>/login.me" method="post" >
     <div class="wrap">
-        <div class="login_window">
-            <div class="login">
+    	<div class="login_window">
+    	    <div class="login">
                 <h2>로그인</h2>
-                
-            <div class="login_form">
-               
-                <div class="login_id">
-                    <h4>ID</h4>
-                    <input type="text" name="userId" id="" placeholder="아이디">
-                </div>
-               
-                <div class="login_pw">
-                    <h4>Password</h4>
-                    <input type="password" name="userPwd" id="" placeholder="비밀번호">
-                </div>
-
-            </div>
-                <div class="submit">
-                    <input type="submit" value="로그인">
-                </div>
-            
+	            <div class="login_form">
+	            	<div class="login_id">
+		            <h4>ID</h4>
+		            <input type="text" name="userId"  placeholder="아이디">
+	            </div>
+	            <div class="login_pw">
+	                <h4>Password</h4>
+	                <input type="password" name="userPwd"  placeholder="비밀번호">
+	            </div>
+	            </div>
+	            <div class="submit">
+	                <input type="submit" value="로그인">
+	            </div>
                 <div>
                     <input type="checkbox">  로그인 상태 유지하기
                 </div>
-            
-                <div class="login_etc">
-                    <div class="forgot_id">
-                        <a href="">아이디찾기</a>
-                    </div>
-
-                    <div class="forgot_pw">
-                    <a href="">비밀번호찾기</a>
-                    </div>
-                </div>
-
+               <div class="login_etc">
+	               <div class="forgot_id">
+	                    <a href="">아이디찾기</a>
+	               </div>
+	               <div class="forgot_pw">
+	                	<a href="">비밀번호찾기</a>
+	               </div>
+               </div>
             </div>
-            
         </div>
-      
     </div>
-        </form>
+    </form>
 
 <script>
 		
