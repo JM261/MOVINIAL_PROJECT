@@ -8,7 +8,7 @@ public class Question {
 	private String qnaWriter;//QNA_WRITER	NUMBER
 	private String qnaTitle; //QNA_TITLE	VARCHAR2(100 BYTE)
 	private String qnaContent;//QNA_CONTENT	VARCHAR2(4000 BYTE)
-	private int category;//CATEGORY_NO	NUMBER
+	private String category;//CATEGORY_NO	NUMBER
 	private Date createDate;//CREATE_DATE	DATE
 	private String orginName;//ORIGIN_NAME	VARCHAR2(100 BYTE)
 	private String qnaFilePath; //QNA_FILE_PATH	VARCHAR2(1000 BYTE)
@@ -18,7 +18,7 @@ public class Question {
 		super();
 	}
 	
-	public Question(int qnaNo, String qnaWriter, String qnaTitle, String qnaContent, int category, Date createDate,
+	public Question(int qnaNo, String qnaWriter, String qnaTitle, String qnaContent, String category, Date createDate,
 			String orginName, String qnaFilePath, String status) {
 		super();
 		this.qnaNo = qnaNo;
@@ -31,6 +31,17 @@ public class Question {
 		this.qnaFilePath = qnaFilePath;
 		this.status = status;
 	}
+
+	public Question(int qnaNo, String qnaWriter, String qnaTitle, String category, Date createDate) {
+		super();
+		this.qnaNo = qnaNo;
+		this.qnaWriter = qnaWriter;
+		this.qnaTitle = qnaTitle;
+		this.category = category;
+		this.createDate = createDate;
+		
+	}
+
 	public int getQnaNo() {
 		return qnaNo;
 	}
@@ -55,10 +66,10 @@ public class Question {
 	public void setQnaContent(String qnaContent) {
 		this.qnaContent = qnaContent;
 	}
-	public int getCategory() {
+	public String getCategory() {
 		return category;
 	}
-	public void setCategory(int category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 	public Date getCreateDate() {

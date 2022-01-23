@@ -31,11 +31,12 @@ public class QuestionEnrollFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		ArrayList<Category> list = new NoticeService().selectCategory();
 		
 		request.setAttribute("list", list);
 		
-		request.getRequestDispatcher("views/notice/QuestionEnrollForm.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/notice/QuestionEnrollForm.jsp").forward(request, response);
 	}
 
 	/**

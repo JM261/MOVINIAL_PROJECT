@@ -17,7 +17,7 @@
 <title>나의 문의 내역</title>
 </head>
 <body>
-style>
+<style>
     .outer{
         background-color: rgb(200, 235, 135);
         color: white;

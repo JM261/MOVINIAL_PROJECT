@@ -45,21 +45,22 @@
  <%@ include file="../common/header.jsp" %>
 
 <div class="outer">
-		<!-- 파일을 첨부하는 요청을 할 경우에는 "반드시" enctype="multipart/form-data"를 지정해야한다.   -->
-		<form id="enroll-form" action="<%= contextPath %>/insert.no" method="post" enctype="multipart/form-data">
 			
 			<div align="center">
 				&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-				<a href="<%= contextPath %>" >공지사항</button> &nbsp; &nbsp;
-				<a href="<%= contextPath %>">FAQ</button> &nbsp; &nbsp;
-				<a href="<%= contextPath %>">문의하기</button> &nbsp; &nbsp;
+				<a href="<%= contextPath%>/noticeList.no?currentPage=1" >공지사항</button> &nbsp; &nbsp;
+				<a href="<%=contextPath%>/FAQList.no">FAQ</button> &nbsp; &nbsp;
+				<a href="<%= contextPath %>/QuestionEnrollForm.no">문의하기</button> &nbsp; &nbsp;
 				<a href="<%= contextPath %>/questionList.no">나의 문의 내역</button>
 			</div>
 
 			<br><br>
+			
+		<!-- 파일을 첨부하는 요청을 할 경우에는 "반드시" enctype="multipart/form-data"를 지정해야한다.   -->
+		<form id="enroll-form" action="<%= contextPath %>/questionInsert.no" method="post">
 			<!-- 제목, 내용, 카테고리, 첨부파일 입력받기 -->
 			<!--  작성자의 회원번호를 hidden으로 같이 넘길것  -->
-			<input type="hidden" name="userNo" value="">
+			<%--<input type="hidden" name="userNo" value="<%= loginUser.getMemberId() %>"> --%>
 			
 			<table align="center" border="1">
 				<tr>
