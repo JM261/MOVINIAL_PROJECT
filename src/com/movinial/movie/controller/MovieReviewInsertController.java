@@ -51,7 +51,7 @@ public class MovieReviewInsertController extends HttpServlet {
 		
 		if(result > 0) { // 성공
 			
-			request.setAttribute("", o);
+			request.setAttribute("", );
 			
 		}
 		
