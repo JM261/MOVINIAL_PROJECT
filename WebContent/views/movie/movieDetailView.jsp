@@ -18,12 +18,10 @@
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
     }
-	table {
-		border: solid 1px black;
+	.table-size {
+		width: 100%;
 	}
-	table td {
-		border: solid 1px black;
-	}
+
 </style>
 </head>
 <body>
@@ -32,17 +30,16 @@
 
 		<!-- 영화 상세 정보 -->
 		<div class="content">
-			<table>
+			<table class="table-size">
 				<tr>
-					<td rowspan="7">
+					<td rowspan="7" style="width: 30%; text-align: center;">
 						<img src="<%= m.getMovieImage() %>영화이미지" alt="영화 포스터">
 					</td>
 					<td>
-						<h2><%= m.getMovieNameEn() %></h2>
-						<h2><%= m.getMovieNameKr() %></h2>
+						<h1><%= m.getMovieNameEn() %> <%= m.getMovieNameKr() %></h1>
 					</td>
 					<td>
-						<h3>이 영화 보셨나요?</h3>
+						<h4>이 영화 보셨나요?</h4>
 					</td>
 					<td>
 						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘"> 봤어요 <%= m.getMovieSeen() %>
@@ -52,29 +49,36 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="5">
-						개요 <br>
-						천문학과 대학원생 케이트 디비아스키(제니퍼 로렌스)와 담당 교수 랜들 민디 박사(레오나르도 디카프리오)는 태양계 내의 궤도를 돌고 있는 혜성이 지구와 직접 충돌하는 궤도에 들어섰다는 엄청난 사실을 발견한다. 하지만 지구를 파괴할 에베레스트 크기의 혜성이 다가온다는 불편한 소식에 아무도 신경 쓰지 않는다. 지구를 멸망으로 이끌지도 모르는 소식을 사람들에게 알리기 위해 언론 투어에 나선 두 사람, 혜성 충돌에 무관심한 대통령 올리언(메릴 스트립)과 그녀의 아들이자 비서실장 제이슨(조나 힐)의 집무실을 시작으로 브리(케이트 블란쳇)와 잭(타일러 페리)이 진행하는 인기 프로그램 ‘더 데일리 립’ 출연까지 이어가지만 성과가 없다. 혜성 충돌까지 남은 시간은 단 6개월, 24시간 내내 뉴스와 정보는 쏟아지고 사람들은 소셜미디어에 푹 빠져있는 시대이지만 정작 이 중요한 뉴스는 대중의 주의를 끌지 못한다. 도대체 어떻게 해야 세상 사람들이 하늘을 좀 올려다볼 수 있을까?!
+					<td>
+						<br><br><br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						개봉년도 <%= m.getReleaseYear() %>						
+						<br>
+						<h4>개봉년도 &nbsp&nbsp&nbsp <%= m.getReleaseYear() %></h4>
+						<br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						제작국가 <%= m.getNational() %>
+						<br>
+						<h4>제작국가 &nbsp&nbsp&nbsp <%= m.getNational() %></h4>
+						<br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						감독 <%= m.getDirector() %>
+						<br>
+						<h4>감독 &nbsp&nbsp&nbsp <%= m.getDirector() %></h4>
+						<br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
-						제작사 <%= m.getCompany() %>
+						<br>
+						<h4>제작사 &nbsp&nbsp&nbsp <%= m.getCompany() %></h4>
+						<br>
 					</td>
 				</tr>
 			</table>
@@ -83,7 +87,7 @@
 
 		<!-- 리뷰 -->
 		<div class="content">
-			<table>
+			<table class="table table-borderless">
 
 				<!-- 리뷰 제목 -->
 				<tr>
@@ -91,7 +95,7 @@
 						<h2>리뷰</h2>
 					</td>
 					<td align="right">
-						<a href="<%= contextPath %>/reviewList.mo?currentPage=1&mno=<%= movieNo %>">MORE</a>
+						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&mno=<%= movieNo %>">MORE</a>
 					</td>
 				</tr>
 
@@ -109,11 +113,12 @@
             		 <!-- 리뷰 n개 출력 -->
             		<% for(Review r: list) { %>
 		                <tr>
-		                    <td>
+		                    <td style="width: 20%;">
 		                    	<%= r.getReviewWriter() %>
 		                    </td>
 		                    <td>
-                                작성일 <%= r.getCreateDate() %> <a type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL -->
+                                작성일 <%= r.getCreateDate() %>
+								<a type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL -->
 		                    </td>
 		                </tr>
 		                <tr>

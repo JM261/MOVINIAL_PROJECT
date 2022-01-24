@@ -34,11 +34,11 @@ public class ReviewDao {
 	}
 
 	/**
-	 * 공개된 리뷰의 총 개수
+	 * 해당 영화의 공개된 리뷰의 총 개수
 	 * @param conn
 	 * @return
 	 */
-	public int selectListCount(Connection conn) {
+	public int selectListCount(Connection conn, int movieNo) {
 		
 		// 변수
 		int listCount = 0;
@@ -50,6 +50,8 @@ public class ReviewDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, movieNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -102,7 +104,8 @@ public class ReviewDao {
 					    			rset.getString("NICKNAME"),
 					    			rset.getString("REVIEW_CONTENT"),
 					    			rset.getDate("CREATE_DATE"),
-					    			rset.getInt("LIKES")));
+					    			rset.getInt("LIKES"),
+					    			rset.getInt("REF_MNO")));
 			}
 			
 		} catch (SQLException e) {
@@ -154,6 +157,47 @@ public class ReviewDao {
 		}
 		
 		return list;
+		
+	}
+	
+	
+
+	/**
+	 * 리뷰 상세보기 페이지에서 리뷰 작성
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @param reviewContent
+	 * @param reviewShow
+	 * @param reviewTitle
+	 * @return
+	 */
+	public int insertMovieReview(Connection conn, int memberNo, int movieNo, String reviewContent, String reviewShow, String reviewTitle) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertMovieReview");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			pstmt.setString(2, reviewTitle);
+			pstmt.setString(3, reviewContent);
+			pstmt.setString(4, reviewShow);
+			pstmt.setInt(5, movieNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 		
 	}
 	

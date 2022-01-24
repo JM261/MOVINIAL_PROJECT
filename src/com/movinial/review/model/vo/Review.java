@@ -23,7 +23,7 @@ public class Review {
 	}
 
 	/**
-	 * 영화 - 리뷰 조회용 생성자
+	 * 해당 영화의 리뷰 정보 받아오기
 	 * @param reviewNo
 	 * @param reviewWriter
 	 * @param reviewContent
@@ -37,6 +37,25 @@ public class Review {
 		this.reviewContent = reviewContent;
 		this.createDate = createDate;
 		this.likes = likes;
+	}
+
+	/**
+	 * 해당 영화 리뷰 상세보기 페이지 출력
+	 * @param reviewNo
+	 * @param reviewWriter
+	 * @param reviewContent
+	 * @param createDate
+	 * @param likes
+	 * @param refMno
+	 */
+	public Review(int reviewNo, String reviewWriter, String reviewContent, Date createDate, int likes, int refMno) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriter = reviewWriter;
+		this.reviewContent = reviewContent;
+		this.createDate = createDate;
+		this.likes = likes;
+		this.refMno = refMno;
 	}
 
 	public Review(int reviewNo, String reviewWriter, String reviewTitle, String reviewContent, Date createDate,

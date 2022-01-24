@@ -142,7 +142,7 @@
 		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
 		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
-		          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+		          <li><a href="<%= contextPath %>/list.cm">COMMUNITY</a></li>
 		          <li><input type="search" name="search" id="header_search"></li>
 		          <li><button id="header_search_btn"></button></li>
 		        </ul>

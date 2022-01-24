@@ -12,14 +12,14 @@ import com.movinial.review.model.vo.Review;
 public class ReviewService {
 	
 	/**
-	 * 공개된 리뷰의 총 개수
+	 * 해당 영화의 공개된 리뷰의 총 개수
 	 * @return int 총 개수
 	 */
-	public int selectListCount() {
+	public int selectListCount(int movieNo) {
 		
 		Connection conn = getConnection();
 		
-		int listCount = new ReviewDao().selectListCount(conn);
+		int listCount = new ReviewDao().selectListCount(conn, movieNo);
 		
 		close(conn);
 		
@@ -58,6 +58,33 @@ public class ReviewService {
 		close(conn);
 		
 		return list;
+		
+	}
+
+	/**
+	 * 리뷰 상세보기 페이지에서 리뷰 작성
+	 * @param memberNo
+	 * @param movieNo
+	 * @param reviewContent
+	 * @param reviewShow
+	 * @param reviewTitle
+	 * @return
+	 */
+	public int insertMovieReview(int memberNo, int movieNo, String reviewContent, String reviewShow, String reviewTitle) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().insertMovieReview(conn, memberNo, movieNo, reviewContent, reviewShow, reviewTitle);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 		
 	}
 	
