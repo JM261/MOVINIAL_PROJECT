@@ -138,7 +138,7 @@ h2 {
 </head>
 
 <body>
-<!--  로그인페이지 매핑값 views/common/login.jsp -->
+<!--  로그인페이지 매피 views/common/login.jsp -->
 	<form action="<%= contextPath %>/login.me" method="post" >
     <div class="wrap">
     	<div class="login_window">

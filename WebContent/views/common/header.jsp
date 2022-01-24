@@ -139,7 +139,7 @@
 	    <div class="login">
 		  <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 		        <ul>
-		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
+		          <li><a href="<%= contextPath %>/views/common/login.jsp">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
 		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
 		          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>

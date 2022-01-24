@@ -10,6 +10,30 @@
    		   AND MEMBER_PWD = ?
    	 	   AND STATUS = 'Y'
 	</entry>
-	
+	<entry key="insertMember">
+	INSERT 
+		   INTO MEMBER
+		          (
+		            MEMBER_NO
+		           ,MEMBER_ID
+		           ,MEMBER_PWD
+		           ,MEMBER_NAME
+		           ,NICKNAME
+		           ,EMAIL
+		           ,PHONE
+		           ,PREPERGENRE
+		          )
+            VALUES
+                  (
+                    SEQ_UNO.NEXTVAL
+                    ,?
+                    ,?
+                    ,?
+                    ,?
+                    ,?
+                    ,?
+                 	,?
+                  )
+	</entry>
 </properties>
 	

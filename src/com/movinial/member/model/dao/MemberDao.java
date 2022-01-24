@@ -63,8 +63,7 @@ public class MemberDao {
 						  ,rset.getString("STATUS")
 						  ,rset.getDate("ENROLL_DATE")
 						  ,rset.getDate("MODIFY_DATE")
-//						  ,rset.getString("preferGenre")
-						  ,null
+						  ,rset.getString("preferGenre")
 						  );
 			}	
 		} catch (SQLException e) {
@@ -74,6 +73,40 @@ public class MemberDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return m;
+	}
+
+	public int insertMember(Connection conn, Member m) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getMemberId());
+			pstmt.setString(2, m.getMemberPwd());
+			pstmt.setString(3, m.getMemberName());
+			pstmt.setString(4, m.getMemberNickname());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getPhone());
+			pstmt.setString(7, m.getPreferGenre());
+			System.out.println(pstmt);
+			result = pstmt.executeUpdate();
+
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+
+
+		}
+		
+		return result;
 	}
 		
 		
