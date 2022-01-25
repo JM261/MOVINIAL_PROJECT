@@ -1,4 +1,4 @@
-package com.movinial.curation.controller;
+package com.movinial.member.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
-import com.movinial.curation.model.service.CurationService;
-import com.movinial.movie.model.vo.Movie;
+import com.movinial.member.model.service.MemberService;
+import com.movinial.member.model.vo.Member;
 
 /**
- * Servlet implementation class searchMovieController
+ * Servlet implementation class MemberManagementSearch
  */
-@WebServlet("/search.cu")
-public class searchMovieController extends HttpServlet {
+@WebServlet("/search.mem")
+public class MemberManagementSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchMovieController() {
+    public MemberManagementSearch() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +33,14 @@ public class searchMovieController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 영화를 조회 해보자 후
-		
 		request.setCharacterEncoding("UTF-8");
+		String keyword = request.getParameter("Keyword");
 		
-		String movieKeyword = request.getParameter("movieKeyword");
-	
-		ArrayList<Movie> list = new CurationService().searchMovie(movieKeyword);
-				
+		ArrayList<Member> list = new MemberService().searchMember(keyword);
+		
 		response.setContentType("application/json; charset=UTF-8");
 		
-		new Gson().toJson(list, response.getWriter());
+		new Gson().toJson(list, response.getWriter());	
 	
 	}
 
