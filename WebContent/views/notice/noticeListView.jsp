@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.util.ArrayList, com.movinial.notice.model.vo.Question, com.movinial.common.model.vo.PageInfo" %>        
+<%@ page import = "java.util.ArrayList, com.movinial.notice.model.vo.Notice, com.movinial.common.model.vo.PageInfo" %>        
 <%
+	
 
-	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");
+	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list");
+	
+        
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	// 페이징바 만들때 필요한 변수 세팅
@@ -18,13 +21,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>나의 문의 내역</title>
+<title>공지사항</title>
 <style>
 .outer{
-    border : 1px solid #bcbcbc;
-    width: 1100px;
-    height: 850px;
-     margin: auto;
+    border: 1px solid #bcbcbc; 
+    width: 1100px; 
+    height:850px;
+    margin: auto;
     margin-bottom: 30px;
 
 }
@@ -32,18 +35,12 @@
     border: 1px solid #bcbcbc; 
     font-size: 22px;  
     width: 1000px;
-    margin : auto;
-    text-align: center;
     
 }
-table{
-	border-bottom : 1px solid #bcbcbc;
-}
-
 .btn-area{
     width : 800px;
     height: 80px;
-    align: center;
+ 
 }
 .btn-area>a{
     color:black;
@@ -53,9 +50,22 @@ table{
     text-align:center;
 
 }
+
 #titleDate:hover{
     cursor: pointer;
     background: #e6e6e6;
+}
+
+#noticeTitle{
+   border-bottom: 1px solid #bcbcbc; 
+}
+#noticeDate{
+    border-bottom: 1px solid #bcbcbc; 
+    text-align: right;
+}
+
+#noticeNo{
+    display: none;
 }
 
 td{
@@ -66,19 +76,6 @@ td{
     font-weight: bolder;
 }
 
-#qnaNo{
-	display:none;
-}
-#reply{
-	color:rgb(105, 105, 105);
-	}
-tr td{
-	border-bottom: 1px solid #bcbcbc; 
-}  
-
-#Qwriter{
-	display:none;
-}
 
 </style>
 
@@ -87,7 +84,7 @@ tr td{
  <%@ include file="../common/header.jsp" %>
 
 	<div class="outer">
- 		<br>
+        <br>
         <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
@@ -99,75 +96,71 @@ tr td{
             <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
             <%} %>
         </div>
-        
-		<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
+
         <table align="center" class="list-area">
-            
-            <thead>
-               <%-- <tr>
-                 	<th width="200">문의 분류</th>
-                    <th width="400">제목</th>
-                    <th width="200">작성일</th>
-                    <th width="100">답변확인</th>
-                </tr>--%> 
-            </thead>
+          <!--  <thead>
+                <tr>                
+                    <th width="500">제목</th>
+                    <th width="300">작성일</th>                  
+                </tr>
+            </thead> -->
             <tbody>
                 <!-- 게시글 출력 -->
                 <% if(list.isEmpty()){ %>
 	                <tr>
-	                    <td colspan="5"> 작성된 문의내역이 없습니다. </td>
+	                    <td colspan="3"> 공지사항이 없습니다. </td>
 	                </tr>
-	            <%}else{ %>   <%-- 로그인한 회원  == 글작성자 --%>   
+	            <%}else{ %>    
 					<!--  반복 : list에 있는 값을 순차적으로 접근해서 뽑아오기  -->
-					<% for(Question q : list) { %>
+					<% for(Notice n: list) { %>
 		                <tr id="titleDate">
-		                	<td id="qnaNo"><%= q.getQnaNo() %></td>
-		                    <td width="200">[ <%= q.getQnaWriter() %> ]</td> <!-- 카테고리.... 일단하고.. 나중에 수정  -->
-		                    <td id="Qwriter"><%=q.getCategory() %></td> <!-- 작성자 ..... -->
-		                	<td width="400"><%= q.getQnaTitle() %></td>   
-		                    <td width="200"><%= q.getCreateDate() %></td>
-		                    <td width="100"><a href="" id="reply">답변확인</a></td>
-		                    <%} %>
-		                </tr>
+		                	<td id="noticeNo"><%= n.getNoticeNo() %></td>		                
+		                    <td id="noticeTitle"><%= n.getNoticeWriter() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? -->
+		                    <td id="noticeDate"><%= n.getCreateDate() %></td>
+		                </tr>                       
                 	<%} %>
-             	
+             	<%} %>
             </tbody>
-        
         </table>
 
-		<script>
-        
-            $(function(){
-                $(".list-area>tbody>tr").click(function(){
-                    // /jsp/ditail.bo?bno=X
-
-                    location.href = "<%=contextPath%>/questionDetail.no?qno="+ $(this).children().eq(0).text();
-                    
-                    
-                })
-
-            })
-            
-        </script>
+        <script>
+			$(function(){
+				$(".list-area>tbody>tr").click(function(){
 
 
+					// 클릭했을 때 해당 공지사항의 번호를 넘기자!!!!
+					// 해당 tr태그의 자손 중에서도 첫번째 td의 값이 필요함!!(내용물을 뽑자!!!)
+					var nno = $(this).children().eq(0).text(); //글번호
+
+					//console.log(nno);
+
+					// 글번호가지고 요청
+					// 대놓고 요청 => url에 키와 밸류를 대놓고 작성해서 요청을 보내버리자
+					// GET방식 : 요청할url?키=밸류&키=밸류&키=밸류....
+					// "쿼리스트링" => ? 뒤의 내용들, 직접만들어서 보내보자
+					// localhost:8001/jsp/detail.no?nno=글번호
+
+					location.href = "<%= contextPath %>/noticeDetail.no?nno=" + nno;
+				})
+			})
+		</script>
+
+ 
 
 
         <br><br>
-
-
-        
+      
         <!-- 페이징바 -->
         <div class = "paging-area" align="center">
            <!-- 페이징 버튼 <를 담당 : 이전페이지로 이동 -->
             <%if(currentPage != 1){ %>
-            	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+            	<button onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
           	<%} %>
           	
           <% for(int i = startPage; i <= endPage; i++){ %>
             <%if(i != currentPage){ %>
             						<!-- http://localhost:8001/jsp/list.bo?currentPage=XX -->
-            	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= i %>'"><%= i %></button>
+            	<button onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= i %>'"><%= i %></button>
             <%}else{ %>
             	<button disabled><%= i %></button>
           	<%} %>
@@ -175,9 +168,11 @@ tr td{
           
           <!-- 페이징바에서 > 를 담당 : 다음페이지 이동 -->
           <%if(currentPage != maxPage){ %>
-        	   <button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+        	   <button onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
 		  <%} %>
-        </div>
+        </div>  
+       
+        
  </div>
 
 

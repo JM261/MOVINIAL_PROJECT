@@ -1,28 +1,24 @@
-package com.movinial.notice.controller;
+package com.movinial.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.movinial.notice.model.service.NoticeService;
-import com.movinial.notice.model.vo.Category;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class QuestionEnrollFormController
+ * Servlet implementation class FindId_EmailController
  */
-@WebServlet("/qEnrollForm.no")
-public class QuestionEnrollFormController extends HttpServlet {
+@WebServlet("/Find_id_Email.me")
+public class FindId_EmailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionEnrollFormController() {
+    public FindId_EmailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +28,20 @@ public class QuestionEnrollFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		ArrayList<Category> list = new NoticeService().selectCategory();
+		//인코딩
+		request.setCharacterEncoding("UTF-8");
 		
-		request.setAttribute("list", list);
+		//새션에 아이디찾기에 필요한 /이름, 핸드폰번호 담기/
+		HttpSession session = request.getSession();
+		session.setAttribute("memberId", request.getParameter("memberId"));
+		session.setAttribute("email", request.getParameter("email"));
+
 		
-		request.getRequestDispatcher("views/notice/QuestionEnrollForm.jsp").forward(request, response);
+		
+		
+		request.getRequestDispatcher("views/member/id_search2.jsp").forward(request, response);
+
+		
 	}
 
 	/**

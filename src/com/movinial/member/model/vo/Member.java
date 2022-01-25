@@ -41,6 +41,22 @@ public class Member {
 		this.preferGenre = preferGenre;
 	}
 	
+	//정인 : 회원가입
+	public Member(String memberId, String memberPwd, String memberName, String memberNickname, String email,
+			String phone, String preferGenre) {
+		super();
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.memberNickname = memberNickname;
+		this.email = email;
+		this.phone = phone;
+		this.preferGenre = preferGenre;
+	}
+	
+	
+	
+	
 	//주현 : 회원정보 수정
 	public Member(String memberId, String memberName, String memberNickname, String email, String phone,
 			String preferGenre) {
@@ -55,6 +71,7 @@ public class Member {
 	
 	
 	
+
 
 	public int getMemberNo() {
 		return memberNo;

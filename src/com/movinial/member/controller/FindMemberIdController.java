@@ -1,28 +1,23 @@
-package com.movinial.notice.controller;
+package com.movinial.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.movinial.notice.model.service.NoticeService;
-import com.movinial.notice.model.vo.Category;
-
 /**
- * Servlet implementation class QuestionEnrollFormController
+ * Servlet implementation class FindMemberIdController
  */
-@WebServlet("/qEnrollForm.no")
-public class QuestionEnrollFormController extends HttpServlet {
+@WebServlet("/id_find.me")
+public class FindMemberIdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionEnrollFormController() {
+    public FindMemberIdController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +26,11 @@ public class QuestionEnrollFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 아이디찾기 폼만 띄워줄것
 		
-		ArrayList<Category> list = new NoticeService().selectCategory();
-		
-		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("views/notice/QuestionEnrollForm.jsp").forward(request, response);
+	
+		request.getRequestDispatcher("views/member/id_find.jsp").forward(request, response);
+
 	}
 
 	/**

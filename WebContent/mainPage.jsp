@@ -23,6 +23,7 @@
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
+        text-align: center;
       }
 
       #content2 {
@@ -31,6 +32,7 @@
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
+        text-align: center;
       }
 
       #div1 {
@@ -103,6 +105,47 @@
         font-weight: bold;
       }
 
+      .movie0{
+        display: inline-block;
+        border: 1px solid #bcbcbc;
+        width: 320px;
+        height: 450px;
+        margin-right: 15px;
+      }
+
+      .movie1{
+        display: inline-block;
+        border: 1px solid #bcbcbc;
+        width: 320px;
+        height: 450px;
+        margin-right: 15px;
+      }
+      .movie2{
+        margin-top: 15px;
+        display: inline-block;
+        border: 1px solid #bcbcbc;
+        width:150px;
+        height: 210px;
+        margin-left: 7px;
+      }
+
+      .movie3{
+        margin-top: 15px;
+        display: inline-block;
+        border: 1px solid #bcbcbc;
+        width:150px;
+        height: 210px;
+        margin-left: 7px;
+      }
+
+      .mCenter{
+        text-align: center;
+      }
+      
+      .reviewr{
+        border-bottom: 1px solid #bcbcbc;
+      }
+      
 
       </style>
   </head>
@@ -119,9 +162,13 @@
     
       <!-- 로그인한 회원만 보이는 부분 -->
       <% if(loginUser != null){ %>   
-      <a href="" class="title">NICKNAME님을 위한 추천영화</a>
+      <a href="" class="title"><%= loginUser.getMemberNickname() %>님을 위한 추천영화</a>
       <div id="content1">
-        
+        <div class="movie0"> </div>
+        <div class="movie0"> </div>
+        <div class="movie0"> </div>
+        <div class="movie0"> </div>
+        <div class="movie0"> </div>
       </div>
       <% } %>
 
@@ -129,23 +176,45 @@
 
       <a href="" class="title">최신 개봉 영화</a>
       <div id="content2">
-       
+        <div class="movie1"> </div>
+        <div class="movie1"> </div>
+        <div class="movie1"> </div>
+        <div class="movie1"> </div>
+        <div class="movie1"> </div>
       </div>
   
       <div><a href="" class="title">MOVINIAL 추천 영화 <br></a></div>
       <div id="div1">
         <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
-        
+        <div class="mCenter">
+          <div class="movie2"> </div>
+          <div class="movie2"> </div>
+          <div class="movie2"> </div>
+          <div class="movie2"> </div>
+          <div class="movie2"> </div>
+        </div>
       </div>
 
       <div id="div2">
         <a href="" class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
-        
+        <div class="mCenter">
+          <div class="movie3"> </div>
+          <div class="movie3"> </div>
+          <div class="movie3"> </div>
+          <div class="movie3"> </div>
+          <div class="movie3"> </div>
+        </div>
       </div>
 
       <div id="div34">
         <a href="" class="title">리뷰어 랭킹</a>
-        <div id="div3">리뷰어 랭킹</div>
+        <div id="div3">
+          <div class="reviewer"></div>
+          <div class="reviewer"></div>
+          <div class="reviewer"></div>
+          <div class="reviewer"></div>
+          <div class="reviewer"></div>
+        </div>
         <a href="" class="title">베스트리뷰</a>
         <div id="div4">베스트 리뷰</div>
       </div>

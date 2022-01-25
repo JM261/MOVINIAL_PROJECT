@@ -10,21 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.movinial.common.model.vo.PageInfo;
-import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.service.NoticeService;
-import com.movinial.notice.model.vo.Question;
+import com.movinial.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class QuestionListController
+ * Servlet implementation class NoticeListController
  */
-@WebServlet("/questionList.no")
-public class QuestionListController extends HttpServlet {
+@WebServlet("/noticeList.no")
+public class NoticeListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionListController() {
+    public NoticeListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +33,7 @@ public class QuestionListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 쿼리스트링으로 요청 => get=> 인코딩 X
-		// 2) request로 부터 값뽑기
-		// --- 페이징 처리
-		// 필요한 변수들
 		// 필요한 변수들 
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-	
 		int listCount; // 현재 일반게시판의 게시글 총 개수 => BOARD 테이블로부터 조회 COUNT(*)활용
 		int currentPage; // 현재 페이지 (사용자가 요청한 페이지)
 		int pageLimit; // 페이지 하단에 보여질 페이징바의 최대 개수 => 10개
@@ -50,21 +43,19 @@ public class QuestionListController extends HttpServlet {
 		int startPage; // 페이지 하단에 보여질 첫번째 페이징바
 		int endPage; // 페이지 하단에 보여질 마지막 페이징바
 		
+		// * listCount : 총 게시글 개수
+		listCount = new NoticeService().selectNoticeListCount();
 				
 		// * currentPage : 현재페이지 ( == 사용자가 요청한 페이지)
 		currentPage = Integer.parseInt(request.getParameter("currentPage")); // : String
-				
+		
+		
 		// * pageLimit : 페이징바의 최대 개수
 		pageLimit = 10;
 				
 		// * boardLimit : 한 페이지에 보여질 게시글의 최대 개수
 		boardLimit = 10;
-
-		Member m = new Member();
-		m.setMemberNo(memberNo);
 		
-		listCount = new NoticeService().selectListCount(m);
-
 		// * maxPage : 가장 마지막 페이지가 몇번 페이지인지 (총 페이지의 개수)
 		maxPage = (int)Math.ceil((double)listCount / boardLimit); 
 		
@@ -74,33 +65,28 @@ public class QuestionListController extends HttpServlet {
 		// * endPage : 페이지 하단에 보여질 페이징바의 끝 수
 		endPage = startPage + pageLimit - 1;
 		
+		// startPage가 11이어서 endPage가 20이 되어야 하는데
+		// maxPage가 11까지 밖에 없다면?
+		// => endPage를 maxPage로 변경
 		if(endPage > maxPage) {
 			endPage = maxPage;
 		}
 		
-		
-		
-		
-		//3) VO가공
-		
-		
+		// VO가공
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		
-		//Service단으로 토스
-		ArrayList<Question> list = new NoticeService().selectList(pi,m);
-		// * listCount : 총 게시글 개수
+		// Service단으로
+		ArrayList<Notice> list = new NoticeService().selectNoticeList(pi);
 		
-		// 5) 응답 뷰 지정 => list, pi를 넘기자
+		// 뽑아온 list를 응답페이지로 보내기
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		
-		
 		// views/notice/QuestionListView.jsp 포워딩
-		request.getRequestDispatcher("views/notice/QuestionListView.jsp").forward(request, response);
 		
-		
-		
+		request.getRequestDispatcher("/views/notice/noticeListView.jsp").forward(request, response);
+	
 	}
 
 	/**
