@@ -11,6 +11,7 @@
 //	int movieSeenChk = Integer.parseInt(request.getAttribute("movieSeenChk"));
 	//int movieLikesChk = 0;
 
+	
 %>
 <!DOCTYPE html>
 <html>
