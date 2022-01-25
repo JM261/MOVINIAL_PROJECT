@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int movieNo = 0;
+
+%>    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -118,6 +123,16 @@
             border-top:none;
          }         
 
+		.selectbtn{
+		
+			background: inherit ;
+			border:none;
+			box-shadow:none;
+			border-radius:0;
+			padding:0;
+			overflow:visible;
+			cursor:pointer;
+		}
 
     </style>
 </head>
@@ -145,7 +160,7 @@
                 <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
             </div>
             <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
-                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div data-toggle="modal" data-target="#insertMovie"><input type='hidden' value='<%= movieNo %>'></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
                 <div></div> <!-- 영화 2 -->
                 <div></div> <!-- 영화 3 -->
                 <div></div> <!-- 영화 4 -->
@@ -164,61 +179,78 @@
             <div class="modal-dialog">
               <div class="modal-content" style="width: 600px; height:800px">
           
-                <!-- Modal Header -->
                 <div class="modal-header">
                   <h4 class="modal-title">영화 추가</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-          
-                <!-- Modal body -->
-                <div class="modal-body">
-                    
+                </div>          
+                <div class="modal-body">                    
 
-                        검색할 영화명 <input type="text" id="searchMovie">
-                        <button onclick="selectMovie();">검색</button><br><br>
-                        <div id="selectResult">
-                            <!-- 검색 결과가 존재하면 출력 없으면 "검색 조회 결과가 없습니다." -->
-                        </div>
-
-                    
+		                        검색할 영화명 <input type="text" id="searchMovie">
+		           <button onclick="selectMovie();">검색</button><br><br>
+		           <div id="selectResult">
+		           <!-- 검색 결과 -->
+		           
+                   
+                   </div>                    
                 </div>
               </div>
             </div>
         </div>
 
         <script>
-        
-      
+        	        	
             function selectMovie(){        	
             	
             	var $keyword = $("#searchMovie").val();
             	console.log($keyword);
             	
                 $.ajax({
-                url : "<%= contextPath %>/search.cu",
-                data : {
-                    movieKeyword : $keyword
-                },
-               	type : "post",
-                success : function(list){
-                	
-                    var result = "";
-					                    
-                	for(var i in list){
-                		result += list[i].movieNameKr + "("+list[i].movieNameEn+")<br><hr>"
-                        /* 영화명을 검색하여 해당되는 영화들을 불러와서 영화 정보(제목, 감독, 장르 등만 불러온다.) */    
-                    }
-                	$("#selectResult").html(result);                	
-                },
-                error : function(){
-                    $("#selectResult").html("조회 결과가 없습니다.");
-                }
-                });
-                
-            }
-    
-        </script>
+	                url : "<%= contextPath %>/search.cu",
+	                data : {movieKeyword : $keyword},
+	               	type : "post",
+	                success : function(list){
+	                	
+		                var result = "";					                    
+	                	for(var i in list){
+	                		result += "<button class='selectbtn' value='"+list[i].movieNo+"'>"+list[i].movieNameKr + "("+list[i].movieNameEn+")</button><br><hr>"
+	                        /* 영화명을 검색하여 해당되는 영화들을 불러와서 영화 정보(제목, 감독, 장르 등만 불러온다.) */
+	                    }	                	
+	                	$("#selectResult").html(result);
 
+	                	$('.selectbtn').click(function(){
+	                		$('#box3_2').children().html($(this).val());
+	                		// 
+	                	})
+	                	
+	                	console.log(result);
+	                	
+	                } // success               
+                });
+            } // selectMovie
+         	
+            
+            $('#box1_plus').click(function(){
+            	
+            	var cur =            		
+            		"<div id='box3'>"+
+                    "<div id='box3_1'>"+
+                        "<div id='box3_title'><input type='text' placeholder='리스트 타이틀을 입력하세요.''></input></div>"+
+                        "<div id='box3_check'><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type='checkbox' style='zoom:2.0;'></p></div>"+
+                       "</div>"+
+            		"<div id='box3_2'>"+
+			                "<div data-toggle='modal' data-target='#insertMovie'><input type='hidden' value='"+<%= movieNo %>+"'></div>"+
+			                "<div></div>"+
+			                "<div></div>"+
+			                "<div></div>"+
+			                "<div></div>"+
+			                "<div></div>"+               
+            				"</div>"+
+            		"</div>";
+            		
+            	$('#box3').append(cur);
+            
+            })	
+            
+        </script>
 
         <%@ include file = "../common/footer.jsp" %>
         
