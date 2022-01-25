@@ -10,6 +10,39 @@
    		   AND MEMBER_PWD = ?
    	 	   AND STATUS = 'Y'
 	</entry>
+	<entry key="insertMember">
+	INSERT 
+		   INTO MEMBER
+		          (
+		            MEMBER_NO
+		           ,MEMBER_ID
+		           ,MEMBER_PWD
+		           ,MEMBER_NAME
+		           ,NICKNAME
+		           ,EMAIL
+		           ,PHONE
+		           ,PREPERGENRE
+		          )
+            VALUES
+                  (
+                    SEQ_UNO.NEXTVAL
+                    ,?
+                    ,?
+                    ,?
+                    ,?
+                    ,?
+                    ,?
+                 	,?
+                  )
+	</entry>
+	
+	<entry key="findId">
+		SELECT MEMBER_ID
+  		  FROM MEMBER
+ 		 WHERE MEMBER_NAME = ?
+ 		  AND  PHONE = ?
+ 		  AND STATUS = 'Y'
+	</entry>
 	
 	<entry key ="selectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
 		SELECT
@@ -52,4 +85,6 @@
    		   	MEMBER_NAME like ?
 	</entry>
 </properties>
+
+
 	
