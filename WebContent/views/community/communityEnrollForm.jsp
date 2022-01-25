@@ -1,26 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>COMMUNITY 게시글 작성</title>
 <style>
-    .outer{
-	    /* background-color: skyblue; */
+	.outer{
 	    color: black;
-	    width: 1000px;
+	    width: 1200px;
 	    height: 100%;
 	    margin: auto;
 	    margin-top: 50px;
-	    border: 1px solid black;
 	}
-	.list-area{
-		/* border: 1px solid white; */
-		text-align: center;
+	
+	table{
+		border: 0.1px solid black;
+		width: 1000px;
 	}
-	#enroll-form>table th{text-align: center;}
+	table th{text-align: center;}
 </style>
 </head>
 <body>
@@ -29,51 +27,71 @@
 	<div class="outer">
 
 		<br>
-		<h2 align="center">일반게시판 작성하기</h2>
-		<br>
-		<!--  파일첨부 요청시 enctype="multipart/form-data" 필수로 지정 -->
-		<form id="enroll-form" action="<%= contextPath %>/insert.cm" method="post" enctype="multipart/form-data">
-			<!-- 카테고리,제목,내용,첨부파일 입력받기 -->
-			<!--  작성자의 회원번호를 hidden으로 같이 넘길 것!!! -->
-			<input type="hidden" name="userNo" value="<%= loginUser.getUserNo() %>">
-			
-			<table align="center">
+		<h1 style="margin-left: 100px; margin-bottom: 25px;">COMMUNITY 게시글 작성</h1>
+
+		<form action="<%= contextPath %>/insert.cm" method="post" enctype="multipart/form-data">
+			<div align="right" style="width:1100px; color: red; font-weight: bold;" >
+				<input type="checkbox" class="form-check-input" name="spoiler">컨텐츠 스포일러가 포함된 글이면 체크해 주세요.
+			</div>
+			<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
+			<table align="center" border="1">
 				<tr>
-					<th width="100">말머리</th>
-					<td width="500">
-						<select name="category">
-							<option  type="hidden">공지</option>
-							<option  type="hidden">일반</option>
-							<option  type="hidden">정보</option>
-							<option  type="hidden">리뷰</option>
+					<th width="100">제목</th>
+					<td colspan="6" width="800"><input type="text" name="title" class="form-control" placeholder="제목을 입력해 주세요 ^_^" maxlength="80" required></td>
+				</tr>
+				<tr>
+					<th>말머리</th>
+					<td colspan="6">
+						<select class="form-control" name="category">
+							<!-- <option value="notice">공지</option> --> <!-- 로그인 아이디가 관리자면 보여지도록 --> 
+							<option selected >일반</option>
+							<option>정보</option>
+							<option>리뷰</option>
 						</select>
 					</td>
 				</tr>
 				<tr>
-					<th>제목</th>
-					<td><input type="text" name="title" required></td>
+					<th>이미지첨부</th>
+					<td colspan="6" class="form-group">
+						<input type="file" class="form-control-file border" name="upfile" onchange="contentImg(this);">
+					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea name="content" rows="10" style="resize: none;" required></textarea>
+						<img id="img" width="900" style="display:none;"> <!-- 이미지 미리보기 영역 기본적으로 숨겨져있음 -->
+						<textarea class="form-control" name="content" rows="20" style="resize: none;" required></textarea>
 					</td>
 				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td><input type="file" name="upfile"></td>
-				</tr>
 			</table>
+		<script>
+			function contentImg(inputFile){
 
+				if(inputFile.files.length == 1){ // 파일이 있는 경우
+
+					var reader = new FileReader();
+
+					reader.readAsDataURL(inputFile.files[0]);
+
+						reader.onload = function(e){
+						// 이미지 미리보기, 선택한 영역에 이미지를 넣으며 감추어져있던 영역이 보여지게함
+						$("#img").attr("src", e.target.result).css('display', 'flex');
+					}
+				}
+				else { // 파일 선택후 취소하는 경우
+						// 미리보기 사라지게 하기
+						$("#img").attr("src", null);
+				}
+			}
+		</script>
 			<br>
-
-			<div align="center">
-				<button type="submit" class="btn btn-sm btn-primary">작성하기</button>
-				<button type="reset" class="btn btn-sm btn-secondary">취소</button>
+			<div class="form-controll" align="center">
+				<button type="submit" class="btn btn-primary">등록</button>
+				<button type="reset" class="btn btn-secondary">취소</button>
 			</div>
-
 		</form>
+		<br><br>
 	</div>
-
+	<%@ include file = "../common/footer.jsp" %>
 </body>
 </html>

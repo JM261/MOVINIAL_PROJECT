@@ -1,6 +1,7 @@
 package com.movinial.community.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,18 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.movinial.community.model.service.CommunityService;
+import com.movinial.community.model.vo.Reply;
 
 /**
- * Servlet implementation class CommunityEnrollFormController
+ * Servlet implementation class AjaxReplyListController
  */
-@WebServlet("/enrollForm.cm")
-public class CommunityEnrollFormController extends HttpServlet {
+@WebServlet("/rlist.cm")
+public class AjaxReplyListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityEnrollFormController() {
+    public AjaxReplyListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,8 +33,21 @@ public class CommunityEnrollFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 커뮤니티 게시글 작성 폼 띄우기
-		request.getRequestDispatcher("views/community/communityEnrollForm.jsp").forward(request, response);
+		// GET방식 => 인코딩 안함
+		
+		// 값 뽑기
+		int communityNo = Integer.parseInt(request.getParameter("cno")); // : String
+		
+		// VO 가공 => 패스 ~
+		
+		// Service단으로 토스 ~ => 게시판 관련 기능
+		ArrayList<Reply> list = new CommunityService().selectReplyList(communityNo);
+		
+		// GSON 사용해서 응답하기 => ArrayList를 자바스크립트의 배열형태로 변환
+									  // 형식,     인코딩 지정
+		response.setContentType("application/json; charset=UTF-8");
+		
+		new Gson().toJson(list, response.getWriter());
 	}
 
 	/**
