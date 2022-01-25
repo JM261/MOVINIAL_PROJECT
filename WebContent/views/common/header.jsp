@@ -3,11 +3,9 @@
 <%@ page import="com.movinial.member.model.vo.Member" %>    
 <%
 	String contextPath = request.getContextPath();
-
 	Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
 	// 로그인 전 : menubar.jsp가 로딩될 때 null
 	// 로그인 후 : manubar.jsp가 로딩될 때 로그인한 회원의 정보가 담겨있음
-
 %>    
     
 <!doctype html>
@@ -33,7 +31,6 @@
 	  	/* header, body, footer {
 	    font-family: 'NanumSquare', sans-serif !important;
 		} */
-
       #container {
         width: 1850px;
         margin: 10px auto;
@@ -47,9 +44,7 @@
         padding-bottom : 70px;
         padding-left: 30px; 
         border: 1px solid #bcbcbc; 
-
       }
-
       .login>ul>li{
         list-style: none;
         display: inline-block;
@@ -61,7 +56,6 @@
         display: inline-block;
         margin-right: 25px;
       }
-
       .login>ul{
         margin-left:900px;
         font-size:20pt;
@@ -84,7 +78,6 @@
       #header a:hover{
         color:coral;   
       }
-
       .login>h1{
         font-size: 50pt;
         
@@ -94,18 +87,18 @@
         font-size: 50pt;
        
       }
-
       #header_search{
         border-left:none;
         border-right:none;
         border-top:none;
-        width:200px;
+        width:180px;
         height:50px;
         font-size:14pt;
-        margin-left:12%;
+        margin-left:10px;
       }
       
       #header_search_btn{
+      	margin-left:-30px;
         border:none;
         background: url("<%= contextPath %>/resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
         background-repeat: no-repeat;
@@ -147,14 +140,13 @@
 		          <li><button id="header_search_btn"></button></li>
 		        </ul>
 		</div>
-		
 	  
 	  <% } else { %>  
 	  <!-- 로그인 후 보여지는 페이지 -->
 		<div class="logout">
 	        <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 	        <ul>
-	          <li><a href="<%=contextPath %>/myPage.me"></a>NICKNAME</li>
+	          <li><a href="<%=contextPath %>/myPage.me"><%= loginUser.getMemberNickname()%></a> 님</li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
 	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
 	          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
