@@ -40,8 +40,8 @@ public class CurationDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, movieKeyword);
-			pstmt.setString(2, movieKeyword);
+			pstmt.setString(1, "%"+movieKeyword+"%");
+			pstmt.setString(2, "%"+movieKeyword+"%");
 			
 			rset = pstmt.executeQuery();
 			
@@ -51,10 +51,10 @@ public class CurationDao {
 							rset.getInt("MOVIE_NO"),
 							rset.getString("MOVIE_NAME_KR"),
 							rset.getString("MOVIE_NAME_EN"),
-							rset.getString("MOVIE_RELEASE_YEAR"),
-							rset.getString("MOVIE_NATIONAL"),
-							rset.getString("MOVIE_GENRE"),
-							rset.getString("MOVIE_DIRECTOR"),
+							rset.getString("RELEASE_YEAR"),
+							rset.getString("NATIONAL"),
+							rset.getString("GENRE_NAME"),
+							rset.getString("DIRECTOR"),
 							rset.getString("MOVIE_IMAGE")
 							);
 				

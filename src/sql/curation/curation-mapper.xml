@@ -6,7 +6,7 @@
 	<entry key="searchMovie">
 		SELECT *
 		FROM MOVIE
-		WHERE MOVIE_NAME_KR LIKE '%'+ ? +'%' OR MOVIE_NAME_EN LIKE '%'+ ? +'%';	
+		WHERE MOVIE_NAME_KR LIKE ? OR MOVIE_NAME_EN LIKE ?	
 	</entry>
 	
 	

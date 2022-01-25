@@ -7,4 +7,90 @@
 		SELECT * FROM CATEGORY
 	</entry>
 	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		  FROM QUESTION
+		  JOIN MEMBER ON (MEMBER_NO = QNA_WRITER)
+		  WHERE MEMBER_NO = QNA_WRITER
+		    AND MEMBER_NO = ?
+	</entry>
+	
+	<entry key="selectList">
+			SELECT *
+			  FROM (
+			        SELECT ROWNUM RNUM, A.*
+			          FROM (
+			                SELECT QNA_NO, CATEGORY_NAME,QNA_TITLE, MEMBER_ID, MEMBER_NO,QNA_WRITER,CREATE_DATE,q.STATUS
+			                  FROM QUESTION q
+			                  JOIN CATEGORY USING (CATEGORY_NO)
+			                  JOIN MEMBER ON (QNA_WRITER = MEMBER_NO)
+			                 WHERE q.STATUS = 'Y'
+			                   AND MEMBER_NO = ?                           
+			                 ORDER 
+			                    BY CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+		
+	</entry>
+	
+	<entry key="insertQuestion">
+		INSERT INTO QUESTION(QNA_NO, CATEGORY_NO, QNA_TITLE,
+	                  QNA_CONTENT, QNA_WRITER)
+		VALUES(SEQ_QNO.NEXTVAL, ?, ?, ?, ?)				    
+	</entry>
+
+
+
+
+
+
+
+	<entry key="selectNoticeListCount">
+		SELECT COUNT(*) COUNT
+		  FROM Notice
+		 WHERE STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectNoticeList">
+		SELECT *
+			FROM (
+			        SELECT ROWNUM RNUM, A.*
+			          FROM (
+			                SELECT NOTICE_NO, NOTICE_TITLE, MEMBER_ID, CREATE_DATE
+			                  FROM NOTICE N
+			                  JOIN MEMBER ON (NOTICE_WRITER = MEMBER_NO)
+			                 WHERE N.STATUS = 'Y'
+			                 ORDER 
+			                    BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>	
+	
+	<entry key="selectNotice">
+		SELECT 
+			   NOTICE_NO
+			  ,NOTICE_TITLE
+			  ,NOTICE_CONTENT
+			  ,MEMBER_ID
+			  ,CREATE_DATE 
+		 FROM  
+		       NOTICE N 
+		       JOIN MEMBER ON(NOTICE_WRITER = MEMBER_NO) 
+		WHERE 
+		       NOTICE_NO = ? 
+		  AND 
+		       N.STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectQuestion">
+		SELECT QNA_NO, CATEGORY_NAME, QNA_TITLE, QNA_CONTENT, MEMBER_ID, MEMBER_NO,CREATE_DATE
+		  FROM QUESTION Q
+		  LEFT JOIN CATEGORY USING(CATEGORY_NO)
+		  JOIN MEMBER ON(QNA_WRITER = MEMBER_NO)
+		 WHERE QNA_NO = ?
+		   AND Q.STATUS = 'Y'
+	
+	</entry>
+	
+	
+	
+	
 </properties>

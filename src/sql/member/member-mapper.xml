@@ -11,5 +11,45 @@
    	 	   AND STATUS = 'Y'
 	</entry>
 	
+	<entry key ="selectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
+		SELECT
+			COUNT(*) COUNT
+		FROM
+			MEMBER
+	</entry>
+	
+	<entry key ="selectMember"> <!-- 전체 멤버 조회(관리자) -->
+		SELECT *
+		FROM
+			(SELECT ROWNUM RNUM, A.*
+    		FROM(
+   				SELECT *
+    			FROM
+    				MEMBER    			
+    			ORDER
+    				BY MEMBER_NO DESC) A)
+		WHERE
+			RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key ="deleteMember">
+		UPDATE
+			MEMBER 
+		SET
+			STATUS = 'N'
+		WHERE
+			MEMBER_NO = ?
+	
+	</entry>
+	
+	<entry key="searchMember">
+		SELECT *
+  		  FROM
+  		  	MEMBER
+ 		 WHERE
+ 		 	NICKNAME like ?
+   		   OR
+   		   	MEMBER_NAME like ?
+	</entry>
 </properties>
 	
