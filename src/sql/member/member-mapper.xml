@@ -35,5 +35,16 @@
                  	,?
                   )
 	</entry>
+	
+	<entry key="findId">
+		SELECT MEMBER_ID
+  		  FROM MEMBER
+ 		 WHERE MEMBER_NAME = ?
+ 		  AND  PHONE = ?
+ 		  AND STATUS = 'Y'
+	</entry>
+	
 </properties>
+
+
 	

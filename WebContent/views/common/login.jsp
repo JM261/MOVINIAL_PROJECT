@@ -5,9 +5,6 @@
     
 <%
 
-	String contextPath = request.getContextPath();
-
-	Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
 	// 로그인 전 : menubar.jsp가 로딩될 때 null
 	// 로그인 후 : manubar.jsp가 로딩될 때 로그인한 회원의 정보가 담겨있음
 
@@ -34,31 +31,8 @@
   font-family: "", sans-serif;
 }
 
-a {
-  text-decoration: none;
-  color: black;
-}
 
 
-.wrap {
-  width: 80%;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.login {
-  width: 100%;
-  height: 600px;
-  background: white;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
 
 h2 {
   color: tomato;
@@ -138,11 +112,14 @@ h2 {
 </head>
 
 <body>
+	 <%@ include file="../common/header.jsp" %>
+
+
 <!--  로그인페이지 매피 views/common/login.jsp -->
 	<form action="<%= contextPath %>/login.me" method="post" >
     <div class="wrap">
     	<div class="login_window">
-    	    <div class="login">
+    	    <div class="loginInput">
                 <h2>로그인</h2>
 	            <div class="login_form">
 	            	<div class="login_id">
@@ -162,7 +139,7 @@ h2 {
                 </div>
                <div class="login_etc">
 	               <div class="forgot_id">
-	                    <a href="">아이디찾기</a>
+	                    <a href="<%= contextPath %>/id_find.me">아이디찾기</a>
 	               </div>
 	               <div class="forgot_pw">
 	                	<a href="">비밀번호찾기</a>
@@ -172,6 +149,10 @@ h2 {
         </div>
     </div>
     </form>
+    
+    
+        <%@ include file="../common/footer.jsp" %>
+    
 
 <script>
 		
