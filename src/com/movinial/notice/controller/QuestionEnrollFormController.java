@@ -15,7 +15,7 @@ import com.movinial.notice.model.vo.Category;
 /**
  * Servlet implementation class QuestionEnrollFormController
  */
-@WebServlet("/QuestionEnrollForm.no")
+@WebServlet("/qEnrollForm.no")
 public class QuestionEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,7 +36,7 @@ public class QuestionEnrollFormController extends HttpServlet {
 		
 		request.setAttribute("list", list);
 		
-		request.getRequestDispatcher("/views/notice/QuestionEnrollForm.jsp").forward(request, response);
+		request.getRequestDispatcher("views/notice/QuestionEnrollForm.jsp").forward(request, response);
 	}
 
 	/**

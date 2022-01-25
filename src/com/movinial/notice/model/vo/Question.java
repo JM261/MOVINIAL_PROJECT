@@ -41,6 +41,19 @@ public class Question {
 		this.createDate = createDate;
 		
 	}
+	
+	
+	
+
+	public Question(int qnaNo, String qnaWriter, String qnaTitle, String qnaContent, String category, Date createDate) {
+		super();
+		this.qnaNo = qnaNo;
+		this.qnaWriter = qnaWriter;
+		this.qnaTitle = qnaTitle;
+		this.qnaContent = qnaContent;
+		this.category = category;
+		this.createDate = createDate;
+	}
 
 	public int getQnaNo() {
 		return qnaNo;

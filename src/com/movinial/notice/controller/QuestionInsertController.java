@@ -34,13 +34,15 @@ public class QuestionInsertController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		// 2) 값 뽑기
-		String memberNo = request.getParameter("memberNo"); // "1" :String
+		String category = request.getParameter("category");
+		String qnaWriter = request.getParameter("memberNo"); // "1" :String
 		String qnaTitle = request.getParameter("title");
 		String qnaContent = request.getParameter("content");
 					
 		// 3) VO객체로 가공
 		Question q = new Question();
-		q.setQnaWriter(memberNo);
+		q.setCategory(category);
+		q.setQnaWriter(qnaWriter);
 		q.setQnaTitle(qnaTitle);
 		q.setQnaContent(qnaContent);
 		
@@ -48,9 +50,9 @@ public class QuestionInsertController extends HttpServlet {
 		int result = new NoticeService().insertQuestion(q);
 				
 		// 5) 결과에따른 응답페이지를 지정
-		if(result > 0) { // 성공 => 공지사항 리스트가 보이게끔 넘겨주자 => localhost:8001/jsp/list.no (alert띄우고나서 이동)
+		if(result > 0) { // 성공 => 문의 리스트가 보이게끔 넘겨주자 => localhost:8001/jsp/list.no (alert띄우고나서 이동)
 			request.getSession().setAttribute("alertMsg", "문의사항이 등록되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/questionList.no");
+			response.sendRedirect(request.getContextPath() + "/questionList.no?currentPage=1");
 		}else { // 실패 => 에러페이지로 보내자
 			//request.setAttribute("errorMsg", "문의사항 등록 실패");
 			//request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

@@ -21,21 +21,64 @@
 <title>나의 문의 내역</title>
 <style>
 .outer{
-    border : 1px solid gray;
-    width: 1000px;
-    height: 500px;
-    margin: auto;
+    border : 1px solid #bcbcbc;
+    width: 1100px;
+    height: 850px;
+     margin: auto;
+    margin-bottom: 30px;
 
 }
 .list-area{
-    border: 1px solid white;
+    border: 1px solid #bcbcbc; 
+    font-size: 22px;  
+    width: 1000px;
+    margin : auto;
     text-align: center;
+    
 }
-.list-area>tbody>tr:hover{
-    cursor: pointer;
-    background: rgb(247, 201, 184);
+table{
+	border-bottom : 1px solid #bcbcbc;
 }
 
+.btn-area{
+    width : 800px;
+    height: 80px;
+    align: center;
+}
+.btn-area>a{
+    color:black;
+    font-size: 25px;
+    margin-left: 50px;
+    text-decoration: none;
+    text-align:center;
+
+}
+#titleDate:hover{
+    cursor: pointer;
+    background: #e6e6e6;
+}
+
+td{
+    height: 55px;
+}
+
+#h2{
+    font-weight: bolder;
+}
+
+#qnaNo{
+	display:none;
+}
+#reply{
+	color:rgb(105, 105, 105);
+	}
+tr td{
+	border-bottom: 1px solid #bcbcbc; 
+}  
+
+#Qwriter{
+	display:none;
+}
 
 </style>
 
@@ -44,59 +87,74 @@
  <%@ include file="../common/header.jsp" %>
 
 	<div class="outer">
-
+ 		<br>
+        <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
-        <h2 align="center">나의 문의 내역</h2>
-        <br>
+        <div class="btn-area">
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            
+            <%if(loginUser != null){ %>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <%} %>
+        </div>
         
-        
-        <div align="center">
-				&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-				<a href="<%= contextPath %>/list.no" class="btn btn-sm btn-primary" >공지사항</a> &nbsp; &nbsp;
-				<a href="#" class="btn btn-sm btn-primary">FAQ</a> &nbsp; &nbsp;
-				
-				<% if(loginUser != null ){ %>
-				<a href="#" class="btn btn-sm btn-primary">문의하기</a> &nbsp; &nbsp;
-				<a href="#" class="btn btn-sm btn-primary">나의 문의 내역</a>
-				<%} %>
-				<% if(loginUser.getMemberId().equals("admin")){ %>
-				<div align="right" style="width:850px;">
-				<a href="#" class="btn btn-sm btn-primary">공지사항 작성</a>
-				</div>
-				<%} %>
-		</div>
-        
-
+		<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
         <table align="center" class="list-area">
+            
             <thead>
-                <tr>
-                 	<th width="300">문의 분류</th>
-                    <th width="300">제목</th>
+               <%-- <tr>
+                 	<th width="200">문의 분류</th>
+                    <th width="400">제목</th>
                     <th width="200">작성일</th>
-                    <th width="300">답변확인</th>
-                </tr>
+                    <th width="100">답변확인</th>
+                </tr>--%> 
             </thead>
             <tbody>
                 <!-- 게시글 출력 -->
                 <% if(list.isEmpty()){ %>
 	                <tr>
-	                    <td colspan="4"> 작성된 문의내역이 없습니다. </td>
+	                    <td colspan="5"> 작성된 문의내역이 없습니다. </td>
 	                </tr>
 	            <%}else{ %>   <%-- 로그인한 회원  == 글작성자 --%>   
 					<!--  반복 : list에 있는 값을 순차적으로 접근해서 뽑아오기  -->
 					<% for(Question q : list) { %>
-		                <tr>
-		                    <td><%= q.getQnaTitle() %></td>
-		                	<td><%= q.getCategory() %></td>   <!-- 이거 왜 카테고리랑 제목이 반대로 나오지.. -->
-		                    <td><%= q.getCreateDate() %></td>
-		                    <td><a href="">답변확인</a></td>
+		                <tr id="titleDate">
+		                	<td id="qnaNo"><%= q.getQnaNo() %></td>
+		                    <td width="200">[ <%= q.getQnaWriter() %> ]</td> <!-- 카테고리.... 일단하고.. 나중에 수정  -->
+		                    <td id="Qwriter"><%=q.getCategory() %></td> <!-- 작성자 ..... -->
+		                	<td width="400"><%= q.getQnaTitle() %></td>   
+		                    <td width="200"><%= q.getCreateDate() %></td>
+		                    <td width="100"><a href="" id="reply">답변확인</a></td>
+		                    <%} %>
 		                </tr>
                 	<%} %>
-             	<%} %>
+             	
             </tbody>
+        
         </table>
 
+		<script>
+        
+            $(function(){
+                $(".list-area>tbody>tr").click(function(){
+                    // /jsp/ditail.bo?bno=X
+
+                    location.href = "<%=contextPath%>/questionDetail.no?qno="+ $(this).children().eq(0).text();
+                    
+                    
+                })
+
+            })
+            
+        </script>
+
+
+
+
         <br><br>
+
 
         
         <!-- 페이징바 -->

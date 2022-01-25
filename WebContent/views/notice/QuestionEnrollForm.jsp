@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList, com.movinial.notice.model.vo.Category" %>
 <%
 	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
+	
 %>
    
         
@@ -13,12 +14,12 @@
 <title>문의 작성하기</title>
 <style>
 	.outer{
-     
-        color: black;
-        width: 1000px;
-		height: 500px;
+     	border: 1px solid #bcbcbc;
+        
+        width: 1100px;
+		height: 800px;
         margin : auto;
-        margin-top : 50px;
+        
     }
 
 	#enroll-form>table {border : 1px solid white;  margin : auto;}
@@ -30,13 +31,30 @@
 	#enroll-form textarea{
 		height: 300px;
 	}
+	
+	.btn-area{
+    width : 800px;
+    height: 80px;
+    
+	}
+	.btn-area>a{
+    color:black;
+    font-size: 25px;
+    margin-left: 50px;
+    text-decoration: none;
+    text-align:center;
+
+	}
 
 	.btn1{
 		width: 400px;
 	}
-
+	
+	#h2{
+    font-weight: bolder;
+    }
 	#gongback{
-		height: 150px;
+		height: 30px;
 	}
 
 </style>
@@ -46,13 +64,18 @@
 
 <div class="outer">
 			
-			<div align="center">
-				&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-				<a href="<%= contextPath%>/noticeList.no?currentPage=1" >공지사항</button> &nbsp; &nbsp;
-				<a href="<%=contextPath%>/FAQList.no">FAQ</button> &nbsp; &nbsp;
-				<a href="<%= contextPath %>/QuestionEnrollForm.no">문의하기</button> &nbsp; &nbsp;
-				<a href="<%= contextPath %>/questionList.no">나의 문의 내역</button>
-			</div>
+		<br>
+        <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
+        <br>
+        <div class="btn-area">
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            
+            <%if(loginUser != null){ %>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <%} %>
+        </div>
 
 			<br><br>
 			
@@ -60,8 +83,9 @@
 		<form id="enroll-form" action="<%= contextPath %>/questionInsert.no" method="post">
 			<!-- 제목, 내용, 카테고리, 첨부파일 입력받기 -->
 			<!--  작성자의 회원번호를 hidden으로 같이 넘길것  -->
-			<%--<input type="hidden" name="userNo" value="<%= loginUser.getMemberId() %>"> --%>
 			
+			<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
+		
 			<table align="center" border="1">
 				<tr>
 					<th width="100">카테고리</th>
