@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.dao.NoticeDao;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
@@ -27,11 +28,11 @@ public class NoticeService {
 		return list;
 	}
 	
-	public int selectListCount() {
+	public int selectListCount(Member m) {
 		
 		Connection conn = getConnection();
 		
-		int listCount = new NoticeDao().selectListCount(conn);
+		int listCount = new NoticeDao().selectListCount(conn, m);
 		// SELECT문의 결과는 ResultSet이 맞지만, 
 		// 게시글의 총 개수를 알아야 하기 때문에 정수형으로 반환받는다.
 		
@@ -40,11 +41,11 @@ public class NoticeService {
 		return listCount;
 	}
 	
-	public ArrayList<Question> selectList(PageInfo pi) { // 나의 문의내역 페이징
+	public ArrayList<Question> selectList(PageInfo pi, Member m) { // 나의 문의내역 페이징
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Question> list = new NoticeDao().selectList(conn, pi);
+		ArrayList<Question> list = new NoticeDao().selectList(conn, pi, m);
 	
 		close(conn);
 		
@@ -105,6 +106,16 @@ public Notice selectNotice(int noticeNo) {
 		
 		return n;
 	}
+
+public Question selectQuestion(int questionNo) {
+	Connection conn = getConnection();
+	
+	Question q = new NoticeDao().selectQuestion(conn, questionNo);
+	
+	close(conn);
+	
+	return q;
+}
 
 	
 	

@@ -35,11 +35,12 @@
     border: 1px solid #bcbcbc; 
     font-size: 22px;  
     width: 1000px;
+    
 }
 .btn-area{
     width : 800px;
     height: 80px;
-    align: center;
+ 
 }
 .btn-area>a{
     color:black;
@@ -50,14 +51,14 @@
 
 }
 
-#noticeTitle{
-   border-bottom: 1px solid #bcbcbc; 
-}
 #titleDate:hover{
     cursor: pointer;
     background: #e6e6e6;
 }
 
+#noticeTitle{
+   border-bottom: 1px solid #bcbcbc; 
+}
 #noticeDate{
     border-bottom: 1px solid #bcbcbc; 
     text-align: right;
@@ -69,9 +70,6 @@
 
 td{
     height: 55px;
-}
-h2{
-    text-decoration: solid;
 }
 
 #h2{
@@ -94,8 +92,8 @@ h2{
             <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <%if(loginUser != null){ %>
-            <a href="/QuestionEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="#" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
             <%} %>
         </div>
 
@@ -134,7 +132,7 @@ h2{
 					// 해당 tr태그의 자손 중에서도 첫번째 td의 값이 필요함!!(내용물을 뽑자!!!)
 					var nno = $(this).children().eq(0).text(); //글번호
 
-					console.log(nno);
+					//console.log(nno);
 
 					// 글번호가지고 요청
 					// 대놓고 요청 => url에 키와 밸류를 대놓고 작성해서 요청을 보내버리자

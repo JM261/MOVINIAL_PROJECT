@@ -61,7 +61,9 @@
     text-align: left;
     display:none;
 }
-
+#h2{
+    font-weight: bolder;
+	}
 
 </style>
 
@@ -71,15 +73,15 @@
 
 	<div class="outer">
         <br>
-        <h2 align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
+        <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
             <a href="<%= contextPath %>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
             <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <%if(loginUser != null){ %>
-            <a href="#" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="#" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
             <%} %>
         </div>
         <br>

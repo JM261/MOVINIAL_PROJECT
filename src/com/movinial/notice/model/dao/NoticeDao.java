@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
 import com.movinial.notice.model.vo.Question;
@@ -61,7 +62,7 @@ public class NoticeDao {
 			return list;
 		}
 	
-	public int selectListCount(Connection conn) {
+	public int selectListCount(Connection conn, Member m) {
 		// SELECT => ResultSet => 우리가 지금 필요한 건 총 게시글의 개수!
 		// SELECT문을 쓰지만 상식적으로 반환되는 값이 정수가 필요함
 		// 변수
@@ -74,6 +75,8 @@ public class NoticeDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, m.getMemberNo());
 			
 			rset = pstmt.executeQuery();
 			
@@ -89,10 +92,8 @@ public class NoticeDao {
 		return listCount;	
 	}
 	
-public ArrayList<Question> selectList(Connection conn, PageInfo pi ) {  // 문의 페이징
+public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {  // 문의 페이징
 		
-		// SELECT문 => ResultSet => 여러 형이므로 ArrayList<Board>
-		// 변수
 		ArrayList<Question> list = new ArrayList<>();		
 		PreparedStatement pstmt = null;		
 		ResultSet rset = null;
@@ -102,31 +103,13 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi ) {  // 문�
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			// TOP-N 분석 활용 : 인라인뷰 활용(서브쿼리 중에서도 FROM절에 서브쿼리가 들어가는 것)
-			// 1) ORDER BY 순서가 가장 마지막인데 맨 처음에 실행되어야 하므로
-			//    일단 정렬해주는 SELECT문을 만듦 => 서브쿼리
-			// 2) 서브쿼리를 FROM절에 넣음(메인쿼리의) + ROWNUM 붙이기
-			// 3) 메인 쿼리의 WHERE절에 어디서부터 어디까지만 조회할 건지 잘라내기
-			
-			// ? 채우기
-			/*
-			 * boardLimit이 10 이라는 가정하에
-			 * 
-			 * currentPage = 1 => 시작값 1, 끝값 10
-			 * currentPage = 2 => 시작값 11, 끝값 20
-			 * currentPage = 3 => 시작값 21, 끝값 30
-			 * ...
-			 *  
-			 * => 시작값 = (currentPage - 1) * boardLimit + 1 
-			 * => 끝값 = 시작값 + boardLimit - 1
-			 * 
-			 */
-			
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, m.getMemberNo());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
 			
 			rset = pstmt.executeQuery();
 			
@@ -150,22 +133,24 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi ) {  // 문�
 	}
 
 	public int insertQuestion(Connection conn, Question q) {
-		// INSERT 문 => 처리된 행의 갯수
+		// INSERT 문 => 처리된 행의 개수
 				// 필요한 변수
 				int result = 0;
 				
 				PreparedStatement pstmt = null;
 				
-				String sql = prop.getProperty("insertNotice");
+				String sql = prop.getProperty("insertQuestion");
 				
 				try {
 					pstmt = conn.prepareStatement(sql);
 					
-					pstmt.setString(1, q.getQnaTitle());
-					pstmt.setString(2, q.getQnaContent());
-					pstmt.setInt(3, Integer.parseInt(q.getQnaWriter()));//"1"
-					
+					pstmt.setInt(1, Integer.parseInt(q.getCategory()));
+					pstmt.setString(2, q.getQnaTitle());
+					pstmt.setString(3, q.getQnaContent());
+					pstmt.setInt(4, Integer.parseInt(q.getQnaWriter()));
+				
 					result = pstmt.executeUpdate();
+					
 				} catch (SQLException e) {
 					e.printStackTrace();
 				} finally {
@@ -251,7 +236,7 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi ) {  // 문�
 		return listCount;	
 	}
 
-public Notice selectNotice(Connection conn, int noticeNo) {
+	public Notice selectNotice(Connection conn, int noticeNo) {
 		
 		// SELECT문 => ResultSet => PK제약조건에 의해 한 행만 뽑힘 => Notice 
 		// 필요한 변수
@@ -291,6 +276,39 @@ public Notice selectNotice(Connection conn, int noticeNo) {
 		}
 		return n;
 	}
+
+	public Question selectQuestion(Connection conn, int questionNo) {
+	// SELECT문 => ResultSet => PK에 의해 한 건만 => Board
+			// 변수
+			Question q = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("selectQuestion");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, questionNo);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					q = new Question(rset.getInt("QNA_NO"),
+								  rset.getString("CATEGORY_NAME"),
+								  rset.getString("QNA_TITLE"),
+								  rset.getString("QNA_CONTENT"),
+								  rset.getString("MEMBER_ID"),
+								  rset.getDate("CREATE_DATE"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);	
+			} 
+			return q;
+}
 
 	
 	

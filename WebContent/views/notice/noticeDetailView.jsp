@@ -17,10 +17,9 @@
 .outer{
     border: 1px solid #bcbcbc; 
     width: 1100px; 
-    height:600px;
+    height:730px;
     margin: auto;
     margin-bottom: 30px;
-
 }
 .list-area{
     border: 1px solid #bcbcbc; 
@@ -50,6 +49,7 @@
     text-align: right;
     font-weight: bold;
 }
+
 td{
     height: 55px;
 }
@@ -57,8 +57,9 @@ h2{
     font-weight: bold;
 }
 #noticeContent{
-    height:300px;
+    height:400px;
 }
+
 
 
 </style>
@@ -76,8 +77,8 @@ h2{
             <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <%if(loginUser != null){ %>
-            <a href="#" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="#" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
             <%} %>
         </div>
 
@@ -101,7 +102,7 @@ h2{
         </table>
         <br>
         <div align="center">
-        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">목록가기</a>
+        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary">목록가기</a>
         	
      
         </div>
