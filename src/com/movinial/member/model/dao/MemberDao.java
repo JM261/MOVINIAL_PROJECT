@@ -94,7 +94,7 @@ public class MemberDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(pstmt);
+			close(pstmt);
 
 		}
 
@@ -243,7 +243,7 @@ public class MemberDao {
 		return list;
 	} // searchMember : 회원 검색(관리자)
   
-}
+
 
 
 	public String findId(Connection conn, String memberName, String phone) {
@@ -270,8 +270,8 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
+			close(rset);
+			close(pstmt);
 		}
 
 		return memberId;

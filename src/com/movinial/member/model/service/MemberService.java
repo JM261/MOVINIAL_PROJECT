@@ -32,12 +32,12 @@ public class MemberService {
 		//Service => Connection 객체
 		// 1) Connecttion 객체 생성
 		
-		Connection conn = JDBCTemplate.getConnection();
+		Connection conn = getConnection();
 		
 		
 		int result = new MemberDao().insertMember(conn, m);
 		
-		JDBCTemplate.close(conn);
+		close(conn);
 		
 		return result;
 		
@@ -46,11 +46,11 @@ public class MemberService {
 
 	public String findId(String memberName, String phone) {
 
-		Connection conn = JDBCTemplate.getConnection();
+		Connection conn = getConnection();
 		
 		String memberId = new MemberDao().findId(conn, memberName, phone);
 		
-		JDBCTemplate.close(conn);
+		close(conn);
 		
 		return memberId;
 	}
