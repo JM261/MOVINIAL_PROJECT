@@ -11,6 +11,9 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
+	// 알림 메시지 담기
+	String alertMsg = (String)request.getAttribute("alertMsg");
 %>
 <!DOCTYPE html>
 <html>
@@ -57,6 +60,17 @@
 <body>
 
     <%@ include file="../common/header.jsp" %>
+    
+    <!-- 리뷰 정상 작성 확인 알림창 스크립트 -->
+    <script>
+		var msg = "<%= alertMsg %>";
+		
+		if(msg != "null") { // 메시지가 있을 경우
+			alert(msg);
+		
+			<% request.removeAttribute("alertMsg"); %>
+		}
+	</script>
 
         <!-- 리뷰 상세보기: 영화 상세 정보 -->
         <div class="content">
@@ -140,7 +154,7 @@
 			<% } else { %>
 
 				<!-- 리뷰 작성 -->
-				<form action="/insertReview.mo" method="post" class="enroll-form">
+				<form action="<%= contextPath %>/insertReview.mo" method="post" class="enroll-form">
 
 					<!-- 회원 번호 및 영화 번호 및 제목 전송 -->
 					<input type="hidden" name="memberNo" value= "<%= loginUser.getMemberNo() %>">
@@ -159,7 +173,7 @@
 					</div>
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="radio" class="form-check-input" name="reviewShow" value="Y">비공개
+							<input type="radio" class="form-check-input" name="reviewShow" value="N">비공개
 						</label>
 					</div>
 					<div class="form-check-inline">
@@ -167,8 +181,9 @@
 						<button type="submit" class="btn btn-sm btn-secondary">등록</button>
 					</div>
 					
-
 				</form>
+				
+				
 
 			<% } %>
 
@@ -181,12 +196,12 @@
 				<!-- 페이징 버튼 -->
 				<!-- 페이징바에서 < 를 담당: 이전페이지 이동 -->
 				<% if(currentPage != 1) { %>
-					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>'">&lt;</a>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>&mno=<%= m.getMovieNo() %>'">&lt;</a>
 				<% } %>
 				
 				<% for(int i = startPage; i <= endPage; i++) { %>
 					<% if(i != currentPage) { %>
-						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>'"><%= i %></a>
+						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>&mno=<%= m.getMovieNo() %>'"><%= i %></a>
 					<% } else { %>
 						<a class="btn-secondary btn-sm" disabled><%= i %></a>
 					<% } %>
@@ -194,7 +209,7 @@
 				
 				<!-- 페이징바에서 > 를 담당: 다음페이지 이동 -->
 				<% if(currentPage != maxPage && maxPage != 0) { %>
-					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>'">&gt;</a>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>&mno=<%= m.getMovieNo() %>'">&gt;</a>
 				<% } %>
 
 			</div>

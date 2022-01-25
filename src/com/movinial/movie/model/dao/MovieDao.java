@@ -73,4 +73,69 @@ public class MovieDao {
 		
 	}
 
+	/**
+	 * 봤어요 카운트 올려주기
+	 * @param conn
+	 * @param movieNo
+	 * @return
+	 */
+	public int increaseMovieSeen(Connection conn, int movieNo) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseMovieSeen");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, movieNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	/**
+	 * 봤어요 카운트 내려주기
+	 * @param conn
+	 * @param movieNo
+	 * @return
+	 */
+	public int decreaseMovieSeen(Connection conn, int movieNo) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseMovieSeen");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, movieNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	
 }

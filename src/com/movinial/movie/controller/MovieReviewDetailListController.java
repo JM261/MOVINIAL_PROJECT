@@ -76,7 +76,7 @@ public class MovieReviewDetailListController extends HttpServlet {
 		request.setAttribute("pi", pi);
 		request.setAttribute("m", m);
 		
-		request.getRequestDispatcher("/views/movie/movieReviewDetailView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/movie/movieReviewDetailView.jsp").forward(request, response);
 		
 	}
 

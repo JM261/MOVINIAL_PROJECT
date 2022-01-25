@@ -9,4 +9,20 @@
 		 WHERE MOVIE_NO = ?
 	</entry>
 	
+	<entry key="increaseMovieSeen">
+		UPDATE MOVIE
+		   SET MOVIE_SEEN = MOVIE_SEEN + 1
+		 WHERE MOVIE_NO = ?
+	</entry>
+	
+	<entry key="decreaseMovieSeen">
+		UPDATE MOVIE
+		   SET MOVIE_SEEN = MOVIE_SEEN - 1
+		 WHERE MOVIE_NO = ?
+	</entry>
+	
+
+	
+
+	
 </properties>

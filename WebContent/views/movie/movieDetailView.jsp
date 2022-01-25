@@ -6,6 +6,11 @@
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
 	
 	int movieNo = ((Movie)request.getAttribute("m")).getMovieNo();
+	
+	// 봤어요/좋아요 클릭 여부 확인 변수
+//	int movieSeenChk = Integer.parseInt(request.getAttribute("movieSeenChk"));
+	//int movieLikesChk = 0;
+
 %>
 <!DOCTYPE html>
 <html>
@@ -21,6 +26,18 @@
 	.table-size {
 		width: 100%;
 	}
+	.movie-seen-btn {
+		text-decoration: none;
+		color: black;
+	}
+	.movie-seen-btn:hover {
+		text-decoration: none;
+		color: black;
+	}
+	.movie-likes-btn {
+		text-decoration: none;
+		color: black;
+	}
 
 </style>
 </head>
@@ -33,7 +50,7 @@
 			<table class="table-size">
 				<tr>
 					<td rowspan="7" style="width: 30%; text-align: center;">
-						<img src="<%= m.getMovieImage() %>영화이미지" alt="영화 포스터">
+						<img src="<%= m.getMovieImage() %>/영화포스터" alt="영화 포스터">
 					</td>
 					<td>
 						<h1><%= m.getMovieNameEn() %> <%= m.getMovieNameKr() %></h1>
@@ -42,12 +59,66 @@
 						<h4>이 영화 보셨나요?</h4>
 					</td>
 					<td>
-						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘"> 봤어요 <%= m.getMovieSeen() %>
+						<a class="movie-seen-btn">
+							<input type="hidden" class="get-movie-no" value="<%= m.getMovieNo() %>">
+							<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘"><%= m.getMovieSeen() %>
+						</a>
 					</td>
 					<td>
-						<img src="" alt="좋아요 아이콘"> 좋아요 <%= m.getMovieLikes() %>
+						<a class="movie-likes-btn">
+							<input type="hidden" class="get-movie-no" value="<%= m.getMovieNo() %>">
+							<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘"><%= m.getMovieLikes() %>
+						</a>
 					</td>
 				</tr>
+
+				<script>
+					$(function() {
+
+						// 봤어요/좋아요 클릭 여부 확인 변수
+						//var movieSeenChk;
+						//var movieLikesChk;
+						
+						//console.log(movieSeenChk);
+
+						// 봤어요 아이콘 클릭시
+						$(".movie-seen-btn").click(function() {
+							$.ajax({
+								url: "movieSeenBtn.mo",
+								data: {
+									movieNo: $(".get-movie-no").val()
+								},
+								success: function(result) {
+									
+									
+									console.log(result);
+									alert("됨");
+									$(".movie-seen-btn").val()
+
+								},
+								error: function() {
+									alert("외않되");
+								}
+							})
+
+
+
+
+
+
+						})
+					})
+
+
+
+
+
+
+
+				</script>
+
+
+
 				<tr>
 					<td>
 						<br><br><br>
