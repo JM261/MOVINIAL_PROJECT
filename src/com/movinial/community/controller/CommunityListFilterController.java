@@ -17,14 +17,14 @@ import com.movinial.community.model.vo.Community;
 /**
  * Servlet implementation class CommunityListController
  */
-@WebServlet("/list.cm")
-public class CommunityListController extends HttpServlet {
+@WebServlet("/list.cc")
+public class CommunityListFilterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CommunityListController() {
+    public CommunityListFilterController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -49,8 +49,9 @@ public class CommunityListController extends HttpServlet {
 		int startPage; // 페이지 하단에 보여질 첫번째 페이징바
 		int endPage; // 페이지 하단에 보여질 마지막 페이징바
 		
-		// *listCount : 총 게시글 갯수
-		listCount = new CommunityService().selectListCount();
+		// *listCount : 카테고리별 게시글 총 갯수
+		String communityCategory = request.getParameter("cct");
+		listCount = new CommunityService().selectListFilterCount(communityCategory);
 		
 		// * currentPage : 현재페이지 (== 사용자가 요청한 페이지)
 		currentPage = Integer.parseInt(request.getParameter("currentPage")); // : String
@@ -79,19 +80,19 @@ public class CommunityListController extends HttpServlet {
 		
 		// 7개의 변수를 가지고 해당되는 범위에 따른 게시글 10개씩만
 		// Service단으로 토스 => 7개의 변수
-		
+
 		// 3) VO로 가공
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		// 4) Service 단으로 토스
-		ArrayList<Community> list = new CommunityService().selectList(pi);
+		ArrayList<Community> list = new CommunityService().selectListFilter(pi, communityCategory);
 		
 		// 5) 응답 뷰 지정 => list, pi를 넘기자
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		
 		// views/board/boardListView.jsp로 포워딩~
-		request.getRequestDispatcher("views/community/communityListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/community/communityListFilterView.jsp").forward(request, response);
 	}
 
 	/**

@@ -142,7 +142,7 @@
 		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
 		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
-		          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+		          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 		          <li><input type="search" name="search" id="header_search"></li>
 		          <li><button id="header_search_btn"></button></li>
 		        </ul>
@@ -154,10 +154,10 @@
 		<div class="logout">
 	        <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 	        <ul>
-	          <li><a href="<%=contextPath %>/myPage.me"></a>NICKNAME</li>
+	          <li><a href="<%=contextPath %>/myPage.me"></a><%= loginUser.getMemberNickname() %></li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
 	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
-	          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+	          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 	          <li><input type="search" name="search" id="header_search"></li>
 	          <li><button id="header_search_btn"></button></li>
 	        </ul>

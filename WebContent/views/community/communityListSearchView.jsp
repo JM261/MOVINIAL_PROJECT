@@ -5,6 +5,9 @@
 	ArrayList<Community> list = (ArrayList<Community>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
+	String searchType = (String)session.getAttribute("searchType");
+	String keyword = (String)session.getAttribute("keyword");
+	
 	// 페이징바 만들 때 필요한 변수 미리 셋팅
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -17,28 +20,29 @@
 <meta charset="UTF-8">
 <title>COMMUNITY</title>
 <style>
-	.outer{
-	    color: black;
-	    width: 1000px;
-	    height: 100%;
-	    margin: auto;
-	    margin-top: 50px;
-	    border: 1px solid black;
-	}
-	
-	.list-area{
-	    /* border: 1px solid white; */
-	    text-align: center;
-	}
-	.list-area>tbody>tr:hover{
-	    cursor : pointer;
-	    background : rgb(240, 240, 240);
-	}
-	.community-category>a{
-	    color: black;
-	    font-weight: bolder;
-	    text-decoration: none;
-	}
+    .outer{
+    /* background-color: skyblue; */
+    color: black;
+    width: 1000px;
+    height: 100%;
+    margin: auto;
+    margin-top: 50px;
+    border: 1px solid black;
+}
+
+.list-area{
+    /* border: 1px solid white; */
+    text-align: center;
+}
+.list-area>tbody>tr:hover{
+    cursor : pointer;
+    background : rgb(240, 240, 240);
+}
+.community-category>a{
+    color: black;
+    font-weight: bolder;
+    text-decoration: none;
+}
 </style>
 </head>
 <body>
@@ -58,11 +62,11 @@
         </div>
 
 
-		<% if(loginUser != null) { %>
+
         <div align="right" style="width:900px">
         <a align="right" href="<%= contextPath %>/enrollForm.cm" class="btn btn-sm btn-secondary" style="margin-bottom: 5px;">글쓰기</a>
         </div>
-		<% } %>
+
 
         <table align="center" class="list-area">
             <thead>
@@ -79,47 +83,39 @@
             <tbody>
             	<!-- 게시글 출력 -->
             	<% if(list.isEmpty()) { %>
-            	<tr>
-            		<td colspan="6">조회된 게시글이 없습니다.</td>
-            	</tr>
-            	<% } else { %>
-            	<!-- 향상된 for문(읽어오기만 할 것이기 때문)으로 list에 있는 값 순차적으로 출력 -->
-				<!-- 글번호 말머리 제목 작성자 작성일 조회수 좋아요 -->
-                    <% for(Community c : list) {%>
-                        <% if(!c.getCommunityCategory().equals("공지")) { %>
-                            <tr style="border: 1px solid lightgray;">
-                        <% } else { %>
-                            <tr style="border: 1px solid lightgray; font-weight: bolder; background-color: ghostwhite;">
+                    <tr>
+                        <td colspan="6">조회된 게시글이 없습니다.</td>
+                    </tr>
+                    <% } else { %>
+                    <!-- 향상된 for문(읽어오기만 할 것이기 때문)으로 list에 있는 값 순차적으로 출력 -->
+                    <!-- 글번호 말머리 제목 작성자 작성일 조회수 좋아요 -->
+                        <% for(Community c : list) {%>
+                            <% if(!c.getCommunityCategory().equals("공지")) { %>
+                                <tr style="border: 1px solid lightgray;">
+                            <% } else { %>
+                                <tr style="border: 1px solid lightgray; font-weight: bolder; background-color: ghostwhite;">
+                            <% } %>
+                                    <td><%= c.getCommunityNo() %></td>
+                                    <td><%= c.getCommunityCategory() %></td>
+                                    <td><%= c.getCommunityTitle() %></td>
+                                    <td><%= c.getCommunityWriter() %></td>
+                                    <td><%= c.getCreateDate() %></td>
+                                    <td><%= c.getViews() %></td>
+                                    <td><%= c.getLikes() %></td>
+                                </tr>
                         <% } %>
-                                <td><%= c.getCommunityNo() %></td>
-                                <td><%= c.getCommunityCategory() %></td>
-                                <td><%= c.getCommunityTitle() %></td>
-                                <td><%= c.getCommunityWriter() %></td>
-                                <td><%= c.getCreateDate() %></td>
-                                <td><%= c.getViews() %></td>
-                                <td><%= c.getLikes() %></td>
-                            </tr>
                     <% } %>
-                <% } %>
             </tbody>
         </table>
+
         <br>
-        
+
         <script>
             $(function(){
 
-                $('.list-area>tbody>tr').click(function(){ // 게시글 리스트 클릭 시 
-                    
-                    var loginUser = '<%= loginUser %>'
-
-                	if(loginUser != 'null') { // 로그인정보가 있으면 게시글을 열람할 수 있게 요청
+                $('.list-area>tbody>tr').click(function(){
 
                     location.href = "<%= contextPath %>/detail.cm?cno=" + $(this).children().eq(0).text();
-                    }
-                    else{ // 로그인정보가 없으면 로그인 화면으로 보내버리기
-                        alert("로그인 후 이용해주시기 바랍니다.");
-                        location.href = "<%= contextPath %>/login.me"
-                    }
 
                 })
 
@@ -139,10 +135,22 @@
 								<option value="content">내용</option>
 								<option value="writer">작성자</option>
                             </select>
+						<script>
+							$(function(){
+								$('.search-area option').each(function(){
+									// 내가 선택 요소에 차례대로 접근해서 요소의 value가 게시글 검색시 선택한 항목일 경우
+									if($(this).val() == "<%= searchType %>") {
+										
+										// 해당 항목을 select 시키겠다
+										$(this).attr('selected', true);
+									}
+								})
+							})
+						</script>
                         </td>
-						<td><input type="text" class="" name="keyword" maxlength="10"></td>
+						<td><input type="text" class="" name="keyword" maxlength="10" value="<%= keyword %>"></td>
 						<td><button type="submit" class="btn btn-secondary btn-sm"><img src="resources/images/searchbtn.png" width="15px" height="15px"  alt="검색버튼"></button></td>
-					</tr>
+                    </tr>
 				</table>
             </form>
         </div>
@@ -154,18 +162,18 @@
 
             <% if(currentPage != 1) { %>
             <!-- 이전 페이지로 이동 -->
-            <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/list.cm?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+            <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= currentPage - 1 %>&searchType=<%= searchType%>&keyword=<%= keyword%>'">&lt;</button>
             <% } %>
             <% for(int i = startPage; i <= endPage; i++) { %>
                 <% if(i != currentPage) { %>
-                    <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/list.cm?currentPage=<%= i %>'"><%= i %></button>
+                    <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= i %>&searchType=<%= searchType%>&keyword=<%= keyword%>'"><%= i %></button>
                 <%} else { %>
                     <button class="btn btn-secondary btn-sm" disabled><%= i %></button>
                 <% } %>
             <% } %>
             <!-- 다음 페이지로 이동 -->
             <% if(currentPage != maxPage) { %>
-            <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/list.cm?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+            <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= currentPage + 1 %>&searchType=<%= searchType%>&keyword=<%= keyword%>'">&gt;</button>
             <% } %>
             </div>
         <br>

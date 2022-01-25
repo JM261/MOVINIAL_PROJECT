@@ -119,7 +119,7 @@
     
       <!-- 로그인한 회원만 보이는 부분 -->
       <% if(loginUser != null){ %>   
-      <a href="" class="title">NICKNAME님을 위한 추천영화</a>
+      <a href="" class="title"><%= loginUser.getMemberNickname() %></a>
       <div id="content1">
         
       </div>

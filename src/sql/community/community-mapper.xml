@@ -9,11 +9,41 @@
 		 WHERE STATUS = 'Y'
 	</entry>
 
-	<entry key="selectListCountFilter">
+	<entry key="selectListFilterCount">
 		SELECT COUNT(*) COUNT
 		  FROM COMMUNITY
 		 WHERE STATUS = 'Y'
            AND COMMUNITY_CATEGORY = ?
+	</entry>
+	
+	<entry key="selectListSearchTitleNcontentCount">
+		SELECT COUNT(*) COUNT
+		  FROM COMMUNITY
+		 WHERE STATUS = 'Y'
+		   AND COMMUNITY_TITLE LIKE ?
+		    OR COMMUNITY_CONTENT LIKE ?
+	</entry>
+	
+	<entry key="selectListSearchTitleCount">
+		SELECT COUNT(*) COUNT
+		  FROM COMMUNITY
+		 WHERE STATUS = 'Y'
+		   AND COMMUNITY_TITLE LIKE ?
+	</entry>
+	
+	<entry key="selectListSearchContentCount">
+		SELECT COUNT(*) COUNT
+		  FROM COMMUNITY
+		 WHERE STATUS = 'Y'
+		   AND COMMUNITY_CONTENT LIKE ?
+	</entry>
+	
+	<entry key="selectListSearchWriterCount">
+		SELECT COUNT(*) COUNT
+		  FROM COMMUNITY C
+		  JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
+		 WHERE C.STATUS = 'Y'
+		   AND NICKNAME LIKE ?
 	</entry>
 	
 	<entry key="selectList">
@@ -45,7 +75,23 @@
 			WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<entry key="">
+	<entry key="selectListSearchTitleNcontent">
+		SELECT *
+			FROM (
+			      SELECT ROWNUM RNUM, A.*
+			        FROM (
+                            SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, NICKNAME, CREATE_DATE, VIEWS, LIKES, SPOILER, REPORT_COUNT, ISNOTICE
+                              FROM COMMUNITY C
+                              JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
+                             WHERE C.STATUS = 'Y'
+                               AND COMMUNITY_TITLE LIKE ?
+                                OR COMMUNITY_CONTENT LIKE ?
+                             ORDER 
+                                BY ISNOTICE DESC, CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	<entry key="selectListSearchTitle">
 		SELECT *
 			FROM (
 			      SELECT ROWNUM RNUM, A.*
@@ -59,7 +105,37 @@
                                 BY ISNOTICE DESC, CREATE_DATE DESC) A)
 			WHERE RNUM BETWEEN ? AND ?
 	</entry>
-	
+
+	<entry key="selectListSearchContent">
+		SELECT *
+			FROM (
+			      SELECT ROWNUM RNUM, A.*
+			        FROM (
+                            SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, NICKNAME, CREATE_DATE, VIEWS, LIKES, SPOILER, REPORT_COUNT, ISNOTICE
+                              FROM COMMUNITY C
+                              JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
+                             WHERE C.STATUS = 'Y'
+                               AND COMMUNITY_CONTENT LIKE ?
+                             ORDER 
+                                BY ISNOTICE DESC, CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	<entry key="selectListSearchWriter">
+		SELECT *
+			FROM (
+			      SELECT ROWNUM RNUM, A.*
+			        FROM (
+                            SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, NICKNAME, CREATE_DATE, VIEWS, LIKES, SPOILER, REPORT_COUNT, ISNOTICE
+                              FROM COMMUNITY C
+                              JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
+                             WHERE C.STATUS = 'Y'
+                               AND NICKNAME LIKE ?
+                             ORDER 
+                                BY ISNOTICE DESC, CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
 	
 	<entry key="selectCategory">
 		SELECT *
@@ -67,38 +143,36 @@
 	</entry>
 	
 	
-	
-	<entry key="insertBoard">
-		INSERT INTO BOARD(BOARD_NO, BOARD_TYPE, CATEGORY_NO, BOARD_TITLE,
-                    BOARD_CONTENT, BOARD_WRITER)
-				VALUES(SEQ_BNO.NEXTVAL, 1, ?, ?, ?, ?)
+	<entry key="insertCommunity">
+		INSERT INTO COMMUNITY(COMMUNITY_NO, COMMUNITY_TITLE, COMMUNITY_CATEGORY, COMMUNITY_WRITER, 
+                    COMMUNITY_CONTENT, SPOILER)
+				VALUES(SEQ_CNO.NEXTVAL, ?, ?, ?, ?, ?)
 	</entry>
 	
-	<entry key="insertAttachment">
-		INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
-		VALUES(SEQ_FNO.NEXTVAL, SEQ_BNO.CURRVAL, ?, ?, ?)
+	<entry key="insertCommunityFile">
+		INSERT INTO C_FILE(FILE_NO, REF_CNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		VALUES(SEQ_CFNO.NEXTVAL, SEQ_CNO.CURRVAL, ?, ?, ?)
 	</entry>
 	
 	<entry key="increaseCount">
-		UPDATE BOARD
-		   SET COUNT = COUNT + 1
-		 WHERE BOARD_NO = ?
+		UPDATE COMMUNITY
+		   SET VIEWS = VIEWS + 1
+		 WHERE COMMUNITY_NO = ?
 		   AND STATUS = 'Y'
 	</entry>
 	
-	<entry key="selectBoard">
-		SELECT BOARD_NO, CATEGORY_NAME, BOARD_TITLE, BOARD_CONTENT, USER_ID, CREATE_DATE
-		  FROM BOARD B
-		  LEFT JOIN CATEGORY USING(CATEGORY_NO)
-		  JOIN MEMBER ON (BOARD_WRITER = USER_NO)
-		 WHERE BOARD_NO = ?
-		   AND B.STATUS = 'Y'
+	<entry key="selectCommunity">
+		SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, COMMUNITY_CONTENT, NICKNAME, CREATE_DATE, VIEWS, LIKES, SPOILER, REPORT_COUNT, ISNOTICE, COMMUNITY_WRITER
+		  FROM COMMUNITY C
+		  JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
+		 WHERE COMMUNITY_NO = ?
+		   AND C.STATUS = 'Y'
 	</entry>
 	
-	<entry key="selectAttachment">
+	<entry key="selectCommunityFile">
 		SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
-		  FROM ATTACHMENT
-		 WHERE REF_BNO = ?
+		  FROM C_FILE
+		 WHERE REF_CNO = ?
 	</entry>
 	
 	<entry key="updateBoard">
@@ -151,17 +225,17 @@
 	</entry>
 	
 	<entry key="selectReplyList">
-		SELECT REPLY_NO, REPLY_CONTENT, USER_ID, TO_CHAR(CREATE_DATE, 'YY/MM/DD HH:MI:SS') "CREATE_DATE"
+		SELECT REPLY_NO, REPLY_CONTENT, NICKNAME, TO_CHAR(CREATE_DATE, 'YY/MM/DD HH:MI:SS') "CREATE_DATE", MEMBER_NO, REPORT_COUNT
 		  FROM REPLY R
-		  JOIN MEMBER ON (REPLY_WRITER = USER_NO)
-		 WHERE REF_BNO = ?
+		  JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
+		 WHERE REF_CNO = ?
 		   AND R.STATUS = 'Y'
 		 ORDER
-		    BY CREATE_DATE DESC
+		    BY CREATE_DATE ASC
 	</entry>
 	
 	<entry key="insertReply">
-		INSERT INTO REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO, REPLY_WRITER)
+		INSERT INTO REPLY(REPLY_NO, REF_CNO, REPLY_WRITER, REPLY_CONTENT)
 		VALUES(SEQ_RNO.NEXTVAL, ?, ?, ?)
 	</entry>
 	
