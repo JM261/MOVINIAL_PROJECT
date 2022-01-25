@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.movinial.notice.model.service.NoticeService;
-import com.movinial.notice.model.vo.Category;
+import com.movinial.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class QuestionEnrollFormController
+ * Servlet implementation class FAQListController
  */
-@WebServlet("/qEnrollForm.no")
-public class QuestionEnrollFormController extends HttpServlet {
+@WebServlet("/FAQList.no")
+public class FAQListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionEnrollFormController() {
+    public FAQListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +31,18 @@ public class QuestionEnrollFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		// Service단으로
+		//ArrayList<Notice> list = new NoticeService().selectNoticeList();
 		
-		ArrayList<Category> list = new NoticeService().selectCategory();
+		// 뽑아온 list를 응답페이지로 보내기
+		//request.setAttribute("list", list);
 		
-		request.setAttribute("list", list);
+		// views/notice/QuestionListView.jsp 포워딩
 		
-		request.getRequestDispatcher("views/notice/QuestionEnrollForm.jsp").forward(request, response);
+		request.getRequestDispatcher("views/notice/FAQListView.jsp").forward(request, response);
+	
+	
 	}
 
 	/**
