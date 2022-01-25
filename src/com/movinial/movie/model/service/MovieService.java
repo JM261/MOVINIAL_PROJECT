@@ -22,6 +22,39 @@ public class MovieService {
 		close(conn);
 		
 		return m;
+		
+	}
+
+	/**
+	 * 봤어요 카운트 올려주기
+	 * @param movieNo
+	 */
+	public int increaseMovieSeen(int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MovieDao().increaseMovieSeen(conn, movieNo);
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+	/**
+	 * 봤어요 카운트 내려주기
+	 * @param movieNo
+	 */
+	public int decreaseMovieSeen(int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MovieDao().increaseMovieSeen(conn, movieNo);
+		
+		close(conn);
+		
+		return result;
+		
 	}
 
 }

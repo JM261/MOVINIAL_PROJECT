@@ -15,7 +15,7 @@ import com.movinial.notice.model.vo.Category;
 /**
  * Servlet implementation class QuestionEnrollFormController
  */
-@WebServlet("/QuestionEnrollForm.no")
+@WebServlet("/qEnrollForm.no")
 public class QuestionEnrollFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,6 +31,7 @@ public class QuestionEnrollFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		ArrayList<Category> list = new NoticeService().selectCategory();
 		
 		request.setAttribute("list", list);

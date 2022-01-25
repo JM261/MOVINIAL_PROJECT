@@ -32,8 +32,8 @@ public class searchMovieController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// 영화를 조회 해보자 후
-		System.out.println("여기오나...");
 		
 		request.setCharacterEncoding("UTF-8");
 		
