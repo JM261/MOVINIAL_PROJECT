@@ -1,8 +1,6 @@
 package com.movinial.movie.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,21 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.movinial.movie.model.service.MovieService;
-import com.movinial.movie.model.vo.Movie;
-import com.movinial.review.model.service.ReviewService;
-import com.movinial.review.model.vo.Review;
 
 /**
- * Servlet implementation class MovieDetailController
+ * Servlet implementation class AjaxMovieSeenButtonController
  */
-@WebServlet("/detail.mo")
-public class MovieDetailController extends HttpServlet {
+@WebServlet("/movieSeenBtn.mo")
+public class AjaxMovieSeenButtonController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieDetailController() {
+    public AjaxMovieSeenButtonController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,26 +29,28 @@ public class MovieDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 쿼리스트링 request 값 뽑기
-		int movieNo = Integer.parseInt(request.getParameter("mno"));
+		// 값 추출
+		int movieNo = Integer.parseInt(request.getParameter("movieNo"));
+	
+		System.out.println(movieNo);
 		
-		// 해당 영화 정보 받아오기
-		Movie m = new MovieService().selectMovieDetail(movieNo);
+		int result = 0;
 		
-		// 해당 영화의 리뷰 정보 받아오기
-		ArrayList<Review> list = new ReviewService().selectMovieReview(movieNo);
+		// 봤어요 카운트 올려주기
+		result = new MovieService().increaseMovieSeen(movieNo);
 		
-		if(m != null) { // 해당 영화 정보가 있음
-			
-			request.setAttribute("m", m);
-			
-			if(list != null) { // 해당 영화 정보의 리뷰가 있음
-				request.setAttribute("list", list);
-			}
-			
+		// 봤어요 카운트 내려주기
+		//result = new MovieService().decreaseMovieSeen(movieNo);
+		
+		
+		if(result > 0) {
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().print(result);
 		}
 		
-		request.getRequestDispatcher("views/movie/movieDetailView.jsp").forward(request, response);
+		
+		
+		
 		
 	}
 

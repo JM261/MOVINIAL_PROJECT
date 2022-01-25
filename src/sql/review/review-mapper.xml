@@ -3,27 +3,52 @@
 <properties>
 	<comment>리뷰 관련 쿼리문들</comment>
 	
+	<!-- 해당 영화의 공개된 리뷰의 총 개수 -->
 	<entry key="selectListCount">
 		SELECT COUNT(*) COUNT
 		  FROM REVIEW
 		 WHERE PUBLIC_STATUS = 'Y'
+		   AND REF_MNO = ?
 	</entry>
 	
-	<entry key="selectList">
+	<!-- 해당 영화 리뷰 상세보기 페이지 출력 -->
+	<entry key="selectMovieReviewList">
 		SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
-		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, REF_MNO
 		                  FROM REVIEW R
 		                  JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
 		                 WHERE PUBLIC_STATUS = 'Y'
 		                   AND REPORT_COUNT &lt;= 15
+		                   AND REF_MNO = ?
 		                 ORDER
 		                    BY CREATE_DATE DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<!-- 해당 영화의 리뷰 정보 받아오기 -->
+	<entry key="selectMovieReview">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES
+		                  FROM REVIEW R
+		                  JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
+		                 WHERE PUBLIC_STATUS = 'Y'
+		                   AND REPORT_COUNT &lt;= 15
+		                   AND REF_MNO = ?
+		                 ORDER
+		                    BY CREATE_DATE DESC) A)
+		WHERE RNUM &lt;= 5
+	</entry>
 	
+	<!-- 리뷰 상세보기 페이지에서 리뷰 작성 -->
+	<entry key="insertMovieReview">
+		INSERT INTO REVIEW (REVIEW_NO, REVIEW_WRITER, REVIEW_TITLE, REVIEW_CONTENT, CREATE_DATE, PUBLIC_STATUS, LIKES, REPORT_COUNT, REF_MNO)
+		VALUES (SEQ_REVNO.NEXTVAL, ?, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, ?)
+	</entry>
 	
 </properties>
