@@ -24,7 +24,26 @@ public class MovieService {
 		return m;
 		
 	}
+	
 
+	/**
+	 * 영화 포스터 가져오기
+	 * @param movieId
+	 * @return
+	 */
+	public String getMoviePosterPath(int movieId) {
+		
+		Connection conn = getConnection();
+		
+		String moviePosterPath = new MovieDao().getMoviePosterPath(conn, movieId);
+		
+		close(conn);
+		
+		return moviePosterPath;
+		
+	}
+	
+	
 	/**
 	 * 봤어요 카운트 올려주기
 	 * @param movieNo
@@ -56,5 +75,7 @@ public class MovieService {
 		return result;
 		
 	}
+
+
 
 }

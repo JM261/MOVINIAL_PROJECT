@@ -17,8 +17,12 @@
 </head>
 <body>
 
+	<%@ include file="../common/header.jsp" %>
+
 
 	<%= overview %>
+	
+	<%@ include file="../common/footer.jsp" %>
 
 </body>
 </html>

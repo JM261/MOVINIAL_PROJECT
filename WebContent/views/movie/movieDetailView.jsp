@@ -1,17 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.movinial.review.model.vo.Review, com.movinial.movie.model.vo.Movie" %>
+<%@ page import="com.movinial.movie.model.vo.Movie, org.json.JSONObject, java.util.ArrayList,
+				 com.movinial.review.model.vo.Review, static com.movinial.common.MovieTemplate.* " %>
 <%
+	// 영화 DB, 상세정보, 리뷰
 	Movie m = (Movie)request.getAttribute("m");
+	JSONObject movieDetail = (JSONObject)request.getAttribute("movieDetail");
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
 	
-	int movieNo = ((Movie)request.getAttribute("m")).getMovieNo();
-	
 	// 봤어요/좋아요 클릭 여부 확인 변수
-//	int movieSeenChk = Integer.parseInt(request.getAttribute("movieSeenChk"));
-	//int movieLikesChk = 0;
-
-	
+	// int movieSeenChk = Integer.parseInt(request.getAttribute("movieSeenChk"));
+	// int movieLikesChk = 0;
 %>
 <!DOCTYPE html>
 <html>
@@ -51,10 +50,10 @@
 			<table class="table-size">
 				<tr>
 					<td rowspan="7" style="width: 30%; text-align: center;">
-						<img src="<%= m.getMovieImage() %>/영화포스터" alt="영화 포스터">
+						<img src="<%= getMoviePosterPath(m.getMovieId(), "w780") %>" alt="영화 포스터">
 					</td>
 					<td>
-						<h1><%= m.getMovieNameEn() %> <%= m.getMovieNameKr() %></h1>
+						<h1><%= m.getTitle() %> <%= m.getOriginalTitle() %></h1>
 					</td>
 					<td>
 						<h4>이 영화 보셨나요?</h4>
@@ -128,28 +127,38 @@
 				<tr>
 					<td colspan="5">
 						<br>
-						<h4>개봉년도 &nbsp&nbsp&nbsp <%= m.getReleaseYear() %></h4>
+						<h4>개요</h4>
+						<p>
+							<%= m.getOverview() %>
+						</p>
 						<br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
 						<br>
-						<h4>제작국가 &nbsp&nbsp&nbsp <%= m.getNational() %></h4>
+						<h4>개봉일 &nbsp&nbsp&nbsp <%= m.getReleaseDate() %></h4>
 						<br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
 						<br>
-						<h4>감독 &nbsp&nbsp&nbsp <%= m.getDirector() %></h4>
+						<h4>제작국가 &nbsp&nbsp&nbsp <%= movieDetail.getJSONArray("production_countries").getJSONObject(0).get("name") %></h4>
 						<br>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="5">
 						<br>
-						<h4>제작사 &nbsp&nbsp&nbsp <%= m.getCompany() %></h4>
+						<h4>제작사 &nbsp&nbsp&nbsp <%= movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name") %></h4>
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<br>
+						<h4>제작사 &nbsp&nbsp&nbsp</h4>
 						<br>
 					</td>
 				</tr>
@@ -167,7 +176,7 @@
 						<h2>리뷰</h2>
 					</td>
 					<td align="right">
-						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&mno=<%= movieNo %>">MORE</a>
+						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&mno=<%= m.getMovieNo() %>">MORE</a>
 					</td>
 				</tr>
 

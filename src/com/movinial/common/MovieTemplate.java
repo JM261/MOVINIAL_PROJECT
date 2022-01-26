@@ -14,6 +14,8 @@ import java.util.Properties;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.movinial.movie.model.service.MovieService;
+
 /**
  * Movie Template
  */
@@ -55,11 +57,31 @@ public class MovieTemplate {
 	 */
 	public static JSONObject getMovieDetail(int movieId) throws JSONException, IOException {
 		
-		
 		String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + getApiKey() + "&language=ko-KR";
 		JSONObject json = readJsonFromUrl(url);
 		
 		return json;
+		
+	}
+	
+	/**
+	 * 영화 포스터 가져오기
+	 * @param movieId
+	 * @param size "w92", "w154", "w185", "w342", "w500", "w780" 중 하나
+	 * @return String
+	 * @throws JSONException
+	 * @throws IOException
+	 */
+	public static String getMoviePosterPath(int movieId, String size) {
+		
+		String moviePosterPath = new MovieService().getMoviePosterPath(movieId);
+		
+		String url = "http://image.tmdb.org/t/p/" + size + moviePosterPath;
+		
+		System.out.println(url);
+		
+		return url;
+		
 	}
 	
 	

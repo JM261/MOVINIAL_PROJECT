@@ -3,11 +3,19 @@
 <properties>
 	<comment>영화 관련 쿼리문들</comment>
 	
+	<!-- 선택한 영화 상세보기 -->
 	<entry key="selectMovieDetail">
 		SELECT *
 		  FROM MOVIE
 		 WHERE MOVIE_NO = ?
 	</entry>
+	
+	<entry key="getMoviePosterPath">
+		SELECT POSTER_PATH
+		  FROM MOVIE
+		 WHERE MOVIE_ID = ?
+	</entry>
+	
 	
 	<entry key="increaseMovieSeen">
 		UPDATE MOVIE

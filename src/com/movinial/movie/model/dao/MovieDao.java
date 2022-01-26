@@ -51,17 +51,19 @@ public class MovieDao {
 			
 			if(rset.next()) {
 				m = new Movie(rset.getInt("MOVIE_NO"),
-							  rset.getString("MOVIE_NAME_KR"),
-							  rset.getString("MOVIE_NAME_EN"),
-							  rset.getString("RELEASE_YEAR"),
-							  rset.getString("NATIONAL"),
-							  rset.getString("GENRE_NAME"),
-							  rset.getString("DIRECTOR"),
-							  rset.getString("COMPANY"),
-							  rset.getString("MOVIE_IMAGE"),
+							  rset.getInt("MOVIE_ID"),
+							  rset.getString("TITLE"),
+							  rset.getString("ORIGINAL_TITLE"),
+							  rset.getString("ORIGINAL_LANGUAGE"),
+							  rset.getString("OVERVIEW"),
+							  rset.getString("GENRE_IDS"),
+							  rset.getDate("RELEASE_DATE"),
+							  rset.getString("POSTER_PATH"),
+							  rset.getString("BACKDROP_PATH"),
 							  rset.getInt("MOVIE_LIKES"),
 							  rset.getInt("MOVIE_SEEN"));
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -72,6 +74,51 @@ public class MovieDao {
 		return m;
 		
 	}
+	
+
+	/**
+	 * 영화 포스터 가져오기
+	 * @param conn
+	 * @param movieId
+	 * @return String
+	 */
+	public String getMoviePosterPath(Connection conn, int movieId) {
+		
+		String moviePosterPath = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getMoviePosterPath");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			System.out.println(movieId);
+			
+			pstmt.setInt(1, movieId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				moviePosterPath = rset.getString("POSTER_PATH");
+			}
+			
+			System.out.println(moviePosterPath);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return moviePosterPath;
+		
+	}
+	
+	
+	
 
 	/**
 	 * 봤어요 카운트 올려주기
@@ -136,6 +183,8 @@ public class MovieDao {
 		return result;
 		
 	}
+
+
 	
 	
 }
