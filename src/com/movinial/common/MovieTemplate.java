@@ -74,11 +74,16 @@ public class MovieTemplate {
 	 */
 	public static String getMoviePosterPath(int movieId, String size) {
 		
+		String url = null;
+		
 		String moviePosterPath = new MovieService().getMoviePosterPath(movieId);
 		
-		String url = "http://image.tmdb.org/t/p/" + size + moviePosterPath;
-		
-		System.out.println(url);
+		// 경로가 있을 경우
+		if(moviePosterPath != null) {
+			
+			url = "http://image.tmdb.org/t/p/" + size + moviePosterPath;
+			
+		}
 		
 		return url;
 		

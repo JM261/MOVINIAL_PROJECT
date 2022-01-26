@@ -3,10 +3,13 @@
 <%@ page import="com.movinial.movie.model.vo.Movie, org.json.JSONObject, java.util.ArrayList,
 				 com.movinial.review.model.vo.Review, static com.movinial.common.MovieTemplate.* " %>
 <%
-	// 영화 DB, 상세정보, 리뷰
+	// 영화 DB, 상세정보, 리뷰 가져오기
 	Movie m = (Movie)request.getAttribute("m");
 	JSONObject movieDetail = (JSONObject)request.getAttribute("movieDetail");
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
+	
+	// 영화 포스터 가져오기
+	String moviePosterUrl = getMoviePosterPath(m.getMovieId(), "w780");
 	
 	// 봤어요/좋아요 클릭 여부 확인 변수
 	// int movieSeenChk = Integer.parseInt(request.getAttribute("movieSeenChk"));
@@ -50,7 +53,11 @@
 			<table class="table-size">
 				<tr>
 					<td rowspan="7" style="width: 30%; text-align: center;">
-						<img src="<%= getMoviePosterPath(m.getMovieId(), "w780") %>" alt="영화 포스터">
+						<% if(moviePosterUrl != null) { %>
+							<img src="<%= moviePosterUrl %>" alt="<%= m.getTitle() %> 영화 포스터">
+						<% } else { %>
+							<h2>영화 포스터 없음</h2>
+						<% } %>
 					</td>
 					<td>
 						<h1><%= m.getTitle() %> <%= m.getOriginalTitle() %></h1>

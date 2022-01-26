@@ -94,8 +94,6 @@ public class MovieDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			System.out.println(movieId);
-			
 			pstmt.setInt(1, movieId);
 			
 			rset = pstmt.executeQuery();
@@ -103,8 +101,6 @@ public class MovieDao {
 			if(rset.next()) {
 				moviePosterPath = rset.getString("POSTER_PATH");
 			}
-			
-			System.out.println(moviePosterPath);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -117,9 +113,6 @@ public class MovieDao {
 		
 	}
 	
-	
-	
-
 	/**
 	 * 봤어요 카운트 올려주기
 	 * @param conn
