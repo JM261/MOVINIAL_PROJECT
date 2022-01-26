@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="org.json.JSONObject" %>
+<%
+	JSONObject json = (JSONObject)request.getAttribute("json");
 
+	String overview = (String)json.get("overview");
+
+
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,16 +17,8 @@
 </head>
 <body>
 
-	<%@ include file="header.jsp" %>
-	
-	<a href="<%= contextPath %>/detail.mo?mno=1">MORE</a>
-	<a href="<%= contextPath %>/movie.test">MORE</a>
-	
 
-	
-	
-	
-	<%@ include file="footer.jsp" %>
-	
+	<%= overview %>
+
 </body>
 </html>
