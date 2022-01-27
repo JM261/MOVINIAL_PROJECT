@@ -114,6 +114,44 @@ public class MovieDao {
 	}
 	
 	/**
+	 * 영화 배경 가져오기
+	 * @param conn
+	 * @param movieId
+	 * @return String
+	 */
+	public String getMovieBackdropPath(Connection conn, int movieId) {
+		
+		String movieBackdropPath = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getMovieBackdropPath");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, movieId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				movieBackdropPath = rset.getString("BACKDROP_PATH");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return movieBackdropPath;
+		
+	}
+	
+	
+	/**
 	 * 봤어요 카운트 올려주기
 	 * @param conn
 	 * @param movieNo
@@ -176,6 +214,8 @@ public class MovieDao {
 		return result;
 		
 	}
+
+
 
 
 	

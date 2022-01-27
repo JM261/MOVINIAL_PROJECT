@@ -69,8 +69,6 @@ public class MovieTemplate {
 	 * @param movieId
 	 * @param size "w92", "w154", "w185", "w342", "w500", "w780" 중 하나
 	 * @return String
-	 * @throws JSONException
-	 * @throws IOException
 	 */
 	public static String getMoviePosterPath(int movieId, String size) {
 		
@@ -89,7 +87,29 @@ public class MovieTemplate {
 		
 	}
 	
-	
+
+	/**
+	 * 영화 배경 가져오기
+	 * @param movieId
+	 * @param size "w300","w780","w1280","original" 중 하나
+	 * @return String
+	 */
+	public static String getMovieBackdropPath(int movieId, String size) {
+		
+		String url = null;
+		
+		String movieBackdropPath = new MovieService().getMovieBackdropPath(movieId);
+		
+		// 경로가 있을 경우
+		if(movieBackdropPath != null) {
+			
+			url = "http://image.tmdb.org/t/p/" + size + movieBackdropPath;
+			
+		}
+		
+		return url;
+		
+	}
 	
 
     // -------------------- JSON 처리용 시작 --------------------

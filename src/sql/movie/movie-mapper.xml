@@ -10,12 +10,19 @@
 		 WHERE MOVIE_NO = ?
 	</entry>
 	
+	<!-- 영화 포스터 가져오기 -->
 	<entry key="getMoviePosterPath">
 		SELECT POSTER_PATH
 		  FROM MOVIE
 		 WHERE MOVIE_ID = ?
 	</entry>
 	
+	<!-- 영화 배경 상세보기 -->
+	<entry key="getMovieBackdropPath">
+		SELECT BACKDROP_PATH
+		  FROM MOVIE
+		 WHERE MOVIE_ID = ?
+	</entry>
 	
 	<entry key="increaseMovieSeen">
 		UPDATE MOVIE
@@ -28,9 +35,5 @@
 		   SET MOVIE_SEEN = MOVIE_SEEN - 1
 		 WHERE MOVIE_NO = ?
 	</entry>
-	
-
-	
-
 	
 </properties>
