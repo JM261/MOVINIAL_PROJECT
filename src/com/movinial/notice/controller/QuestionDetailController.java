@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.movinial.notice.model.service.NoticeService;
+import com.movinial.notice.model.vo.Qfile;
 import com.movinial.notice.model.vo.Question;
 
 /**
@@ -34,17 +35,19 @@ public class QuestionDetailController extends HttpServlet {
 		// 2) request로부터 값 뽑기
 		int questionNo = Integer.parseInt(request.getParameter("qno")); // : String형
 		
-		// 3) 가공 패싱 ~
+		// 3) 가공 패스
 		
-		// 4) Service단으로 전달 -1(클릭했을 때 공지사항 글번호를 UPDATE)
-		//int result = new NoticeService().increaseCount(noticeNo);
-		
-		// 4) Service단으로 전달 -2(UPDATE가 성공했다면 상세조회 요청)
-		
-			
+		// 4) Service단으로 전달 
+			// question 조회
 			Question q = new NoticeService().selectQuestion(questionNo);
+			// Qfile 조회
+			Qfile at = new NoticeService().selectQfile(questionNo);
 			
+			// q, at 넘기기
 			request.setAttribute("q", q);
+			request.setAttribute("at", at);
+			
+			// 화면 => 포워딩
 			request.getRequestDispatcher("/views/notice/QuestionDetailView.jsp").forward(request, response);
 	}
 

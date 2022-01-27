@@ -110,10 +110,11 @@
         clear: both;
       }
       .title{
-        text-decoration: none;
         color: black;
         font-size: x-large; 
         font-weight: bold;
+        pointer-events: none;
+        cursor: default;
       }
 
       .movie1{
@@ -125,10 +126,6 @@
       }
       .moviecontent{
         margin-top: 15px;
-      }
-
-      .moviecontent2, .moviecontent3{
-       
       }
 
       .movie2{
@@ -167,7 +164,7 @@
     </div>
 
 
-      <a href="" class="title">최신 개봉 영화</a>
+      <a class="title">최신 개봉 영화</a>
       <div id="content2">
         <div class="movie1"> </div>
         <div class="movie1"> </div>
@@ -178,7 +175,7 @@
       </div>
 
 
-      <a href="" class="title">이번주 인기 영화</a>
+      <a class="title">이번주 인기 영화</a>
       <div id="content3">
         <div class="moviecontent">
           <div class="movie2"></div>
@@ -198,7 +195,7 @@
       </div>
 
   
-      <div><a href="" class="title">MOVINIAL 추천 영화 <br></a></div>
+      <div><a class="title">MOVINIAL 추천 영화 <br></a></div>
       <div id="div1">
         <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
         
@@ -220,7 +217,7 @@
       </div>
 
       <div id="div2">
-        <a href="" class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
+        <a class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
        
         <div class="moviecontent3">
           <div class="movie4"></div>

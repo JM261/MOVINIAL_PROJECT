@@ -9,10 +9,10 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.movinial.common.model.vo.PageInfo;
-import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.dao.NoticeDao;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
+import com.movinial.notice.model.vo.Qfile;
 import com.movinial.notice.model.vo.Question;
 
 public class NoticeService {
@@ -28,11 +28,11 @@ public class NoticeService {
 		return list;
 	}
 	
-	public int selectListCount(Member m) {
+	public int selectListCount(String memberNo) {
 		
 		Connection conn = getConnection();
 		
-		int listCount = new NoticeDao().selectListCount(conn, m);
+		int listCount = new NoticeDao().selectListCount(conn, memberNo);
 		// SELECT문의 결과는 ResultSet이 맞지만, 
 		// 게시글의 총 개수를 알아야 하기 때문에 정수형으로 반환받는다.
 		
@@ -41,31 +41,41 @@ public class NoticeService {
 		return listCount;
 	}
 	
-	public ArrayList<Question> selectList(PageInfo pi, Member m) { // 나의 문의내역 페이징
+	public ArrayList<Question> selectList(PageInfo pi, String memberNo) { // 나의 문의내역 페이징
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Question> list = new NoticeDao().selectList(conn, pi, m);
+		ArrayList<Question> list = new NoticeDao().selectList(conn, pi, memberNo);
 	
 		close(conn);
 		
 		return list;
 	}
 
-	public int insertQuestion(Question q) {
+	public int insertQuestion(Question q, Qfile at) {
 		
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().insertQuestion(conn, q);
+		// question 테이블에 INSERT 무조건
+		int result1 = new NoticeDao().insertQuestion(conn, q);
 		
-		if(result > 0) { // 성공
+		// Attachment 테이블에 INSERT (null이 아닐때만)
+		int result2 = 1;
+		if(at != null) {
+			result2 = new NoticeDao().insertQfile(conn,at);
+		}
+		
+		
+		
+		// 트랜잭션 처리
+		if((result1 * result2 ) > 0) { // 성공
 			commit(conn);
 		} else { // 실패
 			rollback(conn);
 		}
 		close(conn);
 		
-		return result;
+		return (result1 * result2);
 	}
 
 	
@@ -93,30 +103,40 @@ public class NoticeService {
 		
 		return listCount;
 	}
-
-public Notice selectNotice(int noticeNo) {
-		
+	
+	public Notice selectNotice(int noticeNo) {
+			
+			Connection conn = getConnection();
+			
+			Notice n = new NoticeDao().selectNotice(conn,noticeNo);
+			
+			/* 조회만 해주는 거니까 트랜잭션처리할 필요 없음 */
+			
+			close(conn);
+			
+			return n;
+		}
+	
+	public Question selectQuestion(int questionNo) {
 		Connection conn = getConnection();
 		
-		Notice n = new NoticeDao().selectNotice(conn,noticeNo);
-		
-		/* 조회만 해주는 거니까 트랜잭션처리할 필요 없음 */
+		Question q = new NoticeDao().selectQuestion(conn, questionNo);
 		
 		close(conn);
 		
-		return n;
+		return q;
 	}
-
-public Question selectQuestion(int questionNo) {
-	Connection conn = getConnection();
 	
-	Question q = new NoticeDao().selectQuestion(conn, questionNo);
-	
-	close(conn);
-	
-	return q;
-}
-
+	public Qfile selectQfile(int questionNo) {
+		
+		Connection conn = getConnection();
+		Qfile at = new NoticeDao().selectQfile(conn, questionNo);
+		
+		close(conn);
+		
+		return at;
+		
+	}
 	
 	
 

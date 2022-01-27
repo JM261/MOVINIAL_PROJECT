@@ -59,7 +59,12 @@ h2{
 #noticeContent{
     height:400px;
 }
-
+.qbtn{
+	height : 50px;
+}
+#listFont{
+	font-size:22px;
+}
 
 
 </style>
@@ -102,7 +107,7 @@ h2{
         </table>
         <br>
         <div align="center">
-        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary">목록가기</a>
+        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary qbtn" id="listFont">목록가기</a>
         	
      
         </div>
