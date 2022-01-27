@@ -6,7 +6,7 @@
 	Question q = (Question)request.getAttribute("q");  // : Object
 	//게시글번호,  카테고리명, 제목, 내용, 작성자 아이디, 작성일
 	
-	//Attachment at = (Attachment)request.getAttribute("at");	  // : Object	
+	Qfile at = (Qfile)request.getAttribute("at");	  // : Object	
 	// at => attachment 객체 = 파일번호, 원본명, 수정명, 저장경로
 
 %>    
@@ -53,13 +53,25 @@
 	
     td{
     height: 55px;
-}
-table td, table th {
-    border: 1px solid #bcbcbc;
-}
-.tableWidth{
-    height: 30px;
-}
+	}
+	table td, table th {
+	    border: 1px solid #bcbcbc;
+	}
+	.tableWidth{
+	    height: 30px;
+	}
+	table tr th{
+	width:110px;
+    background: #f7f5f5;
+    }
+	
+	.qbtn{
+	height : 50px;
+	}
+	
+	#listFont{
+	font-size:22px;
+	}
     
 </style>
 </head>
@@ -84,13 +96,14 @@ table td, table th {
         <table align="center" class="detail-area" >
             <tr>
                 <th class="tableWidth">카테고리</th>
-                <td colspan="3" class="tableWidth"><%= q.getQnaWriter() %></td>  <!-- q.getCategory.....-->
+                <td class="tableWidth"><%= q.getQnaWriter() %></td>  <!-- q.getCategory.....-->
+            	<th class="tableWidth">작성일</th>
+                <td class="tableWidth"><%= q.getCreateDate() %></td>
             </tr> 
             <tr> 
                 <th class="tableWidth">제목</th>
-                <td class="tableWidth"><%= q.getQnaTitle() %></td>
-                <th class="tableWidth">작성일</th>
-                <td class="tableWidth"><%= q.getCreateDate() %></td>
+                <td class="tableWidth" colspan=3><%= q.getQnaTitle() %></td>
+                
             </tr>
     
             <tr>
@@ -101,8 +114,8 @@ table td, table th {
                 
             </tr>
 
-        <%--   <tr>
-                <th></th>
+           <tr>
+                <th>첨부파일</th>
                 <td colspan="3">
                     <!-- 첨부파일이 없을 경우-->
                     <% if(at == null){ %>
@@ -114,23 +127,16 @@ table td, table th {
 	                    </a>
                 	<%} %>
                 </td>      
-            </tr>  --%>
+            </tr>  
 
         </table>
 
         <br>
+
         <div align="center">
-            <a href="<%= contextPath%>/questionList.no?currentPage=1" class="btn btn-secondary">목록가기</a>
-         <%-- 
-            <!-- 작성자만 보이게끔 -->
-        	<!--  로그인이 되어있고, 현재 로그인된 사용자가 작성자와 동일할 경우에만  -->
-        	<% if(loginUser != null && loginUser.getUserId().equals(q.getQnaWriter())){ %>
-        		<a href="<%= contextPath%>/updateForm.bo?bno=<%= q.getQnaNo() %>" class="btn btn-sm btn-warning">수정하기</a>  <!-- b. getBoardNo : 현재 보고 있는 글 번호 -->
-        		<a href="<%= contextPath%>/delete.bo?bno=<%= q.getQnaNo() %>" class="btn btn-sm btn-danger">삭제하기</a>
-        		   <!-- localhost:8001/jsp/delete.no?nno=XX  -->
-        	<%} %>
-        	
-        	--%>   
+            <a href="<%= contextPath%>/questionList.no?currentPage=1" class="btn btn-secondary qbtn" id="listFont">목록가기</a>
+       
+    </div>  
 
         </div>
     </div>

@@ -59,7 +59,12 @@ h2{
 #noticeContent{
     height:400px;
 }
-
+.qbtn{
+	height : 50px;
+}
+#listFont{
+	font-size:22px;
+}
 
 
 </style>
