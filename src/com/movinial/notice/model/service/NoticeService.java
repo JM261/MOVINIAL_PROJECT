@@ -117,6 +117,58 @@ public Question selectQuestion(int questionNo) {
 	return q;
 }
 
+	public int insertNotice(Notice n) {
+	
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().insertNotice(conn, n);
+		
+		if(result > 0) { 
+			commit(conn);
+		}else { 
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	} // insertNotice
+
+	public int updateNotice(Notice n) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().updateNotice(conn, n);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	} // updateNotice
+
+	public int deleteNotice(int noticeNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().deleteNotice(conn, noticeNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	} // deleteNotice
 	
 	
 

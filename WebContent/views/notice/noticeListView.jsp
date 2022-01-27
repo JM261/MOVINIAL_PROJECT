@@ -38,7 +38,7 @@
     
 }
 .btn-area{
-    width : 800px;
+    width : 100%;
     height: 80px;
  
 }
@@ -56,16 +56,18 @@
     background: #e6e6e6;
 }
 
-#noticeTitle{
+.noticeTitle{
    border-bottom: 1px solid #bcbcbc; 
+   padding-left: 20px;
 }
-#noticeDate{
+.noticeDate{
     border-bottom: 1px solid #bcbcbc; 
     text-align: right;
+    padding-right: 20px;
 }
 
-#noticeNo{
-    display: none;
+.noticeNo{
+    display: none;    
 }
 
 td{
@@ -75,7 +77,10 @@ td{
 #h2{
     font-weight: bolder;
 }
-
+#noticeInsertbtn{
+    float: right;
+    margin-right: 100px;
+}
 
 </style>
 
@@ -91,10 +96,16 @@ td{
             <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
             <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
             
-            <%if(loginUser != null){ %>
+            <% if(loginUser != null && !loginUser.getMemberId().equals("admin")){ %>
             <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
             <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
             <%} %>
+            
+            <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
+            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary">문의내역</a>  <!-- 문의 내역 조회하기  -->
+                <a href="<%=contextPath%>/enrollForm.no" id="noticeInsertbtn" class="btn btn-sm btn-secondary">추가</a> <!-- 추가 -->
+            <% } %>
+            
         </div>
 
         <table align="center" class="list-area">
@@ -114,9 +125,9 @@ td{
 					<!--  반복 : list에 있는 값을 순차적으로 접근해서 뽑아오기  -->
 					<% for(Notice n: list) { %>
 		                <tr id="titleDate">
-		                	<td id="noticeNo"><%= n.getNoticeNo() %></td>		                
-		                    <td id="noticeTitle"><%= n.getNoticeWriter() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? -->
-		                    <td id="noticeDate"><%= n.getCreateDate() %></td>
+		                	<td class="noticeNo"><%= n.getNoticeNo() %></td>		                
+		                    <td class="noticeTitle"><%= n.getNoticeTitle() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? -->
+		                    <td class="noticeDate"><%= n.getCreateDate() %></td>
 		                </tr>                       
                 	<%} %>
              	<%} %>

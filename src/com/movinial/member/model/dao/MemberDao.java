@@ -108,7 +108,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectMemberCount");
+		String sql = prop.getProperty("AselectMemberCount");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -136,7 +136,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectMember");
+		String sql = prop.getProperty("AselectMember");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -181,7 +181,7 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("deleteMember");
+		String sql = prop.getProperty("AdeleteMember");
 		
 		try {
 			pstmt= conn.prepareStatement(sql);
@@ -205,7 +205,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("searchMember");
+		String sql = prop.getProperty("AsearchMember");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -6,6 +6,8 @@
 	Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
 	// 로그인 전 : menubar.jsp가 로딩될 때 null
 	// 로그인 후 : manubar.jsp가 로딩될 때 로그인한 회원의 정보가 담겨있음
+	
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>    
     
 <!doctype html>
@@ -156,5 +158,15 @@
 	   	 </div>
 	   	 <% } %>
    	 </div>
+   	 
+   	 <script>
+	   	var msg = "<%= alertMsg %>"; 
+		
+		if(msg != "null"){ 
+			alert(msg);
+			<% session.removeAttribute("alertMsg"); %>
+		}
+   	 </script>
+   	 
   </body>
 </html>

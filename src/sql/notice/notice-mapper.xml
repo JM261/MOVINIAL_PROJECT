@@ -38,12 +38,6 @@
 		VALUES(SEQ_QNO.NEXTVAL, ?, ?, ?, ?)				    
 	</entry>
 
-
-
-
-
-
-
 	<entry key="selectNoticeListCount">
 		SELECT COUNT(*) COUNT
 		  FROM Notice
@@ -55,7 +49,7 @@
 			FROM (
 			        SELECT ROWNUM RNUM, A.*
 			          FROM (
-			                SELECT NOTICE_NO, NOTICE_TITLE, MEMBER_ID, CREATE_DATE
+			                SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_WRITER, CREATE_DATE
 			                  FROM NOTICE N
 			                  JOIN MEMBER ON (NOTICE_WRITER = MEMBER_NO)
 			                 WHERE N.STATUS = 'Y'
@@ -90,7 +84,29 @@
 	
 	</entry>
 	
+	<entry key="insertNotice">
+		INSERT INTO NOTICE(NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_WRITER)
+			VALUES (SEQ_QFNO.NEXTVAL, ?, ?, ?)
+	</entry>
 	
+	<entry key = "updateNotice">
+		UPDATE
+			NOTICE
+		SET 
+			NOTICE_TITLE = ?,
+			NOTICE_CONTENT = ?
+		WHERE
+			NOTICE_NO = ?
+		AND
+			STATUS = 'Y'
+	</entry>
 	
-	
+	<entry key = "deleteNotice">
+		UPDATE
+			NOTICE
+		SET
+			STATUS = 'N'
+		WHERE
+			NOTICE_NO = ?		
+	</entry>
 </properties>
