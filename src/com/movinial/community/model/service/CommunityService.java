@@ -8,6 +8,7 @@ import com.movinial.community.model.dao.CommunityDao;
 import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.CommunityFile;
 import com.movinial.community.model.vo.Reply;
+import com.movinial.member.model.vo.LikesCommunity;
 
 public class CommunityService {
 
@@ -149,13 +150,10 @@ public class CommunityService {
 		
 		Connection conn = getConnection();
 		
-		// board 테이블에 삽입 무조건 해야 됨!!!!!!!!!!!!!!!!!!!
-		// 첨부파일은 null 이 아니라면 attachment 테이블에 삽입 <= 선택
-		
-		// 1) board테이블에 INSERT 무조건!!!!
+		// 1) Community 테이블에 INSERT 
 		int result1 = new CommunityDao().insertCommunity(conn, c);
 		
-		// 2) attachment 테이블에 INSERT (null이 아닐때만!!)
+		// 2) CommunityFile 테이블에 INSERT (null이 아닐때만,)
 		int result2 = 1;
 		if(cf != null) {
 			result2 = new CommunityDao().insertCommunityFile(conn, cf);
@@ -174,6 +172,127 @@ public class CommunityService {
 		close(conn);
 		
 		return (result1 * result2);
+	}
+
+	public int updateCommunity(Community c, CommunityFile cf) {
+		
+		Connection conn = getConnection();
+		
+		// 1, 2, 3 케이스에 대해 공통적으로 일어나는 Community UPDATE 먼저 하고 조건 지정
+		int result1 = new CommunityDao().updateCommunity(conn, c);
+			
+		int result2 = 1; // CommunityFile 테이블과 관련된 결과를 저장할 변수 선언 및 초기화
+		
+		// 새롭게 첨부된 파일이 있을경우
+		if(cf != null) {
+			// 기존의 첨부파일이 있을 경우
+			if(cf.getFileNo() != 0) {
+				result2 = new CommunityDao().updateCommunityFile(conn, cf);
+			} else { // 기존 첨부파일이 없을 경우
+				result2 = new CommunityDao().insertNewCommunityFile(conn, cf); // 재활용X
+			}
+		} // 새로운 첨부파일이 없을 경우 , 따로 할일이 없음 => else 블럭 X
+		
+		// 둘 다 성공했을 경우에만 무조건 commit
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+
+		return (result1 * result2);
+	}
+
+	public int deleteCommunity(int communityNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().deleteCommunity(conn, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int increaseLike(int communityNo) { // 게시글 좋아요 수 증가
+		
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().increaseLike(conn, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int communityLikesStore(int memberNo, int communityNo) { // 좋아요 누른 글번호 게시글 좋아요 테이블에 저장
+
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().communityLikesStore(conn, memberNo, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public LikesCommunity selectCommunityLikes(int memberNo) { // 게시글 좋아요 테이블 회원번호로 조회
+		
+		Connection conn = getConnection();
+
+		LikesCommunity lc = new CommunityDao().selectCommunityLikes(conn, memberNo);
+		
+		close(conn);
+		
+		return lc;
+	}
+
+	public int decreaseLike(int communityNo) { // 게시글 좋아요 수 감소
+		
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().decreaseLike(conn, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int communityLikesremove(int memberNo, int communityNo) { // 좋아요 누른 글번호 게시글 좋아요 테이블에서 제거
+
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().communityLikesremove(conn, memberNo, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
 	}
 
 

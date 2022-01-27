@@ -122,11 +122,11 @@
     </style>
   </head>
   
-  <body> 
+  <body>
   
   <div id="container">
   <div id="header">
-	<% if(loginUser == null) { %>  
+	<% if(loginUser == null) { %>
 	  <!-- 로그인 전에 보여지는 페이지  -->
 	  
 	    <div class="login">
@@ -135,7 +135,7 @@
 		          <li><a href="<%= contextPath %>/views/common/login.jsp">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
 		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
-		          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+		          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 		          <li><input type="search" name="search" id="header_search"></li>
 		          <li><button id="header_search_btn"></button></li>
 		        </ul>
@@ -149,7 +149,7 @@
 	          <li><a href="<%=contextPath %>/myPage.me"><%= loginUser.getMemberNickname()%></a> 님</li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
 	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
-	          <li><a href="<%= contextPath %>/community.me">COMMUNITY</a></li>
+	          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 	          <li><input type="search" name="search" id="header_search"></li>
 	          <li><button id="header_search_btn"></button></li>
 	        </ul>

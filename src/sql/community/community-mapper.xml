@@ -135,13 +135,6 @@
                                 BY ISNOTICE DESC, CREATE_DATE DESC) A)
 			WHERE RNUM BETWEEN ? AND ?
 	</entry>
-
-	
-	<entry key="selectCategory">
-		SELECT *
-		  FROM CATEGORY
-	</entry>
-	
 	
 	<entry key="insertCommunity">
 		INSERT INTO COMMUNITY(COMMUNITY_NO, COMMUNITY_TITLE, COMMUNITY_CATEGORY, COMMUNITY_WRITER, 
@@ -161,6 +154,38 @@
 		   AND STATUS = 'Y'
 	</entry>
 	
+	<entry key="increaseLike">
+		UPDATE COMMUNITY
+		   SET LIKES = LIKES + 1
+		 WHERE COMMUNITY_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+
+	<entry key="decreaseLike">
+		UPDATE COMMUNITY
+		   SET LIKES = LIKES - 1
+		 WHERE COMMUNITY_NO = ?
+		   AND STATUS = 'Y'
+	</entry>	
+	
+	<entry key="communityLikesStore">
+		UPDATE LIKES_COMMUNITY
+		   SET LIKES_COMMUNITY = LIKES_COMMUNITY || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="communityLikesremove">
+		UPDATE LIKES_COMMUNITY
+		   SET LIKES_COMMUNITY = replace(LIKES_COMMUNITY, ? ,'')
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="selectCommunityLikes">
+		SELECT LIKES_COMMUNITY
+		  FROM LIKES_COMMUNITY
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
 	<entry key="selectCommunity">
 		SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, COMMUNITY_CONTENT, NICKNAME, CREATE_DATE, VIEWS, LIKES, SPOILER, REPORT_COUNT, ISNOTICE, COMMUNITY_WRITER
 		  FROM COMMUNITY C
@@ -175,32 +200,33 @@
 		 WHERE REF_CNO = ?
 	</entry>
 	
-	<entry key="updateBoard">
-		UPDATE BOARD
-		   SET CATEGORY_NO = ?
-		     , BOARD_TITLE = ?
-		     , BOARD_CONTENT = ?
-		 WHERE BOARD_NO = ?
+	<entry key="updateCommunity">
+		UPDATE COMMUNITY
+		   SET COMMUNITY_CATEGORY = ?
+		     , COMMUNITY_TITLE =?
+		     , COMMUNITY_CONTENT = ?
+		     , SPOILER = ?
+		 WHERE COMMUNITY_NO = ?
 	</entry>
 	
-	<entry key="updateAttachment">
-		UPDATE ATTACHMENT
+	<entry key="updateCommunityFile">
+		UPDATE C_FILE
 		   SET ORIGIN_NAME = ?
 		     , CHANGE_NAME = ?
 		     , FILE_PATH = ?
-		     , UPLOAD_DATE = SYSDATE
+		     , MODIFY_DATE = SYSDATE
 		 WHERE FILE_NO = ?
 	</entry>
 	
-	<entry key="insertNewAttachment">
-		INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
-		VALUES(SEQ_FNO.NEXTVAL, ?, ?, ?, ?)
+	<entry key="insertNewCommunityFile">
+		INSERT INTO C_FILE(FILE_NO, REF_CNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		VALUES(SEQ_CFNO.NEXTVAL, ?, ?, ?, ?)
 	</entry>
 	
-	<entry key="deleteBoard">
-		UPDATE BOARD
+	<entry key="deleteCommunity">
+		UPDATE COMMUNITY
 		   SET STATUS = 'N'
-		 WHERE BOARD_NO = ?
+		 WHERE COMMUNITY_NO = ?
 	</entry>
 	
 	<entry key="insertThumbnailBoard">
@@ -225,7 +251,7 @@
 	</entry>
 	
 	<entry key="selectReplyList">
-		SELECT REPLY_NO, REPLY_CONTENT, NICKNAME, TO_CHAR(CREATE_DATE, 'YY/MM/DD HH:MI:SS') "CREATE_DATE", MEMBER_NO, REPORT_COUNT
+		SELECT REPLY_NO, REPLY_CONTENT, NICKNAME, TO_CHAR(CREATE_DATE, 'YY/MM/DD HH24:MI:SS') "CREATE_DATE", MEMBER_NO, REPORT_COUNT
 		  FROM REPLY R
 		  JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
 		 WHERE REF_CNO = ?

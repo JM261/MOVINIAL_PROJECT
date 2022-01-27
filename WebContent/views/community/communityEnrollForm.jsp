@@ -27,12 +27,13 @@
 	<div class="outer">
 
 		<br>
-		<h1 style="margin-left: 100px; margin-bottom: 25px;">COMMUNITY 게시글 작성</h1>
+		<h1 style="margin-left: 100px; margin-bottom: 25px;">COMMUNITY</h1>
 
 		<form action="<%= contextPath %>/insert.cm" method="post" enctype="multipart/form-data">
 			<div align="right" style="width:1100px; color: red; font-weight: bold;" >
 				<input type="checkbox" class="form-check-input" name="spoiler">컨텐츠 스포일러가 포함된 글이면 체크해 주세요.
 			</div>
+			<!--  input 태그의 hidden 타입으로 게시글 작성하는 회원의 고유번호 넘기기 -->
 			<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
 			<table align="center" border="1">
 				<tr>
@@ -85,9 +86,10 @@
 			}
 		</script>
 			<br>
-			<div class="form-controll" align="center">
-				<button type="submit" class="btn btn-primary">등록</button>
-				<button type="reset" class="btn btn-secondary">취소</button>
+			<div align="center">
+				<button type="submit" class="btn btn-primary">게시글 등록</button>
+				<a href="<%= contextPath %>/list.cm?currentPage=1" class="btn btn-secondary">목록으로 돌아가기</a>
+                <button type="button" class="btn btn-secondary" onclick="history.back();">이전 페이지로 이동</button>
 			</div>
 		</form>
 		<br><br>

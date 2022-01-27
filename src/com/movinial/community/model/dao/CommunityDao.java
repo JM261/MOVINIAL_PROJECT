@@ -13,6 +13,7 @@ import com.movinial.common.model.vo.PageInfo;
 import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.CommunityFile;
 import com.movinial.community.model.vo.Reply;
+import com.movinial.member.model.vo.LikesCommunity;
 
 import static com.movinial.common.JDBCTemplate.*;
 
@@ -494,5 +495,230 @@ public class CommunityDao {
 		return result;
 	}
 
+	public int updateCommunity(Connection conn, Community c) { // 게시글 수정,업데이트
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateCommunity");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, c.getCommunityCategory());
+			pstmt.setString(2, c.getCommunityTitle());
+			pstmt.setString(3, c.getCommounityContent());
+			pstmt.setString(4, c.getSpoiler());
+			pstmt.setInt(5, c.getCommunityNo());
+			
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateCommunityFile(Connection conn, CommunityFile cf) { // 게시글 첨부파일 수정,업데이트
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateCommunityFile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cf.getOriginName());
+			pstmt.setString(2, cf.getChangeName());
+			pstmt.setString(3, cf.getFilePath());
+			pstmt.setInt(4, cf.getFileNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertNewCommunityFile(Connection conn, CommunityFile cf) {
+		
+		// INSERT => 처리된 행의 갯수
+		// 변수
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertNewCommunityFile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, cf.getRefNo());
+			pstmt.setString(2, cf.getOriginName());
+			pstmt.setString(3, cf.getChangeName());
+			pstmt.setString(4, cf.getFilePath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteCommunity(Connection conn, int communityNo) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteCommunity");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, communityNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int increaseLike(Connection conn, int communityNo) { // 게시글 좋아요 수 증가
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, communityNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int communityLikesStore(Connection conn, int memberNo, int communityNo) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("communityLikesStore");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(communityNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public LikesCommunity selectCommunityLikes(Connection conn, int memberNo) {
+		
+		LikesCommunity lc = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCommunityLikes");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				lc = new LikesCommunity();
+				lc.setLikesCommunity(rset.getString("LIKES_COMMUNITY"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		return lc;
+	}
+
+	public int decreaseLike(Connection conn, int communityNo) { // 게시글 좋아요 수 감소
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("decreaseLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, communityNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int communityLikesremove(Connection conn, int memberNo, int communityNo) {
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("communityLikesremove");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(communityNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }

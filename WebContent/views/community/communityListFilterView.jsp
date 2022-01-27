@@ -19,29 +19,27 @@
 <meta charset="UTF-8">
 <title>COMMUNITY</title>
 <style>
-    .outer{
-    /* background-color: skyblue; */
-    color: black;
-    width: 1000px;
-    height: 100%;
-    margin: auto;
-    margin-top: 50px;
-    border: 1px solid black;
-}
-
-.list-area{
-    /* border: 1px solid white; */
-    text-align: center;
-}
-.list-area>tbody>tr:hover{
-    cursor : pointer;
-    background : rgb(240, 240, 240);
-}
-.community-category>a{
-    color: black;
-    font-weight: bolder;
-    text-decoration: none;
-}
+	.outer{
+	    color: black;
+	    width: 1000px;
+	    height: 100%;
+	    margin: auto;
+	    margin-top: 50px;
+	    border: 1px solid black;
+	}
+	.list-area{
+	    text-align: center;
+	}
+	.list-area>tbody>tr:hover{
+	    cursor : pointer;
+	    background : rgb(240, 240, 240);
+	}
+	.community-category>a{
+	    color: black;
+	    font-weight: bolder;
+	    text-decoration: none;
+        margin-left: 10px;
+	}
 </style>
 </head>
 <body>
@@ -52,20 +50,16 @@
         <br>
         <h1 style="margin-left: 100px; margin-bottom: 20px;">COMMUNITY</h1>
 
-        <div class="community-category">
+        <div class="community-category" style="margin-bottom: 5px;" >
         <a href="<%= contextPath %>/list.cm?currentPage=1" style="margin-left: 100px;">전체</a>
-        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=공지" style="margin-left: 10px;" >공지</a>
-        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=일반" style="margin-left: 10px;" >일반</a>
-        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=정보" style="margin-left: 10px;" >정보</a>
-        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=리뷰" style="margin-left: 10px;" >리뷰</a>
+        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=공지" >공지</a>
+        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=일반" >일반</a>
+        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=정보" >정보</a>
+        <a href="<%= contextPath %>/list.cc?currentPage=1&cct=리뷰" >리뷰</a>
+        <% if(loginUser != null) { %>
+        <a align="right" style="color: white; font-weight: lighter; margin-left: 518px;" href="<%= contextPath %>/enrollForm.cm" class="btn btn-sm btn-secondary">글쓰기</a>
+        <% } %>
         </div>
-
-
-
-        <div align="right" style="width:900px">
-        <a align="right" href="<%= contextPath %>/enrollForm.cm" class="btn btn-sm btn-secondary" style="margin-bottom: 5px;">글쓰기</a>
-        </div>
-
 
         <table align="center" class="list-area">
             <thead>
@@ -112,14 +106,22 @@
         <script>
             $(function(){
 
-                $('.list-area>tbody>tr').click(function(){
+                $('.list-area>tbody>tr').click(function(){ // 게시글 리스트 클릭 시 
+                    
+                    var loginUser = '<%= loginUser %>'
+
+                	if(loginUser != 'null') { // 로그인정보가 있으면 게시글을 열람할 수 있게 요청
 
                     location.href = "<%= contextPath %>/detail.cm?cno=" + $(this).children().eq(0).text();
+                    }
+                    else{ // 로그인정보가 없으면 로그인 화면으로 보내버리기
+                        alert("로그인 후 이용해주시기 바랍니다.");
+                        location.href = "<%= contextPath %>/login.me"
+                    }
 
                 })
 
             })
-
         </script>
 
         <!-- 커뮤니티 게시글 검색창 -->
