@@ -142,7 +142,7 @@ h2 {
 	                    <a href="<%= contextPath %>/id_find.me">아이디찾기</a>
 	               </div>
 	               <div class="forgot_pw">
-	                	<a href="">비밀번호찾기</a>
+	                	<a href="<%= contextPath %>/pwd_find.me">비밀번호찾기</a>
 	               </div>
                </div>
             </div>

@@ -87,7 +87,6 @@ public class MemberDao {
 			pstmt.setString(5, m.getEmail());
 			pstmt.setString(6, m.getPhone());
 			pstmt.setString(7, m.getPreferGenre());
-			System.out.println(pstmt);
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -198,6 +197,70 @@ public class MemberDao {
 		
 		return result;
 	} // deleteMember : 멤버 삭제(관리자)
+	
+	
+	
+	public Member forgotPwd(Connection conn, String memberId, String memberName, String phone) { // 비밀번호 바꿀 대상찾기
+		
+		Member m = new Member();
+		
+		ResultSet rset = null;
+		
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("forgotPwd");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			pstmt.setString(3, phone);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+
+				m = new Member(rset.getInt("MEMBER_NO"), rset.getString("MEMBER_ID"), rset.getString("MEMBER_PWD"),
+						rset.getString("MEMBER_NAME"), rset.getString("NICKNAME"), rset.getString("EMAIL"),
+						rset.getString("PHONE"), rset.getString("MEMBER_TYPE"), rset.getString("STATUS"),
+						rset.getDate("ENROLL_DATE"), rset.getDate("MODIFY_DATE"), rset.getString("preferGenre"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+			return m;
+		}
+	
+	public int updateMemberPwd(Connection conn, String updatePwd,String memberId, int memberNo) { // 비밀번호 변경
+			
+			int result = 0;
+			
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("updateMemberPwd");
+			
+			try {
+				pstmt= conn.prepareStatement(sql);
+				
+				pstmt.setString(1, updatePwd);
+				pstmt.setString(2, memberId);
+				pstmt.setInt(3, memberNo);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
+	
+	
 
 	public ArrayList<Member> searchMember(Connection conn, String keyword) { // searchMember : 회원 검색(관리자)
 		
@@ -256,7 +319,7 @@ public class MemberDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			System.out.println(sql);
+
 			pstmt.setString(1, memberName);
 			pstmt.setString(2, phone);
 
@@ -276,5 +339,13 @@ public class MemberDao {
 
 		return memberId;
 	}
+	
+	
 
+	
+
+
+
+
+	
 }
