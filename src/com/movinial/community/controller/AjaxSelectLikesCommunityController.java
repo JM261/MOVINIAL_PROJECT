@@ -39,6 +39,8 @@ public class AjaxSelectLikesCommunityController extends HttpServlet {
 		// 회원번호를 가지고 게시글 좋아요 테이블을 조회하여 온다
 		LikesCommunity lc = new CommunityService().selectCommunityLikes(memberNo);
 		
+		System.out.println(lc);
+		
 		// GSON 사용해서 응답하기 => lc를 자바스크립트 객체형태로 변환
 		response.setContentType("application/json; charset=UTF-8");
 		

@@ -136,7 +136,7 @@
 		        <ul>
 		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
-		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
+		          <li><a href="<%= contextPath %>/main.mo">MOVIE</a></li>
 		          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 		          <li><input type="search" name="search" id="header_search"></li>
 		          <li><button id="header_search_btn"></button></li>
@@ -150,7 +150,7 @@
 	        <ul>
 	          <li><a href="<%=contextPath %>/myPage.me"><%= loginUser.getMemberNickname()%></a> 님</li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
-	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
+	          <li><a href="<%= contextPath %>/main.mo">MOVIE</a></li>
 	          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 	          <li><input type="search" name="search" id="header_search"></li>
 	          <li><button id="header_search_btn"></button></li>

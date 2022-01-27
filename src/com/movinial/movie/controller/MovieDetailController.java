@@ -39,7 +39,7 @@ public class MovieDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 쿼리스트링 request 값 뽑기
-		int movieNo = Integer.parseInt(request.getParameter("mno"));
+		int movieNo = Integer.parseInt(request.getParameter("movieNo"));
 		
 		// 해당 영화 DB 정보 가져오기
 		Movie m = new MovieService().selectMovieDetail(movieNo);

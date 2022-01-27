@@ -10,12 +10,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import com.movinial.member.model.vo.LikesCommunity;
+import com.movinial.member.model.vo.LikesMovie;
 import com.movinial.movie.model.vo.Movie;
 
 public class MovieDao {
 	
 	private Properties prop = new Properties();
 	
+	/**
+	 * 기본 생성자: movie-mapper.xml 파일 삽입
+	 */
 	public MovieDao() {
 		
 		String fileName = MovieDao.class.getResource("/sql/movie/movie-mapper.xml").getPath();
@@ -28,6 +33,7 @@ public class MovieDao {
 		
 	}
 
+	
 	/**
 	 * 선택한 영화 상세보기
 	 * @param conn
@@ -75,7 +81,6 @@ public class MovieDao {
 		
 	}
 	
-
 	/**
 	 * 영화 포스터 가져오기
 	 * @param conn
@@ -149,10 +154,49 @@ public class MovieDao {
 		return movieBackdropPath;
 		
 	}
-	
-	
+
 	/**
-	 * 봤어요 카운트 올려주기
+	 * 영화 좋아요 테이블 회원번호로 조회 (이영화 봤어요 컬럼용)
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 */
+	public LikesMovie selectSeenMovie(Connection conn, int memberNo) {
+		
+		LikesMovie lm = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectSeenMovie");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				lm = new LikesMovie();
+				lm.setSeenMovie(rset.getString("SEEN_MOVIE"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		
+		return lm;
+		
+	}
+
+	/**
+	 * 해당 영화의 봤어요 수 증가
 	 * @param conn
 	 * @param movieNo
 	 * @return
@@ -160,7 +204,6 @@ public class MovieDao {
 	public int increaseMovieSeen(Connection conn, int movieNo) {
 		
 		int result = 0;
-		
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("increaseMovieSeen");
@@ -184,7 +227,7 @@ public class MovieDao {
 	}
 	
 	/**
-	 * 봤어요 카운트 내려주기
+	 * 해당 영화의 봤어요 수 감소
 	 * @param conn
 	 * @param movieNo
 	 * @return
@@ -192,10 +235,9 @@ public class MovieDao {
 	public int decreaseMovieSeen(Connection conn, int movieNo) {
 		
 		int result = 0;
-		
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("increaseMovieSeen");
+		String sql = prop.getProperty("decreaseMovieSeen");
 		
 		try {
 			
@@ -214,10 +256,75 @@ public class MovieDao {
 		return result;
 		
 	}
-
-
-
-
 	
+
+	/**
+	 * 봤어요 누른 영화 번호, 영화 좋아요 '이영화 봤어요' 컬럼에 저장
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public int seenMovieStore(Connection conn, int memberNo, int movieNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("seenMovieStore");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(movieNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+
+	/**
+	 * 봤어요 누른 영화 번호, 영화 좋아요 '이영화 봤어요' 컬럼에서 삭제
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public int seenMovieRemove(Connection conn, int memberNo, int movieNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("seenMovieRemove");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(movieNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+
 	
 }
