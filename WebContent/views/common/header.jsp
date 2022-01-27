@@ -124,19 +124,19 @@
     </style>
   </head>
   
-  <body> 
+  <body>
   
   <div id="container">
   <div id="header">
-	<% if(loginUser == null) { %>  
+	<% if(loginUser == null) { %>
 	  <!-- 로그인 전에 보여지는 페이지  -->
 	  
 	    <div class="login">
 		  <h1><a href="<%= contextPath %>/mainpage.mp"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 		        <ul>
-		          <li><a href="<%= contextPath %>/views/common/login.jsp">LOGIN</a></li>
+		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
-		          <li><a href="<%= contextPath %>/main.mo">MOVIE</a></li>
+		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
 		          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 		          <li><input type="search" name="search" id="header_search"></li>
 		          <li><button id="header_search_btn"></button></li>
@@ -150,7 +150,7 @@
 	        <ul>
 	          <li><a href="<%=contextPath %>/myPage.me"><%= loginUser.getMemberNickname()%></a> 님</li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
-	          <li><a href="<%= contextPath %>/main.mo">MOVIE</a></li>
+	          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
 	          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
 	          <li><input type="search" name="search" id="header_search"></li>
 	          <li><button id="header_search_btn"></button></li>
