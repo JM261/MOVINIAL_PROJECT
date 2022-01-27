@@ -69,8 +69,8 @@
           
             <li><a href="#">개인정보처리방침</a></li>
             <li><a href="#">청소년보호정책</a></li>
-            <li><a href="<%= contextPath %>/noticeList.no?currentPage=1">고객센터</a></li>
-            <li><a href="#">공지사항</a></li>
+            <li><a href="<%= contextPath %>/FAQList.no">고객센터</a></li>
+            <li><a href="<%= contextPath %>/noticeList.no?currentPage=1">공지사항</a></li>
             <%if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
             <li><a href ="<%= contextPath %>/manage.mem?currentPage=1">회원관리</a></li>
             <%} %>

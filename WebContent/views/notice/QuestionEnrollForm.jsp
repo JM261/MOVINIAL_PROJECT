@@ -56,6 +56,13 @@
 	#gongback{
 		height: 30px;
 	}
+	table{
+	font-size: 22px;
+	}
+	.qbtn{
+	height : 50px;
+	font-size:22px;
+	}
 
 </style>
 </head>
@@ -80,7 +87,7 @@
 			<br><br>
 			
 		<!-- 파일을 첨부하는 요청을 할 경우에는 "반드시" enctype="multipart/form-data"를 지정해야한다.   -->
-		<form id="enroll-form" action="<%= contextPath %>/questionInsert.no" method="post">
+		<form id="enroll-form" action="<%= contextPath %>/questionInsert.no" method="post" enctype="multipart/form-data">
 			<!-- 제목, 내용, 카테고리, 첨부파일 입력받기 -->
 			<!--  작성자의 회원번호를 hidden으로 같이 넘길것  -->
 			
@@ -116,8 +123,8 @@
 			<br>
 			<div align="center">
 				&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;
-				<button type="submit" class="btn1 btn-secondary">작성하기</button> 
-				<button type="reset" class="btn1 btn-secondary">취소하기</button>
+				<button type="submit" class="btn1 btn-secondary qbtn">작성하기</button> 
+				<button type="reset" class="btn1 btn-secondary qbtn">취소하기</button>
 			</div>
 
 			<br><br>

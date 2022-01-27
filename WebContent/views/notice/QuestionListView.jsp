@@ -5,6 +5,7 @@
 
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String memberNo = request.getParameter("memberNo");
 	
 	// 페이징바 만들때 필요한 변수 세팅
 	int currentPage = pi.getCurrentPage();
@@ -100,7 +101,8 @@ tr td{
             <%} %>
         </div>
         
-		<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
+        <form id="list-form" action="<%= contextPath %>/questionDetail.no">
+		<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>"> 
         <table align="center" class="list-area">
             
             <thead>
@@ -112,28 +114,33 @@ tr td{
                 </tr>--%> 
             </thead>
             <tbody>
-                <!-- 게시글 출력 -->
+                <!-- 게시글 출력 .-->
                 <% if(list.isEmpty()){ %>
 	                <tr>
 	                    <td colspan="5"> 작성된 문의내역이 없습니다. </td>
 	                </tr>
-	            <%}else{ %>   <%-- 로그인한 회원  == 글작성자 --%>   
+	            <%}else{ %>      
 					<!--  반복 : list에 있는 값을 순차적으로 접근해서 뽑아오기  -->
 					<% for(Question q : list) { %>
+					
 		                <tr id="titleDate">
 		                	<td id="qnaNo"><%= q.getQnaNo() %></td>
-		                    <td width="200">[ <%= q.getQnaWriter() %> ]</td> <!-- 카테고리.... 일단하고.. 나중에 수정  -->
+		                    <td width="210">[ <%= q.getQnaWriter() %> ]</td> <!-- 카테고리.... 일단하고.. 나중에 수정  -->
 		                    <td id="Qwriter"><%=q.getCategory() %></td> <!-- 작성자 ..... -->
-		                	<td width="400"><%= q.getQnaTitle() %></td>   
-		                    <td width="200"><%= q.getCreateDate() %></td>
-		                    <td width="100"><a href="" id="reply">답변확인</a></td>
-		                    <%} %>
-		                </tr>
+		                	<td width="450"><%= q.getQnaTitle() %></td>   
+		                    <td width="150"><%= q.getCreateDate() %></td>
+		                    <td width="90"><a href="" id="reply">답변확인</a></td>
+		                </tr>	                	
+		                <%} %>
                 	<%} %>
              	
             </tbody>
         
         </table>
+    </form>
+	
+
+
 
 		<script>
         
@@ -141,11 +148,8 @@ tr td{
                 $(".list-area>tbody>tr").click(function(){
                     // /jsp/ditail.bo?bno=X
 
-                    location.href = "<%=contextPath%>/questionDetail.no?qno="+ $(this).children().eq(0).text();
-                    
-                    
+                    location.href = "<%=contextPath%>/questionDetail.no?qno="+ $(this).children().eq(0).text();             
                 })
-
             })
             
         </script>
