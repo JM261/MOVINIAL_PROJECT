@@ -6,19 +6,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class FindId_EmailController
+ * Servlet implementation class FindMemberPwdController
  */
-@WebServlet("/Find_id_Email.me")
-public class FindId_EmailController extends HttpServlet {
+@WebServlet("/pwd_find.me")
+public class FindMemberPwdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindId_EmailController() {
+    public FindMemberPwdController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,20 +27,11 @@ public class FindId_EmailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//인코딩
-		request.setCharacterEncoding("UTF-8");
+			// 비밀번호 폼만 띄워줄것
+			
 		
-		//새션에 아이디찾기에 필요한 /이름, 핸드폰번호 담기/
-		HttpSession session = request.getSession();
-		session.setAttribute("memberId", request.getParameter("memberId"));
-		session.setAttribute("email", request.getParameter("email"));
+			request.getRequestDispatcher("views/member/pwd_find.jsp").forward(request, response);
 
-		
-		
-		
-		request.getRequestDispatcher("views/member/id_search2.jsp").forward(request, response);
-
-		
 	}
 
 	/**

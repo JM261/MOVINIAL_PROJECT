@@ -6,6 +6,8 @@
 	Member loginUser = (Member)session.getAttribute("loginUser"); // : Object
 	// 로그인 전 : menubar.jsp가 로딩될 때 null
 	// 로그인 후 : manubar.jsp가 로딩될 때 로그인한 회원의 정보가 담겨있음
+	
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>    
     
 <!doctype html>
@@ -130,9 +132,9 @@
 	  <!-- 로그인 전에 보여지는 페이지  -->
 	  
 	    <div class="login">
-		  <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+		  <h1><a href="<%= contextPath %>/mainpage.mp"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 		        <ul>
-		          <li><a href="<%= contextPath %>/views/common/login.jsp">LOGIN</a></li>
+		          <li><a href="<%= contextPath %>/login.me">LOGIN</a></li>
 		          <li><a href="<%= contextPath %>/enrollForm.me">JOIN</a></li>
 		          <li><a href="<%= contextPath %>/movie.me">MOVIE</a></li>
 		          <li><a href="<%= contextPath %>/list.cm?currentPage=1">COMMUNITY</a></li>
@@ -144,7 +146,7 @@
 	  <% } else { %>  
 	  <!-- 로그인 후 보여지는 페이지 -->
 		<div class="logout">
-	        <h1><a href="<%= contextPath %>/main.me"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
+	        <h1><a href="<%= contextPath %>/mainpage.mp"><img src="<%= contextPath %>/resources/images/movinial_logo.jpg" alt="로고">MOVINIAL[:near]</a></h1> <!-- 이미지 경로 상대 경로 -->
 	        <ul>
 	          <li><a href="<%=contextPath %>/myPage.me"><%= loginUser.getMemberNickname()%></a> 님</li>
 	          <li><a href="<%= contextPath %>/logout.me">LOGOUT</a></li>
@@ -156,5 +158,15 @@
 	   	 </div>
 	   	 <% } %>
    	 </div>
+   	 
+   	 <script>
+	   	var msg = "<%= alertMsg %>"; 
+		
+		if(msg != "null"){ 
+			alert(msg);
+			<% session.removeAttribute("alertMsg"); %>
+		}
+   	 </script>
+   	 
   </body>
 </html>

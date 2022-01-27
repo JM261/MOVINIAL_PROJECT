@@ -1,26 +1,28 @@
 package com.movinial.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.movinial.member.model.service.MemberService;
+import com.movinial.member.model.vo.Member;
 
 /**
- * Servlet implementation class FindId_PhoneController
+ * Servlet implementation class ChangeMemberPwdController
  */
-@WebServlet("/Fine_id_Phone.me")
-public class FindId_PhoneController extends HttpServlet {
+@WebServlet("/pwd_change.me")
+public class ChangeMemberPwdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindId_PhoneController() {
+    public ChangeMemberPwdController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,25 +31,29 @@ public class FindId_PhoneController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		//1.인코딩
 		request.setCharacterEncoding("UTF-8");
-		System.out.println("Fine_id_Phone.me");
-		//2. 넘겨 받은 값을 가공한다
+		
+		String memberId = request.getParameter("memberId");
 		String memberName = request.getParameter("memberName");
 		String phone = request.getParameter("phone1") +"-" +request.getParameter("phone2") + "-" +request.getParameter("phone3");
-	
-		//3. 서비스 호출 (가공한 데이터를 같이 넘긴다)
-		// 결과값을 생각하면서 호출하기(UPDATE, DELETE, INSERT -> int로 반환해준다)
-		// SELECT 같은 경우 객체(즉VO) 가 여러개일경우 ArrayList<vo> 로받아야하고
-		// 단일 일땐 VO로 받을것을 생각한다
-		// memberId 단일 문자열
-		System.out.println(memberName);
-		String memberId = new MemberService().findId(memberName, phone); 
-		System.out.println(memberId);
-		request.setAttribute("memberId", memberId);
+		
+		Member m = new MemberService().forgotPwd(memberId, memberName, phone); 
+		System.out.println(m);
+		if( m.getMemberId() == null  ) {	//인증 성공시
+		
+			request.setAttribute("errorMsg", "회원정보를 잘못 입력하셨습니다.");
+			request.getRequestDispatcher("views/member/pwd_find.jsp").forward(request, response);
+			
+		} else {	//인증 성공시
+			request.setAttribute("memberInfo", m);	
+			request.getRequestDispatcher("views/member/pwd_change.jsp").forward(request, response);
+
+//			response.sendRedirect("views/member/pwd_change.jsp");
+		}
 		
 		
-		request.getRequestDispatcher("views/member/id_search.jsp").forward(request, response);
 
 		
 	}

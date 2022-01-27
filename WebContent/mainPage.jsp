@@ -99,10 +99,11 @@
       }
 
       .title{
-        text-decoration: none;
         color: black;
         font-size: x-large; 
         font-weight: bold;
+        pointer-events: none;
+        cursor: default;
       }
 
       .movie0{
@@ -164,7 +165,7 @@
       <% if(loginUser != null){ %>   
       <a href="" class="title"><%= loginUser.getMemberNickname() %>님을 위한 추천영화</a>
       <div id="content1">
-        <div class="movie0"> </div>
+        <div class="movie0"></div>
         <div class="movie0"> </div>
         <div class="movie0"> </div>
         <div class="movie0"> </div>
@@ -174,7 +175,7 @@
 
 
 
-      <a href="" class="title">최신 개봉 영화</a>
+      <a class="title">최신 개봉 영화</a>
       <div id="content2">
         <div class="movie1"> </div>
         <div class="movie1"> </div>
@@ -183,7 +184,7 @@
         <div class="movie1"> </div>
       </div>
   
-      <div><a href="" class="title">MOVINIAL 추천 영화 <br></a></div>
+      <div><a class="title">MOVINIAL 추천 영화 <br></a></div>
       <div id="div1">
         <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
         <div class="mCenter">
@@ -196,7 +197,7 @@
       </div>
 
       <div id="div2">
-        <a href="" class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
+        <a class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
         <div class="mCenter">
           <div class="movie3"> </div>
           <div class="movie3"> </div>
@@ -207,7 +208,7 @@
       </div>
 
       <div id="div34">
-        <a href="" class="title">리뷰어 랭킹</a>
+        <a class="title">리뷰어 랭킹</a>
         <div id="div3">
           <div class="reviewer"></div>
           <div class="reviewer"></div>
@@ -216,11 +217,11 @@
           <div class="reviewer"></div>
         </div>
         <a href="" class="title">베스트리뷰</a>
-        <div id="div4">베스트 리뷰</div>
+        <div id="div4"></div>
       </div>
 
-      <a href="" class="title">&nbsp;&nbsp;&nbsp;&nbsp;이번주 인기 영화 TOP 10</a>
-      <div id="div5">이번주 인기 영화 TOP 10</div>
+      <a class="title">&nbsp;&nbsp;&nbsp;&nbsp;이번주 인기 영화 TOP 10</a>
+      <div id="div5"></div>
 
 
       <div id="div6"><a href="" class="title">COMMUNITY</a></div>  

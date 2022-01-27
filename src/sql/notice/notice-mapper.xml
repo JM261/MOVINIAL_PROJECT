@@ -9,26 +9,25 @@
 	
 	<entry key="selectListCount">
 		SELECT COUNT(*) COUNT
-		  FROM QUESTION
-		  JOIN MEMBER ON (MEMBER_NO = QNA_WRITER)
-		  WHERE MEMBER_NO = QNA_WRITER
-		    AND MEMBER_NO = ?
+		  FROM QUESTION Q  
+		 WHERE Q.STATUS = 'Y'
+           AND MEMBER_NO = ?
 	</entry>
 	
 	<entry key="selectList">
-			SELECT *
-			  FROM (
+		SELECT *
+			FROM (
 			        SELECT ROWNUM RNUM, A.*
 			          FROM (
-			                SELECT QNA_NO, CATEGORY_NAME,QNA_TITLE, MEMBER_ID, MEMBER_NO,QNA_WRITER,CREATE_DATE,q.STATUS
-			                  FROM QUESTION q
+			                SELECT QNA_NO, CATEGORY_NAME,QNA_TITLE, MEMBER_ID, MEMBER_NO,QNA_WRITER,CREATE_DATE,Q.STATUS
+			                  FROM QUESTION Q
 			                  JOIN CATEGORY USING (CATEGORY_NO)
 			                  JOIN MEMBER ON (QNA_WRITER = MEMBER_NO)
-			                 WHERE q.STATUS = 'Y'
-			                   AND MEMBER_NO = ?                           
+			                 WHERE Q.STATUS = 'Y'
+			                   AND MEMBER_NO = ?
 			                 ORDER 
 			                    BY CREATE_DATE DESC) A)
-			WHERE RNUM BETWEEN ? AND ?
+		WHERE RNUM BETWEEN ? AND ?
 		
 	</entry>
 	
@@ -38,11 +37,11 @@
 		VALUES(SEQ_QNO.NEXTVAL, ?, ?, ?, ?)				    
 	</entry>
 
-
-
-
-
-
+	<entry key="insertQfile">
+		INSERT INTO Q_file(FILE_NO, REF_QNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		VALUES(SEQ_QFNO.NEXTVAL, SEQ_QNO.CURRVAL, ?, ?, ?)
+	
+	</entry>
 
 	<entry key="selectNoticeListCount">
 		SELECT COUNT(*) COUNT
@@ -55,7 +54,7 @@
 			FROM (
 			        SELECT ROWNUM RNUM, A.*
 			          FROM (
-			                SELECT NOTICE_NO, NOTICE_TITLE, MEMBER_ID, CREATE_DATE
+			                SELECT NOTICE_NO, NOTICE_TITLE, NOTICE_WRITER, CREATE_DATE
 			                  FROM NOTICE N
 			                  JOIN MEMBER ON (NOTICE_WRITER = MEMBER_NO)
 			                 WHERE N.STATUS = 'Y'
@@ -87,10 +86,37 @@
 		  JOIN MEMBER ON(QNA_WRITER = MEMBER_NO)
 		 WHERE QNA_NO = ?
 		   AND Q.STATUS = 'Y'
-	
 	</entry>
 	
+	<entry key="selectQfile">
+		SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
+		  FROM Q_FILE
+		 WHERE REF_QNO = ?
+	</entry>
 	
+	<entry key="insertNotice">
+		INSERT INTO NOTICE(NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_WRITER)
+			VALUES (SEQ_QFNO.NEXTVAL, ?, ?, ?)
+	</entry>
 	
+	<entry key = "updateNotice">
+		UPDATE
+			NOTICE
+		SET 
+			NOTICE_TITLE = ?,
+			NOTICE_CONTENT = ?
+		WHERE
+			NOTICE_NO = ?
+		AND
+			STATUS = 'Y'
+	</entry>
 	
+	<entry key = "deleteNotice">
+		UPDATE
+			NOTICE
+		SET
+			STATUS = 'N'
+		WHERE
+			NOTICE_NO = ?		
+	</entry>
 </properties>

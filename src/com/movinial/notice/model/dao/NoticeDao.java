@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
-import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
+import com.movinial.notice.model.vo.Qfile;
 import com.movinial.notice.model.vo.Question;
 
 public class NoticeDao {
@@ -62,7 +62,7 @@ public class NoticeDao {
 			return list;
 		}
 	
-	public int selectListCount(Connection conn, Member m) {
+	public int selectListCount(Connection conn, String memberNo) {
 		// SELECT => ResultSet => 우리가 지금 필요한 건 총 게시글의 개수!
 		// SELECT문을 쓰지만 상식적으로 반환되는 값이 정수가 필요함
 		// 변수
@@ -76,7 +76,7 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, m.getMemberNo());
+			pstmt.setString(1, memberNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -92,7 +92,7 @@ public class NoticeDao {
 		return listCount;	
 	}
 	
-public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {  // 문의 페이징
+public ArrayList<Question> selectList(Connection conn, PageInfo pi, String memberNo ) {  // 문의 페이징
 		
 		ArrayList<Question> list = new ArrayList<>();		
 		PreparedStatement pstmt = null;		
@@ -106,7 +106,7 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
-			pstmt.setInt(1, m.getMemberNo());
+			pstmt.setString(1, memberNo);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			
@@ -115,11 +115,13 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {
 			
 			while(rset.next()) {
 				
-				list.add(new Question(rset.getInt("QNA_NO"),
-								   rset.getString("CATEGORY_NAME"),
-								   rset.getString("QNA_TITLE"),
-								   rset.getString("QNA_WRITER"),
-								   rset.getDate("CREATE_DATE")));
+				Question q = new Question(rset.getInt("QNA_NO"),
+						   				  rset.getString("CATEGORY_NAME"),
+						   				  rset.getString("QNA_TITLE"),
+						   				  rset.getString("QNA_WRITER"),
+						   				  rset.getDate("CREATE_DATE"));
+						
+				list.add(q);
 			}
 			
 		} catch (SQLException e) {
@@ -159,6 +161,30 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {
 				return result;
 	}
 
+	public int insertQfile(Connection conn, Qfile at) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertQfile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, at.getOriginName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;	
+	}
+
+	
+	
 	
 	public ArrayList<Notice> selectNoticeList(Connection conn, PageInfo pi) { // 공지 페이징
 		
@@ -190,8 +216,8 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {
 			while(rset.next()) {
 				
 				Notice n = new Notice(rset.getInt("NOTICE_NO"),
-									  rset.getString("NOTICE_TITLE"),
-								      rset.getString("MEMBER_ID"),
+									  rset.getString("NOTICE_WRITER"),
+								      rset.getString("NOTICE_TITLE"),
 								      rset.getDate("CREATE_DATE"));
 			   
 				list.add(n);
@@ -257,9 +283,9 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {
 			
 			if(rset.next()) {
 				n = new Notice(rset.getInt("NOTICE_NO"),
+							   rset.getString("MEMBER_ID"),
 							   rset.getString("NOTICE_TITLE"),
 							   rset.getString("NOTICE_CONTENT"),
-							   rset.getString("MEMBER_ID"),
 							   rset.getDate("CREATE_DATE"));
 				
 				
@@ -309,6 +335,114 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, Member m ) {
 			} 
 			return q;
 }
+	
+	public Qfile selectQfile(Connection conn, int questionNo) {
+		
+		Qfile at = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectQfile");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, questionNo);
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				at = new Qfile();
+				at.setFileNo(rset.getInt("FILE_NO"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return at;
+	}
+
+	public int insertNotice(Connection conn, Notice n) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, Integer.parseInt(n.getNoticeWriter()));  // "1"
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	} // insertNotice
+
+	public int updateNotice(Connection conn, Notice n) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, n.getNoticeNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	} // updateNotice
+
+	public int deleteNotice(Connection conn, int noticeNo) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	} // deleteNotice
 
 	
 	

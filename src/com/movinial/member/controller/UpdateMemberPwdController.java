@@ -16,14 +16,14 @@ import com.movinial.member.model.vo.Member;
  * Servlet implementation class MemberUpdatePwdController
  */
 @WebServlet("/updatePwd.me")
-public class MemberUpdatePwdController extends HttpServlet {
+public class UpdateMemberPwdController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberUpdatePwdController() {
-        super();
+    public UpdateMemberPwdController() {
+         super();
         // TODO Auto-generated constructor stub
     }
 
@@ -33,28 +33,29 @@ public class MemberUpdatePwdController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-		
-		//2) request로 부터 값을 추출(아이디(식별용), 패스워드랑 변경할 비밀번호만)
+
+		String newPwd 	= request.getParameter("newPwd");
 		String memberId = request.getParameter("memberId");
-		String memberPwd = request.getParameter("memberPwd");
-		String updatePwd = request.getParameter("updatePwd");
+		int memberNo 	= Integer.parseInt(request.getParameter("memberNo"));
 
 		//4) Service 단으로 토스
 		
-		 Member updateMem = new MemberService().updatePwdMember(memberId, memberPwd, updatePwd);
+		int result = new MemberService().updateMemberPwd(newPwd,memberId,memberNo);
 		
 		 //5) 결과값을 통해 성공 실패 여부에 따른 응답화면 지정
 		 
 		 HttpSession session = request.getSession();
 	
-		 if(updateMem == null) { //실패했을때
-			session.setAttribute("alertMsg", "비밀번호가 변경되지 않았습니다. 다시 시도해주세요."); 
+		 if(result == 0) { //실패했을때
+			 request.setAttribute("alertMsg", "비밀번호가 변경되지 않았습니다. 다시 시도해주세요.");
+			request.getRequestDispatcher("views/member/pwd_change.jsp").forward(request, response);
 		 } else { //성공했을때
-			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다");
-			session.setAttribute("loginUser", updateMem);
+//			 request.setAttribute("alertMsg", "비밀번호가 변경되었습니다");
+//			session.setAttribute("loginUser", updateMem);
+			 response.sendRedirect("views/member/pwd_update.jsp");
 		 }
-			
-		 response.sendRedirect(request.getContextPath() + "/myPage.me");
+		
+		
 
 	}
 
