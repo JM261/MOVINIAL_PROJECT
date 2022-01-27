@@ -72,8 +72,8 @@ public class MovieReviewDetailListController extends HttpServlet {
 		// 해당 영화 정보 받아오기
 		Movie m = new MovieService().selectMovieDetail(movieNo);
 		
-		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
 		request.setAttribute("m", m);
 		
 		request.getRequestDispatcher("views/movie/movieReviewDetailView.jsp").forward(request, response);

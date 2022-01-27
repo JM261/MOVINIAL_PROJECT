@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList, com.movinial.movie.model.vo.Movie, com.movinial.common.model.vo.PageInfo, com.movinial.review.model.vo.Review" %>
 <%
+	//영화 DB, 상세정보, 리뷰 가져오기
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
 	Movie m = (Movie)request.getAttribute("m");
@@ -12,8 +13,8 @@
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-	// 알림 메시지 담기
-	String alertMsg = (String)request.getAttribute("alertMsg");
+	// 알림 메시지 담기 - header.jsp > session으로 이동
+	//String alertMsg = (String)request.getAttribute("alertMsg");
 %>
 <!DOCTYPE html>
 <html>

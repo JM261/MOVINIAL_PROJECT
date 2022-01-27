@@ -38,14 +38,6 @@ public class MovieDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
-//		int movieId = 577922;
-//
-//        JSONObject json = getMovieDetail(movieId);
-//
-//        request.setAttribute("json", json);
-//        request.getRequestDispatcher("views/movie/test111.jsp").forward(request, response);
-		
 		// 쿼리스트링 request 값 뽑기
 		int movieNo = Integer.parseInt(request.getParameter("mno"));
 		
@@ -62,8 +54,6 @@ public class MovieDetailController extends HttpServlet {
 		request.setAttribute("m", m);
 		request.setAttribute("movieDetail", movieDetail);
 		request.setAttribute("list", list);
-		
-		
 		
 		request.getRequestDispatcher("views/movie/movieDetailView.jsp").forward(request, response);
 		
