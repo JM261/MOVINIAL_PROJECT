@@ -58,6 +58,7 @@ public class MovieReviewInsertController extends HttpServlet {
 			
 			request.setAttribute("alertMsg", "리뷰가 정상적으로 작성되었습니다.");
 			request.getRequestDispatcher("/reviewList.mo?currentPage=1&mno=" + movieNo).forward(request, response);
+			
 		} else {
 			
 			request.setAttribute("alertMsg", "리뷰 작성에 실패했습니다.");
