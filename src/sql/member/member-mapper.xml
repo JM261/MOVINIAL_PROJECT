@@ -44,6 +44,14 @@
  		  AND STATUS = 'Y'
 	</entry>
 	
+		<entry key="forgotPwd">
+		SELECT MEMBER_ID
+  		  FROM MEMBER
+ 		 WHERE MEMBER_NAME = ?
+ 		  AND  PHONE = ?
+ 		  AND STATUS = 'Y'
+	</entry>
+	
 	<entry key ="AselectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
 		SELECT
 			COUNT(*) COUNT
@@ -74,6 +82,7 @@
 			MEMBER_NO = ?
 	
 	</entry>
+	
 	
 	<entry key="AsearchMember"> 
 		SELECT *
