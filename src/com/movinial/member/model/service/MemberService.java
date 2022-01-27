@@ -1,6 +1,7 @@
 package com.movinial.member.model.service;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 
 import static com.movinial.common.JDBCTemplate.*;
 
@@ -44,7 +45,7 @@ public class MemberService {
 		
 	}
 
-	public String findId(String memberName, String phone) {
+	public String findId(String memberName, String phone) { // 아아디 찾기
 
 		Connection conn = getConnection();
 		
@@ -54,6 +55,39 @@ public class MemberService {
 		
 		return memberId;
 	}
+	
+	public Member forgotPwd(String memberId, String memberName, String phone) { // 비밀번호 변경 대상 찾기
+		
+		
+		
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().forgotPwd(conn, memberId, memberName, phone);
+
+		close(conn);
+		
+		return m;
+	}
+	
+	public int updateMemberPwd(String updatePwd,String memberId, int memberNo) {	//확인된 회원 비밀번호 변경
+
+		Connection conn = getConnection();
+
+		int result = new MemberDao().updateMemberPwd(conn, updatePwd,memberId,memberNo);
+
+		close(conn);
+
+		
+		return result;
+	}
+
+
+	
+
+	
+
+
+	
 
 	public int selectMemberCount() { // 전체 멤버 수 구하기
 		
@@ -103,6 +137,13 @@ public class MemberService {
 		return list;
 		
 	} // searchMember : 키워드로 검색
+
+	
+
+
+
+
+
 
 	
 	
