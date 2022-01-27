@@ -44,14 +44,14 @@
  		  AND STATUS = 'Y'
 	</entry>
 	
-	<entry key ="selectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
+	<entry key ="AselectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
 		SELECT
 			COUNT(*) COUNT
 		FROM
 			MEMBER
 	</entry>
 	
-	<entry key ="selectMember"> <!-- 전체 멤버 조회(관리자) -->
+	<entry key ="AselectMember"> <!-- 전체 멤버 조회(관리자) -->
 		SELECT *
 		FROM
 			(SELECT ROWNUM RNUM, A.*
@@ -65,7 +65,7 @@
 			RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<entry key ="deleteMember">
+	<entry key ="AdeleteMember">
 		UPDATE
 			MEMBER 
 		SET
@@ -75,7 +75,7 @@
 	
 	</entry>
 	
-	<entry key="searchMember">
+	<entry key="AsearchMember"> 
 		SELECT *
   		  FROM
   		  	MEMBER

@@ -216,8 +216,8 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 			while(rset.next()) {
 				
 				Notice n = new Notice(rset.getInt("NOTICE_NO"),
-									  rset.getString("NOTICE_TITLE"),
-								      rset.getString("MEMBER_ID"),
+									  rset.getString("NOTICE_WRITER"),
+								      rset.getString("NOTICE_TITLE"),
 								      rset.getDate("CREATE_DATE"));
 			   
 				list.add(n);
@@ -283,9 +283,9 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 			
 			if(rset.next()) {
 				n = new Notice(rset.getInt("NOTICE_NO"),
+							   rset.getString("MEMBER_ID"),
 							   rset.getString("NOTICE_TITLE"),
 							   rset.getString("NOTICE_CONTENT"),
-							   rset.getString("MEMBER_ID"),
 							   rset.getDate("CREATE_DATE"));
 				
 				
@@ -365,6 +365,84 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 		}
 		return at;
 	}
+
+	public int insertNotice(Connection conn, Notice n) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, Integer.parseInt(n.getNoticeWriter()));  // "1"
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	} // insertNotice
+
+	public int updateNotice(Connection conn, Notice n) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, n.getNoticeNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	} // updateNotice
+
+	public int deleteNotice(Connection conn, int noticeNo) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, noticeNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	} // deleteNotice
 
 	
 	

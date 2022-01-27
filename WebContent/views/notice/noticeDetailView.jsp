@@ -27,7 +27,7 @@
     width: 1000px;
 }
 .btn-area{
-    width : 800px;
+    width : 100%;
     height: 80px;
     align: center;
 }
@@ -81,10 +81,15 @@ h2{
             <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
             <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
             
-            <%if(loginUser != null){ %>
+            <% if(loginUser != null && !loginUser.getMemberId().equals("admin")){ %>
             <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
             <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
             <%} %>
+            
+            <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
+            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary">문의내역</a>  <!-- 문의 내역 조회하기  -->
+            <% } %>
+            
         </div>
 
         <table align="center" class="list-area">
@@ -96,19 +101,23 @@ h2{
             </thead> -->
             <tbody>
 		        <tr>		                
-		            <td id="noticeTitle"><%= n.getNoticeWriter() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? 일단하고 나중에 고치기☆★  -->
+		            <td id="noticeTitle"><%= n.getNoticeTitle() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? 일단하고 나중에 고치기☆★  -->
 		            <td id="noticeDate"><%= n.getCreateDate() %></td>
 		        </tr> 
                 <tr>
-                    <td colspan="2" id="noticeContent"><%= n.getNoticeTitle() %></td> <!-- getNoticeContent 부분인데 얘도 왜 ...? 일단하고 나중에 고치기☆★  -->
+                    <td colspan="2" id="noticeContent"><%= n.getNoticeContent() %></td> <!-- getNoticeContent 부분인데 얘도 왜 ...? 일단하고 나중에 고치기☆★  -->
                 </tr>                      
                 	
             </tbody>
         </table>
         <br>
         <div align="center">
-        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary qbtn" id="listFont">목록가기</a>
-        	
+        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary">목록가기</a>
+        	 
+            <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
+                <a href="<%=contextPath%>/updateForm.no?nno=<%= n.getNoticeNo() %>" id="noticeUpdatebtn"  class="btn btn-sm btn-warning" style="width: 92px; height: 40px;">수정</a> <!-- 수정 -->
+                <a href="<%=contextPath%>/delete.no?nno=<%= n.getNoticeNo() %>" id="noticeDeletebtn" class="btn btn-sm btn-danger" style="width: 92px; height: 40px;">삭제</a> <!-- 삭제 -->
+            <% } %>
      
         </div>
  </div>

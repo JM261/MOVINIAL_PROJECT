@@ -1,7 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	int movieNo = 0;
+	int movie1 = 1;
+	int movie2 = 2;
+	int movie3 = 3;
+	int movie4 = 4;
+	int movie5 = 5;
+	int movie6 = 6;
+
+    int movieNo = 0;
+
+
 
 %>    
 
@@ -11,7 +20,6 @@
 <meta charset="UTF-8">
 <title>큐레이션</title>
 <style>
-
         #box{
             width: 1400px;            
         }
@@ -58,7 +66,7 @@
 
         #box3{
             width: 100%;
-            height: 400px;
+            /*height: 400px;*/
             border: 1px solid black;
         }
 
@@ -160,12 +168,12 @@
                 <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
             </div>
             <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
-                <div data-toggle="modal" data-target="#insertMovie"><input type='hidden' value='<%= movieNo %>'></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
-                <div></div> <!-- 영화 2 -->
-                <div></div> <!-- 영화 3 -->
-                <div></div> <!-- 영화 4 -->
-                <div></div> <!-- 영화 5 -->
-                <div></div> <!-- 영화 6 -->               
+                <div class="" data-toggle="modal" data-target="#insertMovie"></div> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div class="" data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 2 -->
+                <div class="" data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 3 -->
+                <div class="" data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 4 -->
+                <div class="" data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 5 -->
+                <div class="" data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 6 -->               
                 
             </div>
             
@@ -178,16 +186,14 @@
 		<div class="modal" id="insertMovie">
             <div class="modal-dialog">
               <div class="modal-content" style="width: 600px; height:800px">
-          
                 <div class="modal-header">
                   <h4 class="modal-title">영화 추가</h4>
                 </div>          
                 <div class="modal-body">                    
-
-		                        검색할 영화명 <input type="text" id="searchMovie">
+		            검색할 영화명 <input type="text" id="searchMovie">
 		           <button onclick="selectMovie();">검색</button><br><br>
 		           <div id="selectResult">
-		           <!-- 검색 결과 -->
+		            <!-- 검색 결과 -->
 		           
                    
                    </div>                    
@@ -215,20 +221,18 @@
 	                        /* 영화명을 검색하여 해당되는 영화들을 불러와서 영화 정보(제목, 감독, 장르 등만 불러온다.) */
 	                    }	                	
 	                	$("#selectResult").html(result);
-
+                        
 	                	$('.selectbtn').click(function(){
-	                		$('#box3_2').children().html($(this).val());
-	                		// 
+	                		$('').html($(this).val());	                		
 	                	})
 	                	
 	                	console.log(result);
 	                	
 	                } // success               
                 });
-            } // selectMovie
-         	
+            } // selectMovie         	
             
-            $('#box1_plus').click(function(){
+            $('#box1_plus').click(function(){ // 추가 버튼
             	
             	var cur =            		
             		"<div id='box3'>"+
@@ -248,8 +252,7 @@
             		
             	$('#box3').append(cur);
             
-            })	
-            
+            })            
         </script>
 
         <%@ include file = "../common/footer.jsp" %>
