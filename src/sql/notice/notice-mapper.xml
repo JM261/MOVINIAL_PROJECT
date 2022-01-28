@@ -119,4 +119,28 @@
 		WHERE
 			NOTICE_NO = ?		
 	</entry>
+	
+	<entry key="selectListManagementCount">
+		SELECT COUNT(*) COUNT
+		  FROM QUESTION Q
+		 WHERE Q.STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectListManagement">
+		SELECT *
+			FROM (
+			        SELECT ROWNUM RNUM, A.*
+			          FROM (
+			                SELECT QNA_NO, CATEGORY_NAME,QNA_TITLE, MEMBER_ID, MEMBER_NO,QNA_WRITER,CREATE_DATE,Q.STATUS
+			                  FROM QUESTION Q
+			                  JOIN CATEGORY USING (CATEGORY_NO)
+			                  JOIN MEMBER ON (QNA_WRITER = MEMBER_NO)
+			                 WHERE Q.STATUS = 'Y'
+			                 ORDER 
+			                    BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+		
+	</entry>
+	
+	
 </properties>

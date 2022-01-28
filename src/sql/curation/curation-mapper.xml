@@ -6,8 +6,25 @@
 	<entry key="searchMovie">
 		SELECT *
 		FROM MOVIE
-		WHERE MOVIE_NAME_KR LIKE ? OR MOVIE_NAME_EN LIKE ?	
+		WHERE TITLE LIKE ? OR ORIGINAL_TITLE LIKE ?	
 	</entry>
 	
+	<entry key="insertCurationList">
+		INSERT INTO CURATIONLIST(LIST_NO, LIST_NAME, LIST_MOVIE_ID, STATUS)
+		VALUES(SEQ_CUNO.NEXTVAL, ?, ?, 'Y')
+	</entry>
+	
+	<entry key="selectCurationList">
+		SELECT *
+		FROM CURATIONLIST
+		WHERE STATUS = 'Y'
+		ORDER BY LIST_NO DESC
+	</entry>
+	
+	<entry key="deleteCuration">
+		UPDATE CURATIONLIST
+		SET STATUS = 'N'
+		WHERE LIST_NO = ?
+	</entry>
 	
 </properties>

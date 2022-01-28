@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.dao.NoticeDao;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
@@ -189,6 +190,30 @@ public class NoticeService {
 		
 		return at;
 		
+	}
+
+	// 모든 문의 내역 수
+	public int selectListManagementCount() {
+
+		Connection conn = getConnection();
+		
+		int listCount = new NoticeDao().selectListManagementCount(conn);
+		
+		close(conn);
+		
+		return listCount;
+	} // selectListManagementCount
+
+	// 모든 문의 내역 조회
+	public ArrayList<Question> selectListManagement(PageInfo pi) {
+
+		Connection conn = getConnection();
+		
+		ArrayList<Question> list = new NoticeDao().selectListManagement(conn, pi);
+		
+		close(conn);
+		
+		return list;
 	}
 	
 	

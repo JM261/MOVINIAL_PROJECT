@@ -35,8 +35,6 @@ public class QuestionListManagementController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 이동
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-				
 		int listCount; 
 		int currentPage; 
 		int pageLimit; 
@@ -50,10 +48,8 @@ public class QuestionListManagementController extends HttpServlet {
 		pageLimit = 10;
 		boardLimit = 10;
 
-		Member m = new Member();
-		m.setMemberNo(memberNo);
-				
-		listCount = new NoticeService().selectListCount(m);
+		listCount = new NoticeService().selectListManagementCount();
+		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit); 
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 		endPage = startPage + pageLimit - 1;
@@ -63,7 +59,8 @@ public class QuestionListManagementController extends HttpServlet {
 		}
 				
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		ArrayList<Question> list = new NoticeService().selectList(pi,m);
+		ArrayList<Question> list = new NoticeService().selectListManagement(pi);
+		
 				
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);

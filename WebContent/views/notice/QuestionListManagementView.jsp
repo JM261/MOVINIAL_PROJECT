@@ -102,7 +102,6 @@
           	
           <% for(int i = startPage; i <= endPage; i++){ %>
             <%if(i != currentPage){ %>
-            						<!-- http://localhost:8001/jsp/list.bo?currentPage=XX -->
             	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= i %>'"><%= i %></button>
             <%}else{ %>
             	<button disabled><%= i %></button>
@@ -114,11 +113,6 @@
 		  <%} %>
         </div>
  </div>
-	
-	
-	
-	
-	
 	
 
 	<%@ include file="../common/footer.jsp" %>  

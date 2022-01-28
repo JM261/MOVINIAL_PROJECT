@@ -9,20 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.movinial.curation.model.service.CurationService;
-import com.movinial.movie.model.vo.Movie;
+import com.movinial.curation.model.vo.CurationList;
+
 /**
- * Servlet implementation class searchMovieController
+ * Servlet implementation class CurationListController
  */
-@WebServlet("/search.cu")
-public class searchMovieController extends HttpServlet {
+@WebServlet("/list.cu")
+public class CurationListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchMovieController() {
+    public CurationListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,19 +31,25 @@ public class searchMovieController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		ArrayList<CurationList> list = new CurationService().selectCurationList();
+		// 큐레이션 번호, 큐레이션에 담긴 영화(6개)의 번호
+		// 큐레이션에 담긴 영화(6개)의 번호는 split으로 처리 후에 다시 쿼리문을 돌려서 영화의 이미지를 가져와야한다.
 		
-		// 영화를 조회 해보자 후
+		/////// 영화의 번호에서 영화의 아이디로 수정햇음 => 영화의 아이디로 MovieTemplate를 써서 경로를 가져올거기때문에
+		// 큐레이션 이름
 		
-		request.setCharacterEncoding("UTF-8");
+		/*
+			for(int i=0; i<list.size(); i++) {
+				String[] movieId = list.get(i).getListMovieId().split(",");
+				
+			}
+		*/
 		
-		String movieKeyword = request.getParameter("movieKeyword");
-	
-		ArrayList<Movie> list = new CurationService().searchMovie(movieKeyword);
-  		
-		response.setContentType("application/json; charset=UTF-8");
 		
-		new Gson().toJson(list, response.getWriter());
 		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("views/curation/curation.jsp").forward(request, response);
 	
 	}
 

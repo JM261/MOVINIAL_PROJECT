@@ -73,6 +73,7 @@
             <li><a href="<%= contextPath %>/noticeList.no?currentPage=1">공지사항</a></li>
             <%if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
             <li><a href ="<%= contextPath %>/manage.mem?currentPage=1">회원관리</a></li>
+            <li><a href ="<%= contextPath %>/list.cu">큐레이션관리</a></li>
             <%} %>
             
           </ul>
