@@ -26,7 +26,7 @@
 	table th{text-align: center;}
 	.replyWriter{text-align: center; width:50px;}
 	.replyContent{text-align: left; width:300px;}
-	.replyCreateDate{text-align: center; width: 60px;}
+	.replyCreateDate{text-align: center; width: 120px;}
 	.reply-list{border: 1px solid grey; background-color: rgb(245, 250, 250);}
 </style>
 </head>
@@ -67,7 +67,7 @@
 							<th>첨부파일</th>
 							<td colspan="3">
 		                    <a download="<%= cf.getOriginName() %>" href="<%= contextPath %><%= cf.getFilePath() + cf.getChangeName()%>">
-		                    	<%= cf.getOriginName() %>
+		                    	&nbsp;<%= cf.getOriginName() %>
 		                    </a>
 	                <% } %>
 	                </td>
@@ -75,7 +75,9 @@
 			</table>
 			<br>
 			<!-- 좋아요 / 신고 버튼 영역 -->
-			<div style="margin-left: 100px;"><button onclick="checkLikes();" class="btn btn-sm btn-outline-success">좋아요</button>&nbsp;<button class="btn btn-sm btn-outline-danger">신고하기</button></div>
+			<div style="margin-left: 100px;"><button onclick="checkLikes();" class="btn btn-sm btn-outline-success">좋아요</button>&nbsp;
+				<button class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#myModal">신고하기</button>
+			</div>
 			<div align="center">
                 <a href="<%= contextPath %>/list.cm?currentPage=1" class="btn btn-secondary">목록으로 돌아가기</a>
                 <!-- <button type="button" class="btn btn-secondary" onclick="history.back();">이전 페이지로 이동</button> -->
@@ -97,13 +99,38 @@
 	            <tbody>
 					<tr>
 						<td colspan="6">
-							<textarea id="replyContent" class="form-control" cols="120" rows="3" style="resize: none; background-color: rgb(250, 250, 250);"></textarea>
+							<textarea id="replyContent" class="form-control" cols="120" rows="3" maxlength="600" style="resize: none; background-color: rgb(250, 250, 250);"></textarea>
 							<td style="background-color: gray;"><button style="height: 85px;" onclick="insertReply();" class="btn btn-sm btn-secondary">등록</button></td>
 						</td>
 					</tr>
 	            </tbody>
 	        </table>
 		</div>
+		<div class="container">
+			<!-- 신고화면 모달 -->
+			<div class="modal fade" id="myModal">
+			  <div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+				
+				  <div class="modal-header">
+					<h4 class="modal-title" style="color: red;">신고 사유</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				  </div>
+				  
+				  <!-- 신고사유 작성란 -->
+				  <div class="modal-body">
+				  	<textarea id="reportContent" class="form-control" cols="59" rows="5" style="resize: none;"></textarea>
+				  </div>
+				  
+				  <!-- 신고 제출 버튼 -->
+				  <div class="modal-footer">
+					<button type="button" onclick="checkReportCommunity();" class="btn btn-danger" data-dismiss="modal">제출</button>
+				  </div>
+				  
+				</div>
+			  </div>
+			</div>
+		  </div>
 		<script>
 
 			function selectReplyList(){ // 댓글 작성
@@ -115,11 +142,13 @@
 	                	var result = "";
 						$('#rcount').html(list.length)
 	                	for(var i in list){ // for in문 사용  ,  댓글 수만큼 반복 => 누적(문자열)
-	                		result += "<tr>"
+	                		result += "<tr id='rno" +  list[i].replyNo  + "'>"
 	                			   + "<td class='replyWriter'>" + list[i].replyWriter + "</td>"
 	                			   + "<td class='replyContent'>" + list[i].replyContent + "</td>"
 	                			  + "<td class='replyCreateDate'>" + list[i].createDate + "</td>"
-	                			   + "</tr>";
+								//    + "<td><a onclick='editReply(" + list[i].replyNo + ',' + list[i].replyWriter + ',' + list[i].replyContent + ',' + list[i].createDate + ");' style='color:blue;'>수정</a></td>"
+								//    + "<td><a onclick='editReply(" + list[i].replyNo + "," + list[i].replyWriter + ");' style='color:blue;'>수정</a></td>"
+								  + "</tr>"
 	                	}
 	                	$(".reply-area thead").html(result);
 	                },
@@ -129,7 +158,7 @@
 				})
 			}
 			
-			$(function(){ // 문서가 로드될때 마다 실행
+			$(function(){ // 문서가 로드될 때 마다 실행
 	             selectReplyList();
 
 	            //  setInterval(selectReplyList, 5000);
@@ -161,22 +190,29 @@
 			})
 			
 		}
-		function checkLikes(){
+		function checkLikes(){ // 해당 회원이 이 게시글에 좋아요를 했는지 체크
 			var cno = "<%= c.getCommunityNo() %>"
 			$.ajax({
 				url : "chklike.cm",
 				data : {mno : <%= loginUser.getMemberNo() %>},
 				success : function(lc){
-					
-					var likeCm = lc.likesCommunity.split(',');
 
-					if(likeCm.indexOf(cno) != -1){ // 배열에 찾는 글번호가 있으면, 이미 좋아요를 누른 것
-						// console.log('응~ 이미 좋아요 눌렀어~')
-						iDontLikeIt()
+					if(lc.likesCommunity != null){ // 가져온 likesCommunity의 값이 null이 아니면
+						
+						var likeCm = lc.likesCommunity.split(',');
+
+						if(likeCm.indexOf(cno) != -1){ // 배열에 찾는 글번호가 있으면, 이미 좋아요를 누른 것
+							// console.log('응~ 이미 좋아요 눌렀어~')
+							iDontLikeIt()
+						}
+						else{ // 배열에 찾는 이 게시글 글번호가 없으면 좋아요를 누른 적 없는 것
+							iLikeIt() // 그럼 좋아요 눌러주기
+						}
 					}
-					else{ // 배열에 찾는 이 게시글 글번호가 없으면 좋아요를 누른 적 없는 것
-						iLikeIt() // 그럼 좋아요 눌러주기
+					else{// 가져온 likesCommunity의 값이 null 이면, 바로 좋아요를 눌러줘라
+						iLikeIt()
 					}
+
 
 				},
 				error : function(){
@@ -185,7 +221,7 @@
 			})
 		}
 
-		function iLikeIt(){
+		function iLikeIt(){ // 게시글 좋아요
 
 			$.ajax({
 				url : "like.cm",
@@ -207,7 +243,7 @@
 				}	
 			})
 		}
-		function iDontLikeIt(){
+		function iDontLikeIt(){ // 게시글 좋아요 취소
 
 			$.ajax({
 				url : "dislike.cm",
@@ -228,7 +264,74 @@
 				}	
 			})
 		}
-		
+		function checkReportCommunity(){ // 게시글 신고하기 전 신고여부 체크
+			var cno = "<%= c.getCommunityNo() %>"
+			$.ajax({ 
+				url : "chkreport.cm",
+				data : {
+					mno : <%= loginUser.getMemberNo() %>,
+					cno : <%= c.getCommunityNo() %>
+				},
+				success : function(rc){
+
+					if(rc.reportCommunity != null){ // 가져온 likesCommunity의 값이 null이 아니면
+						
+						var reportCm = rc.reportCommunity.split(',');
+
+						if(reportCm.indexOf(cno) != -1){ // 배열에 찾는 글번호가 있으면, 이미 좋아요를 누른 것
+							alert("이미 신고한 게시글 입니다.");
+						}
+						else{ // 배열에 찾는 이 게시글 글번호가 없으면 신고한 적 없는 것
+							reportCommunity() // 그럼 신고하기 실행
+						}
+					}
+					else{// 가져온 reportCommunity의 값이 null 이면, 바로 신고하기 실행
+						reportCommunity()
+					}
+				},
+				error : function(){
+					console.log("게시글 신고 AJAX실패");
+				}	
+			})
+		}
+		function reportCommunity(){ // 게시글 신고하기
+
+			$.ajax({
+				url : "report.cm",
+				data : {
+					mno : <%= loginUser.getMemberNo() %>,
+					cno : <%= c.getCommunityNo() %>
+				},
+				success : function(like){
+					
+					if(like > 0){
+						alert("해당 게시글을 신고했습니다.");
+					}
+					else{
+						console.log('좋아요 실패 ㅜㅜ')
+					}
+				},
+				error : function(){
+					console.log("좋아요 AJAX실패");
+				}	
+			})
+		}
+		function editReply(rno, vvs){
+			// rwriter, rcontent, rdate
+			// alert(rno);
+			console.log(rno)
+			console.log(vvs)
+			// console.log(rcontent)
+			// console.log(rdate)
+
+			// var replyEdit = "";
+
+			// replyEdit = rno
+
+			// $("#rno"+rno).replaceWith(replyEdit);
+
+
+		}
 		</script>
 		
 	</div>

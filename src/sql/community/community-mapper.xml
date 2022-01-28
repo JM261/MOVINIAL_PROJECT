@@ -55,6 +55,7 @@
                               FROM COMMUNITY C
                               JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
                              WHERE C.STATUS = 'Y'
+                               AND REPORT_COUNT &lt; 15
                              ORDER 
                                 BY ISNOTICE DESC, CREATE_DATE DESC) A)
 			WHERE RNUM BETWEEN ? AND ?
@@ -138,8 +139,8 @@
 	
 	<entry key="insertCommunity">
 		INSERT INTO COMMUNITY(COMMUNITY_NO, COMMUNITY_TITLE, COMMUNITY_CATEGORY, COMMUNITY_WRITER, 
-                    COMMUNITY_CONTENT, SPOILER)
-				VALUES(SEQ_CNO.NEXTVAL, ?, ?, ?, ?, ?)
+                    COMMUNITY_CONTENT, SPOILER, ISNOTICE)
+				VALUES(SEQ_CNO.NEXTVAL, ?, ?, ?, ?, ?,?)
 	</entry>
 	
 	<entry key="insertCommunityFile">
@@ -166,7 +167,20 @@
 		   SET LIKES = LIKES - 1
 		 WHERE COMMUNITY_NO = ?
 		   AND STATUS = 'Y'
-	</entry>	
+	</entry>
+	
+	<entry key="reportCommunity">
+		UPDATE COMMUNITY
+		   SET REPORT_COUNT = REPORT_COUNT + 1
+		 WHERE COMMUNITY_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="communityReportStore">
+		UPDATE MEMBER
+		   SET REPORT_COMMUNITY = REPORT_COMMUNITY || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
 	
 	<entry key="communityLikesStore">
 		UPDATE LIKES_COMMUNITY
@@ -174,7 +188,7 @@
 		 WHERE MEMBER_NO = ?
 	</entry>
 	
-	<entry key="communityLikesremove">
+	<entry key="communityLikesRemove">
 		UPDATE LIKES_COMMUNITY
 		   SET LIKES_COMMUNITY = replace(LIKES_COMMUNITY, ? ,'')
 		 WHERE MEMBER_NO = ?
@@ -183,6 +197,12 @@
 	<entry key="selectCommunityLikes">
 		SELECT LIKES_COMMUNITY
 		  FROM LIKES_COMMUNITY
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="selectCommunityReport">
+		SELECT REPORT_COMMUNITY
+		  FROM MEMBER
 		 WHERE MEMBER_NO = ?
 	</entry>
 	
@@ -256,6 +276,7 @@
 		  JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
 		 WHERE REF_CNO = ?
 		   AND R.STATUS = 'Y'
+		   AND REPORT_COUNT &lt; 15
 		 ORDER
 		    BY CREATE_DATE ASC
 	</entry>

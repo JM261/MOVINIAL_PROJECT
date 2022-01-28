@@ -50,7 +50,10 @@
 					<th>말머리</th>
 					<td colspan="6">
 						<select class="form-control" name="category">
-							<!-- <option value="notice">공지</option> --> <!-- 로그인 아이디가 관리자면 보여지도록 --> 
+							<!-- <option value="notice">공지</option> --> <!-- 로그인 아이디가 관리자면 보여지도록 -->
+							<% if(loginUser.getMemberId().equals("admin")) { %>
+								<option>공지</option>
+							<% } %>
 							<option>일반</option>
 							<option>정보</option>
 							<option>리뷰</option>
@@ -92,8 +95,8 @@
 				<tr>
 					<th>내용</th>
 					<td>
-						<img id="img" width="900" style="display:none;"> <!-- 이미지 미리보기 영역 기본적으로 숨겨져있음 -->
-						<textarea class="form-control" name="content" rows="20" style="resize: none;" required><%= c.getCommounityContent() %></textarea>
+						<img id="img" style="display:none;"> <!-- 이미지 미리보기 영역 기본적으로 숨겨져있음 -->
+						<textarea class="form-control" name="content" rows="20" style="resize: none;" maxlength="1300" required><%= c.getCommounityContent() %></textarea>
 					</td>
 				</tr>
 			</table>
