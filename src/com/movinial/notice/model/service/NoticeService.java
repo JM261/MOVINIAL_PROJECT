@@ -29,7 +29,7 @@ public class NoticeService {
 		return list;
 	}
 	
-	public int selectListCount(String memberNo) {
+	public int selectListCount(int memberNo) {
 		
 		Connection conn = getConnection();
 		
@@ -42,7 +42,7 @@ public class NoticeService {
 		return listCount;
 	}
 	
-	public ArrayList<Question> selectList(PageInfo pi, String memberNo) { // 나의 문의내역 페이징
+	public ArrayList<Question> selectList(PageInfo pi, int memberNo) { // 나의 문의내역 페이징
 		
 		Connection conn = getConnection();
 		

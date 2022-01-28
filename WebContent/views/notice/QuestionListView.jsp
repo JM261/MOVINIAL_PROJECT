@@ -5,7 +5,7 @@
 
 	ArrayList<Question> list = (ArrayList<Question>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	String memberNo = request.getParameter("memberNo");
+	
 	
 	// 페이징바 만들때 필요한 변수 세팅
 	int currentPage = pi.getCurrentPage();
@@ -102,7 +102,6 @@ tr td{
         </div>
         
         <form id="list-form" action="<%= contextPath %>/questionDetail.no">
-		<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>"> 
         <table align="center" class="list-area">
             
             <thead>
@@ -115,6 +114,7 @@ tr td{
             </thead>
             <tbody>
                 <!-- 게시글 출력 .-->
+				<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>"> 
                 <% if(list.isEmpty()){ %>
 	                <tr>
 	                    <td colspan="5"> 작성된 문의내역이 없습니다. </td>

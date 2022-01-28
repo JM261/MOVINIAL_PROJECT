@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.ArrayList, com.movinial.community.model.vo.Community" %>
+<%
+	ArrayList<Community> list = (ArrayList<Community>)request.getAttribute("list");
+	
+
+%>    
+    
 <!doctype html>
 <html lang="ko">
   <head>
@@ -147,6 +154,14 @@
         border-bottom: 1px solid #bcbcbc;
       }
       
+      table>thead>tr{
+        font-size: 21px;
+        text-align: center;
+      }
+      table>tbody td{
+        font-size: 21px;
+        text-align: center;
+      }
 
       </style>
   </head>
@@ -216,7 +231,7 @@
           <div class="reviewer"></div>
           <div class="reviewer"></div>
         </div>
-        <a href="" class="title">베스트리뷰</a>
+        <a href="" class="title">베스트 리뷰</a>
         <div id="div4"></div>
       </div>
 
@@ -224,13 +239,76 @@
       <div id="div5"></div>
 
 
-      <div id="div6"><a href="" class="title">COMMUNITY</a></div>  
-
-        <div id="content3">
-        
-        </div>
+      <div id="div6"><a href="<%= contextPath %>/list.cm?currentPage=1" class="title">COMMUNITY</a></div>  
+	  <br>
+	      <table align="center" class="list-area" >
+            <thead>
+                <tr style="background-color: lightgray;">
+                    <th width="100">번호</th>
+                    <th width="100">말머리</th>
+                    <th width="810">제목</th>
+                    <th width="320">작성자</th>
+                    <th width="250">작성일</th>
+                    <th width="100">조회수</th>
+                    <th width="100">좋아요</th>
+                </tr>
+            </thead> 
+            <tbody>
+            <%--
+            	<!-- 게시글 출력 -->
+            	<% if(list.isEmpty()) { %>
+            	<tr>
+            		<td colspan="6">조회된 게시글이 없습니다.</td>
+            	</tr>
+            	<% } else { %>
+            	<!-- 향상된 for문(읽어오기만 할 것이기 때문)으로 list에 있는 값 순차적으로 출력 -->
+				<!-- 글번호 말머리 제목 작성자 작성일 조회수 좋아요 -->
+                    <% for(Community c : list) {%>
+                        <% if(!c.getCommunityCategory().equals("공지")) { %>
+                            <tr style="border: 1px solid lightgray;">
+                        <% } else { %>
+                            <tr style="border: 1px solid lightgray; font-weight: bolder; background-color: ghostwhite;">
+                        <% } %>
+                                <td><%= c.getCommunityNo() %></td>
+                                <td><%= c.getCommunityCategory() %></td>
+                                <td><%= c.getCommunityTitle() %></td>
+                                <td><%= c.getCommunityWriter() %></td>
+                                <td><%= c.getCreateDate() %></td>
+                                <td><%= c.getViews() %></td>
+                                <td><%= c.getLikes() %></td>
+                            </tr>
+                    <% } %>
+                <% } %>
+                 --%>
     
-      
+            </tbody> 
+            
+           <script>
+             function mainCommunity(){
+              
+                $.ajax({
+                  url : "mainCommunity.cm",
+                  data : ()
+
+
+
+                })
+             }
+
+
+           </script>
+            
+            
+            
+        </table> 
+            
+            
+            
+            
+        
+       
+    
+      <br><br>
    
     <%@ include file="/views/common/footer.jsp" %>
     

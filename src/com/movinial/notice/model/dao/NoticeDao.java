@@ -63,7 +63,7 @@ public class NoticeDao {
 			return list;
 		}
 	
-	public int selectListCount(Connection conn, String memberNo) {
+	public int selectListCount(Connection conn, int memberNo) {
 		// SELECT => ResultSet => 우리가 지금 필요한 건 총 게시글의 개수!
 		// SELECT문을 쓰지만 상식적으로 반환되는 값이 정수가 필요함
 		// 변수
@@ -77,7 +77,7 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, memberNo);
+			pstmt.setInt(1, memberNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -93,7 +93,7 @@ public class NoticeDao {
 		return listCount;	
 	}
 	
-public ArrayList<Question> selectList(Connection conn, PageInfo pi, String memberNo ) {  // 문의 페이징
+public ArrayList<Question> selectList(Connection conn, PageInfo pi, int memberNo ) {  // 문의 페이징
 		
 		ArrayList<Question> list = new ArrayList<>();		
 		PreparedStatement pstmt = null;		
@@ -107,7 +107,7 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
-			pstmt.setString(1, memberNo);
+			pstmt.setInt(1, memberNo);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			

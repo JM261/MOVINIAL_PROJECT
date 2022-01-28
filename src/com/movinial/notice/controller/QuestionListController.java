@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.service.NoticeService;
 import com.movinial.notice.model.vo.Question;
 
@@ -33,9 +34,6 @@ public class QuestionListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 쿼리스트링으로 요청 => get=> 인코딩 XS
-		// 2) request로 부터 값뽑기
-		// --- 페이징 처리
 		// 필요한 변수들
 		int listCount; // 현재 일반게시판의 게시글 총 개수 => BOARD 테이블로부터 조회 COUNT(*)활용
 		int currentPage; // 현재 페이지 (사용자가 요청한 페이지)
@@ -46,7 +44,7 @@ public class QuestionListController extends HttpServlet {
 		int startPage; // 페이지 하단에 보여질 첫번째 페이징바
 		int endPage; // 페이지 하단에 보여질 마지막 페이징바
 		
-		String memberNo = request.getParameter("memberNo");
+		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		
 		// * listCount : 총 게시글 개수
 		listCount = new NoticeService().selectListCount(memberNo);
@@ -78,6 +76,8 @@ public class QuestionListController extends HttpServlet {
 		
 		//Service단으로 토스
 		ArrayList<Question> list = new NoticeService().selectList(pi, memberNo);
+		
+		//System.out.println(list.toString());
 		
 		// 5) 응답 뷰 지정 => list, pi를 넘기자
 		request.setAttribute("list", list);
