@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.Member;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
 import com.movinial.notice.model.vo.Qfile;
@@ -443,6 +444,77 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 		return result;
 		
 	} // deleteNotice
+
+	// 모든 문의 내역 수
+	public int selectListManagementCount(Connection conn) { 
+		
+		int listCount=0;
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return listCount;
+		
+	} // selectListManagementCount
+
+	// 모든 문의 내역 조회
+	public ArrayList<Question> selectListManagement(Connection conn, PageInfo pi) {
+
+		ArrayList<Question> list = new ArrayList<>();		
+		PreparedStatement pstmt = null;		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Question q = new Question(rset.getInt("QNA_NO"),
+						   				  rset.getString("CATEGORY_NAME"),
+						   				  rset.getString("QNA_TITLE"),
+						   				  rset.getString("QNA_WRITER"),
+						   				  rset.getDate("CREATE_DATE"));
+						
+				list.add(q);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);	
+		}
+		
+		return list;
+		
+	}
 
 	
 	

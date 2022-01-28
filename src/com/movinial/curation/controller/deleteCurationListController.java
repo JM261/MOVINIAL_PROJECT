@@ -1,7 +1,6 @@
 package com.movinial.curation.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +8,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
 import com.movinial.curation.model.service.CurationService;
-import com.movinial.movie.model.vo.Movie;
+
 /**
- * Servlet implementation class searchMovieController
+ * Servlet implementation class deleteCurationListController
  */
-@WebServlet("/search.cu")
-public class searchMovieController extends HttpServlet {
+@WebServlet("/delete.cu")
+public class deleteCurationListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public searchMovieController() {
+    public deleteCurationListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,19 +29,18 @@ public class searchMovieController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int listNo = Integer.parseInt(request.getParameter("cno"));
 		
-		// 영화를 조회 해보자 후
+		int result = new CurationService().deleteCuration(listNo); 
 		
-		request.setCharacterEncoding("UTF-8");
+		if(result > 0) {
+			
+			request.getSession().setAttribute("alertMsg", "성공적으로 삭제 되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/list.cu");
 		
-		String movieKeyword = request.getParameter("movieKeyword");
+		}
 	
-		ArrayList<Movie> list = new CurationService().searchMovie(movieKeyword);
-  		
-		response.setContentType("application/json; charset=UTF-8");
-		
-		new Gson().toJson(list, response.getWriter());
-		
 	
 	}
 
