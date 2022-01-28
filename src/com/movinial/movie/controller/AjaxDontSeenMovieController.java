@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.movinial.movie.model.service.MovieService;
 
 /**
- * Servlet implementation class AjaxMovieSeenButtonController
+ * Servlet implementation class AjaxDontSeenMovieController
  */
-@WebServlet("/movieSeenBtn.mo")
-public class AjaxMovieSeenButtonController extends HttpServlet {
+@WebServlet("/dontSeen.mo")
+public class AjaxDontSeenMovieController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxMovieSeenButtonController() {
+    public AjaxDontSeenMovieController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,28 +29,23 @@ public class AjaxMovieSeenButtonController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 값 추출
-		int movieNo = Integer.parseInt(request.getParameter("movieNo"));
-	
-		System.out.println(movieNo);
+		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원 번호
+		int movieNo = Integer.parseInt(request.getParameter("movieNo")); // 영화 번호
 		
-		int result = 0;
+		int result1 = new MovieService().decreaseMovieSeen(movieNo); // 해당 영화의 봤어요 수 감소
 		
-		// 봤어요 카운트 올려주기
-		result = new MovieService().increaseMovieSeen(movieNo);
-		
-		// 봤어요 카운트 내려주기
-		//result = new MovieService().decreaseMovieSeen(movieNo);
-		
-		
-		if(result > 0) {
+		if(result1 > 0) { // 해당 영화의 봤어요 수 증가 처리 성공시, 영화 좋아요 테이블 '이영화 봤어요' 컬럼에서 영화 번호 삭제 
+			
+			int result2 = new MovieService().seenMovieRemove(memberNo, movieNo);
+			
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print(result);
+			response.getWriter().print(result2); // 저장 성공 유무 상관없이 값 넘기기
+			
+		} else { // 해당 영화의 봤어요 수 증가 처리 실패시
+			
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			
 		}
-		
-		
-		
-		
 		
 	}
 

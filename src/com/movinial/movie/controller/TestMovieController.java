@@ -1,6 +1,7 @@
 package com.movinial.movie.controller;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +39,11 @@ public class TestMovieController extends HttpServlet {
 
         request.setAttribute("json", json);
         request.getRequestDispatcher("views/movie/test111.jsp").forward(request, response);
+        
+        Locale locale = new Locale("ko", "KR");
+        
+        System.out.println();
+        // DisplayCountry : 대한민국
 
     }
 //

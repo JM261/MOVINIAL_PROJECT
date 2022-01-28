@@ -11,7 +11,7 @@
 
 	<%@ include file="../common/header.jsp" %>
 	
-	<a href="<%= contextPath %>/detail.mo?mno=1">MORE</a>
+	<a href="<%= contextPath %>/detail.mo?movieNo=1">MORE</a>
 	<a href="<%= contextPath %>/movie.test">MORE</a>
 	
 
