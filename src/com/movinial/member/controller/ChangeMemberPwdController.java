@@ -38,7 +38,7 @@ public class ChangeMemberPwdController extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		String memberName = request.getParameter("memberName");
 		String phone = request.getParameter("phone1") +"-" +request.getParameter("phone2") + "-" +request.getParameter("phone3");
-		
+				
 		Member m = new MemberService().forgotPwd(memberId, memberName, phone); 
 		System.out.println(m);
 		if( m.getMemberId() == null  ) {	//인증 성공시

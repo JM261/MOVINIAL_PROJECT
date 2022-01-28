@@ -42,12 +42,15 @@
       			</table> 
       		  <% } else {%>
       			<table width="550px" align=center border="0" style="color: black; font-size: 30px;">
+
 		       		<tr align=center>
-		        		<td style="height: 170px">* 잘못된 회원정보를 입력하셨습니다. *</td>
-		       		</tr>
+		       			<div name="loginPage" align=center>
+		       				<a href="<%= contextPath %>/login.me">로그인페이지 돌아가기</a>
+		       			</div>
 		       		
+		       		</tr>
 		       		<tr align=center>
-		        		<td><input type="button" value="돌아가기" onClick="history.back()"></td>
+        				<td style="height: 170px">* 회원님의 비밀번호가 수정되었습니다! *</td>
 		       		</tr>
       			</table> 
       

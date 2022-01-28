@@ -4,20 +4,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>[MOVINIAL]회원가입 완료</title>
 </head>
 <body>
 
-    <form action="">
-        <div>
+	 <%@ include file="../common/header.jsp" %>
 
-            Movinial[:near] 회원이 되신 것을 환영합니다. <br>
+
+    <form action = "<%= contextPath %>/login.me">
+        
+        <fieldset>
+        <div>
+         <legend>Movinial[:near] 회원이 되신 것을 환영합니다.</legend>
+            <br>
             <br>
             회원가입 절차가 모두 완료되었습니다.<br>
             로그인 후 모든 기능을 이용할 수 있습니다.
             
-            <input type="button" value="로그인 페이지로 이동" id="loginPage">
-            <input type="button" value="메인 페이지로 이동" id="mainPage">
+           
+            <input type="submit" value="로그인 페이지로 이동" id="loginPage">
+
             
 
 
@@ -25,6 +31,12 @@
 
 
     </form>
+    
+    </fieldset>
+        
+
+	    <%@ include file="../common/footer.jsp" %>
+
 
 </body>
 </html>

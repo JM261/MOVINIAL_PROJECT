@@ -162,14 +162,216 @@
     <form id="enroll-form" action="<%= contextPath %>/insert.me" method="post">
 	
 	<td><input type="text" name="memberId" maxlength="12" id="memberId" value="<%= memberId %>"></td> 
-    <td><input type="password" name="memberPwd" maxlength="15" id="memberPwd" value="<%= memberPwd %>"></td>
+    <td><input type="text" name="memberPwd" maxlength="15" id="memberPwd" value="<%= memberPwd %>"></td>
     <td><input type="text" name="memberName" id="membernickName" maxlength="6" value="<%= memberName %>"></td>
    	<td><input type="text" name="membernickName" id="nickName" maxlength="6" value="<%= nickName %>"></td>
-    <td><input type="email" name="email" id="email" value="<%= email %>"></td>
+    <td><input type="text" name="email" id="email" value="<%= email %>"></td>
     <td><input type="text" name="phone" value="<%= phone %>"> </td>
 
 	</form>
 	
+	<br>
+  <form id="enroll-form" action="<%= contextPath %>/insert.me" method="post">
+	
+	
+    <div id="box">
+        <div id="box1"> <!-- 상단 -->
+            <div id="box1_1">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" style="width: 300px; height: 40px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-secondary" style="width: 75px; height: 45px; font-size: 20px;">검색</button>
+            </div>
+            <div id="box1_2">
+                <button id="box1_plus" class="btn btn-secondary" style="width: 75px; height: 45px; font-size: 20px;">추가</button>
+            </div>
+        </div>
+        
+        <div id="box2" class="btn btn-secondary"><p id="box2_title">선호 영화 고르기 1 / 2</p></div>
+        
+        <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+        <div style="align-items: right;">
+ 			<button type="submit" class="" onclick="">다음</button>
+            <button type="submit" class="">건너 뛰기</button>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+    </div>
+        
+        <br>
+        
+        
 	<br>
     <div id="box">
         <div id="box1"> <!-- 상단 -->
@@ -182,11 +384,11 @@
             </div>
         </div>
         
-        <div id="box2" class="btn btn-secondary"><p id="box2_title">선호 영화 고르기</p></div>
+        <div id="box2" class="btn btn-secondary"><p id="box2_title">선호 영화 고르기 2 / 2</p></div>
         
-        <div id="box3"> <!-- 큐레이션... -->
+        <div id="box3"> <!-- 영화포스터 띄울 화면... -->
             <div id="box3_1">
-                <div id="box3_title"><input type="text" placeholder="리스트 타이틀을 입력하세요."></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
                 <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
             </div>
             <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
@@ -195,41 +397,167 @@
                 <div></div> <!-- 영화 3 -->
                 <div></div> <!-- 영화 4 -->
                 <div></div> <!-- 영화 5 -->
-                <div></div> <!-- 영화 6 -->               
+             
                 
             </div>
             
         </div>
-    </div>
         
-        <br>
-        
-        <!-- The Modal : 큐레이션 추가 -->
-		<div class="modal" id="insertMovie">
-            <div class="modal-dialog">
-              <div class="modal-content" style="width: 600px;">
-          
-                <!-- Modal Header -->
-                <div class="modal-header">
-                  <h4 class="modal-title">영화 추가</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-          
-                <!-- Modal body -->
-                <div class="modal-body">
-                    
-
-                        검색할 영화명 <input type="text" id="searchMovie">
-                        <button onclick="selectMovie();">검색</button>
-                        <div id="selectResult">
-                            <!-- 검색 결과가 존재하면 출력 없으면 "검색 조회 결과가 없습니다." -->
-                        </div>
-
-                    
-                </div>
-              </div>
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
             </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
         </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+        </div>
+        
+                <div id="box3"> <!-- 영화포스터 띄울 화면... -->
+            <div id="box3_1">
+                <div id="box3_title"><input type="text" placeholder="장르명1"></input></div> <!-- 리스트 타이틀 -->
+                <div id="box3_check"><p>표시여부&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" style='zoom:2.0;'></p></div> <!-- 표시 여부 -->
+            </div>
+            <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
+                <div data-toggle="modal" data-target="#insertMovie"></div> <!-- 영화 1 --> <!-- 클릭해서 영화명 검색 후 입력한 단어가 들어가는 영화 모두 조회 %영화명% -->
+                <div></div> <!-- 영화 2 -->
+                <div></div> <!-- 영화 3 -->
+                <div></div> <!-- 영화 4 -->
+                <div></div> <!-- 영화 5 -->
+             
+                
+            </div>
+            
+
+        
+        <div style="align-items: right;">
+        <input type="button" value=" < 이전" >
+        <input type="button" value="  다음장르 > " >
+        <input type="button" value=" < 선택없이 회원가입" >
+        </div>
+        
+    </div>
+    
+  </form>    
+    <br><br><br><br><br>
+    
+    
+        
+        
+        
+        
+        
+        
+        
 
         <script>
         

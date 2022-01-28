@@ -90,7 +90,6 @@ public class MemberDao {
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -232,6 +231,7 @@ public class MemberDao {
 		} finally {
 			close(pstmt);
 		}
+			System.out.println("DAO단에서의 m" + m);
 			return m;
 		}
 	

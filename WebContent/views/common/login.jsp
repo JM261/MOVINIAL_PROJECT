@@ -28,7 +28,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "", sans-serif;
 }
 
 
@@ -139,7 +138,7 @@ h2 {
                 </div>
                <div class="login_etc">
 	               <div class="forgot_id">
-	                    <a href="<%= contextPath %>/id_find.me">아이디찾기</a>
+	                    <a href="<%= contextPath %>/id_find.me">아이디찾기</a>	               		
 	               </div>
 	               <div class="forgot_pw">
 	                	<a href="<%= contextPath %>/pwd_find.me">비밀번호찾기</a>

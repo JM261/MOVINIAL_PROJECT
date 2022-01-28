@@ -37,7 +37,7 @@ public class UpdateMemberPwdController extends HttpServlet {
 		String newPwd 	= request.getParameter("newPwd");
 		String memberId = request.getParameter("memberId");
 		int memberNo 	= Integer.parseInt(request.getParameter("memberNo"));
-
+		
 		//4) Service 단으로 토스
 		
 		int result = new MemberService().updateMemberPwd(newPwd,memberId,memberNo);
@@ -45,6 +45,8 @@ public class UpdateMemberPwdController extends HttpServlet {
 		 //5) 결과값을 통해 성공 실패 여부에 따른 응답화면 지정
 		 
 		 HttpSession session = request.getSession();
+		 
+		 System.out.println("업댓컨트롤러에서의 값" + session);
 	
 		 if(result == 0) { //실패했을때
 			 request.setAttribute("alertMsg", "비밀번호가 변경되지 않았습니다. 다시 시도해주세요.");
