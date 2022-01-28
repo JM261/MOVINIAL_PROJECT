@@ -46,9 +46,9 @@ public class AjaxReplyInsertController extends HttpServlet {
 		// Service단 호출
 		int result = new CommunityService().insertReply(r);
 		
-		// Gson, Json => 넘겨야할 값이 여러개일때 묶을 때
+		// Gson, Json => 넘겨야할 값이 여러개 일때 , 묶을 때
 		
-		// result1 개 이므로 그냥 넘기기
+		// 넘길 값이 정수형 변수 하나라서 그냥 넘기기
 		response.setContentType("text/html; charset=UTF-8");
 		
 		response.getWriter().print(result);

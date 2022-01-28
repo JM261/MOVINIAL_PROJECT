@@ -16,13 +16,16 @@ public class Member {
 	private Date enrollDate;
 	private Date modifyDate;
 	private String preferGenre;
+	private String reportReview;
+	private String reportCommunity;
+	private String reportReply;
 	
 	//기본 생성자
 	public Member() {
 		super();
 	}
 	
-	//전체 생성자
+	// 로그인
 	public Member(int memberNo, String memberId, String memberPwd, String memberName, String memberNickname,
 			String email, String phone, String memberType, String status, Date enrollDate, Date modifyDate,
 			String preferGenre) {
@@ -40,6 +43,28 @@ public class Member {
 		this.modifyDate = modifyDate;
 		this.preferGenre = preferGenre;
 	}
+
+	//전체 생성자
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String memberNickname,
+			String email, String phone, String memberType, String status, Date enrollDate, Date modifyDate,
+			String preferGenre, String reportReview, String reportCommunity, String reportReply) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.memberNickname = memberNickname;
+		this.email = email;
+		this.phone = phone;
+		this.memberType = memberType;
+		this.status = status;
+		this.enrollDate = enrollDate;
+		this.modifyDate = modifyDate;
+		this.preferGenre = preferGenre;
+		this.reportReview = reportReview;
+		this.reportCommunity = reportCommunity;
+		this.reportReply = reportReply;
+	}
 	
 	//정인 : 회원가입
 	public Member(String memberId, String memberPwd, String memberName, String memberNickname, String email,
@@ -53,10 +78,7 @@ public class Member {
 		this.phone = phone;
 		this.preferGenre = preferGenre;
 	}
-	
-	
-	
-	
+
 	//주현 : 회원정보 수정
 	public Member(String memberId, String memberName, String memberNickname, String email, String phone,
 			String preferGenre) {
@@ -68,10 +90,6 @@ public class Member {
 		this.phone = phone;
 		this.preferGenre = preferGenre;
 	}
-	
-	
-	
-
 
 	public int getMemberNo() {
 		return memberNo;
@@ -169,15 +187,39 @@ public class Member {
 		this.preferGenre = preferGenre;
 	}
 
-	
+	public String getReportReview() {
+		return reportReview;
+	}
+
+	public void setReportReview(String reportReview) {
+		this.reportReview = reportReview;
+	}
+
+	public String getReportCommunity() {
+		return reportCommunity;
+	}
+
+	public void setReportCommunity(String reportCommunity) {
+		this.reportCommunity = reportCommunity;
+	}
+
+	public String getReportReply() {
+		return reportReply;
+	}
+
+	public void setReportReply(String reportReply) {
+		this.reportReply = reportReply;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberId=" + memberId + ", memberPwd=" + memberPwd + ", memberName="
 				+ memberName + ", memberNickname=" + memberNickname + ", email=" + email + ", phone=" + phone
 				+ ", memberType=" + memberType + ", status=" + status + ", enrollDate=" + enrollDate + ", modifyDate="
-				+ modifyDate + ", preferGenre=" + preferGenre + "]";
+				+ modifyDate + ", preferGenre=" + preferGenre + ", reportReview=" + reportReview + ", reportCommunity="
+				+ reportCommunity + ", reportReply=" + reportReply + "]";
 	}
-
+	
 }
 	
 

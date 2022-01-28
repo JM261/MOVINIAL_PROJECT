@@ -57,17 +57,7 @@ public class CommunityInsertController extends HttpServlet {
 			// 		(용량 제한, 전달된 파일을 저장할 경로)
 			// 1_1. 전송파일 용량 제한
 			//			(int maxSize => 10Mbyte로 제한)
-			/*
-			 * 단위 정리 (2의 10승(1024) 단위로 변경)
-			 * Byte -> Kbyte -> Mbyte -> Gbyte -> Tbyte -> ...
-			 * 
-			 * 환산
-			 * 1Kbyte == 1024byte(2의 10승)
-			 * 1Mbyte == 1024Kbyte == 1024 * 1024 Byte(2의 20승)
-			 * 
-			 * 
-			 * 
-			 */
+
 			int maxSize = 1024 * 1024 * 10; // 10Mbyte
 			
 			// 1_2. 전달된 파일을 저장할 서버의 폴더 경로 알아내기
@@ -82,49 +72,15 @@ public class CommunityInsertController extends HttpServlet {
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/community_upfiles/");
 			
 			// 스텝 2) 전달된 파일명 수정 및 서버에 업로드 작업
-			/*
-			 * - HttpServletRequest request => MultipartRequest multiRequest 객체로 변환
-			 * 
-			 * MultipartRequest객체 생성 방법 : 매개변수 생성자로 생성(cos.jar 에서 제공)
-			 * 
-			 * [ 표현법 ]
-			 * MultipartRequest multiRequest
-			 * 				= new MultipartRequest(request, 파일이 저정될 물리적 경로);
-			 * 									   ,파일최대용량, 인코딩
-			 * 									   ,파일명을 수정시켜주는 객체);
-			 * 
-			 * 위 구문 한줄 실행만으로 넘어온 첨부파일이 해당 폴더에 그대로 무조건 업로드 됨!!!!!!
-			 * 그리고 사용자가 올린 파일명은 그대로 해당 폴더에 업로드 하지 않는 것이 일반적이다
-			 * 그래서 파일명을 수정시켜주는 객체를 생성!!!!!!!(내맘대로)
-			 * 
-			 * Q) 파일명을 수정하는 이유??
-			 * A) 같은 파일명 있을 경우를 대비해서
-			 * 	파일명에 한글 / 특수문자 / 띄어쓰기가 포함된 경우 서버에 따라 문제가 발생할 수 있기 떄문에
-			 * 
-			 * 
-			 * 기본적으로 파일명을 수정시켜주는 객체 => DefaultFileRenamePolicy객체(cos.jar에서 제공)
-			 * => 내부적으로 rename()이라는 메소드를 실행시키면서 파일명 수정 됨
-			 * => 기본적으로 동일한 파일명이 존재할 경우 뒤에 숫자를 붙여줌
-			 * ex) aaa.jpg, aaa1.jpg, aaa2.jpg
-			 * 
-			 * 너무 성의가 없음 --
-			 * 
-			 * 우리 입맛대로 파일명을 수정해서 절대 파일명이 겹치지 않도록 rename 해볼 것.
-			 * > DefaultFileRenamePolicy를 이용하지 않을 것,
-			 * > 우리만의 파일 생성 규칙을 만들자!
-			 * ex) kakaotalk_yyyymmdd_hhmmssRRR카카오톡
-			 * 
-			 * com.kh.common.MyFileRenamePolicy라는 클래스를 만들어보자
-			 */
 			
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
-			// 스포일러포함여부, 제목, 카테고리, 내용, 회원번호  Community 객체로 가공 => INSERT
-			String communityTitle = multiRequest.getParameter("title");
-			String category =  multiRequest.getParameter("category");
-			String communityWriter = multiRequest.getParameter("memberNo");
-			String communityContent = multiRequest.getParameter("content");
-			String spoiler =  multiRequest.getParameter("spoiler");
+			String communityTitle = multiRequest.getParameter("title"); // 글제목
+			String category =  multiRequest.getParameter("category"); // 글 카테고리
+			String communityWriter = multiRequest.getParameter("memberNo"); // 글 작성자(회원번호)
+			String communityContent = multiRequest.getParameter("content"); // 글 내용,본문
+			String spoiler =  multiRequest.getParameter("spoiler"); // 스포일러 포함여부
+			int isNotice = 0; // 공지사항여부
 			
 			if(spoiler != null) {
 				spoiler = "Y";
@@ -132,11 +88,15 @@ public class CommunityInsertController extends HttpServlet {
 				spoiler = "N";
 			}
 			
+			if(category.equals("공지")) { // 글 카테고리가 "공지" 라면
+				isNotice = 1;
+			}
+			
 			// 3) VO 객체로 가공 => Community 객체로 만들자
-			Community c = new Community(communityTitle,category,communityWriter,communityContent,spoiler);
+			Community c = new Community(communityTitle,category,communityWriter,communityContent,spoiler,isNotice);
 			
 			// 두번째 INSERT => 선택적(첨부파일이 있을 경우에만 INSERT)
-			CommunityFile cf = null; // null로 초기화, 첨부파일이 있으면 그 때 객체 생성
+			CommunityFile cf = null;
 			
 			// 원본명, 수정파일명, 파일경로
 			
@@ -158,22 +118,20 @@ public class CommunityInsertController extends HttpServlet {
 
 			}
 			
-			// 4) Service 단으로 토스
+			// 4) Service 단으로 넘기기
 			int result = new CommunityService().insertCommunity(c, cf);
 			
 			// 5) 응답페이지 결정
-			if(result > 0) { // 성공 => list.bo?currentPage=1 요청 (가장 최신글이므로)
+			if(result > 0) { // 게시글 등록 성공 => 알림 띄우고 커뮤니티 메인으로 이동
 				
-//				request.getSession().setAttribute("alertMsg", "게시글 작성 성공");
+				request.getSession().setAttribute("alertMsg", "게시글이 등록 되었습니다");
 				response.sendRedirect(request.getContextPath() + "/list.cm?currentPage=1");
 				
-			} else { // 실패
-				// => 첨부파일이 있었을 경우 이미 업로드된 첨부파일을 굳이 서버에 보관할 이유가 없다! (용량만 차지)
-				if(cf != null) {
-					new File(savePath + cf.getChangeName()).delete(); // File 클래스의 delete 메소드 호출
-				}
+			} else { // 게시글 등록 실패 => 저장한 첨부파일 삭제 후 에러페이지로 이동
 				
-//				request.setAttribute("errerMsg", "게시글 작성 실패");
+				if(cf != null) { // 첨부파일이 있었을 경우 이미 업로드된 첨부파일을 굳이 서버에 저장해둘 필요가 없음
+					new File(savePath + cf.getChangeName()).delete(); // File 클래스의 delete 메소드 호출
+				} 				
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 		}

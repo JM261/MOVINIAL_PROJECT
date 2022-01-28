@@ -9,6 +9,7 @@ import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.CommunityFile;
 import com.movinial.community.model.vo.Reply;
 import com.movinial.member.model.vo.LikesCommunity;
+import com.movinial.member.model.vo.Member;
 
 public class CommunityService {
 
@@ -279,11 +280,11 @@ public class CommunityService {
 		return result;
 	}
 
-	public int communityLikesremove(int memberNo, int communityNo) { // 좋아요 누른 글번호 게시글 좋아요 테이블에서 제거
+	public int communityLikesRemove(int memberNo, int communityNo) { // 좋아요 누른 글번호 게시글 좋아요 테이블에서 제거
 
 		Connection conn = getConnection();
 		
-		int result = new CommunityDao().communityLikesremove(conn, memberNo, communityNo);
+		int result = new CommunityDao().communityLikesRemove(conn, memberNo, communityNo);
 		
 		if(result > 0) {
 			commit(conn);
@@ -293,6 +294,49 @@ public class CommunityService {
 		close(conn);
 		
 		return result;
+	}
+
+	public int reportCommunity(int communityNo) { // 게시글 신고횟수 1 누적 증가
+		
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().reportCommunity(conn, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public int communityReportStore(int memberNo, int communityNo) { // 좋아요 누른 글번호 회원 신고한 게시글 컬럼에 저장
+
+		Connection conn = getConnection();
+		
+		int result = new CommunityDao().communityReportStore(conn, memberNo, communityNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+
+	public Member selectCommunityReport(int memberNo) { // 멤버 테이블 게시글 신고횟수 컬럼 회원번호로 조회
+		
+		Connection conn = getConnection();
+
+		Member m = new CommunityDao().selectCommunityReport(conn, memberNo);
+		
+		close(conn);
+		
+		return m;
 	}
 
 

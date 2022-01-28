@@ -26,6 +26,15 @@ public class Community {
 		super();
 	}
 	
+	// 주현 : 내 글 보기 생성자
+	public Community(int communityNo, String communityTitle, String communityCategory, Date createDate) {
+		super();
+		this.communityNo = communityNo;
+		this.communityTitle = communityTitle;
+		this.communityCategory = communityCategory;
+		this.createDate = createDate;
+	}
+	
 	// 게시글 리스트 보기 용도 생성자
 	public Community(int communityNo, String communityTitle, String communityCategory, String communityWriter,
 			int views, int likes, Date createDate, String spoiler, int reportCount) {
@@ -62,13 +71,14 @@ public class Community {
 	
 	// 게시글 등록 용도 생성자
 	public Community(String communityTitle, String communityCategory, String communityWriter, String commounityContent,
-			String spoiler) {
+			String spoiler, int isNotice) {
 		super();
 		this.communityTitle = communityTitle;
 		this.communityCategory = communityCategory;
 		this.communityWriter = communityWriter;
 		this.commounityContent = commounityContent;
 		this.spoiler = spoiler;
+		this.isNotice = isNotice;
 	}
 
 	public Community(int communityNo, String communityTitle, String communityCategory, String communityWriter,

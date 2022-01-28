@@ -10,6 +10,7 @@ public class Reply {
 	private String modifyDate;//MODIFY_DATE	DATE
 	private int reportCount;//REPORT_COUNT	NUMBER
 	private String status;//STATUS	VARCHAR2(1 BYTE)
+	private String replyTitle; // 주현님 요청 마이페이지에 필요 *
 	
 	// 생성자부
 	public Reply() {
@@ -23,6 +24,16 @@ public class Reply {
 		this.replyWriter = replyWriter;
 		this.replyContent = replyContent;
 	}
+	// 주현님 요청 생성자
+	public Reply(int replyNo, int refCno, String replyWriter, String replyContent, String createDate, String replyTitle) {
+		super();
+		this.replyNo = replyNo;
+		this.refCno = refCno;
+		this.replyContent = replyContent;
+		this.replyWriter = replyWriter;
+		this.createDate = createDate;
+		this.replyTitle = replyTitle;
+	}
 
 	public Reply(int replyNo, String replyWriter, String replyContent, String createDate, int reportCount) {
 		super();
@@ -32,9 +43,9 @@ public class Reply {
 		this.createDate = createDate;
 		this.reportCount = reportCount;
 	}
-
+	// 모든 매개변수가 있는 생성자
 	public Reply(int replyNo, int refCno, String replyWriter, String replyContent, String createDate, String modifyDate,
-			int reportCount, String status) {
+			int reportCount, String status, String replyTitle) {
 		super();
 		this.replyNo = replyNo;
 		this.refCno = refCno;
@@ -44,6 +55,7 @@ public class Reply {
 		this.modifyDate = modifyDate;
 		this.reportCount = reportCount;
 		this.status = status;
+		this.replyTitle = replyTitle;
 	}
 	
 	// 메소드부
@@ -107,15 +119,23 @@ public class Reply {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setReplyTitle(String status) {
 		this.status = status;
+	}
+	
+	public String getReplyTitle() {
+		return replyTitle;
+	}
+
+	public void setStatus(String replyTitle) {
+		this.replyTitle = replyTitle;
 	}
 
 	@Override
 	public String toString() {
 		return "Reply [replyNo=" + replyNo + ", refCno=" + refCno + ", replyWriter=" + replyWriter + ", replyContent="
 				+ replyContent + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", reportCount="
-				+ reportCount + ", status=" + status + "]";
+				+ reportCount + ", status=" + status + ", replyTitle=" + replyTitle + "]";
 	}
 	
 }
