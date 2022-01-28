@@ -10,7 +10,7 @@ import com.movinial.movie.model.dao.MovieDao;
 import com.movinial.movie.model.vo.Movie;
 
 public class MovieService {
-
+	
 	/**
 	 * 선택한 영화 상세보기
 	 * @return
@@ -26,6 +26,9 @@ public class MovieService {
 		return m;
 		
 	}
+	
+	
+	// ---------- 영화 템플릿 시작 ----------
 	
 	/**
 	 * 영화 포스터 가져오기
@@ -61,6 +64,11 @@ public class MovieService {
 		
 	}
 	
+	// ---------- 영화 템플릿 끝 ----------
+	
+	
+	// ---------- 영화 봤어요 시작 ----------
+	
 	/**
 	 * 영화 좋아요 테이블 회원번호로 조회 (이영화 봤어요 컬럼용)
 	 * @param memberNo
@@ -79,7 +87,7 @@ public class MovieService {
 	}
 	
 	/**
-	 * 해당 영화의 봤어요 수 증가 
+	 * 해당 영화의 봤어요 수 증가
 	 * @param movieNo
 	 * @return
 	 */
@@ -171,9 +179,124 @@ public class MovieService {
 		return result;
 		
 	}
-
-
 	
+	// ---------- 영화 봤어요 끝 ----------
+	
+	
+	// ---------- 영화 좋아요 시작 ----------
+	
+	/**
+	 * 영화 좋아요 테이블 회원번호로 조회 (좋아요 컬럼용)
+	 * @param memberNo
+	 * @return
+	 */
+	public LikesMovie selectLikesMovie(int memberNo) {
+		
+		Connection conn = getConnection();
+
+		LikesMovie lm = new MovieDao().selectLikesMovie(conn, memberNo);
+		
+		close(conn);
+		
+		return lm;
+		
+	}
+
+	/**
+	 * 해당 영화의 좋아요 수 증가
+	 * @param movieNo
+	 * @return
+	 */
+	public int increaseMovieLikes(int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MovieDao().increaseMovieLikes(conn, movieNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	/**
+	 * 해당 영화의 좋아요 수 감소
+	 * @param movieNo
+	 * @return
+	 */
+	public int decreaseMovieLikes(int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MovieDao().decreaseMovieLikes(conn, movieNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	/**
+	 * 좋아요 누른 영화 번호, 영화 좋아요 '좋아요' 컬럼에 저장
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public int likesMovieStore(int memberNo, int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MovieDao().likesMovieStore(conn, memberNo, movieNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+	/**
+	 * 좋아요 누른 영화 번호, 영화 좋아요 '좋아요' 컬럼에서 삭제
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public int likesMovieRemove(int memberNo, int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new MovieDao().likesMovieRemove(conn, memberNo, movieNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+	// ---------- 영화 좋아요 끝 ----------
 	
 	
 	

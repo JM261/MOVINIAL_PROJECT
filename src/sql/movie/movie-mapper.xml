@@ -11,6 +11,8 @@
 	</entry>
 	
 	
+	<!-- 영화 템플릿 시작 -->
+	
 	<!-- 영화 포스터 가져오기 -->
 	<entry key="getMoviePosterPath">
 		SELECT POSTER_PATH
@@ -24,8 +26,12 @@
 		  FROM MOVIE
 		 WHERE MOVIE_ID = ?
 	</entry>
+	
+	<!-- 영화 템플릿 끝 -->
+	
 
-
+	<!-- 영화 봤어요 시작 -->
+	
 	<!-- 영화 좋아요 테이블 회원번호로 조회 (이영화 봤어요 컬럼용) -->
 	<entry key="selectSeenMovie">
 		SELECT SEEN_MOVIE
@@ -57,8 +63,53 @@
 	<!-- 봤어요 누른 영화 번호, 영화 좋아요 '이영화 봤어요' 컬럼에서 삭제 -->
 	<entry key="seenMovieRemove">
 		UPDATE LIKES_MOVIE
-		   SET SEEN_MOVIE = REPLACE(SEEN_MOVIE, ? ,'')
+		   SET SEEN_MOVIE = REPLACE(SEEN_MOVIE, ?, '')
 		 WHERE MEMBER_NO = ?
 	</entry>
+	
+	<!-- 영화 봤어요 끝 -->
+	
+	
+	<!-- 영화 좋아요 시작 -->
+	
+	<!-- 영화 좋아요 테이블 회원번호로 조회 (좋아요 컬럼용) -->
+	<entry key="selectLikesMovie">
+		SELECT LIKES_MOVIE
+		  FROM LIKES_MOVIE
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 해당 영화의 좋아요 수 증가 -->
+	<entry key="increaseMovieLikes">
+		UPDATE MOVIE
+		   SET MOVIE_LIKES = MOVIE_LIKES + 1
+		 WHERE MOVIE_NO = ?
+	</entry>
+	
+	<!-- 해당 영화의 좋아요 수 감소 -->
+	<entry key="decreaseMovieLikes">
+		UPDATE MOVIE
+		   SET MOVIE_LIKES = MOVIE_LIKES - 1
+		 WHERE MOVIE_NO = ?
+	</entry>
+	
+	<!-- 좋아요 누른 영화 번호, 영화 좋아요 '이영화 좋아요' 컬럼에 저장 -->
+	<entry key="likesMovieStore">
+		UPDATE LIKES_MOVIE
+		   SET LIKES_MOVIE = LIKES_MOVIE || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 좋아요 누른 영화 번호, 영화 좋아요 '이영화 좋아요' 컬럼에서 삭제 -->
+	<entry key="likesMovieRemove">
+		UPDATE LIKES_MOVIE
+		   SET LIKES_MOVIE = REPLACE(LIKES_MOVIE, ?, '')
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 영화 봤어요 끝 -->
+	
+	
+	
 
 </properties>

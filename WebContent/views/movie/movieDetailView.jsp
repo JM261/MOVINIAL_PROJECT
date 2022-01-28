@@ -54,6 +54,10 @@
 		text-decoration: none;
 		color: black;
 	}
+	.movie-likes-btn:hover {
+		text-decoration: none;
+		color: black;
+	}
 
 </style>
 </head>
@@ -114,6 +118,9 @@
 					var movieNo = "<%= m.getMovieNo() %>"; // 현재 영화 번호
 					var movieSeenValue = <%= m.getMovieSeen() %>; // 페이지 진입시 봤어요 값
 					var movieLikesValue = <%= m.getMovieLikes() %>; // 페이지 진입시 좋아요 값
+					
+					
+					// ---------- 영화 봤어요 ----------
 					
 					// 회원이 해당 영화에 '봤어요'를 누른 적이 있는지 확인
 					function checkSeen(){
@@ -182,6 +189,86 @@
 								if(dontSeen > 0){
 									movieSeenValue--; // 봤어요 값 - 1
 									$(".movie-seen-btn").children().eq(1).text(movieSeenValue);
+								}
+								
+							},
+							error: function() {
+								alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+							}	
+						})
+						
+					}
+					
+					
+					// ---------- 영화 좋아요 ----------
+					
+					// 회원이 해당 영화에 '좋아요'를 누른 적이 있는지 확인
+					function checkLikes(){
+						
+						$.ajax({
+							url: "chklike.mo",
+							data: { mno : <%= loginUser.getMemberNo() %> },
+							success: function(lm) {
+								
+								// 좋아요를 눌렀는지 확인
+								if(lm.likesMovie != null) { 
+									// 해당 회원의 '좋아요' 영화 번호 뽑아내기 (String[])
+									var likesMovie = lm.likesMovie.split(',');
+								}
+								
+								// 영화번호가 이미 있는지 확인
+								if(likesMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
+									iDontLikeIt();
+								}
+								else { // 없다면, 영화 번호 삽입
+									iLikeIt();
+								}
+								
+							},
+							error: function() {
+								alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+							}
+						})
+					}
+					
+					// 해당 영화 '좋아요' 체크 
+					function iLikeIt() {
+						
+						$.ajax({
+							url: "like.mo",
+							data: { 
+								mno : <%= loginUser.getMemberNo() %>,
+								movieNo: <%= m.getMovieNo() %>
+							},
+							success: function(like) {
+								
+								if(like > 0){ // 성공 시
+									movieLikesValue++; // 봤어요 값 + 1
+									$(".movie-likes-btn").children().eq(1).text(movieLikesValue);
+								}
+								
+							},
+							error: function() {
+								alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+							}		
+						})
+						
+					}
+					
+					// 해당 영화 '좋아요' 체크 해제
+					function iDontLikeIt(){
+
+						$.ajax({
+							url: "dislike.mo",
+							data: { 
+								mno : <%= loginUser.getMemberNo() %>,
+								movieNo: <%= m.getMovieNo() %>
+							},
+							success: function(dislike) {
+								
+								if(dislike > 0){
+									movieLikesValue--; // 봤어요 값 - 1
+									$(".movie-likes-btn").children().eq(1).text(movieLikesValue);
 								}
 								
 							},
