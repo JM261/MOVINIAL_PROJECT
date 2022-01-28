@@ -21,7 +21,9 @@
 		           ,NICKNAME
 		           ,EMAIL
 		           ,PHONE
-		           ,PREPERGENRE
+		           ,PREFERGENRE
+		           ,ENROLL_DATE
+                   ,MEMBER_TYPE
 		          )
             VALUES
                   (
@@ -33,6 +35,8 @@
                     ,?
                     ,?
                  	,?
+                 	, DEFAULT
+                    , DEFAULT
                   )
 	</entry>
 	
@@ -43,6 +47,34 @@
  		  AND  PHONE = ?
  		  AND STATUS = 'Y'
 	</entry>
+	
+	<entry key="forgotPwd"> <!-- 비밀번호 변경 대상자 -->
+		SELECT *
+    		FROM MEMBER
+ 		 WHERE 
+ 		 	MEMBER_ID = ?
+          AND 
+          	MEMBER_NAME = ?
+ 		  AND  
+ 		  	PHONE = ?
+ 		  AND 
+ 		  	STATUS = 'Y'
+	</entry>
+	
+	<entry key ="updateMemberPwd">
+	UPDATE
+	    MEMBER 
+	SET
+	    MEMBER_PWD = ?
+	WHERE
+	    MEMBER_ID = ?
+	 AND
+	    MEMBER_NO = ?
+		
+	
+	</entry>
+	
+	
 	
 	<entry key ="AselectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
 		SELECT
@@ -74,6 +106,7 @@
 			MEMBER_NO = ?
 	
 	</entry>
+	
 	
 	<entry key="AsearchMember"> 
 		SELECT *

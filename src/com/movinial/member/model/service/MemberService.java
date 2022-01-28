@@ -29,14 +29,17 @@ public class MemberService {
 	}
 	
 	public int insertMember(Member m ) {
-							
-		//Service => Connection 객체
-		// 1) Connecttion 객체 생성
-		
+
 		Connection conn = getConnection();
 		
-		
 		int result = new MemberDao().insertMember(conn, m);
+		
+		// 성공헀으면 1, 실패했다면 0으로 리턴이 되었을 것이다.
+		if(result > 0) { //성공했다면
+			commit(conn);
+		} else { // 실패했다면
+			rollback(conn);
+		}
 		
 		close(conn);
 		
@@ -58,13 +61,13 @@ public class MemberService {
 	
 	public Member forgotPwd(String memberId, String memberName, String phone) { // 비밀번호 변경 대상 찾기
 		
-		
-		
 		Connection conn = getConnection();
 		
 		Member m = new MemberDao().forgotPwd(conn, memberId, memberName, phone);
 
 		close(conn);
+		
+		System.out.println("서비스단에서의 m" + m);
 		
 		return m;
 	}

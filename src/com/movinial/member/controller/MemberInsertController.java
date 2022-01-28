@@ -30,27 +30,24 @@ public class MemberInsertController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		// POST
 		// 1) 인코딩 설정
 		request.setCharacterEncoding("UTF-8");
-		String memberId = (String)request.getSession().getAttribute("memberId");
+		
+		 String memberId = (String)request.getSession().getAttribute("memberId");
 	     String memberPwd = (String)request.getSession().getAttribute("memberPwd"); // 필수입력사항
 		 String memberName = (String)request.getSession().getAttribute("memberName"); // 필수입력사항
 		 String nickName = (String)request.getSession().getAttribute("nickName"); // 필수입력사항
-		
 		 String email = (String)request.getSession().getAttribute("email"); // 빈 문자열이 들어갈 수 있음
 		 String phone = (String)request.getSession().getAttribute("phone");
-		 //선호 장르는 여기다가 추가
+		 String Prefergenre = (String)request.getSession().getAttribute("Prefergenre");
 		 
+		 //선호 장르는 여기다가 추가
 		// 2) request객체로부터 요청 시 전달값을 get해버리기
-
-		
-		System.out.println(memberId);
-		
+		 
 		// 3) 매개변수 생성자를 이용해서 Member객체에 담기
-		Member m = new Member(memberId, memberPwd, memberName, email, phone, "");
+		Member m = new Member(memberId, memberPwd, memberName, nickName, email, phone, Prefergenre);
 		
 		// 4) 요청처리(Service단으로 토스~)
 		int result = new MemberService().insertMember(m);
@@ -67,8 +64,7 @@ public class MemberInsertController extends HttpServlet {
 			
 			request.setAttribute("errorMsg", "회원가입에 실패했습니다.");
 			
-			RequestDispatcher view = request.getRequestDispatcher("views/member/memberEnrollGenre.jsp");
-			
+			RequestDispatcher view = request.getRequestDispatcher("views/member/memberInsertComplete.jsp");
 			view.forward(request, response);
 			
 		}

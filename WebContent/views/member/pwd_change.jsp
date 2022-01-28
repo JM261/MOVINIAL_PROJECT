@@ -62,8 +62,9 @@
        			 <tr>
         		  <td>수정할 비밀번호 재입력</td>
         		  <td><input type="password" name="newPwdChk" id="newPwdChk" required></td>
-        		   <input type="text" name="memberId"   value="<%= m.getMemberId() %>" >
-        		  <input type="text" name="memberNo"  value="<%= m.getMemberNo() %>">
+        		      <font id="chkNotice" size="2"></font></td>
+        		      <input type="hidden" name="memberId"   value="<%= m.getMemberId() %>" >
+        		  	  <input type="hidden" name="memberNo"  value="<%= m.getMemberNo() %>">
        			</tr>
 			     </table>
 			    
@@ -78,26 +79,25 @@
     			<td>
       				<table width="150px"  align="center" border="0" style="margin-top:1%">
        				 <tr>
-        				<td><input type="submit" name="enter2" value="  찾기  " align="center" style="cursor:pointer; border-color:black; background:white; color:black;" onClick="enter()" >
+        				<td><input type="submit" name="enter2" value="  새로운 비밀번호 설정하기  " align="center" style="cursor:pointer; border-color:black; background:white; color:black;" onClick="enter()" >
          				</td>
        				</tr>
       				</table>
      			</td>
     			</tr>
-
 	  	</table>
-	 			</td>
-				</tr>
-			</table>
-			</td>
+	 		</td>
+			</tr>
 		</table>
+		</td>
+	</table>
 
 
 	</form>
 	
 	       <%@ include file="../common/footer.jsp" %>
 	<script>
-	$(function(){
+	
 		 var pwd1 = $('#newPwd').val();
 	     var pwd2 = $('#newPwdChk').val();
 	  
@@ -106,18 +106,32 @@
 	    	} else if (pwd1 != "" || pwd2 != "") {
 	            if (pwd1 == pwd2) {
 	            	$('#updatePwd').submit(function() { // 비밀번호 일치 이벤트 실행
-	            		"<%=contextPath %>/updatePwd.me" 	
+	            		"<%=contextPath %>/updatePwd.me" 
 	            	}
 	            	} else {
 	            		$('#updatePwd').submit(function() {
 	               			alert("새로운 비밀번호가 일치하지 않습니다.")// 비밀번호 불일치 이벤트 실행
-	            				})
-	            			}
-	            
-		});
-	
-	
-		
+	            			})
+	            			
+	    					}
+													});
+	            	
+	            	
+	        $('#newPwd').keyup(function(){ // 비밀번호 재입력 확인 
+	        	$('#newPwdChk').html('');
+	       		    });
+
+	       	$('#newPwdChk').keyup(function(){
+				if($('#newPwd').val() != $('#newPwdChk').val()){
+	       		          $('#chkNotice').html('비밀번호 일치하지 않음<br><br>');
+	       		          $('#chkNotice').attr('color', '#f82a2aa3');
+	       		        } else{
+	       		          $('#chkNotice').html('비밀번호 일치함<br><br>');
+	       		          $('#chkNotice').attr('color', '#199894b3');
+	       		        }
+
+	       		    });
+	            	
 	</script>
 </body>
 </html>

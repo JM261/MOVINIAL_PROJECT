@@ -11,25 +11,6 @@ pageEncoding="UTF-8"%>
         <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         
-
-
-	    <script type="text/javascript">
-		    $(document).ready(function(){
-			$("#cbx_chkAll").click(function() {
-				if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
-				else $("input[name=chk]").prop("checked", false);
-			});
-			
-			$("input[name=chk]").click(function() {
-                var total = $("input[name=chk]").length;
-				var checked = $("input[name=chk]:checked").length;
-				
-				if(total != checked) $("#cbx_chkAll").prop("checked", false);
-				else $("#cbx_chkAll").prop("checked", true); 
-			});
-		});
-        </script>
-        
         <style>
 		details { margin:5px 0 10px; }
 		details > summary { background:#444; color:#fff; padding:10px; outline:0; border-radius:5px; cursor:pointer; transition:background 0.5s; text-align:left; box-shadow: 1px 1px 2px gray;}
@@ -43,7 +24,7 @@ pageEncoding="UTF-8"%>
 		    from { opacity:0; transform:translate3d(0, -30px, 0); }
 		    to { opacity:1; transform:translate3d(0, 0, 0); }
 		}
-		</style>
+		</st	yle>
         
         
     </head>
@@ -149,7 +130,7 @@ pageEncoding="UTF-8"%>
                 <tr>
                     <td>* 아이디</td>
                     <td><input type="text" name="memberId" maxlength="12" id="memberId" required></td>
-                    <td><button type="button" onclick="idCheck();" class="btn bnt-sm btn-secondary">중복확인</button></td>
+                    <td><button type="bFutton" onclick="idCheck();" class="btn bnt-sm btn-secondary">중복확인</button></td>
                 </tr>
                 <tr>
                     <td>* 비밀번호</td>
@@ -190,7 +171,6 @@ pageEncoding="UTF-8"%>
                         </select> 
                         <input type="text" name="phone2"> </td>
                         
-                     <!--   <td><input type="button" value="휴대폰인증"></td>   -->
                 </tr>
 
             </table>
@@ -263,7 +243,7 @@ pageEncoding="UTF-8"%>
     <script>
     $(function(){
 		
-		 $('#memberPwd1').keyup(function(){
+		 $('#memberPwd1').keyup(function(){ // 비밀번호 재입력 확인 
 		      $('#chkNotice').html('');
 		    });
 
@@ -281,6 +261,23 @@ pageEncoding="UTF-8"%>
 	    
 	  
 	  });
+    
+    $(document).ready(function(){  //이용약관 체크박스 관련 
+		$("#cbx_chkAll").click(function() {
+			if($("#cbx_chkAll").is(":checked")) $("input[name=chk]").prop("checked", true);
+			else $("input[name=chk]").prop("checked", false);
+		});
+		
+		$("input[name=chk]").click(function() {
+            var total = $("input[name=chk]").length;
+			var checked = $("input[name=chk]:checked").length;
+			
+			if(total != checked) $("#cbx_chkAll").prop("checked", false);
+			else $("#cbx_chkAll").prop("checked", true); 
+		});
+	});
+    
+    
 	</script>
 
 
