@@ -40,6 +40,13 @@ public class Movie {
 		this.movieSeen = movieSeen;
 	}	
 	
+  public Movie(int movieNo, String title, String posterPath) {
+		super();
+		this.movieNo = movieNo;
+		this.title = title;
+  	this.posterPath = posterPath;
+  }
+
 	// mainPage 최신 영화 포스터 이미지경로, 영화번호
 	public Movie(int movieNo, String posterPath) {
 		super();
