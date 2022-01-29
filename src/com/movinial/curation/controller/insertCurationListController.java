@@ -35,6 +35,7 @@ public class insertCurationListController extends HttpServlet {
 		
 		String listName = (String)request.getParameter("listName");
 		String[] listMovieIdArr = request.getParameterValues("listMovieId");
+		String[] posterPathArr = request.getParameterValues("posterPath");
 
 		/*
 			System.out.println(request.getParameter("listName"));
@@ -47,13 +48,16 @@ public class insertCurationListController extends HttpServlet {
 		*/
 		
 		String listMovieId = "";
+		String posterPath = "";
 		
 		if(listMovieIdArr != null) {
 			listMovieId = String.join(",", listMovieIdArr);
 		}
-		// 나중에 split(","); 으로  자른다
+		if(posterPathArr != null) {
+			posterPath = String.join(",", posterPathArr);
+		}
 		
-		CurationList cl = new CurationList(listName, listMovieId);
+		CurationList cl = new CurationList(listName, listMovieId, posterPath);
 		
 		int result = new CurationService().insertCurationList(cl);
 		
