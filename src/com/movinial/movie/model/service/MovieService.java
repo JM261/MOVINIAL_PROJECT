@@ -3,6 +3,7 @@ package com.movinial.movie.model.service;
 import static com.movinial.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.movinial.community.model.dao.CommunityDao;
 import com.movinial.member.model.vo.LikesMovie;
@@ -297,6 +298,46 @@ public class MovieService {
 	}
 
 	// ---------- 영화 좋아요 끝 ----------
+	
+	
+	// ---------- 회원 추천 영화 시작 ----------
+
+	/**
+	 * 회원 선호 장르 가져오기
+	 * @param memberNo
+	 * @return
+	 */
+	public String selectMemberPreferGenre(int memberNo) {
+		
+		Connection conn = getConnection();
+		
+		String result = new MovieDao().selectMemberPreferGenre(conn, memberNo);
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+	/**
+	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
+	 * @param regExpGenre
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovie(String regExpGenre) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().selectMemberRecommendMovie(conn, regExpGenre);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+
+	// ---------- 회원 추천 영화 끝 ----------
+
 	
 	
 	

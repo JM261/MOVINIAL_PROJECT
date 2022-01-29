@@ -172,24 +172,41 @@
   </head>
   <body>
   
- <%@ include file="/views/common/header.jsp" %>
-
+ <%@ include file="/views/common/header.jsp" %> 
+ 
       <div id="content0">
         <!-- 이미지 포스터? -->
         <!--<a href=""><img src="" alt=""></a>-->
       </div>
     
-      <!-- 로그인한 회원만 보이는 부분 -->
-      <% if(loginUser != null){ %>   
-      <a href="" class="title"><%= loginUser.getMemberNickname() %>님을 위한 추천영화</a>
+      <!-- 관리자가 아닌 로그인한 회원만 보이는 부분 -->
+      <!-- 회원 추천 영화 -->
+      <% if(loginUser != null && loginUser.getMemberType().equals("U")) { %>
+      	<script>
+			$(function(){
+			
+				$.ajax({
+					url: "<%= contextPath %>/recommendMovie.mo",
+					success: function(recommendList) {
+						
+						var result = "";
+						
+						for(var i in recommendList) {
+							result += "<img class='movie1' src='" + recommendList[i].posterPath + "'>";
+						}
+
+						$('#content1').html(result);
+					}
+				})
+				
+			})
+		</script>
+    
+    <a href="" class="title"><%= loginUser.getMemberNickname() %>님을 위한 추천영화</a>
       <div id="content1">
-        <div class="movie0"></div>
-        <div class="movie0"></div>
-        <div class="movie0"></div>
-        <div class="movie0"></div>
-        <div class="movie0"></div>
       </div>
       <% } %>
+
 
       <script>
           $(function(){
@@ -199,7 +216,7 @@
                 success : function(latestList){
                     var result = "";
                     <% for(int i=0; i<5; i++){ %>
-                      result += "<img class='movie1' src='http://image.tmdb.org/t/p/w154"+ latestList[<%=i%>].posterPath +"'>"
+                      result += "<img class='movie1' src='http://image.tmdb.org/t/p/w500"+ latestList[<%=i%>].posterPath +"'>"
                     <% } %>
                     $('#content2').html(result);  
                 } // success
@@ -211,7 +228,7 @@
       <a class="title">최신 개봉 영화</a>
       <div id="content2">
       </div>
-      
+
 	  	 <script>
 	        $(function(){
 	        	
@@ -250,7 +267,6 @@
          <div class='div2'>
 	                   
          </div>
-
 
       <div id="div34">
         <a class="title">리뷰어 랭킹</a>

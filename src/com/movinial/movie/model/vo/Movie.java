@@ -18,9 +18,35 @@ public class Movie {
 	private int movieLikes; 			// MOVIE_LIKES	NUMBER
 	private int movieSeen; 				// MOVIE_SEEN	NUMBER
 	
+	
 	// 생성자
-	public Movie() {
+	// mainPage 최신 영화 포스터 이미지경로, 영화번호
+	
+	public Movie(int movieNo, String posterPath) {
 		super();
+		this.movieNo = movieNo;
+		this.posterPath = posterPath;
+	}
+	
+	/**
+	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
+	 * @param movieNo
+	 * @param title
+	 * @param posterPath
+	 */
+	public Movie(int movieNo, String title, String posterPath) {
+		super();
+		this.movieNo = movieNo;
+		this.title = title;
+		this.posterPath = posterPath;
+	}
+	
+	public Movie(int movieNo, int movieId, String title, String posterPath) {
+		super();
+		this.movieNo = movieNo;
+		this.movieId = movieId;
+		this.title = title;
+		this.posterPath = posterPath;
 	}
 
 	public Movie(int movieNo, int movieId, String title, String originalTitle, String originalLanguage, String overview,
@@ -40,20 +66,7 @@ public class Movie {
 		this.movieSeen = movieSeen;
 	}	
 	
-  public Movie(int movieNo, String title, String posterPath) {
-		super();
-		this.movieNo = movieNo;
-		this.title = title;
-  	this.posterPath = posterPath;
-  }
-
-	// mainPage 최신 영화 포스터 이미지경로, 영화번호
-	public Movie(int movieNo, String posterPath) {
-		super();
-		this.movieNo = movieNo;
-		this.posterPath = posterPath;
-	}
-
+	
 	// 메소드
 	public int getMovieNo() {
 		return movieNo;
