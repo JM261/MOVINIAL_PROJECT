@@ -162,7 +162,7 @@
 		   
 		          (
 		            MEMBER_NO
-		            LIKES_COMMUNITY
+		            ,LIKES_COMMUNITY
 		           
 		          )
             VALUES
@@ -178,7 +178,7 @@
 		   
 		          (
 		            MEMBER_NO
-		            LIKES_REFVIEW
+		            ,LIKES_REVIEW
 		           
 		          )
             VALUES
@@ -194,8 +194,8 @@
 		   
 		          (
 		            MEMBER_NO
-		            LIKES_MOVIE
-		            SEEN_MOVIE
+		            ,LIKES_MOVIE
+		            ,SEEN_MOVIE
 		           
 		          )
             VALUES

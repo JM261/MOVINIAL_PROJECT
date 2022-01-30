@@ -24,6 +24,13 @@
 <style>
 		.btn-area{
 		
+		width : 1500px;
+		height: 100px;
+        text-align:center; 
+		}
+		.btn-area>input{
+            align-
+		
 		}
 
         #box{
@@ -225,8 +232,8 @@
         
         <div class="btn-area" >
        		<input type="button" value=" < 이전" >
- 			<input type="button" class="" value="회원가입" onclick="fnSubmit();">
-            <button type="submit" class="">건너 뛰기</button>
+ 			<input type="button" class="" value="회원가입 > " onclick="fnSubmit();">
+            <input type="submit" class="" value="건너 뛰기 >> ">
         </div>
     </div>
         <td><input type="hidden" name="memberId" maxlength="12" id="memberId" value="<%= memberId %>"></td> 

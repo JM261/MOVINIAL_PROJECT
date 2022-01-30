@@ -42,7 +42,6 @@ public class MemberInsertController extends HttpServlet {
 		 String email = (String)request.getSession().getAttribute("email"); // 빈 문자열이 들어갈 수 있음
 		 String phone = (String)request.getSession().getAttribute("phone");
 		 String prefergenre = (String)request.getParameter("prefergenre");
-		 String ddddddd = (String)request.getParameter("a");
 		 
 		 //선호 장르는 여기다가 추가
 		// 2) request객체로부터 요청 시 전달값을 get해버리기

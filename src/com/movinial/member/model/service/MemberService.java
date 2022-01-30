@@ -39,9 +39,11 @@ public class MemberService {
 		// 성공헀으면 1, 실패했다면 0으로 리턴이 되었을 것이다.
 		if(result > 0) { //성공했다면
 			
-		//TODO	result += new MemberDao().insertMemberLikeCommunity(conn, m);
-		//TODO	result += new MemberDao().insertMemberLikeMovie(conn, m);
-	    //TODO result += new MemberDao().insertMemberLikeReview(conn, m);
+		Member mm = new MemberDao().loginMember(conn, m.getMemberId(), m.getMemberPwd());
+		m.setMemberNo(mm.getMemberNo());
+		result += new MemberDao().insertMemberLikeCommunity(conn, m);
+		result += new MemberDao().insertMemberLikeMovie(conn, m);
+	    result += new MemberDao().insertMemberLikeReview(conn, m);
 			
 			commit(conn);
 		} else { // 실패했다면

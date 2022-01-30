@@ -33,6 +33,8 @@ public class MemberDao {
 
 		// SELECT문 => ResultSet객체로
 
+		
+
 		// 변수선언먼저
 		Member m = null;
 
@@ -100,6 +102,8 @@ public class MemberDao {
 		return result;
 	}
 	public int insertMemberLikeCommunity(Connection conn, Member m) { 
+		
+		System.out.println("dao커뮤니티에서 m" + m);
 		int result = 0;
 
 		PreparedStatement pstmt = null;
@@ -122,6 +126,8 @@ public class MemberDao {
 		return result;
 	}
 	public int insertMemberLikeMovie(Connection conn, Member m) {
+
+		System.out.println("dao라이크무비에서 m" + m);
 
 		int result = 0;
 
@@ -146,6 +152,9 @@ public class MemberDao {
 	}
 	public int insertMemberLikeReview(Connection conn, Member m) {
 
+		System.out.println("dao라이크리뷰에서 m" + m);
+
+		
 		int result = 0;
 
 		PreparedStatement pstmt = null;
