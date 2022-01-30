@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.movinial.member.model.vo.LikesCommunity;
 import com.movinial.member.model.vo.LikesMovie;
 import com.movinial.movie.model.vo.Movie;
 

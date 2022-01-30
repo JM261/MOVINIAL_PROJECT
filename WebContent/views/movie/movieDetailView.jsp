@@ -1,3 +1,4 @@
+<%@page import="oracle.net.aso.r"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.movinial.movie.model.vo.Movie, org.json.JSONObject, java.util.ArrayList,
@@ -23,7 +24,6 @@
 	String productionCompanies = (String)movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name"); // 제작사
 	
 	
-
 	
 	// 영화 상세보기 - 영화 포스터 가져오기
 	String moviePosterUrl = getMoviePosterPath(m.getMovieId(), "w780");
@@ -43,21 +43,14 @@
 		padding: 10px;
 		border: solid 1px black;
 	}
-	.movie-seen-btn {
+	.btn-group {
 		text-decoration: none;
 		color: black;
 	}
-	.movie-seen-btn:hover {
+	.btn-group:hover {
 		text-decoration: none;
 		color: black;
-	}
-	.movie-likes-btn {
-		text-decoration: none;
-		color: black;
-	}
-	.movie-likes-btn:hover {
-		text-decoration: none;
-		color: black;
+		cursor: pointer;
 	}
 
 </style>
@@ -89,13 +82,13 @@
 					<h1><%= m.getOriginalTitle() %></h1>
 				</td>
 				<td>
-					<a class="movie-seen-btn" onclick="checkSeen()">
+					<a class="movie-seen-btn btn-group" onclick="checkSeen()">
 						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘" style="text-align: center;">
-						<h3 style="text-align: center;"><%= m.getMovieSeen() %></h3>
+						<h3><%= m.getMovieSeen() %></h3>
 					</a>
 				</td>
 				<td>
-					<a class="movie-likes-btn" onclick="checkLikes()">
+					<a class="movie-likes-btn btn-group" onclick="checkLikes()">
 						<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘">
 						<h3 style="text-align: center;"><%= m.getMovieLikes() %></h3>
 					</a>
@@ -103,37 +96,56 @@
 			</tr>
 			<tr>
 				<td colspan="5">
-					<h4>개요</h4>
-					<p>
-						<%= m.getOverview() %>
-					</p>
+					<h4 style="font-weight: bold;">개요</h4>
+					<% if(m.getOverview() != null) { %>
+						<p>
+							<%= m.getOverview() %>
+						</p>
+					<% } else { %>
+						<p>
+							없음
+						</p>
+					<% } %>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="5">
 					<br>
-					<h4>개봉일 &nbsp&nbsp&nbsp <%= m.getReleaseDate() %></h4>
-					<br>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="5">
-					<br>
-					<h4>제작국가 &nbsp&nbsp&nbsp <%= productionCountries.getDisplayCountry() %></h4>
-					<br>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="5">
-					<br>
-					<h4>제작사 &nbsp&nbsp&nbsp <%= productionCompanies %></h4>
+					<h4 style="font-weight: bold;">개봉일</h4>
+					<h5><%= m.getReleaseDate() %></h5>
 					<br>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="5">
 					<br>
-					<h4>공식홈페이지 &nbsp&nbsp&nbsp <a href="<%= homepage %>" style="text-decoration: none; color: black;">홈페이지</a></h4>
+					<h4 style="font-weight: bold;">제작국가</h4>
+					<h5><%= productionCountries.getDisplayCountry() %></h5>
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<br>
+					<h4 style="font-weight: bold;">제작사</h4>
+					<h5><%= productionCompanies %></h5>
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5">
+					<br>
+					<h4 style="font-weight: bold;">공식 홈페이지 &nbsp&nbsp
+					<% if(!homepage.equals("")) { %>
+						<a href="<%= homepage %>" target="_blank">
+							<img src="<%= contextPath %>/resources/images/external-link-btn.png" alt="<%= m.getTitle() %> 공식 홈페이지로 이동" style="width: 30px; height: 30px;">
+						</a>
+						</h4>
+						<% } else { %>
+						</h4>
+						<h5>없음</h5>
+					<% } %>
+					
 					<br>
 				</td>
 			</tr>
@@ -141,16 +153,16 @@
 	</div>
 
 
-	<%-- movie-seen-btn, movie-likes-btn: onclick 로그인 여부 확인 --%>
+	<%-- 영화 봤어요 & 좋아요: 로그인 여부 확인 --%>
 	<% if(loginUser == null) { %>
 	
 		<script>
 			function checkSeen() {
-				alert("먼저 로그인해주세요");
+				alert("로그인 후 이용해주시기 바랍니다");
 				location.href = "<%= contextPath %>/login.me"
 			}
 			function checkLikes() {
-				alert("먼저 로그인해주세요");
+				alert("로그인 후 이용해주시기 바랍니다");
 				location.href = "<%= contextPath %>/login.me"
 			}
 		</script>
@@ -163,7 +175,6 @@
 			var movieNo = "<%= m.getMovieNo() %>"; // 현재 영화 번호
 			var movieSeenValue = <%= m.getMovieSeen() %>; // 페이지 진입시 봤어요 값
 			var movieLikesValue = <%= m.getMovieLikes() %>; // 페이지 진입시 좋아요 값
-			
 			
 			// ---------- 영화 봤어요 ----------
 			
@@ -378,7 +389,10 @@
 	                </tr>
 	                <tr>
 	                    <td>
-	                        <img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘"> 좋아요 <%= r.getLikes() %>
+							<a class="review-likes-btn btn-group" onclick="checkReviewLikes('<%= r.getReviewWriter() %>', '<%= r.getReviewNo() %>', this)">
+	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 50%; height: 50%;">&nbsp&nbsp
+								<h4 style="text-align: center;"><%= r.getLikes() %></h4>
+							</a>
 	                    </td>
 	                </tr>
                 <% } %>
@@ -386,6 +400,113 @@
                <% } %>
 		</table>
 	</div>
+
+	<%-- 리뷰 좋아요: 로그인 여부 확인 --%>
+	<% if(loginUser == null) { %>
+	
+		<script>
+			function checkReviewLikes() {
+				alert("로그인 후 이용해주시기 바랍니다");
+				location.href = "<%= contextPath %>/login.me"
+			}
+		</script>
+		
+	<%-- 리뷰 좋아요: 증감 처리 --%> 
+	<%-- 리뷰 좋아요: 리뷰 번호 저장/삭제 처리 --%>
+	<% } else { %>
+		<script>
+		
+			// 회원이 해당 리뷰에 '좋아요'를 누른 적이 있는지 확인
+			// 매개변수: 현재 리뷰 작성자(닉네임), 현재 리뷰 번호, 사용자가 누른 review-likes-btn 클래스 요소
+			function checkReviewLikes(reviewWriter, reviewNo, reviewLikesBtn){
+				
+				var $reviewLikesValue = $(reviewLikesBtn).children().eq(1).text(); // 현재 리뷰의 좋아요 개수
+				
+				if(reviewWriter == "<%= loginUser.getMemberNickname() %>") { // 리뷰 작성자 확인
+					alert("자신의 리뷰에 좋아요를 할 수 없습니다");
+					return;
+				}
+			
+				$.ajax({
+					url: "chklike.rev",
+					data: { mno : <%= loginUser.getMemberNo() %> },
+					success: function(lr) {
+						
+						// 좋아요를 눌렀는지 확인
+						if(lr.likesReview != null) { 
+							// 해당 회원의 '좋아요' 리뷰 번호 뽑아내기 (String[])
+							var likesReview = lr.likesReview.split(',');
+						}
+						
+						// 리뷰번호가 이미 있는지 확인
+						if(likesReview.indexOf(reviewNo) != -1) { // 있다면, 리뷰 번호 삭제
+							iDontLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
+						}
+						else { // 없다면, 리뷰 번호 삽입
+							iLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
+						}
+						
+					},
+					error: function() {
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+					}
+				})
+				
+			}
+			
+			// 해당 영화 '좋아요' 체크 
+			function iLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue) {
+				
+				$.ajax({
+					url: "like.rev",
+					data: { 
+						mno : <%= loginUser.getMemberNo() %>,
+						reviewNo: reviewNo
+					},
+					success: function(like) {
+						
+						if(like > 0){ // 성공 시
+							$reviewLikesValue++; // 좋아요 값 - 1
+							$(reviewLikesBtn).children().eq(1).text($reviewLikesValue);
+						}
+						
+					},
+					error: function() {
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+					}		
+				})
+				
+			}
+			
+			// 해당 영화 '좋아요' 체크 해제
+			function iDontLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue) {
+				
+				$.ajax({
+					url: "dislike.rev",
+					data: { 
+						mno : <%= loginUser.getMemberNo() %>,
+						reviewNo: reviewNo
+					},
+					success: function(dislike) {
+						
+						if(dislike > 0){ // 성공 시
+							$reviewLikesValue--; // 좋아요 값 - 1
+							$(reviewLikesBtn).children().eq(1).text($reviewLikesValue);
+						}
+						
+					},
+					error: function() {
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+					}	
+				})
+				
+			}
+			
+		</script>
+	<% } %>
+
+
+	</script>
 
 	
 	<!-- Modal 영역 -->

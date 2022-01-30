@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.LikesReview;
 import com.movinial.review.model.vo.Review;
 
 public class ReviewDao {
@@ -200,8 +201,180 @@ public class ReviewDao {
 		return result;
 		
 	}
+
 	
+	// ---------- 리뷰 좋아요 시작 ----------
 	
+	/**
+	 * 리뷰 좋아요 테이블 회원번호로 조회
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 */
+	public LikesReview selectLikesReview(Connection conn, int memberNo) {
+
+		LikesReview lr = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectLikesReview");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				lr = new LikesReview();
+				lr.setLikesReview(rset.getString("LIKES_REVIEW"));
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		
+		return lr;
+		
+	}
+
+	/**
+	 * 해당 리뷰의 좋아요 수 증가
+	 * @param conn
+	 * @param reviewNo
+	 * @return
+	 */
+	public int increaseLikes(Connection conn, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseLikes");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reviewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	/**
+	 * 해당 리뷰의 좋아요 수 감소
+	 * @param conn
+	 * @param reviewNo
+	 * @return
+	 */
+	public int decreaseLikes(Connection conn, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("decreaseLikes");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reviewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	/**
+	 * 좋아요 누른 리뷰 번호, 리뷰 좋아요 '좋아요' 컬럼에 저장
+	 * @param conn
+	 * @param memberNo
+	 * @param reviewNo
+	 * @return
+	 */
+	public int likesReviewStore(Connection conn, int memberNo, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("likesReviewStore");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(reviewNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	/**
+	 * 좋아요 누른 리뷰 번호, 리뷰 좋아요 '좋아요' 컬럼에서 삭제
+	 * @param conn
+	 * @param memberNo
+	 * @param reviewNo
+	 * @return
+	 */
+	public int likesReviewRemove(Connection conn, int memberNo, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("likesReviewRemove");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(reviewNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	// ---------- 리뷰 좋아요 끝 ----------
 	
 
 }

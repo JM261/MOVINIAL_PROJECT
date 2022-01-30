@@ -34,7 +34,7 @@ public class AjaxDontSeenMovieController extends HttpServlet {
 		
 		int result1 = new MovieService().decreaseMovieSeen(movieNo); // 해당 영화의 봤어요 수 감소
 		
-		if(result1 > 0) { // 해당 영화의 봤어요 수 증가 처리 성공시, 영화 좋아요 테이블 '이영화 봤어요' 컬럼에서 영화 번호 삭제 
+		if(result1 > 0) { // 해당 영화의 봤어요 수 감소 처리 성공시, 영화 좋아요 테이블 '좋아요' 컬럼에서 영화 번호 삭제
 			
 			int result2 = new MovieService().seenMovieRemove(memberNo, movieNo);
 			

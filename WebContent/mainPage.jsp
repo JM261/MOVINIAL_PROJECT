@@ -192,10 +192,15 @@
 						var result = "";
 						
 						for(var i in recommendList) {
-							result += "<img class='movie1' src='" + recommendList[i].posterPath + "'>";
+							result += "<img class='movie0' src='" + recommendList[i].posterPath + "' alt='" + recommendList[i].title + "'><input type='hidden' name='movieNo' value='" + recommendList[i].movieNo + "'>";
 						}
 
 						$('#content1').html(result);
+						
+						// 요소 클릭하면 영화 상세 페이지 넘기기
+						$('.movie0').click(function() {
+							location.href = "<%= contextPath %>/detail.mo?movieNo=" + $(this).next().val();
+						})
 					}
 				})
 				
