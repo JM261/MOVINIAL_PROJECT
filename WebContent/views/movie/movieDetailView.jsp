@@ -34,6 +34,23 @@
 <meta charset="UTF-8">
 <title>영화 상세 페이지</title>
 <style>
+ 	.mylist{
+ 		color:white;
+ 		background-color:black;
+ 		line-height:35px;
+ 		width:70px;
+ 		list-style:none;
+ 		display:inline-block;
+ 		text-align:center;
+ 		margin-bottom:10px;
+ 		margin-left:10px;
+ 		margin-right:5px;
+ 		margin-top:10px;
+ 		text-decolation:none;
+ 	}
+ 	.mylist:hover{
+ 		text-decolation:none;
+ 	}
 	.content {
 		padding: 20px;
         margin-bottom: 20px;
@@ -41,7 +58,6 @@
     }
 	.table-size td {
 		padding: 10px;
-		border: solid 1px black;
 	}
 	.btn-group {
 		text-decoration: none;
@@ -71,26 +87,26 @@
 					<% } %>
 				</td>
 				<td style="width: 40%;">
-					<h1><%= m.getTitle() %></h1>
+					<h1 style="font-weight: bold;"><%= m.getTitle() %></h1>
 				</td>
 				<td colspan="3" style="text-align: center;">
-					<h4>이 영화 보셨나요?</h4>
+					<h4 style="font-weight: bold;">이 영화 보셨나요?</h4>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<h1><%= m.getOriginalTitle() %></h1>
+					<h1 style="font-weight: bold;"><%= m.getOriginalTitle() %></h1>
 				</td>
 				<td>
 					<a class="movie-seen-btn btn-group" onclick="checkSeen()">
-						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘" style="text-align: center;">
+						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘">
 						<h3><%= m.getMovieSeen() %></h3>
 					</a>
 				</td>
 				<td>
 					<a class="movie-likes-btn btn-group" onclick="checkLikes()">
 						<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘">
-						<h3 style="text-align: center;"><%= m.getMovieLikes() %></h3>
+						<h3><%= m.getMovieLikes() %></h3>
 					</a>
 				</td>
 			</tr>
@@ -340,15 +356,16 @@
 
 
 	<!-- 리뷰 -->
-	<div class="content">
-		<table class="table table-borderless" style="border: 1px black solid;">
+	<div class="content" style="">
+		<table class="table table-borderless">
 
 			<!-- 리뷰 제목 -->
 			<tr>
-				<td>
-					<h2>리뷰</h2>
+				<td colspan="2" style="border: 1px solid #bcbcbc;">
+					<h2 style="font-weight: bold;">리뷰</h2>
 				</td>
-				<td align="right">
+				
+				<td align="right" style="border: 1px solid #bcbcbc;">
 					<h5>
 						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>">MORE</a>
 					</h5>
@@ -361,7 +378,9 @@
            	<% if(list.isEmpty()) { %>
            	
             	<tr>
-            	    <td style="border: 1px black solid;" colspan="6">조회된 리뷰가 없습니다.</td>
+            	    <td colspan="7">
+            	    	<h2 style="text-align: center;">조회된 리뷰가 없습니다</h2>
+            	    </td>
             	</tr>
             	
            	<% } else {%>
@@ -369,13 +388,14 @@
            		 <!-- 리뷰 n개 출력 -->
            		<% for(Review r: list) { %>
 	                <tr>
-	                    <td style="width: 20%; border: 1px black solid;">
-	                    	<%= r.getReviewWriter() %>
+	                    <td style="width: 20%; border: 1px solid #bcbcbc;">
+	                    	<h5><%= r.getReviewWriter() %></h5>
 	                    </td>
-	                    <td>
-                               작성일 <%= r.getCreateDate() %>
-							<a type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL -->
+	                    <td style="border: 1px solid #bcbcbc;">
+	                    	작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp
+							
 	                    </td>
+	                    <td style="border: 1px solid #bcbcbc;"><a type="button" class="mylist" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL --></td>
 	                </tr>
 	                <tr>
 	                    <td rowspan="2">
@@ -390,8 +410,8 @@
 	                <tr>
 	                    <td>
 							<a class="review-likes-btn btn-group" onclick="checkReviewLikes('<%= r.getReviewWriter() %>', '<%= r.getReviewNo() %>', this)">
-	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 50%; height: 50%;">&nbsp&nbsp
-								<h4 style="text-align: center;"><%= r.getLikes() %></h4>
+	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 30px; height: 30px;">&nbsp&nbsp
+								<h4><%= r.getLikes() %></h4>
 							</a>
 	                    </td>
 	                </tr>
