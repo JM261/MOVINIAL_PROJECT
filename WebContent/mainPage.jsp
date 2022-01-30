@@ -193,19 +193,24 @@
 
       <script>
           $(function(){
-
+			
             $.ajax({
                 url : "<%= contextPath %>/latest.cu",
                 success : function(latestList){
                     var result = "";
                     <% for(int i=0; i<5; i++){ %>
-                      result += "<img class='movie1' src='http://image.tmdb.org/t/p/w154"+ latestList[<%=i%>].posterPath +"'>"
+                      result += "<img class='movie1' src='http://image.tmdb.org/t/p/w154"+ latestList[<%=i%>].posterPath +"'><input type='hidden' name='movieNo' value='"+latestList[<%=i%>].movieNo+"'>"
                     <% } %>
-                    $('#content2').html(result);  
+                    $('#content2').html(result);
+                    
+                    $('.movie1').click(function(){                  		
+                  		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+                    })
+                    
                 } // success
             }) // ajax
-
           })
+          
       </script>
 
       <a class="title">최신 개봉 영화</a>
@@ -213,6 +218,9 @@
       </div>
       
 	  	 <script>
+	  	 
+	  	
+	  	 
 	        $(function(){
 	        	
 	          $.ajax({
