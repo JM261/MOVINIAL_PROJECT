@@ -12,6 +12,15 @@
 <meta charset="UTF-8">
 <title>[MOVINIAL]아이디 찾기</title>
 
+<style>
+
+	#btn{
+     	width:250px;
+     	background-color:black;
+     	color:white;
+     	margin-left:10px;
+</style>
+
 </head>
 <body>
 
@@ -33,7 +42,7 @@
        				<br>
        				
        				<tr>
-       					<td><button onclick="<%=contextPath%>/views/common/login.jsp"> 로그인페이지로 돌아가기 </button></td>
+            			<td><input type="submit" value="로그인 페이지로 이동" id="btn"></td>
        				</tr>
        				
        				<tr align=center>

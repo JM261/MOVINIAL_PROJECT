@@ -43,7 +43,7 @@ pageEncoding="UTF-8"%>
     <%@ include file = "../common/header.jsp" %> <!-- header -->
 
     <div class=terms>
-    <form>
+        <form id="enroll-form" action="<%= contextPath %>/GenreNext.me" method="post">
         <fieldset> 
             <h1>
                 회원가입
@@ -125,14 +125,12 @@ pageEncoding="UTF-8"%>
             </table>
         </div>
     </fieldset>
-    </form>
 
 
     <div class="outer">
         <br>
        
 
-        <form id="enroll-form" action="<%= contextPath %>/GenreNext.me" method="post">
             <!-- 아이디, 비밀번호, 이름, 닉네임, 이메일주소,  전화번호, 전화번호 인증 -->
             <table>
                 <tr>
