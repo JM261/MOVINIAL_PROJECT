@@ -5,6 +5,7 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+    
         <meta charset="UTF-8">
         <title>회원가입페이지</title>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -12,6 +13,7 @@ pageEncoding="UTF-8"%>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         
         <style>
+		
 		details { margin:5px 0 10px; }
 		details > summary { background:#444; color:#fff; padding:10px; outline:0; border-radius:5px; cursor:pointer; transition:background 0.5s; text-align:left; box-shadow: 1px 1px 2px gray;}
 		details > summary::-webkit-details-marker { background:#444; color:#fff; background-size:contain; transform:rotate3d(0, 0, 1, 90deg); transition:transform 0.25s;}
@@ -24,7 +26,18 @@ pageEncoding="UTF-8"%>
 		    from { opacity:0; transform:translate3d(0, -30px, 0); }
 		    to { opacity:1; transform:translate3d(0, 0, 0); }
 		}
-		</st	yle>
+		
+		.wrapper {
+		    padding: 10px;
+		}
+		div {
+	    padding-top: 3px;
+	    padding-bottom: 8px;
+		}
+			
+
+	
+		</style>
         
         
     </head>
@@ -34,8 +47,9 @@ pageEncoding="UTF-8"%>
 
     <%@ include file = "../common/header.jsp" %> <!-- header -->
 
-    <div>
-    <form>
+ <div class="wrapper">
+ 	 <div class="title"><h1>회원가입</h1></div>
+ 	    <form>
         <fieldset> 
             <legend>
                 회원가입 약관 동의
@@ -50,7 +64,7 @@ pageEncoding="UTF-8"%>
                         
                     </tr>	
                     <tr>
-                        <td><input type="checkbox" name="chk" required></td>
+                        <td><input type="checkbox" name="wr_1" required></td>
                         <td>(필수)서비스 이용약관</td>
                         <td><details>
 	   						<summary>서비스이용약관 전체보기</summary>
@@ -126,11 +140,27 @@ pageEncoding="UTF-8"%>
 
         <form id="enroll-form" action="<%= contextPath %>/GenreNext.me" method="post">
             <!-- 아이디, 비밀번호, 이름, 닉네임, 이메일주소,  전화번호, 전화번호 인증 -->
+            
+            <div id="content">
+				<div>
+					<h3>
+						<label for="id">아이디</label>
+					</h3>
+					<span class="box int_id">
+						*아이디 <input type="text" id="id" class="int" maxlength="20">
+						<span class="step_url"></span>
+					</span>
+					<span class="error_next_box"></span>
+				</div>
+			</div>
+            
+            
             <table>
                 <tr>
                     <td>* 아이디</td>
                     <td><input type="text" name="memberId" maxlength="12" id="memberId" required></td>
                     <td><button type="bFutton" onclick="idCheck();" class="btn bnt-sm btn-secondary">중복확인</button></td>
+                    
                 </tr>
                 <tr>
                     <td>* 비밀번호</td>
@@ -176,6 +206,12 @@ pageEncoding="UTF-8"%>
             </table>
 
             <br><br>
+            
+            <div class="btn_area">
+				<button type="button">
+					<span>가입하기</span>
+				</button>
+ 			</div>
             <div align="center">
                 <button type="submit" class="btn btn-sm btn-secondary"
                 	onclick="">다음</button>
@@ -276,6 +312,16 @@ pageEncoding="UTF-8"%>
 			else $("#cbx_chkAll").prop("checked", true); 
 		});
 	});
+    
+
+    function fwrite_submit(f)
+
+    {
+        if (!f.wr_1.checked) {
+            alert("개인정보수집이용에 동의하셔야 작성할 수 있습니다.");
+            f.wr_1.focus();
+            return false;
+        }
     
     
 	</script>

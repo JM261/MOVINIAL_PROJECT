@@ -13,6 +13,7 @@ import static com.movinial.common.JDBCTemplate.*;
 
 import com.movinial.common.model.vo.PageInfo;
 import com.movinial.member.model.vo.Member;
+import com.movinial.member.model.vo.MemberGenre;
 
 public class MemberDao {
 
@@ -87,6 +88,74 @@ public class MemberDao {
 			pstmt.setString(5, m.getEmail());
 			pstmt.setString(6, m.getPhone());
 			pstmt.setString(7, m.getPreferGenre());
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+
+		}
+
+		return result;
+	}
+	public int insertMemberLikeCommunity(Connection conn, Member m) { 
+		int result = 0;
+
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("insertMemberLikeCommunity");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, m.getMemberNo());
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+
+		}
+
+		return result;
+	}
+	public int insertMemberLikeMovie(Connection conn, Member m) {
+
+		int result = 0;
+
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("insertMemberLikeMovie");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, m.getMemberNo());
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+
+		}
+
+		return result;
+	}
+	public int insertMemberLikeReview(Connection conn, Member m) {
+
+		int result = 0;
+
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("insertMemberLikeReview");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, m.getMemberNo());
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -339,8 +408,101 @@ public class MemberDao {
 
 		return memberId;
 	}
+
+	public int idCheck(Connection conn, String checkId) {
+		//SELECT => ResultSet => COUNT 함수 이용(숫자 한 개)
+				// 변수
+				int count = 0;
+				PreparedStatement pstmt = null;
+				ResultSet rset = null;
+				String sql = prop.getProperty("idCheck");
+				
+				try {
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, checkId);
+					rset = pstmt.executeQuery();
+					
+					if(rset.next()) {
+						count = rset.getInt("COUNT(*)");	
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					close(rset);
+					close(pstmt);
+				}
+				return count;
+	}
 	
 	
+	public ArrayList<MemberGenre> selectGenreList(Connection conn) { // 장르조회
+		
+		ArrayList<MemberGenre> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectGenreList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				MemberGenre m = new MemberGenre(
+						   rset.getString("GENRE_ID")
+						  ,rset.getString("GENRE_NAME"));				
+				list.add(m);				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	} // 장르조회
+	
+public ArrayList<MemberGenre> selectGenreMoiveList(Connection conn) { // 장르별영화조회
+		
+		ArrayList<MemberGenre> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectGenreMoiveList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				MemberGenre m = new MemberGenre(
+						   rset.getString("GENRE_ID")
+						  ,rset.getString("GENRE_NAME")
+						  ,rset.getString("TITLE")
+						  ,rset.getString("MOVIE_ID")
+						  ,rset.getString("POSTER_PATH")
+						  );				
+				list.add(m);				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	} // 장르별영화조회
+  
 
 	
 

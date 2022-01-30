@@ -9,6 +9,7 @@ import com.movinial.common.model.vo.PageInfo;
 import java.util.ArrayList;
 import com.movinial.member.model.dao.MemberDao;
 import com.movinial.member.model.vo.Member;
+import com.movinial.member.model.vo.MemberGenre;
 
 public class MemberService {
 	public Member loginMember(String userId, String userPwd) {
@@ -34,8 +35,14 @@ public class MemberService {
 		
 		int result = new MemberDao().insertMember(conn, m);
 		
+		
 		// 성공헀으면 1, 실패했다면 0으로 리턴이 되었을 것이다.
 		if(result > 0) { //성공했다면
+			
+		//TODO	result += new MemberDao().insertMemberLikeCommunity(conn, m);
+		//TODO	result += new MemberDao().insertMemberLikeMovie(conn, m);
+	    //TODO result += new MemberDao().insertMemberLikeReview(conn, m);
+			
 			commit(conn);
 		} else { // 실패했다면
 			rollback(conn);
@@ -47,7 +54,7 @@ public class MemberService {
 		
 		
 	}
-
+		
 	public String findId(String memberName, String phone) { // 아아디 찾기
 
 		Connection conn = getConnection();
@@ -140,6 +147,38 @@ public class MemberService {
 		return list;
 		
 	} // searchMember : 키워드로 검색
+
+	public int idCheck(String checkId) { // 아이디 중복 체크
+		
+		Connection conn = getConnection();
+		int count = new MemberDao().idCheck(conn, checkId);
+		close(conn);
+	
+		return count;
+
+		
+	}
+	
+	public  ArrayList<MemberGenre> selectGenreList() { // 장르조회
+		
+		Connection conn = getConnection();
+		ArrayList<MemberGenre> memberGenreList = new MemberDao().selectGenreList(conn);
+		close(conn);
+	
+		return memberGenreList;
+
+		
+	}
+	public  ArrayList<MemberGenre> selectGenreMoiveList() { // 장르별영화목록
+		
+		Connection conn = getConnection();
+		ArrayList<MemberGenre> memberGenreMovieList = new MemberDao().selectGenreMoiveList(conn);
+		close(conn);
+	
+		return memberGenreMovieList;
+
+		
+	}
 
 	
 

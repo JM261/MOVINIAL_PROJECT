@@ -12,6 +12,7 @@
 	String errorMsg = (String)request.getAttribute("errorMsg"); // : Object
 	// 서비스 요청 전 : alertMsg = null
 	// 서비스 요청 후 성공 시 : alertMsg = 메시지문구
+	
 %>    
     
 <!DOCTYPE html>
@@ -21,90 +22,29 @@
     <title>로그인 페이지</title>
 
     <style>
+    
 
+     #loginId, #loginPwd{
+     	width: 250px;
+     	border-left:none;
+     	border-right:none;
+     	border-top:none;
+     	line-height:25px;
+     	margin-left:10px;
+     	font-style:i;
+     	input:focus{outline:none;}
 
-
-        * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
-
-
-h2 {
-  color: tomato;
-  font-size: 2em;
-  text-align: center;
-}
-
-.login_form{
-    width: 100%;
-
-}
-
-.login_window{
-    width: 100%;
-}
-
-.login_id {
-  margin-top: 20px;
-  margin-left: 10%;
-  width: 60%;   
-}
-
-.login_id input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.login_pw {
-  margin-top: 20px;
-  margin-left: 10%;
-  width: 60%;
-}
-
-.login_pw input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.login_etc {
-  padding: 10px;
-  width: 60%;
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-}
-
-.submit {
-  margin-top: 50px;
-  width: 80%;
-}
-.submit input {
-  width: 75%;
-  height: 50px;
-  border: 0;
-  outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
-  color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
-}
+     }
+     
+  	 input:focus{
+   		outline:none;
+   	}
+     
+     #login_btn{
+     	width:250px;
+     	background-color:black;
+     	color:white;
+     	margin-left:10px;
     </style>
 
 
@@ -113,43 +53,39 @@ h2 {
 <body>
 	 <%@ include file="../common/header.jsp" %>
 
-
-<!--  로그인페이지 매피 views/common/login.jsp -->
-	<form action="<%= contextPath %>/login.me" method="post" >
-    <div class="wrap">
-    	<div class="login_window">
-    	    <div class="loginInput">
-                <h2>로그인</h2>
-	            <div class="login_form">
-	            	<div class="login_id">
-		            <h4>ID</h4>
-		            <input type="text" name="userId"  placeholder="아이디">
-	            </div>
-	            <div class="login_pw">
-	                <h4>Password</h4>
-	                <input type="password" name="userPwd"  placeholder="비밀번호">
-	            </div>
-	            </div>
-	            <div class="submit">
-	                <input type="submit" value="로그인">
-	            </div>
-                <div>
-                    <input type="checkbox">  로그인 상태 유지하기
-                </div>
-               <div class="login_etc">
-	               <div class="forgot_id">
-	                    <a href="<%= contextPath %>/id_find.me">아이디찾기</a>	               		
-	               </div>
-	               <div class="forgot_pw">
-	                	<a href="<%= contextPath %>/pwd_find.me">비밀번호찾기</a>
-	               </div>
-               </div>
+   		 <div class="modal-dialog modal-sm">
+      	 <div class="modal-content">
+      
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h4 class="modal-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MOVINIAL[:near]</h4>
+	          <br><br>
             </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          	 <form action="<%= contextPath %>/login.me" method="post" >
+          	 	<table>
+          	 		<tr>
+          				<td><B>아이디&nbsp;&nbsp;&nbsp;&nbsp;</B><input type="text" name="userId" id="loginId" required></td>
+          			</tr>
+								<tr>  					
+          				<td><B>비밀번호&nbsp;</B><input type="password" name="userPwd" id="loginPwd" required></td>
+          			</tr>          			
+          		</table>
+          		<br> 
+         	 <button type="submit" class="btn btn-secondary" id="login_btn">로그인</button> 
+         	 <button type="button" class="btn btn-secondary" id="login_btn" onclick="location.href='<%= contextPath %>/id_find.me'">아이디 찾기</button> 
+         	 <button type="button" class="btn btn-secondary" id="login_btn" onclick="location.href='<%= contextPath %>/pwd_find.me'">비밀번호 찾기</button> 
+        	</form>
         </div>
+
+      </div>
     </div>
-    </form>
-    
-    
+  </div>
+
+
+ 	
         <%@ include file="../common/footer.jsp" %>
     
 

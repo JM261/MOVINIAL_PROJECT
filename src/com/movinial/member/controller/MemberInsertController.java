@@ -41,13 +41,14 @@ public class MemberInsertController extends HttpServlet {
 		 String nickName = (String)request.getSession().getAttribute("nickName"); // 필수입력사항
 		 String email = (String)request.getSession().getAttribute("email"); // 빈 문자열이 들어갈 수 있음
 		 String phone = (String)request.getSession().getAttribute("phone");
-		 String Prefergenre = (String)request.getSession().getAttribute("Prefergenre");
+		 String prefergenre = (String)request.getParameter("prefergenre");
+		 String ddddddd = (String)request.getParameter("a");
 		 
 		 //선호 장르는 여기다가 추가
 		// 2) request객체로부터 요청 시 전달값을 get해버리기
 		 
 		// 3) 매개변수 생성자를 이용해서 Member객체에 담기
-		Member m = new Member(memberId, memberPwd, memberName, nickName, email, phone, Prefergenre);
+		Member m = new Member(memberId, memberPwd, memberName, nickName, email, phone, prefergenre);
 		
 		// 4) 요청처리(Service단으로 토스~)
 		int result = new MemberService().insertMember(m);
