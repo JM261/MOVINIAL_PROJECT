@@ -268,7 +268,7 @@
 	FROM (
 	    SELECT ROWNUM RNUM, A.*
 	    FROM (
-	        SELECT REVIEW_NO, REVIEW_TITLE, NICKNAME, CREATE_DATE, LIKES, REF_MNO 
+	        SELECT REVIEW_NO, REVIEW_TITLE, NICKNAME, CREATE_DATE, LIKES, REF_MNO, REVIEW_CONTENT
 	        FROM REVIEW R
 	        JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
 	        WHERE R.STATUS = 'Y'
@@ -279,6 +279,16 @@
     ORDER
     BY CREATE_DATE DESC) A)
 	WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 주현 : 본 영화 검색 -->
+	<entry key="searchSeenMovie">
+		SELECT * FROM MOVIE
+		WHERE MOVIE_NO IN
+           (SELECT TRIM(REGEXP_SUBSTR(likes_movie, '[^,]+', 1, LEVEL)) AS REVIEW_NO
+           FROM (SELECT likes_movie FROM likes_movie WHERE MEMBER_NO = ?)
+           CONNECT BY  INSTR(likes_movie, ',', 1, LEVEL - 1) > 0)
+
 	</entry>
 	
 	<!-- 주현 : 좋아요 리뷰 수 -->
@@ -314,12 +324,12 @@
 		FROM        (SELECT LIKES_COMMUNITY FROM LIKES_COMMUNITY WHERE MEMBER_NO = ?)
 		CONNECT BY  INSTR(LIKES_COMMUNITY, ',', 1, LEVEL - 1) > 0)
 		ORDER
-		BY ISNOTICE DESC, CREATE_DATE DESC) A)
+		BY CREATE_DATE DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
 	
 	</entry>	
 
-	
+	<!-- 주현 " 영화 좋아요 리스트 -->
 	<entry key="myMovieLikesList">
 		SELECT *
 		FROM (
@@ -332,7 +342,7 @@
                     FROM        (SELECT LIKES_MOVIE FROM LIKES_MOVIE WHERE MEMBER_NO = ?)
                     CONNECT BY  INSTR(LIKES_MOVIE, ',', 1, LEVEL - 1) > 0)
 		ORDER
-		BY RELEASE_DATE DESC) A)
+		BY ROWNUM DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
 	
 	</entry>
@@ -355,14 +365,14 @@ SELECT *
 		FROM (
 		SELECT ROWNUM RNUM, A.*
             FROM (
-                SELECT MOVIE_NO, TITLE, RELEASE_DATE,POSTER_PATH
+                SELECT MOVIE_NO, TITLE, RELEASE_DATE,POSTER_PATH, GENRE_IDS 
                 FROM MOVIE M
                 WHERE MOVIE_NO IN 
                     (SELECT      TRIM(REGEXP_SUBSTR(SEEN_MOVIE, '[^,]+', 1, LEVEL)) AS MOVIE_NO
                     FROM        (SELECT SEEN_MOVIE FROM LIKES_MOVIE WHERE MEMBER_NO = ?)
                     CONNECT BY  INSTR(SEEN_MOVIE, ',', 1, LEVEL - 1) > 0)
 		ORDER
-		BY RELEASE_DATE DESC) A)
+		BY ROWNUM DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
 	
 	</entry>

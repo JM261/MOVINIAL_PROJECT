@@ -15,16 +15,16 @@ import com.movinial.member.model.vo.Member;
 import com.movinial.review.model.vo.Review;
 
 /**
- * Servlet implementation class myReviewLikesListView
+ * Servlet implementation class myPageMovieReviewController
  */
-@WebServlet("/myLikes.review")
-public class MyReviewLikesListController extends HttpServlet {
+@WebServlet("/myMovieReviews.bo")
+public class MyPageMovieReviewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MyReviewLikesListController() {
+    public MyPageMovieReviewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +33,7 @@ public class MyReviewLikesListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 
 		int listCount; 
 		int currentPage; 
@@ -55,7 +55,7 @@ public class MyReviewLikesListController extends HttpServlet {
 		
 		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		
-		listCount = new MemberService().selectReviewLikesCount(memberNo);
+		listCount = new MemberService().selectMyReviewCount(memberNo);
 		startPage = (currentPage-1) / pageLimit * pageLimit + 1;
 		endPage = startPage + pageLimit -1;
 		maxPage = (int)Math.ceil((double)listCount / boardLimit);
@@ -63,15 +63,13 @@ public class MyReviewLikesListController extends HttpServlet {
 		if(endPage>maxPage) {
 			endPage = maxPage;
 		} 
-		
+
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		list = new MemberService().myReviewLikesListView(pi, memberNo);
+		list = new MemberService().selectMyReview(pi, memberNo);
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
-
-		
-		request.getRequestDispatcher("views/member/myReviewLikesListView.jsp").forward(request, response);
+		request.getRequestDispatcher("views/member/myPageMovieReview.jsp").forward(request, response);
 	
 	}
 

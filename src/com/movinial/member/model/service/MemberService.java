@@ -1,15 +1,16 @@
 package com.movinial.member.model.service;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
+import static com.movinial.common.JDBCTemplate.close;
+import static com.movinial.common.JDBCTemplate.commit;
+import static com.movinial.common.JDBCTemplate.getConnection;
+import static com.movinial.common.JDBCTemplate.rollback;
 
-import static com.movinial.common.JDBCTemplate.*;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.movinial.common.model.vo.PageInfo;
 import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.Reply;
-
-import java.util.ArrayList;
 import com.movinial.member.model.dao.MemberDao;
 import com.movinial.member.model.vo.Member;
 import com.movinial.member.model.vo.MyPageFile;
@@ -73,9 +74,7 @@ public class MemberService {
 		Member m = new MemberDao().forgotPwd(conn, memberId, memberName, phone);
 
 		close(conn);
-		
-		System.out.println("서비스단에서의 m" + m);
-		
+
 		return m;
 	}
 	
@@ -324,7 +323,8 @@ public class MemberService {
 		return list;
 		
 	}
-
+	
+	//주현 : 내가 누른 영화 좋아요 리스트 수
 	public int selectMovieLikesCount(int memberNo) {
 		
 		Connection conn = getConnection();
@@ -335,7 +335,8 @@ public class MemberService {
 		
 		return listCount;
 	}
-
+	
+	//주현 : 내가 누른 영화 좋아요 리스트
 	public ArrayList<Movie> myMovieLikesList(PageInfo pi, int memberNo) {
 		
 		Connection conn = getConnection();
@@ -346,7 +347,8 @@ public class MemberService {
 
 		return list;
 	}
-
+	
+	//주현 : 내가 누른 영화 봤어요 수 카운트
 	public int selectMyMovieSeenCount(int memberNo) {
 		
 		Connection conn = getConnection();
@@ -358,7 +360,8 @@ public class MemberService {
 		return listCount;
 		
 	}
-
+	
+	//주현 : 내가 누른 영화 봤어요 목록
 	public ArrayList<Movie> myMovieSeenList(PageInfo pi, int memberNo) {
 		
 		Connection conn = getConnection();
@@ -368,9 +371,9 @@ public class MemberService {
 		close(conn);
 
 		return list;
-		
 	}
 
+	//주현: 마이페이지 프로필이미지(업로드)
 	public int updateProfileImage(MyPageFile mpf) {
 		
 		Connection conn = getConnection();
@@ -381,7 +384,8 @@ public class MemberService {
 
 		return result;
 	}
-
+	
+	//주현 : 마이페이지 프로필 이미지(가져오기)
 	public String getProfileImage(int memberNo) {
 		
 		Connection conn = getConnection();
@@ -392,6 +396,20 @@ public class MemberService {
 
 		return result;
 	}
+	
+	//주현: 마이페이지 
+	public ArrayList<Movie> searchSeenMovie(int memberNo) { // searchSeenMovie : 키워드로 영화 조회 
+
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MemberDao().searchSeenMovie(conn, memberNo);
+		
+		close(conn);
+		
+		return list;
+		
+	} // searchSeenMovie : 키워드로 영화 조회 
+	
 	
 
 }

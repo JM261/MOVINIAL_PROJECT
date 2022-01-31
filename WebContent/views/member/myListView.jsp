@@ -6,7 +6,6 @@
 
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-	int cno = list.get(0).getCommunityNo();
 	
 	//페이징바 만들 때 필요한 변수 미리 셋팅
  	int currentPage = pi.getCurrentPage();
@@ -93,14 +92,13 @@
     </thead>
     <tbody>
     
-    
 	 <% if(list.isEmpty()){ %>
 	        <tr>
 	        	<td colspan="9"> 조회된 게시글이 없습니다</td>
 	        </tr>
      <%} else{ %>
      	<% for(Community c : list) { %>
-      <tr>
+      <tr myListCommunity = <%= c.getCommunityNo()%>>
         <td width="10px"><input type="hidden" value="<%= c.getCommunityNo() %>"></td>
         <td width="70px"><%= c.getCommunityCategory() %></td>
         <td width="300px"><%= c.getCommunityTitle() %></td>
@@ -115,10 +113,18 @@
   <script>
 	
 	$(function(){
-		$(".list-area>tbody>tr").click(function(){
-			//jsp/detail.bo?bno=x
-			location.href = "<%=contextPath%>/detail.cm?cno=<%= cno %>";
-		})
+	
+		var loginUser = '<%= loginUser %>'
+
+	    if(loginUser != 'null') {
+			$(".list-area>tbody>tr").click(function(){
+				location.href = "<%=contextPath%>/detail.cm?cno=" + $(this).attr('myListCommunity');
+			})
+	    } else{
+            alert("로그인 후 이용해주시기 바랍니다.");
+            location.href = "<%= contextPath %>/login.me"
+        }
+		
 	})
 
   </script>

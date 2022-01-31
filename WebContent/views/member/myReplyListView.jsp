@@ -102,7 +102,7 @@
      <%} else{ %>
      	<% for(Reply r : list) { %>
      		
-      <tr>
+      <tr myListReply = <%= r.getReplyNo() %>>
         <td width="10px"><input type="hidden" value="<%= r.getReplyNo() %>"></td>
         <td width="200px"><%= r.getReplyTitle() %></td>
         <td width="300px"><%= r.getReplyContent() %></td>
@@ -121,10 +121,17 @@
   <script>
 	
 	$(function(){
-		$(".list-area>tbody>tr").click(function(){
-			//jsp/detail.bo?bno=x
-			location.href = "<%=contextPath%>/detail.cm?cno=<%= list.get(0).getRefCno() %>";
-		})
+		
+		var loginUser = '<%= loginUser %>'
+
+	    if(loginUser != 'null') {
+			$(".list-area>tbody>tr").click(function(){
+				location.href = "<%=contextPath%>/detail.cm?cno=" +  + $(this).attr('myListReply');
+			})
+		} else{
+	        alert("로그인 후 이용해주시기 바랍니다.");
+	        location.href = "<%= contextPath %>/login.me"
+    	}
 	})
 
   </script>

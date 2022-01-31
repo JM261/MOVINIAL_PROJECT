@@ -233,7 +233,6 @@ public class MemberDao {
 		} finally {
 			close(pstmt);
 		}
-			System.out.println("DAO단에서의 m" + m);
 			return m;
 		}
 	
@@ -587,7 +586,8 @@ public class MemberDao {
 										rset.getString("REVIEW_TITLE"),
 										rset.getDate("CREATE_DATE"),
 										rset.getInt("LIKES"),
-										rset.getInt("REF_MNO")));
+										rset.getInt("REF_MNO"),
+										rset.getString("REVIEW_CONTENT")));
 							}
 
 			} catch (SQLException e) {
@@ -835,7 +835,8 @@ public class MemberDao {
 		
 		
 	}
-
+	
+	//주현: 좋아요 영화 수
 	public int selectMovieLikesCount(Connection conn, int memberNo) {
 		
 		int listCount = 0;
@@ -865,7 +866,8 @@ public class MemberDao {
 		return listCount;
 
 	}
-
+	
+	//주현 : 영화 좋아요 리스트
 	public ArrayList<Movie> myMovieLikesList(Connection conn, PageInfo pi, int memberNo) {
 		
 		ArrayList<Movie> list = new ArrayList<>();
@@ -900,7 +902,8 @@ public class MemberDao {
 		return list;
 	
 	}
-
+	
+	//주현 : 봤어요 영화 수
 	public int selectMyMovieSeenCount(Connection conn, int memberNo) {
 		
 		int listCount = 0;
@@ -929,7 +932,8 @@ public class MemberDao {
 		}
 		return listCount;	
 	}
-
+	
+	//주현 : 봤어요 영화 리스트
 	public ArrayList<Movie> myMovieSeenList(Connection conn, PageInfo pi, int memberNo) {
 		
 		ArrayList<Movie> list = new ArrayList<>();
@@ -963,7 +967,8 @@ public class MemberDao {
 		}
 		return list;
 	}
-
+	
+	//주현: 프로필 이미지 수정
 	public int updateProfileImage(Connection conn, MyPageFile mpf) {
 
 		int result = 0;
@@ -988,7 +993,7 @@ public class MemberDao {
 
 		return result;
 	}
-
+	//주현: 프로필이미지
 	public String getProfileImage(Connection conn, int memberNo) {
 		
 		String profileImage = "";
@@ -1017,4 +1022,50 @@ public class MemberDao {
 		}
 		return profileImage;
 	}
+
+	//주현 : 마이페이지 리뷰쓰기 - 봤어요 영화 검색
+	public ArrayList<Movie> searchSeenMovie(Connection conn, int memberNo) {
+		
+		// 영화 조회
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("searchSeenMovie");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Movie m = new Movie(
+							rset.getInt("MOVIE_NO"),
+							rset.getInt("MOVIE_ID"),
+							rset.getString("TITLE"),
+							rset.getString("ORIGINAL_TITLE"),
+							rset.getString("ORIGINAL_LANGUAGE"),
+							rset.getString("OVERVIEW"),
+							rset.getString("GENRE_IDS"),
+							rset.getDate("RELEASE_DATE"),
+							rset.getString("POSTER_PATH"),
+							rset.getString("BACKDROP_PATH"),
+							rset.getInt("MOVIE_LIKES"),
+							rset.getInt("MOVIE_SEEN")
+							);
+				
+				list.add(m);				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	} // searchSeenMovie
 }
