@@ -32,8 +32,6 @@ public class MovieReviewInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("?");
-		
 		// POST UTF-8 인코딩
 		request.setCharacterEncoding("UTF-8");
 		
@@ -44,25 +42,23 @@ public class MovieReviewInsertController extends HttpServlet {
 		
 		// 영화 상세정보에서 작성시 기본 제목 생성용
 		String memberNickname = request.getParameter("memberNickname"); // 회원 닉네임
-		String movieNameKr = request.getParameter("movieNameKr"); // 영화 이름 한국어
+		String movieTitle = request.getParameter("movieTitle"); // 국내 영화 번호
 		
-		String reviewTitle = memberNickname + "의 " + movieNameKr + " 리뷰"; // 기본 생성 제목
+		String reviewTitle = memberNickname + "의 " + movieTitle + " 리뷰"; // 기본 생성 제목
 		
+		// Review 작성
 		int result = new ReviewService().insertMovieReview(memberNo, movieNo, reviewContent, reviewShow, reviewTitle);
 		
-		System.out.println(result);
-		
-		// <%= contextPath %>/reviewList.mo?currentPage=1&mno=<%= movieNo %>
 		
 		if(result > 0) { // 성공
 			
-			request.setAttribute("alertMsg", "리뷰가 정상적으로 작성되었습니다.");
-			request.getRequestDispatcher("/reviewList.mo?currentPage=1&mno=" + movieNo).forward(request, response);
+			request.getSession().setAttribute("alertMsg", "리뷰가 정상적으로 작성되었습니다");
+			request.getRequestDispatcher("/reviewList.mo?currentPage=1&movieNo=" + movieNo).forward(request, response);
 			
-		} else {
+		} else { // 실패
 			
-			request.setAttribute("alertMsg", "리뷰 작성에 실패했습니다.");
-			request.getRequestDispatcher("/reviewList.mo?currentPage=1&mno=" + movieNo).forward(request, response);
+			request.getSession().setAttribute("alertMsg", "리뷰 작성에 실패했습니다");
+			request.getRequestDispatcher("/reviewList.mo?currentPage=1&movieNo=" + movieNo).forward(request, response);
 			
 		}
 		

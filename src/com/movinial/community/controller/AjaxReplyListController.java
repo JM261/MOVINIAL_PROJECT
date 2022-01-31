@@ -42,6 +42,7 @@ public class AjaxReplyListController extends HttpServlet {
 		
 		// Service단으로 토스 ~ => 게시판 관련 기능
 		ArrayList<Reply> list = new CommunityService().selectReplyList(communityNo);
+//		System.out.println(list);
 		
 		// GSON 사용해서 응답하기 => ArrayList를 자바스크립트의 배열형태로 변환
 									  // 형식,     인코딩 지정

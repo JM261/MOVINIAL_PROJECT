@@ -46,7 +46,7 @@ public class MovieReviewDetailListController extends HttpServlet {
 		int startPage; // 페이지 하단에 보여질 첫번째 페이징바
 		int endPage; // 페이지 하단에 보여질 마지막 페이징바
 		
-		movieNo = Integer.parseInt(request.getParameter("mno"));
+		movieNo = Integer.parseInt(request.getParameter("movieNo"));
 		
 		listCount = new ReviewService().selectListCount(movieNo);
 		
@@ -72,8 +72,8 @@ public class MovieReviewDetailListController extends HttpServlet {
 		// 해당 영화 정보 받아오기
 		Movie m = new MovieService().selectMovieDetail(movieNo);
 		
-		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
 		request.setAttribute("m", m);
 		
 		request.getRequestDispatcher("views/movie/movieReviewDetailView.jsp").forward(request, response);

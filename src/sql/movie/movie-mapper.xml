@@ -10,6 +10,9 @@
 		 WHERE MOVIE_NO = ?
 	</entry>
 	
+	
+	<!-- 영화 템플릿 시작 -->
+	
 	<!-- 영화 포스터 가져오기 -->
 	<entry key="getMoviePosterPath">
 		SELECT POSTER_PATH
@@ -24,16 +27,119 @@
 		 WHERE MOVIE_ID = ?
 	</entry>
 	
+	<!-- 영화 템플릿 끝 -->
+	
+
+	<!-- 영화 봤어요 시작 -->
+	
+	<!-- 영화 좋아요 테이블 회원번호로 조회 (이영화 봤어요 컬럼용) -->
+	<entry key="selectSeenMovie">
+		SELECT SEEN_MOVIE
+		  FROM LIKES_MOVIE
+		 WHERE MEMBER_NO = ?
+	</entry>
+		
+	<!-- 해당 영화의 봤어요 수 증가 -->
 	<entry key="increaseMovieSeen">
 		UPDATE MOVIE
 		   SET MOVIE_SEEN = MOVIE_SEEN + 1
 		 WHERE MOVIE_NO = ?
 	</entry>
 	
+	<!-- 해당 영화의 봤어요 수 감소 -->
 	<entry key="decreaseMovieSeen">
 		UPDATE MOVIE
 		   SET MOVIE_SEEN = MOVIE_SEEN - 1
 		 WHERE MOVIE_NO = ?
+	</entry>
+	
+	<!-- 봤어요 누른 영화 번호, 영화 좋아요 '이영화 봤어요' 컬럼에 저장 -->
+	<entry key="seenMovieStore">
+		UPDATE LIKES_MOVIE
+		   SET SEEN_MOVIE = SEEN_MOVIE || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 봤어요 누른 영화 번호, 영화 좋아요 '이영화 봤어요' 컬럼에서 삭제 -->
+	<entry key="seenMovieRemove">
+		UPDATE LIKES_MOVIE
+		   SET SEEN_MOVIE = REPLACE(SEEN_MOVIE, ?, '')
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 영화 봤어요 끝 -->
+	
+	
+	<!-- 영화 좋아요 시작 -->
+	
+	<!-- 영화 좋아요 테이블 회원번호로 조회 (좋아요 컬럼용) -->
+	<entry key="selectLikesMovie">
+		SELECT LIKES_MOVIE
+		  FROM LIKES_MOVIE
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 해당 영화의 좋아요 수 증가 -->
+	<entry key="increaseMovieLikes">
+		UPDATE MOVIE
+		   SET MOVIE_LIKES = MOVIE_LIKES + 1
+		 WHERE MOVIE_NO = ?
+	</entry>
+	
+	<!-- 해당 영화의 좋아요 수 감소 -->
+	<entry key="decreaseMovieLikes">
+		UPDATE MOVIE
+		   SET MOVIE_LIKES = MOVIE_LIKES - 1
+		 WHERE MOVIE_NO = ?
+	</entry>
+	
+	<!-- 좋아요 누른 영화 번호, 영화 좋아요 '이영화 좋아요' 컬럼에 저장 -->
+	<entry key="likesMovieStore">
+		UPDATE LIKES_MOVIE
+		   SET LIKES_MOVIE = LIKES_MOVIE || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 좋아요 누른 영화 번호, 영화 좋아요 '이영화 좋아요' 컬럼에서 삭제 -->
+	<entry key="likesMovieRemove">
+		UPDATE LIKES_MOVIE
+		   SET LIKES_MOVIE = REPLACE(LIKES_MOVIE, ?, '')
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 영화 봤어요 끝 -->
+	
+	
+	<!-- 회원 추천 영화 시작 -->
+	
+	<!-- 회원 선호 장르 가져오기 -->
+	<entry key="selectMemberPreferGenre">
+		SELECT PREFERGENRE
+		FROM MEMBER
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 회원 선호 장르 기반 추천 영화 가져오기 (5개) -->
+	<entry key="selectMemberRecommendMovie">
+		SELECT *
+		  FROM (SELECT MOVIE_NO, MOVIE_ID, TITLE, POSTER_PATH
+		          FROM MOVIE
+		         WHERE REGEXP_LIKE(GENRE_IDS, ?)
+		         ORDER BY DBMS_RANDOM.RANDOM)
+		 WHERE ROWNUM &lt;= 5
+	</entry>
+	
+	<!-- 회원 추천 영화 끝 -->
+	
+	
+	<!-- 메인화면 영화 배경이미지 가져오기 -->
+	<entry key="selectMaingBackgroundImage">
+		SELECT *
+		  FROM (SELECT MOVIE_NO, MOVIE_ID, BACKDROP_PATH
+		          FROM MOVIE
+		         WHERE BACKDROP_PATH IS NOT NULL
+		         ORDER BY DBMS_RANDOM.RANDOM)
+		 WHERE ROWNUM = 1
 	</entry>
 	
 </properties>

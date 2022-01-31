@@ -38,7 +38,7 @@
     
 	}
 	.btn-area>a{
-    color:black;
+    color:white;
     font-size: 25px;
     margin-left: 50px;
     text-decoration: none;
@@ -75,12 +75,12 @@
         <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
-            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary" style="background: black;">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <%if(loginUser != null){ %>
-            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary" style="background: black;">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">나의 문의내역</a>
             <%} %>
         </div>
 
@@ -123,8 +123,8 @@
 			<br>
 			<div align="center">
 				&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;&nbsp;
-				<button type="submit" class="btn1 btn-secondary qbtn">작성하기</button> 
-				<button type="reset" class="btn1 btn-secondary qbtn">취소하기</button>
+				<button type="submit" class="btn1 btn-secondary qbtn" style="background: black;">작성하기</button> 
+				<button type="reset" class="btn1 btn-secondary qbtn" style="background: black;">취소하기</button>
 			</div>
 
 			<br><br>

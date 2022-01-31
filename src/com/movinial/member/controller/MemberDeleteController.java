@@ -54,7 +54,7 @@ public class MemberDeleteController extends HttpServlet {
 				} else { 
 					request.setAttribute("alertMsg", "회원탈퇴에 실패했습니다");
 					
-					request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+					response.sendRedirect(request.getContextPath());
 					
 				}
 	

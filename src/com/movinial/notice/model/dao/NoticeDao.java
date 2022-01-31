@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
+
+import com.movinial.member.model.vo.Member;
+import com.movinial.notice.model.vo.Answer;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
 import com.movinial.notice.model.vo.Qfile;
@@ -62,7 +65,7 @@ public class NoticeDao {
 			return list;
 		}
 	
-	public int selectListCount(Connection conn, String memberNo) {
+	public int selectListCount(Connection conn, int memberNo) {
 		// SELECT => ResultSet => 우리가 지금 필요한 건 총 게시글의 개수!
 		// SELECT문을 쓰지만 상식적으로 반환되는 값이 정수가 필요함
 		// 변수
@@ -76,7 +79,7 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, memberNo);
+			pstmt.setInt(1, memberNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -92,7 +95,7 @@ public class NoticeDao {
 		return listCount;	
 	}
 	
-public ArrayList<Question> selectList(Connection conn, PageInfo pi, String memberNo ) {  // 문의 페이징
+public ArrayList<Question> selectList(Connection conn, PageInfo pi, int memberNo ) {  // 문의 페이징
 		
 		ArrayList<Question> list = new ArrayList<>();		
 		PreparedStatement pstmt = null;		
@@ -106,7 +109,7 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
 			
-			pstmt.setString(1, memberNo);
+			pstmt.setInt(1, memberNo);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
 			
@@ -444,6 +447,202 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, String membe
 		
 	} // deleteNotice
 
+	// 모든 문의 내역 수
+	public int selectListManagementCount(Connection conn) { 
+		
+		int listCount=0;
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListManagementCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return listCount;
+		
+	} // selectListManagementCount
+
+	// 모든 문의 내역 조회
+	public ArrayList<Question> selectListManagement(Connection conn, PageInfo pi) {
+
+		ArrayList<Question> list = new ArrayList<>();		
+		PreparedStatement pstmt = null;		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListManagement");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Question q = new Question(rset.getInt("QNA_NO"),
+						   				  rset.getString("CATEGORY_NAME"),
+						   				  rset.getString("QNA_TITLE"),
+						   				  rset.getString("MEMBER_ID"),						   				 
+						   				  rset.getDate("CREATE_DATE"));
+						
+				list.add(q);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);	
+		}
+		
+		return list;
+		
+	}
 	
-	
+	public Question selectQuestionManagement(Connection conn, int questionNo) {
+		// SELECT문 => ResultSet => PK에 의해 한 건만 => Board
+				// 변수
+				Question q = null;
+				PreparedStatement pstmt = null;
+				ResultSet rset = null;
+				
+				String sql = prop.getProperty("selectQuestion");
+				
+				try {
+					pstmt = conn.prepareStatement(sql);
+					
+					pstmt.setInt(1, questionNo);
+					
+					rset = pstmt.executeQuery();
+					
+					if(rset.next()) {
+						q = new Question(rset.getInt("QNA_NO"),
+									  rset.getString("CATEGORY_NAME"),
+									  rset.getString("QNA_TITLE"),
+									  rset.getString("QNA_CONTENT"),
+									  rset.getString("MEMBER_ID"),
+									  rset.getDate("CREATE_DATE"));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}finally {
+					close(rset);
+					close(pstmt);	
+				} 
+				return q;
+	}
+		
+		public Qfile selectQfileManagement(Connection conn, int questionNo) {
+			
+			Qfile at = null;
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("selectQfile");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, questionNo);
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					at = new Qfile();
+					at.setFileNo(rset.getInt("FILE_NO"));
+					at.setOriginName(rset.getString("ORIGIN_NAME"));
+					at.setChangeName(rset.getString("CHANGE_NAME"));
+					at.setFilePath(rset.getString("FILE_PATH"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(rset);
+				close(pstmt);
+			}
+			return at;
+		}
+
+		public ArrayList<Answer> selectAnswerList(Connection conn, int qnaNo) {
+			// SELECT => ResultSet => ArrayList, while
+			// 변수
+			ArrayList<Answer> list = new ArrayList<>();
+			
+			PreparedStatement pstmt = null;
+			
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("selectAnswerList");
+			
+			try {
+				pstmt=conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, qnaNo);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					
+					list.add(new Answer(rset.getInt("ANSWER_NO"),
+									   	rset.getString("ANSWER_CONTENT"),
+									   	rset.getString("MEMBER_ID"),
+									   	rset.getString("CREATE_DATE")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return list;
+		}
+
+		public int insertAnswer(Connection conn, Answer a) {
+			// INSERT문 = 처리된 행의 개수
+			// 필요한 변수
+			int result = 0 ;
+			
+			PreparedStatement pstmt = null;
+			
+			String sql = prop.getProperty("insertAnswer");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, a.getRefQno());
+				pstmt.setInt(2, Integer.parseInt(a.getAnswerWriter()));
+				pstmt.setString(3, a.getAnswerContent());
+				
+
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}		
+			return result;
+		}
 }
+
+	
+
+		
+	
+

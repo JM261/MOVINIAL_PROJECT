@@ -22,22 +22,23 @@ public class Question {
 			String orginName, String qnaFilePath, String status) {
 		super();
 		this.qnaNo = qnaNo;
-		this.qnaWriter = qnaWriter;
+		this.category = category;
 		this.qnaTitle = qnaTitle;
 		this.qnaContent = qnaContent;
-		this.category = category;
+		this.qnaWriter = qnaWriter;
 		this.createDate = createDate;
 		this.orginName = orginName;
 		this.qnaFilePath = qnaFilePath;
 		this.status = status;
 	}
 
-	public Question(int qnaNo, String qnaWriter, String qnaTitle, String category, Date createDate) {
+	public Question(int qnaNo, String category, String qnaTitle, String qnaWriter, Date createDate) {
 		super();
 		this.qnaNo = qnaNo;
+		this.category = category;
 		this.qnaWriter = qnaWriter;
 		this.qnaTitle = qnaTitle;
-		this.category = category;
+		this.qnaWriter = qnaWriter;
 		this.createDate = createDate;
 		
 	}
@@ -45,13 +46,14 @@ public class Question {
 	
 	
 
-	public Question(int qnaNo, String qnaWriter, String qnaTitle, String qnaContent, String category, Date createDate) {
+	public Question(int qnaNo, String category, String qnaTitle, String qnaContent, String qnaWriter, Date createDate) {
 		super();
 		this.qnaNo = qnaNo;
-		this.qnaWriter = qnaWriter;
+		this.category = category;
 		this.qnaTitle = qnaTitle;
 		this.qnaContent = qnaContent;
 		this.category = category;
+		this.qnaWriter = qnaWriter;
 		this.createDate = createDate;
 	}
 

@@ -14,6 +14,7 @@ import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.CommunityFile;
 import com.movinial.community.model.vo.Reply;
 import com.movinial.member.model.vo.LikesCommunity;
+import com.movinial.member.model.vo.Member;
 
 import static com.movinial.common.JDBCTemplate.*;
 
@@ -275,7 +276,7 @@ public class CommunityDao {
 		return list;
 	}
 
-	public int increaseCount(Connection conn, int communityNo) {
+	public int increaseCount(Connection conn, int communityNo) { // 게시글 조회수 1 누적 증가
 
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -458,6 +459,7 @@ public class CommunityDao {
 			pstmt.setInt(3, Integer.parseInt(c.getCommunityWriter()));
 			pstmt.setString(4, c.getCommounityContent());
 			pstmt.setString(5, c.getSpoiler());
+			pstmt.setInt(6, c.getIsNotice());
 			
 			result = pstmt.executeUpdate();
 			
@@ -698,12 +700,12 @@ public class CommunityDao {
 		return result;
 	}
 
-	public int communityLikesremove(Connection conn, int memberNo, int communityNo) {
+	public int communityLikesRemove(Connection conn, int memberNo, int communityNo) {
 
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String sql = prop.getProperty("communityLikesremove");
+		String sql = prop.getProperty("communityLikesRemove");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -719,6 +721,83 @@ public class CommunityDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int reportCommunity(Connection conn, int communityNo) { // 게시글 신고횟수 1 누적 증가
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("reportCommunity");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, communityNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int communityReportStore(Connection conn, int memberNo, int communityNo) { // 좋아요 누른 글번호 회원 신고한 게시글 컬럼에 저장
+
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("communityReportStore");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(communityNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Member selectCommunityReport(Connection conn, int memberNo) {	
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCommunityReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				m = new Member();
+				m.setReportCommunity(rset.getString("REPORT_COMMUNITY"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		return m;
 	}
 
 }

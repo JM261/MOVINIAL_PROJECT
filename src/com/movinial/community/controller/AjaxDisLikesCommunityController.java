@@ -42,7 +42,7 @@ public class AjaxDisLikesCommunityController extends HttpServlet {
 		
 		if(result1 > 0) { // 게시글의 좋아요 수 감소 처리가 성공하면, 커뮤니티 좋아요 테이블에 회원번호로 게시글 번호 삭제시키기*
 			
-			int result2 = new CommunityService().communityLikesremove(memberNo,communityNo);
+			int result2 = new CommunityService().communityLikesRemove(memberNo,communityNo);
 			
 			response.setContentType("text/html; charset=UTF-8");
 			

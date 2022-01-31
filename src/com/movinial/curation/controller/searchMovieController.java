@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.movinial.curation.model.service.CurationService;
 import com.movinial.movie.model.vo.Movie;
-
 /**
  * Servlet implementation class searchMovieController
  */
@@ -40,10 +39,11 @@ public class searchMovieController extends HttpServlet {
 		String movieKeyword = request.getParameter("movieKeyword");
 	
 		ArrayList<Movie> list = new CurationService().searchMovie(movieKeyword);
-				
+  		
 		response.setContentType("application/json; charset=UTF-8");
 		
 		new Gson().toJson(list, response.getWriter());
+		
 	
 	}
 

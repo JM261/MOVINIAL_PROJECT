@@ -31,7 +31,7 @@
 
       #m_search_btn{
         border:none;
-        background: url("../../resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
+        background: url("../resources/images/searchbtn.png"); /* 이미지 경로 상대 경로 */
         background-repeat: no-repeat;
         width:55px;
         height:30px;

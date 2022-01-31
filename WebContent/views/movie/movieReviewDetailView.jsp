@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.movinial.movie.model.vo.Movie, com.movinial.common.model.vo.PageInfo, com.movinial.review.model.vo.Review" %>
+<%@ page import="java.util.ArrayList, com.movinial.movie.model.vo.Movie,
+				com.movinial.common.model.vo.PageInfo, com.movinial.review.model.vo.Review,
+				static com.movinial.common.MovieTemplate.*" %>
 <%
+	//영화 DB, 상세정보, 리뷰 가져오기
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
 	Movie m = (Movie)request.getAttribute("m");
+	
+	// 영화 포스터 가져오기
+	String moviePosterUrl = getMoviePosterPath(m.getMovieId(), "w500");
 	
 	// 페이징 처리용
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
-	
-	// 알림 메시지 담기
-	String alertMsg = (String)request.getAttribute("alertMsg");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,18 +62,7 @@
 </head>
 <body>
 
-    <%@ include file="../common/header.jsp" %>
-    
-    <!-- 리뷰 정상 작성 확인 알림창 스크립트 -->
-    <script>
-		var msg = "<%= alertMsg %>";
-		
-		if(msg != "null") { // 메시지가 있을 경우
-			alert(msg);
-		
-			<% request.removeAttribute("alertMsg"); %>
-		}
-	</script>
+	<%@ include file="../common/header.jsp" %>
 
         <!-- 리뷰 상세보기: 영화 상세 정보 -->
         <div class="content">
@@ -82,10 +74,14 @@
             <table class="table-size">
                 <tr>
                     <td>
-                        <h2><%= m.getMovieNameEn() %> &nbsp&nbsp <%= m.getMovieNameKr() %> &nbsp&nbsp <%= m.getReleaseYear() %></h2>
+                        <h2><%= m.getTitle() %> &nbsp&nbsp <%= m.getOriginalTitle() %> &nbsp&nbsp <%= m.getReleaseDate() %></h2>
                     </td>
                     <td align="right">
-                        <img src="영화이미지" alt="영화 포스터">
+						<% if(moviePosterUrl != null) { %>
+							<img src="<%= moviePosterUrl %>" alt="<%= m.getTitle() %> 영화 포스터">
+						<% } else { %>
+							<h2>영화 포스터 없음</h2>
+						<% } %>
                     </td>
                 </tr>
             </table>
@@ -115,6 +111,7 @@
 					<br>
             		 
             		<% for(Review r: list) { %>
+            		
 		                <tr>
 		                    <td style="width: 20%;">
 		                    	<%= r.getReviewWriter() %>
@@ -160,20 +157,20 @@
 					<input type="hidden" name="memberNo" value= "<%= loginUser.getMemberNo() %>">
 					<input type="hidden" name="memberNickname" value= "<%= loginUser.getMemberNickname() %>">					
 					<input type="hidden" name="movieNo" value="<%= m.getMovieNo() %>">
-					<input type="hidden" name="movieNameKr" value="<%= m.getMovieNameKr() %>">
+					<input type="hidden" name="movieTitle" value="<%= m.getTitle() %>">
 
-					<textarea class="enroll-form form-control" name="reviewContent" cols="200" rows="7" placeholder="해당 영화에 관련된 리뷰만 작성하시기 바랍니다.&#13;&#10;광고성 글, 비방글, 욕설 등 부적절한 내용이 포함될 시 신고 될 수 있으며, 부적절한 컨텐츠로 판단되면 별도의 안내없이 삭제 조치 될 수 있습니다."></textarea>
+					<textarea class="enroll-form form-control" name="reviewContent" cols="200" rows="7" required placeholder="해당 영화에 관련된 리뷰만 작성하시기 바랍니다.&#13;&#10;광고성 글, 비방글, 욕설 등 부적절한 내용이 포함될 시 신고 될 수 있으며, 부적절한 컨텐츠로 판단되면 별도의 안내없이 삭제 조치 될 수 있습니다."></textarea>
 
 					<br>
 
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="radio" class="form-check-input" name="reviewShow" value="Y">공개
+							<input type="radio" class="form-check-input" name="reviewShow" required value="Y">공개
 						</label>
 					</div>
 					<div class="form-check-inline">
 						<label class="form-check-label">
-							<input type="radio" class="form-check-input" name="reviewShow" value="N">비공개
+							<input type="radio" class="form-check-input" name="reviewShow" required value="N">비공개
 						</label>
 					</div>
 					<div class="form-check-inline">
@@ -196,12 +193,12 @@
 				<!-- 페이징 버튼 -->
 				<!-- 페이징바에서 < 를 담당: 이전페이지 이동 -->
 				<% if(currentPage != 1) { %>
-					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>&mno=<%= m.getMovieNo() %>'">&lt;</a>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>&movieNo=<%= m.getMovieNo() %>'">&lt;</a>
 				<% } %>
 				
 				<% for(int i = startPage; i <= endPage; i++) { %>
 					<% if(i != currentPage) { %>
-						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>&mno=<%= m.getMovieNo() %>'"><%= i %></a>
+						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>&movieNo=<%= m.getMovieNo() %>'"><%= i %></a>
 					<% } else { %>
 						<a class="btn-secondary btn-sm" disabled><%= i %></a>
 					<% } %>
@@ -209,7 +206,7 @@
 				
 				<!-- 페이징바에서 > 를 담당: 다음페이지 이동 -->
 				<% if(currentPage != maxPage && maxPage != 0) { %>
-					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>&mno=<%= m.getMovieNo() %>'">&gt;</a>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>&movieNo=<%= m.getMovieNo() %>'">&gt;</a>
 				<% } %>
 
 			</div>
