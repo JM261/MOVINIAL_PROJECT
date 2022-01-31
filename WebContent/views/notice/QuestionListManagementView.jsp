@@ -17,6 +17,93 @@
 <head>
 <meta charset="UTF-8">
 <title>문의 내역 관리</title>
+
+<style>
+	.outer{
+	    border: 1px solid #bcbcbc; 
+	    width: 1500px; 
+	    height:900px;
+	    margin: auto;
+	    margin-bottom: 30px;
+	
+	}
+	.list-area{
+	    border: 1px solid #bcbcbc; 
+	    font-size: 22px;  
+	    width: 1400px;
+	    margin : auto;
+	    text-align: center;
+	    
+	}
+	.btn-area{
+	    width : 100%;
+	    height: 80px;
+	 
+	}
+	.btn-area>a{
+	    color:white;
+	    font-size: 25px;
+	    margin-left: 50px;
+	    text-decoration: none;
+	    text-align:center;
+	
+	}
+	tr td{
+		border-bottom: 1px solid #bcbcbc; 
+	}
+	#titleDate:hover{
+	    cursor: pointer;
+	    background: #e6e6e6;
+	}
+	
+	.noticeTitle{
+	   border-bottom: 1px solid #bcbcbc; 
+	   padding-left: 20px;
+	}
+	.noticeDate{
+	    border-bottom: 1px solid #bcbcbc; 
+	    text-align: right;
+	    padding-right: 20px;
+	}
+	
+	#qnaNo{
+	    display: none;    
+	}
+	th{
+	    height: 55px;
+		border-bottom: 1px solid #bcbcbc;
+		background: #f7f5f5;
+	}
+	td{
+	    height: 55px;
+	}
+	#reply{
+		color:rgb(105, 105, 105);
+		}
+	
+	#h2{
+	    font-weight: bolder;
+	}
+	#noticeInsertbtn{
+	    float: right;
+	    margin-right: 100px;
+	}
+	.pagingation{
+		border:none;
+	}
+	
+	.page-item{
+		border:none;
+		color : black;
+		background-color:white;
+		width:30px;
+	}
+	
+
+</style>
+	
+	
+</style>
 </head>
 <body>
 
@@ -29,30 +116,31 @@
         <br>
         
         <div class="btn-area">
-            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary" style="background: black;">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <% if(loginUser != null && !loginUser.getMemberId().equals("admin")){ %>
-            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary" style="background: black;">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">나의 문의내역</a>
             <%} %>
             
             <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
-            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary">문의내역</a>  <!-- 문의 내역 조회하기  -->
-                <a href="<%=contextPath%>/enrollForm.no" id="noticeInsertbtn" class="btn btn-sm btn-secondary">추가</a> <!-- 추가 -->
+            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">문의내역</a>  <!-- 문의 내역 조회하기  -->
+               
             <% } %>
             
         </div>        
         
-		<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
-        <table align="center" class="list-area">
+		<%-- <input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">--%>
+       	 <table align="center" class="list-area">
             
             <thead>
                 <tr>
-                 	<th width="200">문의 분류</th>
+                 	<th width="250">문의 분류</th>
                     <th width="400">제목</th>
-                    <th width="200">작성일</th>
-                    <th width="100">답변확인</th>
+                    <th width="150">회원번호</th>
+                    <th width="150">작성일</th>
+                    <th width="100">답변하기</th>
                 </tr> 
             </thead>
             <tbody>
@@ -61,30 +149,30 @@
 	                <tr>
 	                    <td colspan="5"> 작성된 문의내역이 없습니다. </td>
 	                </tr>
-	            <%}else{ %>   <%-- 로그인한 회원  == 글작성자 --%>   
+	            <%}else{ %>     
 					<!--  반복 : list에 있는 값을 순차적으로 접근해서 뽑아오기  -->
 					<% for(Question q : list) { %>
 		                <tr id="titleDate">
 		                	<td id="qnaNo"><%= q.getQnaNo() %></td>
-		                    <td width="200">[ <%= q.getQnaWriter() %> ]</td> <!-- 카테고리.... 일단하고.. 나중에 수정  -->
-		                    <td id="Qwriter"><%=q.getCategory() %></td> <!-- 작성자 ..... -->
-		                	<td width="400"><%= q.getQnaTitle() %></td>   
-		                    <td width="200"><%= q.getCreateDate() %></td>
-		                    <td width="100"><a href="" id="reply">답변확인</a></td>
+		                    <td>[ <%= q.getCategory() %> ]</td> 
+		                	<td><%= q.getQnaTitle() %></td>
+		                	<td><%= q.getQnaWriter() %></td>
+		                    <td><%= q.getCreateDate() %></td>
+		                    <td><a href="<%=contextPath%>/questionDetail.no?qno=<%= q.getQnaNo() %>" id="reply">답변하기</a></td>
 		                    <%} %>
 		                </tr>
                 	<%} %>
              	
             </tbody>
         
-        </table>
+       	 </table>
 
 		<script>
         
             $(function(){
                 $(".list-area>tbody>tr").click(function(){
 
-                    location.href = "<%=contextPath%>/questionDetail.no?qno="+ $(this).children().eq(0).text();                    
+                    location.href = "<%=contextPath%>/questionDetailManagement.no?qno="+ $(this).children().eq(0).text();                    
                     
                 })
 
@@ -95,23 +183,25 @@
         <br><br>
         
         <!-- 페이징바 -->
-        <div class = "paging-area" align="center">
+        <div class = "paging-area pagingation" align="center">
             <%if(currentPage != 1){ %>
-            	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+            	<button class="page-item" onclick="location.href='<%= contextPath %>/questionListManagement.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
           	<%} %>
           	
           <% for(int i = startPage; i <= endPage; i++){ %>
             <%if(i != currentPage){ %>
-            	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= i %>'"><%= i %></button>
+            	<button class="page-item" onclick="location.href='<%= contextPath %>/questionListManagement.no?currentPage=<%= i %>'"><%= i %></button>
             <%}else{ %>
-            	<button disabled><%= i %></button>
+            	<button class="page-item" style="color:coral"><%= i %></button>
           	<%} %>
           <%} %>  
           
           <%if(currentPage != maxPage){ %>
-        	   <button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+        	   <button class="page-item" onclick="location.href='<%= contextPath %>/questionListManagement.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
 		  <%} %>
         </div>
+        
+       
  </div>
 	
 

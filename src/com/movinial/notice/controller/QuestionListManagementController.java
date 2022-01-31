@@ -61,7 +61,8 @@ public class QuestionListManagementController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		ArrayList<Question> list = new NoticeService().selectListManagement(pi);
 		
-				
+		//System.out.println(list.toString());	
+		
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 				
