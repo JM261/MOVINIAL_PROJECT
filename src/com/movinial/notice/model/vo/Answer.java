@@ -7,12 +7,12 @@ public class Answer {
 	private int refQno;//REF_QNO	NUMBER
 	private String answerWriter;//ANSWER_WRITER	NUMBER
 	private String answerContent;//ANSWER_CONTENT	VARCHAR2(2000 BYTE)
-	private Date createDate;//CREATE_DATE	DATE
+	private String createDate;//CREATE_DATE	DATE
 	private String status;//STATUS	VARCHAR2(1 BYTE)
 	public Answer() {
 		super();
 	}
-	public Answer(int answerNo, int refQno, String  answerWriter, String answerContent, Date createDate, String status) {
+	public Answer(int answerNo, int refQno, String  answerWriter, String answerContent, String createDate, String status) {
 		super();
 		this.answerNo = answerNo;
 		this.refQno = refQno;
@@ -22,7 +22,7 @@ public class Answer {
 		this.status = status;
 	}
 	
-	public Answer(int answerNo, String answerContent, Date createDate) {
+	public Answer(int answerNo, String answerContent, String createDate) {
 		super();
 		this.answerNo = answerNo;
 		this.answerContent = answerContent;
@@ -30,13 +30,16 @@ public class Answer {
 	}
 	
 	
-	public Answer(int answerNo, String answerWriter, String answerContent, Date createDate) {
+	public Answer(int answerNo, String answerContent, String answerWriter, String createDate) {
 		super();
 		this.answerNo = answerNo;
+		this.answerContent = answerContent;
 		this.answerWriter = answerWriter;
-		this.answerContent = answerContent;
 		this.createDate = createDate;
 	}
+	
+	
+	
 	public int getAnswerNo() {
 		return answerNo;
 	}
@@ -61,10 +64,10 @@ public class Answer {
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 	public String getStatus() {

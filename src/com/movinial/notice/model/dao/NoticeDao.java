@@ -604,7 +604,7 @@ public ArrayList<Question> selectList(Connection conn, PageInfo pi, int memberNo
 					list.add(new Answer(rset.getInt("ANSWER_NO"),
 									   	rset.getString("ANSWER_CONTENT"),
 									   	rset.getString("MEMBER_ID"),
-									   	rset.getDate("CREATE_DATE")));
+									   	rset.getString("CREATE_DATE")));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

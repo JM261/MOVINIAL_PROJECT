@@ -87,8 +87,16 @@
    .reply1{
 	   height: 150px;
 	   
+	   
    }
-   
+
+	#answerContent{
+		border: none;
+	}
+	#answerDate{
+		border: none;
+	}
+
 </style>
 </head>
 <body>
@@ -160,15 +168,26 @@
 	                    <th>답변 등록</th>
 	                    <td class="reply1">
 	                        <textarea class="replyContent"  cols="75" rows="1" style="resize: none; border:none;"></textarea>	    
-	                    </td>
+							<div class="adminAnswer">
+
+
+							</div>
+							<div> <br> </div>
+						</td>
 	                    <td><button onclick="insertAnswer()" class="btn btn-sm btn-info" style="background: black;">등록</button></td>
 	                </tr>
 				<%}else{ %>
-	                <!-- 로그인이 되어있지 않을 경우 : 작성 불가능-->
+	               
 	                <tr>
 	                    <th>문의 답변</th>
-	                    <td class="reply1">
-	                        <textarea class="replyContent" readonly cols="80" rows="1" style="resize: none; border:none;">기다려주시면 문의내용에 답변해드리겠습니다.</textarea>
+	                    <td class="reply1">	                    
+							<div style="position: absolute;">
+								<textarea class="replyContent" readonly cols="80" rows="1" style="resize: none; border:none;">기다려주시면 문의내용에 답변해드리겠습니다.</textarea>
+							</div>
+	                    		<div class="adminAnswer" style="position: relative; background: white; ">
+
+								</div>
+	                   	 	
 	                    </td>
 	                </tr>
              	<%} %>
@@ -192,15 +211,13 @@
                 	// 댓글 개수만큼 반복 => 누적(문자열)
                 	var result = "";
                 	for(var i in list){ // for in
-                		result += "<tr>"
-             			   	  
-                			   + "<td>" + list[i].answerContent + "</td>"
-                			  
-                			   + "<td>" + list[i].createDate + "</td>"
-                			   + "</tr>";
+                		result += "<tr>"          			   	  
+                			    + "<td id='answerContent'>" +list[i].answerContent + "</td>"              			  
+//    							+ "<td id='answerDate'>" + list[i].createDate + "</td>"
+                			    + "</tr>";
                 	}
                 	
-                	$("#reply-area tbody").html(result);
+                	$(".adminAnswer").html(result);
                 },
                 error : function(){
                     consol.log("답변 조회 실패");
@@ -214,8 +231,6 @@
         $(function(){
         	
         	selectAnswerList();
-        	
-        	//setInterval(selectAnswerList, 1000);
         	
         })
         
