@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import = "java.util.ArrayList, com.movinial.community.model.vo.Community" %>
+<%@ page import = "java.util.ArrayList, com.movinial.community.model.vo.Community, com.movinial.curation.model.vo.CurationList, static com.movinial.common.MovieTemplate.*" %>
 <%
 	ArrayList<Community> list = (ArrayList<Community>)request.getAttribute("list");
 	
@@ -42,7 +42,7 @@
         text-align: center;
       }
 
-      #div1 {
+      .div1 {
         width: 890px;
         height: 300px;
         padding: 20px;
@@ -50,8 +50,8 @@
         float: left;
         border: 1px solid #bcbcbc;
       }
-
-      #div2 {
+      
+      .div2 {
         width: 890px;
         height: 300px;
         padding: 20px;
@@ -59,7 +59,7 @@
         float: right;
         border: 1px solid #bcbcbc;
       }
-
+      
       #div34{
       
         clear:both;
@@ -136,6 +136,11 @@
         height: 210px;
         margin-left: 7px;
       }
+      .movie2>img{
+      	width:150px;
+        height: 210px;	
+      
+      }
 
       .movie3{
         margin-top: 15px;
@@ -169,8 +174,6 @@
   
  <%@ include file="/views/common/header.jsp" %>
 
-      
-
       <div id="content0">
         <!-- 이미지 포스터? -->
         <!--<a href=""><img src="" alt=""></a>-->
@@ -181,46 +184,73 @@
       <a href="" class="title"><%= loginUser.getMemberNickname() %>님을 위한 추천영화</a>
       <div id="content1">
         <div class="movie0"></div>
-        <div class="movie0"> </div>
-        <div class="movie0"> </div>
-        <div class="movie0"> </div>
-        <div class="movie0"> </div>
+        <div class="movie0"></div>
+        <div class="movie0"></div>
+        <div class="movie0"></div>
+        <div class="movie0"></div>
       </div>
       <% } %>
 
+      <script>
+          $(function(){
 
+            $.ajax({
+                url : "<%= contextPath %>/latest.cu",
+                success : function(latestList){
+                    var result = "";
+                    <% for(int i=0; i<5; i++){ %>
+                      result += "<img class='movie1' src='http://image.tmdb.org/t/p/w154"+ latestList[<%=i%>].posterPath +"'>"
+                    <% } %>
+                    $('#content2').html(result);  
+                } // success
+            }) // ajax
+
+          })
+      </script>
 
       <a class="title">최신 개봉 영화</a>
       <div id="content2">
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
       </div>
-  
+      
+	  	 <script>
+	        $(function(){
+	        	
+	          $.ajax({
+	            url : "<%= contextPath %>/random.cu",
+	            success : function(randomList){
+	            	var result = "";
+	            	<% for(int i=0; i<2; i++){ %>
+	            		var randomId = randomList[<%=i%>].listMovieId.split(',');
+	            		var posterPath = randomList[<%=i%>].posterPath.split(',');
+	            		result = "<a href='' class='title' style='font-size: medium;'>"+randomList[<%=i%>].listName+"</a>"
+	            					+ "<div class='mCenter'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[0] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[1] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[2] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[3] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[4] +"'>"
+	            					+ "</div>";
+	            		
+		            		$('.div<%=i+1%>').html(result);
+	            		
+	            	<% } %>
+	            	
+	            } // success
+	          }) // ajax
+	        })
+	       
+	      </script>
+	  
       <div><a class="title">MOVINIAL 추천 영화 <br></a></div>
-      <div id="div1">
-        <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
-        <div class="mCenter">
-          <div class="movie2"> </div>
-          <div class="movie2"> </div>
-          <div class="movie2"> </div>
-          <div class="movie2"> </div>
-          <div class="movie2"> </div>
-        </div>
-      </div>
+        	  	      
+         <div class='div1'>
+	                      
+         </div>
 
-      <div id="div2">
-        <a class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
-        <div class="mCenter">
-          <div class="movie3"> </div>
-          <div class="movie3"> </div>
-          <div class="movie3"> </div>
-          <div class="movie3"> </div>
-          <div class="movie3"> </div>
-        </div>
-      </div>
+         <div class='div2'>
+	                   
+         </div>
+
 
       <div id="div34">
         <a class="title">리뷰어 랭킹</a>
@@ -254,6 +284,8 @@
                 </tr>
             </thead> 
             <tbody>
+
+
             <%--
             	<!-- 게시글 출력 -->
             	<% if(list.isEmpty()) { %>
@@ -282,15 +314,9 @@
                  --%>
     
             </tbody> 
-          
+
         </table> 
             
-            
-            
-            
-        
-       
-    
       <br><br>
    
     <%@ include file="/views/common/footer.jsp" %>

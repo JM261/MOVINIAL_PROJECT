@@ -10,8 +10,8 @@
 	</entry>
 	
 	<entry key="insertCurationList">
-		INSERT INTO CURATIONLIST(LIST_NO, LIST_NAME, LIST_MOVIE_ID, STATUS)
-		VALUES(SEQ_CUNO.NEXTVAL, ?, ?, 'Y')
+		INSERT INTO CURATIONLIST(LIST_NO, LIST_NAME, LIST_MOVIE_ID, LIST_POSTER_PATH, STATUS)
+		VALUES(SEQ_CUNO.NEXTVAL, ?, ?, ?, 'Y')
 	</entry>
 	
 	<entry key="selectCurationList">
@@ -25,6 +25,22 @@
 		UPDATE CURATIONLIST
 		SET STATUS = 'N'
 		WHERE LIST_NO = ?
+	</entry>
+	
+	<entry key="randomList">
+		SELECT *
+		FROM(SELECT *
+     	FROM CURATIONLIST
+     	ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE 3 > ROWNUM AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="latestList">
+		SELECT *
+		FROM (SELECT *
+       		  FROM MOVIE 
+    	      ORDER BY RELEASE_DATE DESC NULLS LAST)
+	    WHERE ROWNUM BETWEEN 1 AND 5
 	</entry>
 	
 </properties>

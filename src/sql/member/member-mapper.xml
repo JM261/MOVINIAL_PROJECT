@@ -61,7 +61,7 @@
  		  	STATUS = 'Y'
 	</entry>
 	
-	<entry key ="updateMemberPwd">
+	<entry key ="updateMemberPwd"><!-- 주현 : 비밀번호 변경 -->
 	UPDATE
 	    MEMBER 
 	SET
@@ -71,9 +71,25 @@
 	 AND
 	    MEMBER_NO = ?
 		
-	
 	</entry>
 	
+	<entry key="updateProfileImage"><!-- 주현 : 프로필 이미지 변경 -->
+	UPDATE
+	    MEMBER 
+	SET
+	    PROFILE_IMAGE = ?
+	WHERE
+	    MEMBER_NO = ?
+	</entry>
+	
+	<entry key="getProfileImage"><!-- 주현 : 프로필 이미지 가져오기 -->
+		SELECT
+			PROFILE_IMAGE
+		FROM
+			MEMBER
+		WHERE
+		    MEMBER_NO = ?
+	</entry>
 	
 	
 	<entry key ="AselectMemberCount"> <!-- 멤버 전체 수 조회(관리자) -->
@@ -117,4 +133,297 @@
    		   OR
    		   	MEMBER_NAME like ?
 	</entry>
+	
+	<entry key="updateMember">
+		UPDATE MEMBER
+		SET NICKNAME = ?
+			   ,EMAIL = ?
+			   ,PHONE = ?
+			   ,MODIFY_DATE = SYSDATE
+			   ,PREFERGENRE = ?  
+		WHERE MEMBER_ID = ? 
+
+	</entry>
+	
+	<!-- 주현 : 회원정보 수정 시 기존 정보 불러오기/비밀번호변경시 기존정보-->
+	<entry key="selectMember">
+	SELECT * 
+	FROM MEMBER 
+	WHERE MEMBER_ID = ? 
+	AND 
+		STATUS = 'Y' 
+	</entry>
+	
+	<!-- 주현 : 비밀번호 변경 -->
+	<entry key="updatePwdMember">
+	UPDATE 
+			MEMBER 
+		SET 
+			MEMBER_PWD = ? 
+		   ,MODIFY_DATE = SYSDATE 
+	WHERE 
+			MEMBER_PWD = ? 
+	AND 
+			MEMBER_ID = ? 
+	
+	</entry>
+	
+	<!-- 주현 : 회원탈퇴 -->
+	<entry key="deleteMember">
+	UPDATE 
+			MEMBER 
+		SET 
+			STATUS = 'N' 
+		   ,MODIFY_DATE = SYSDATE 
+	 WHERE MEMBER_ID = ? 
+	   AND MEMBER_PWD = ?		   
+	</entry>
+	
+	<!-- 주현: 아이디 중복확인 -->
+	<entry key="idCheck">
+	SELECT COUNT(*) 
+	FROM MEMBER 
+	WHERE MEMBER_ID = ? 
+	</entry>
+	
+	<!-- 주현 : 내 글 목록 -->
+	<entry key="selectList">
+	SELECT *
+			FROM (
+			      SELECT ROWNUM RNUM, A.*
+			        FROM (
+                            SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, CREATE_DATE
+                              FROM COMMUNITY C 
+                              JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO) 
+                             WHERE C.STATUS = 'Y' 
+                                AND MEMBER_NO = ?
+                             ORDER 
+                                BY CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 주현: 내글 수  -->
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT 
+		FROM COMMUNITY 
+		JOIN MEMBER ON ( MEMBER_NO = COMMUNITY_WRITER) 
+		WHERE COMMUNITY_WRITER = ?
+	</entry>
+	
+	<!-- 주현 : 내 댓글 수 -->
+	<entry key="selectReplyListCount">
+		SELECT COUNT(*) COUNT 
+		FROM REPLY 
+		JOIN MEMBER ON ( MEMBER_NO = REPLY_WRITER) 
+		WHERE REPLY_WRITER = ?
+	</entry>
+	
+	<!-- 주현 : 내 댓글 목록 -->
+	<entry key="selectReplyList">
+	SELECT *
+			FROM ( 
+			      SELECT ROWNUM RNUM, A.* 
+			        FROM ( 
+                            SELECT REPLY_NO, REF_CNO, REPLY_CONTENT, R.CREATE_DATE, COMMUNITY_NO, COMMUNITY_WRITER, COMMUNITY_TITLE, NICKNAME
+                              FROM REPLY R
+                              JOIN COMMUNITY C ON (REF_CNO = COMMUNITY_NO) 
+                              JOIN MEMBER ON(COMMUNITY_WRITER = MEMBER_NO)
+                             WHERE R.STATUS = 'Y' AND REPLY_WRITER = ? 
+                             ORDER 
+                                BY R.CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 주현 : 내 리뷰 글 수 -->
+	<entry key="selectMyReviewCount">
+		SELECT COUNT(*) COUNT 
+		FROM REVIEW
+		JOIN MEMBER ON ( MEMBER_NO = REVIEW_WRITER) 
+		WHERE REVIEW_WRITER = ?
+	
+	</entry>
+	
+	<!-- 주현 : 내 리뷰 글 가져오기 -->
+	<entry key="selectMyReview">
+		
+		SELECT *
+			FROM ( 
+			      SELECT ROWNUM RNUM, A.* 
+			        FROM ( 
+                            SELECT REVIEW_NO, NICKNAME, REVIEW_TITLE, RV.CREATE_DATE,
+                            	POSTER_PATH, REF_MNO
+                              FROM REVIEW RV
+                            JOIN MEMBER ON(REVIEW_WRITER = MEMBER_NO)
+                            JOIN MOVIE ON(REF_MNO = MOVIE_NO)
+                             WHERE RV.STATUS = 'Y' AND REVIEW_WRITER = ?
+                             ORDER 
+                                BY RV.CREATE_DATE DESC) A)
+			WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>
+	
+	<!-- 주현 : 리뷰 좋아요 리스트 -->
+	<entry key="myReviewLikesList">
+	SELECT *
+	FROM (
+	    SELECT ROWNUM RNUM, A.*
+	    FROM (
+	        SELECT REVIEW_NO, REVIEW_TITLE, NICKNAME, CREATE_DATE, LIKES, REF_MNO, REVIEW_CONTENT
+	        FROM REVIEW R
+	        JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
+	        WHERE R.STATUS = 'Y'
+	        AND REVIEW_NO  IN
+	                (SELECT TRIM(REGEXP_SUBSTR(LIKES_REVIEW, '[^,]+', 1, LEVEL)) AS REVIEW_NO
+	                FROM (SELECT LIKES_REVIEW FROM LIKES_REVIEW WHERE MEMBER_NO = ?)
+	                CONNECT BY  INSTR(LIKES_REVIEW, ',', 1, LEVEL - 1) > 0)  
+    ORDER
+    BY CREATE_DATE DESC) A)
+	WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 주현 : 본 영화 검색 -->
+	<entry key="searchSeenMovie">
+		SELECT * FROM MOVIE
+		WHERE MOVIE_NO IN
+           (SELECT TRIM(REGEXP_SUBSTR(likes_movie, '[^,]+', 1, LEVEL)) AS REVIEW_NO
+           FROM (SELECT likes_movie FROM likes_movie WHERE MEMBER_NO = ?)
+           CONNECT BY  INSTR(likes_movie, ',', 1, LEVEL - 1) > 0)
+
+	</entry>
+	
+	<!-- 주현 : 좋아요 리뷰 수 -->
+	<entry key="selectReviewLikesCount">
+	SELECT COUNT(*) COUNT 
+	FROM
+	                (SELECT TRIM(REGEXP_SUBSTR(LIKES_REVIEW, '[^,]+', 1, LEVEL)) AS REVIEW_NO
+	                FROM (SELECT LIKES_REVIEW FROM LIKES_REVIEW WHERE MEMBER_NO = ?)
+	                      CONNECT BY  INSTR(LIKES_REVIEW, ',', 1, LEVEL - 1) > 0)
+	</entry>
+	
+	<!-- 주현 : 커뮤니티 좋아요 리스트 수-->
+	<entry key="selectCommunityLikesCount">
+		SELECT COUNT(*) COUNT 
+	FROM
+	                (SELECT TRIM(REGEXP_SUBSTR(LIKES_COMMUNITY, '[^,]+', 1, LEVEL)) AS COMMUNITY_NO
+	                FROM (SELECT LIKES_COMMUNITY FROM LIKES_COMMUNITY WHERE MEMBER_NO = ?)
+	                      CONNECT BY  INSTR(LIKES_COMMUNITY, ',', 1, LEVEL - 1) > 0)
+	</entry>
+	
+	<!-- 주현 : 커뮤니티 좋아요 리스트 목록-->
+	<entry key="myCommunityLikesList">
+		
+		SELECT *
+		FROM (
+		SELECT ROWNUM RNUM, A.*
+		FROM (
+		SELECT COMMUNITY_NO, COMMUNITY_CATEGORY, COMMUNITY_TITLE, NICKNAME, CREATE_DATE, VIEWS, LIKES, SPOILER, REPORT_COUNT, ISNOTICE
+		FROM COMMUNITY C
+		JOIN MEMBER ON (COMMUNITY_WRITER = MEMBER_NO)
+		WHERE C.STATUS = 'Y' 
+		AND COMMUNITY_NO IN (SELECT      TRIM(REGEXP_SUBSTR(LIKES_COMMUNITY, '[^,]+', 1, LEVEL)) AS COMMUNITY_NO
+		FROM        (SELECT LIKES_COMMUNITY FROM LIKES_COMMUNITY WHERE MEMBER_NO = ?)
+		CONNECT BY  INSTR(LIKES_COMMUNITY, ',', 1, LEVEL - 1) > 0)
+		ORDER
+		BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>	
+
+	<!-- 주현 " 영화 좋아요 리스트 -->
+	<entry key="myMovieLikesList">
+		SELECT *
+		FROM (
+		SELECT ROWNUM RNUM, A.*
+            FROM (
+                SELECT MOVIE_NO, TITLE, RELEASE_DATE,POSTER_PATH
+                FROM MOVIE M
+                WHERE MOVIE_NO IN 
+                    (SELECT      TRIM(REGEXP_SUBSTR(LIKES_MOVIE, '[^,]+', 1, LEVEL)) AS MOVIE_NO
+                    FROM        (SELECT LIKES_MOVIE FROM LIKES_MOVIE WHERE MEMBER_NO = ?)
+                    CONNECT BY  INSTR(LIKES_MOVIE, ',', 1, LEVEL - 1) > 0)
+		ORDER
+		BY ROWNUM DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>
+	
+	<entry key="selectMovieLikesCount">
+		
+		SELECT COUNT(*) COUNT 
+	FROM
+	                (SELECT TRIM(REGEXP_SUBSTR(LIKES_MOVIE, '[^,]+', 1, LEVEL)) AS MOVIE_NO
+	                FROM (SELECT LIKES_MOVIE FROM LIKES_MOVIE WHERE MEMBER_NO = ?)
+	                      CONNECT BY  INSTR(LIKES_MOVIE, ',', 1, LEVEL - 1) > 0)
+	
+	
+	</entry>
+	
+	
+	<!-- 주현 : 봤어요 리스트 -->
+	<entry key="myMovieSeenList">
+SELECT *
+		FROM (
+		SELECT ROWNUM RNUM, A.*
+            FROM (
+                SELECT MOVIE_NO, TITLE, RELEASE_DATE,POSTER_PATH, GENRE_IDS 
+                FROM MOVIE M
+                WHERE MOVIE_NO IN 
+                    (SELECT      TRIM(REGEXP_SUBSTR(SEEN_MOVIE, '[^,]+', 1, LEVEL)) AS MOVIE_NO
+                    FROM        (SELECT SEEN_MOVIE FROM LIKES_MOVIE WHERE MEMBER_NO = ?)
+                    CONNECT BY  INSTR(SEEN_MOVIE, ',', 1, LEVEL - 1) > 0)
+		ORDER
+		BY ROWNUM DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	
+	</entry>
+		
+	<!-- 주현 : 봤어요 수 -->
+	<entry key="selectMyMovieSeenCount">
+				SELECT COUNT(*) COUNT 
+	FROM
+	                (SELECT TRIM(REGEXP_SUBSTR(SEEN_MOVIE, '[^,]+', 1, LEVEL)) AS MOVIE_NO
+	                FROM (SELECT SEEN_MOVIE FROM LIKES_MOVIE WHERE MEMBER_NO = ?)
+	                      CONNECT BY  INSTR(SEEN_MOVIE, ',', 1, LEVEL - 1) > 0)
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </properties>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
