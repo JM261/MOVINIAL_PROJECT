@@ -5,6 +5,8 @@ pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+    
+    
         <meta charset="UTF-8">
         <title>회원가입페이지</title>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -24,7 +26,15 @@ pageEncoding="UTF-8"%>
 		    from { opacity:0; transform:translate3d(0, -30px, 0); }
 		    to { opacity:1; transform:translate3d(0, 0, 0); }
 		}
-		</st	yle>
+		
+		.terms{
+            display: block;
+
+		}
+		.terms>input{
+            margin: 0 auto;			
+		}
+		</style>
         
         
     </head>
@@ -34,12 +44,12 @@ pageEncoding="UTF-8"%>
 
     <%@ include file = "../common/header.jsp" %> <!-- header -->
 
-    <div>
-    <form>
+    <div class=terms>
+        <form id="enroll-form" action="<%= contextPath %>/GenreNext.me" method="post">
         <fieldset> 
-            <legend>
-                회원가입 약관 동의
-            </legend> 
+            <h1>
+                회원가입
+            </h1> 
             
             <table>
             
@@ -117,46 +127,44 @@ pageEncoding="UTF-8"%>
             </table>
         </div>
     </fieldset>
-    </form>
 
 
     <div class="outer">
         <br>
        
 
-        <form id="enroll-form" action="<%= contextPath %>/GenreNext.me" method="post">
             <!-- 아이디, 비밀번호, 이름, 닉네임, 이메일주소,  전화번호, 전화번호 인증 -->
             <table>
                 <tr>
                     <td>* 아이디</td>
-                    <td><input type="text" name="memberId" maxlength="12" id="memberId" required></td>
-                    <td><button type="bFutton" onclick="idCheck();" class="btn bnt-sm btn-secondary">중복확인</button></td>
+                    <td><input type="text" name="memberId" maxlength="12" id="memberId" placeholder="아이디" required></td>
+                    <td><button type="button" id="idCheck_btn" class="btn bnt-sm btn-secondary">중복확인</button></td>
                 </tr>
                 <tr>
                     <td>* 비밀번호</td>
-                    <td><input type="password" name="memberPwd" maxlength="15" id="memberPwd1" placeholder="비밀번호는 최소 6자를 입력해야 합니다." required></td>
+                    <td><input type="password" name="memberPwd" maxlength="15" id="memberPwd1" placeholder="패스워드" required></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>* 비밀번호 재확인</td>
-                    <td><input type="password" maxlength="15" id="memberPwd2" required>
+                    <td><input type="password" maxlength="15" id="memberPwd2" placeholder="패스워드 확인" required>
                     	<font id="chkNotice" size="2"></font></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>* 이름</td>
-                    <td><input type="text" name="memberName" id="memberName" maxlength="6" required></td>
+                    <td><input type="text" name="memberName" id="memberName" maxlength="6" placeholder="최대6자" required></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td>* 닉네임</td>
-                    <td><input type="text" name="nickName" id="nickName" maxlength="6" required></td>
+                    <td><input type="text" name="nickName" id="nickName" maxlength="6" placeholder="최대6자" required></td>
                     <td></td>
                 </tr>
                 
                 <tr>
                     <td>* 이메일</td>
-                    <td><input type="email" name="email" id="email"></td>
+                    <td><input type="email" name="email" id="email" placeholder="이메일주소"></td>
                     <td></td>
                 </tr>
 
@@ -169,7 +177,8 @@ pageEncoding="UTF-8"%>
                           <option value="016">016</option>
                           <option value="017">017</option>
                         </select> 
-                        <input type="text" name="phone2"> </td>
+                 	<input type="text" name="phone2" style="width:70px" maxlength='4'> -
+			        <input type="text" name="phone3" style="width:70px" maxlength='4'>
                         
                 </tr>
 
@@ -182,19 +191,71 @@ pageEncoding="UTF-8"%>
                 <button type="reset" class="btn btn-sm btn-danger">초기화</button>
             </div>
             
+            
             <script>
-            	function idCheck(){
+			
+            $(function(){
+            	$('#idCheck_btn').on('click',function(){
             		// 인풋태그로부터 값을 뽑아와야함 -> 인풋태그요소 자체먼저 뽑자
-            		var $userId = $("#enroll-form input[name=userId]");
-            		// name이 userId인 요소가 menubar.jsp에도 있기 때문에
+            		var $memberId = $("#enroll-form input[name=memberId]");
+            		// name이 memberId인 요소가 menubar.jsp에도 있기 때문에
             		// 조금 더 디테일하게 선택해야함
             		
             		// ajax로 컨트롤러에 요청하기
             		$.ajax({
-            			url : "idCheck.me",
-            			data : { checkId : $userId.val() },
+            			url : "<%=request.getContextPath()%>/idCheck.me",
+            			data : { checkId : $('#memberId').val() 
+            			},
+            			type : "post",
             			success : function(result){
+            				console.log(result);
+            				// result 경우의 수 : "NNNNN", "NNNNY"
+            				// 문자열 동등 비교로 따지기
+            				if(result == "NNNNN"){ // 중복된 아이디 == 사용불가
+            					
+            					alert("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
             				
+            				}else{ // 중복되지 않은 아이디 == 사용가능
+            					
+            					// 알람창 => confirm()
+            					if(confirm("사용가능한 아이디입니다. 사용하시겠습니까?")){
+            						
+            						// 중복확인 전까지는 submit버튼을 막았다가 if문 내부로 오면 submit활성화
+            						$("#enroll-form button[type=submit]").removeAttr("disabled");
+            						
+            						// 아이디 값을 이후로 못바꾸게 확정 => readonly
+            						$('#memberId').attr("readonly", true);
+            					}else { // 취소를 선택 => 다시 입력
+            						
+            						$('#memberId').focus(); // 다시입력 유도
+            					}
+            					
+            					
+            				}
+            				
+            				
+            			},
+            			error : function(){
+            				console.log("아이디 중복체크용 ajax 실패");
+            			}
+            		})
+            	})
+            })
+            
+            <%-- $(document).ready(function(){
+            	function idCheck(){
+            		// 인풋태그로부터 값을 뽑아와야함 -> 인풋태그요소 자체먼저 뽑자
+            		var $memberId = $("#enroll-form input[name=memberId]");
+            		// name이 memberId인 요소가 menubar.jsp에도 있기 때문에
+            		// 조금 더 디테일하게 선택해야함
+            		
+            		// ajax로 컨트롤러에 요청하기
+            		$.ajax({
+            			url : "<%=request.getContextPath()%>/idCheck.me",
+            			data : { checkId : $('#memberId').val() 
+            			},
+            			success : function(result){
+            				console.log(result);
             				// result 경우의 수 : "NNNNN", "NNNNY"
             				// 문자열 동등 비교로 따지기
             				if(result == "NNNNN"){ // 중복된 아이디 == 사용불가
@@ -202,7 +263,7 @@ pageEncoding="UTF-8"%>
             					alert("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
             				
             					//재입력 유도
-            					$userId.focus();
+            					$memberId.focus();
             				}
             				else{ // 중복되지 않은 아이디 == 사용가능
             					
@@ -213,11 +274,11 @@ pageEncoding="UTF-8"%>
             						$("#enroll-form button[type=submit]").removeAttr("disabled");
             						
             						// 아이디 값을 이후로 못바꾸게 확정 => readonly
-            						$userId.attr("readonly", true);
+            						$memberId.attr("readonly", true);
             					}
             					else { // 취소를 선택 => 다시 입력
             						
-            						$userId.focus(); // 다시입력 유도
+            						$memberId.focus(); // 다시입력 유도
             					}
             					
             					
@@ -230,12 +291,16 @@ pageEncoding="UTF-8"%>
             			}
             		})
             	}
+            	
+            }); --%>
+
             </script>
+            
 
             <br><br><br>
         </form>
 
-
+	
     </div>
 
     <%@ include file="../common/footer.jsp" %>

@@ -111,6 +111,7 @@
 					<br>
             		 
             		<% for(Review r: list) { %>
+            		
 		                <tr>
 		                    <td style="width: 20%;">
 		                    	<%= r.getReviewWriter() %>

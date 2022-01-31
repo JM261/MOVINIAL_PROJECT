@@ -11,8 +11,7 @@ public class LikesMovie {
 	public LikesMovie() {
 		super();
 	}
-
-
+	
 	public LikesMovie(int memberNo, String likesMovie, String seenMovie) {
 		super();
 		this.memberNo = memberNo;
