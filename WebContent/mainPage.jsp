@@ -409,12 +409,6 @@
         <a class="title">리뷰어 랭킹</a>
         <div id="div3">
 
-          <div class="reviewer">
-            <img class="review1">
-            <div class="review2">이곳은 이름이다</div>
-            <div class="review3">이곳은 횟수다</div>
-          </div>
-
         </div>
 
         <script>

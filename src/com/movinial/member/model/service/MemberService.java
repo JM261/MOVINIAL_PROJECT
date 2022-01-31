@@ -363,6 +363,10 @@ public class MemberService {
 		ArrayList<Community> list = new MemberDao().myCommunityLikesList(conn,pi,memberNo);
 			
 		close(conn);
+		
+		return list;
+		
+	}
 
 	public ArrayList<ReviewRank> reviewRanking() {
 
