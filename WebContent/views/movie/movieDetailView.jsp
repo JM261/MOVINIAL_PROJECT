@@ -18,7 +18,7 @@
 	String productionCountry = "확인 불가"; // 제작 국가
 	String productionCompany = "확인 불가"; // 제작사
 	
-	// JSON 빈 객체 및 배열 확인
+	// JSON 빈 객체 및 빈 배열 확인
 	JSONArray countriesCheck = movieDetail.getJSONArray("production_countries");
 	JSONArray productionCheck = movieDetail.getJSONArray("production_companies");
 	
@@ -69,6 +69,12 @@
 		text-decoration: none;
 		color: black;
 		cursor: pointer;
+	}
+	.profile{
+	  	width:150px;
+	  	height:150px;
+	  	border-radius:60px;
+	  	border: 1px solid lightgray;
 	}
 
 </style>
@@ -367,16 +373,15 @@
 
 
 	<!-- 리뷰 -->
-	<div class="content" style="">
+	<div class="content">
 		<table class="table table-borderless">
 
 			<!-- 리뷰 제목 -->
 			<tr>
-				<td colspan="2" style="border: 1px solid #bcbcbc;">
+				<td colspan="2">
 					<h2 style="font-weight: bold;">리뷰</h2>
 				</td>
-				
-				<td align="right" style="border: 1px solid #bcbcbc;">
+				<td align="right">
 					<h5>
 						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>">MORE</a>
 					</h5>
@@ -399,18 +404,19 @@
            		 <!-- 리뷰 n개 출력 -->
            		<% for(Review r: list) { %>
 	                <tr>
-	                    <td style="width: 20%; border: 1px solid #bcbcbc;">
+	                    <td align="center" style="width: 10%;">
 	                    	<h5><%= r.getReviewWriter() %></h5>
 	                    </td>
-	                    <td style="border: 1px solid #bcbcbc;">
-	                    	작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp
-							
+	                    <td>
+	                    	<h5>작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp</h5>
 	                    </td>
-	                    <td style="border: 1px solid #bcbcbc;"><a type="button" class="mylist" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL --></td>
+	                    <td align="right">
+                    		<a type="button" class="mylist" data-toggle="modal" data-target="#reportForm" style="text-decoration: none; color: white;">신고하기</a><!-- MODAL -->
+	                    </td>
 	                </tr>
 	                <tr>
-	                    <td rowspan="2">
-	                        <img src="" alt="유저 프로필 이미지 경로">
+	                    <td rowspan="2" align="center">
+	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile">
 	                    </td>
 	                    <td>
 	                    	<p>
@@ -540,38 +546,6 @@
 			
 		</script>
 	<% } %>
-
-
-	</script>
-
-	
-	<!-- Modal 영역 -->
-	<!-- 신고하기 -->
-	<div class="modal fade" id="reportForm">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-	
-		<!-- Modal Header -->
-		<div class="modal-header">
-			<h4 class="modal-title">신고 사유</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		</div>
-	
-			<!-- Modal body -->
-			<div class="modal-body">
-				<form action="신고처리할 서블릿" method="post">
-						<table>
-							<textarea name="reportContent" cols="60" rows="10" style="resize: none;"></textarea>
-
-						</table>
-						<br>
-
-						<button type="submit" class="btn btn-info btn-sm">비밀번호 변경</button>
-				</form>
-			</div>
-		</div>
-		</div>
-	</div>
 	
 	<%@ include file="../common/footer.jsp" %>
 
