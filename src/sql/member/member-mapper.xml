@@ -134,6 +134,97 @@
    		   	MEMBER_NAME like ?
 	</entry>
 	
+	<!--  회원가입 장르선택을위한 장를별 영화포스터 조회 -->
+	<entry key="selectGenreList"> 
+	  SELECT *
+	    FROM genre
+	   ORDER BY genre_id
+	</entry>
+	<entry key="selectGenreMoiveList"> 
+		select 
+		       r.genre_id
+		     , r.genre_name
+		     , r.title
+		     , r.movie_id     
+		     , r.poster_path  
+		     , r.rn
+		from (
+		        select a.genre_id
+		             , a.genre_name
+		             , b.title
+		             , b.movie_id             
+		             , b.poster_path     
+		             , row_number() over(partition by a.genre_id order by a.genre_id) rn
+		        from genre a
+		           , (
+		                select 
+		                       title
+		                     , movie_id        
+		                     , case when instr(genre_ids , ',') <![CDATA[>]]> 0  then  substr(genre_ids, 1,instr(genre_ids , ',')-1)  
+		                            when instr(genre_ids , ',') <![CDATA[=]]> 0  then genre_ids end    as genre_id
+		                     , poster_path  
+		                from movie        
+		             ) b
+		        where a.genre_id = b.genre_id
+		        order by a.genre_id  
+		      ) r
+		where r.rn <![CDATA[<=]]>5
+	</entry>
+	
+	<entry key="insertMemberLikeCommunity"> <!--회원가입시 커뮤니티 좋아요생성 -->
+	INSERT 
+		   INTO LIKES_COMMUNITY
+		   
+		          (
+		            MEMBER_NO
+		            ,LIKES_COMMUNITY
+		           
+		          )
+            VALUES
+                  (
+                    ?
+                    , DEFAULT
+                  )
+	</entry>
+	
+		<entry key="insertMemberLikeReview"> <!--회원가입시 리뷰 좋아요생성 -->
+	INSERT 
+		   INTO LIKES_REVIEW
+		   
+		          (
+		            MEMBER_NO
+		            ,LIKES_REVIEW
+		           
+		          )
+            VALUES
+                  (
+                    ?
+                    , DEFAULT
+                  )
+	</entry>
+	
+		<entry key="insertMemberLikeMovie"> <!--회원가입시 영화 좋아요생성 -->
+	INSERT 
+		   INTO LIKES_MOVIE
+		   
+		          (
+		            MEMBER_NO
+		            ,LIKES_MOVIE
+		            ,SEEN_MOVIE
+		           
+		          )
+            VALUES
+                  (
+                    ?
+                    , DEFAULT
+                    , DEFAULT
+                  )
+	</entry>
+	<entry key="idCheck">
+	SELECT COUNT(*) COUNT FROM MEMBER
+	WHERE MEMBER_ID = ?
+	</entry>
+
 	<entry key="updateMember">
 		UPDATE MEMBER
 		SET NICKNAME = ?
@@ -142,7 +233,6 @@
 			   ,MODIFY_DATE = SYSDATE
 			   ,PREFERGENRE = ?  
 		WHERE MEMBER_ID = ? 
-
 	</entry>
 	
 	<!-- 주현 : 회원정보 수정 시 기존 정보 불러오기/비밀번호변경시 기존정보-->
@@ -386,44 +476,4 @@ SELECT *
 	                      CONNECT BY  INSTR(SEEN_MOVIE, ',', 1, LEVEL - 1) > 0)
 	</entry>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 </properties>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

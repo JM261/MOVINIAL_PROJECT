@@ -23,7 +23,7 @@
     				 <td>
      					<table width="750px" align="center" border="0" style="background-color:white; margin-top:3%" >
       						<tr>
-       						 <td align="center"><img src="../img/miki_icon.png" height="30px"></td>
+       						 <td align="center"></td>
        						  <td>비밀번호 찾기</td>
        						  <td><div id="sub-title"> |  회원정보에 등록한 정보로 인증.</td>
        						  <td style="width:300px"></td>
@@ -38,7 +38,7 @@
      		 <td>
       		 	<table width="400px"  border="0" style="margin-top:3%">
        			 <tr>
-        		  <td>&nbsp;&nbsp;<img src="../img/check.png" height="30px" >
+        		  <td>&nbsp;&nbsp;
         		  </td>
         		  <td><div id="middle-title">&nbsp;아이디와 핸드폰번호를 입력해주세요.</div>
         		  </td>
@@ -68,8 +68,8 @@
 			        <option value ="016">016</option>
 			        <option value ="017">017</option>
 			        </select> -
-			        <input type="text" name="phone2" style="width:70px"> -
-			        <input type="text" name="phone3" style="width:70px"></td>
+			        <input type="text" name="phone2" style="width:70px" maxlength='4'> -
+			        <input type="text" name="phone3" style="width:70px" maxlength='4'></td>
 			       </tr>
 			     </table>
 			    </td>
