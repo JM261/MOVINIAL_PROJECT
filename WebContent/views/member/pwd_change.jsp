@@ -57,15 +57,11 @@
        			 <tr>
         		  <td>수정할 비밀번호</td>
         		  <td><input type="password" name="newPwd" id="newPwd" required></td>
-       			</tr>
-       			
-       			 <tr>
-        		  <td>수정할 비밀번호 재입력</td>
-        		  <td><input type="password" name="newPwdChk" id="newPwdChk" required></td>
-        		      <font id="chkNotice" size="2"></font></td>
         		      <input type="hidden" name="memberId"   value="<%= m.getMemberId() %>" >
         		  	  <input type="hidden" name="memberNo"  value="<%= m.getMemberNo() %>">
+       			
        			</tr>
+       			
 			     </table>
 			    
 			</td>

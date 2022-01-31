@@ -32,7 +32,7 @@
 		FROM(SELECT *
      	FROM CURATIONLIST
      	ORDER BY DBMS_RANDOM.RANDOM)
-		WHERE 3 > ROWNUM AND STATUS = 'Y'
+		WHERE 5 > ROWNUM AND STATUS = 'Y'
 	</entry>
 	
 	<entry key="latestList">

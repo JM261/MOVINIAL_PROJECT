@@ -131,6 +131,7 @@
 		div>img{
 			width : 154px;
 			height : 220px;
+            
 			
 		}
 
@@ -168,6 +169,15 @@
         .cl2>img{
             margin: 30px 15px 15px;
         }
+        .modal-content{
+            overflow:auto;
+        }
+        .modal1, .modal2, .modal3, .modal4, .modal5, .modal6{
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } 
     </style>
 </head>
 <body>

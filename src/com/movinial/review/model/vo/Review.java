@@ -24,7 +24,17 @@ public class Review {
 	public Review() {
 		super();
 	}
-
+  
+  // 메인 페이지에 출력
+	public Review(int reviewNo, String reviewWriter, String reviewContent, int refMno, String reviewTitle) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriter = reviewWriter;
+		this.reviewContent = reviewContent;
+		this.refMno = refMno;
+		this.reviewTitle = reviewTitle;
+	}
+  
 	/**
 	 * 해당 영화의 리뷰 정보 받아오기
 	 * @param reviewNo
@@ -93,7 +103,7 @@ public class Review {
 		this.status = status;
 		this.refMno = refMno;
 	}
-	
+  
 	/**
 	 * 리뷰 전체 + 프로필 사진 포함
 	 * @param reviewNo

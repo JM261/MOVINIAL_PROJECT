@@ -100,22 +100,33 @@ public class Community {
 		this.isNotice = isNotice;
 		this.memberNo = memberNo;
 	}
-	
-	
-	//주현 : 좋아요 누른 커뮤니티 게시글 리스트
+  
+  //주현 : 좋아요 누른 커뮤니티 게시글 리스트
 	public Community(int communityNo, String communityTitle, String communityCategory, String communityWriter,
 			int likes, Date createDate) {
-		super();
+    super();
 		this.communityNo = communityNo;
 		this.communityTitle = communityTitle;
 		this.communityCategory = communityCategory;
 		this.communityWriter = communityWriter;
+   	this.likes = likes;
+		this.createDate = createDate;
+	}
+  
+  // 메인 페이지에서 띄우기
+	public Community(int communityNo, String communityTitle, String communityCategory, String communityWriter,
+			int views, int likes, Date createDate) {
+    super();
+		this.communityNo = communityNo;
+		this.communityTitle = communityTitle;
+		this.communityCategory = communityCategory;
+		this.communityWriter = communityWriter;
+  	this.views = views;
 		this.likes = likes;
 		this.createDate = createDate;
 	}
-
+  
 	// 메소드부
-	
 	public int getCommunityNo() {
 		return communityNo;
 	}

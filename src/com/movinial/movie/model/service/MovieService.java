@@ -297,6 +297,32 @@ public class MovieService {
 	}
 
 	// ---------- 영화 좋아요 끝 ----------
+
+	public ArrayList<Movie> movieTopTen() { // movieTopTen : 좋아요  TOP10 영화
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().movieTopTen(conn);
+		
+		close(conn);
+		
+		return list;
+		
+	} // movieTopTen : 좋아요  TOP10 영화
+
+
+	public ArrayList<Movie> moviePopular() { // MoviePopular : 인기영화
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().moviePopular(conn);
+		
+		close(conn);
+		
+		return list;
+		
+	} // MoviePopular : 인기영화
+
 	
 	
 	// ---------- 회원 추천 영화 시작 ----------
