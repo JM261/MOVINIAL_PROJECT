@@ -77,7 +77,21 @@ public class Movie {
 		this.movieSeen = movieSeen;
 	}	
 	
+	// mainPage 최신 영화 포스터 이미지경로, 영화번호
+	public Movie(int movieNo, String posterPath) {
+		super();
+		this.movieNo = movieNo;
+		this.posterPath = posterPath;
+	}
 	
+	// movieTopTen : TOP 10 순위
+	public Movie(int movieNo, String title, String posterPath) {
+		super();
+		this.movieNo = movieNo;
+		this.title = title;
+		this.posterPath = posterPath;
+	}
+  
 	// 메소드
 	public int getMovieNo() {
 		return movieNo;

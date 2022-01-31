@@ -134,6 +134,14 @@
    		   	MEMBER_NAME like ?
 	</entry>
 	
+	<entry key="reviewRanking">
+		SELECT MEMBER_NAME, COUNT(*) COUNT, PROFILE_IMAGE
+		FROM REVIEW
+		JOIN MEMBER ON (MEMBER_NO = REVIEW_WRITER)
+		GROUP BY MEMBER_NAME, PROFILE_IMAGE
+		ORDER BY COUNT(*) DESC
+	</entry>
+
 	<!--  회원가입 장르선택을위한 장를별 영화포스터 조회 -->
 	<entry key="selectGenreList"> 
 	  SELECT *

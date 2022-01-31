@@ -109,6 +109,21 @@
 	
 	<!-- 영화 봤어요 끝 -->
 	
+	<!-- 영화 좋아요 순 TOP 10 -->
+	<entry key="movieTopTen">
+		SELECT MOVIE_NO, TITLE, POSTER_PATH
+		FROM MOVIE
+		WHERE 11 > ROWNUM 
+		ORDER BY MOVIE_LIKES DESC
+	</entry>
+	
+	<entry key="moviePopular">
+		SELECT *
+		FROM (SELECT MOVIE_NO, POSTER_PATH
+		FROM MOVIE
+		ORDER BY MOVIE_LIKES DESC)
+		WHERE 11 > ROWNUM
+	</entry>
 	
 	<!-- 회원 추천 영화 시작 -->
 	

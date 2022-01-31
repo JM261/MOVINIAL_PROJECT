@@ -508,8 +508,71 @@ public class MovieDao {
 		return result;
 		
 	}
-	
+
 	// ---------- 영화 좋아요 끝 ----------
+
+	public ArrayList<Movie> movieTopTen(Connection conn) { // movieTopTen : 좋아요  TOP10 영화
+
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("movieTopTen");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Movie m = new Movie(rset.getInt("MOVIE_NO")
+						           ,rset.getString("TITLE")
+						           ,rset.getString("POSTER_PATH"));
+				
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	} // movieTopTen : 좋아요  TOP10 영화
+
+
+	public ArrayList<Movie> moviePopular(Connection conn) { // MoviePopular : 인기영화
+
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("moviePopular");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Movie m = new Movie(rset.getInt("MOVIE_NO")
+						           ,rset.getString("POSTER_PATH"));
+				
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}  // MoviePopular : 인기영화
+	
 	
 	
 	// ---------- 회원 추천 영화 시작 ----------

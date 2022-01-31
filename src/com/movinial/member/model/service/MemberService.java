@@ -13,6 +13,7 @@ import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.Reply;
 import com.movinial.member.model.dao.MemberDao;
 import com.movinial.member.model.vo.Member;
+import com.movinial.review.model.vo.ReviewRank;
 import com.movinial.member.model.vo.MemberGenre;
 import com.movinial.member.model.vo.MyPageFile;
 import com.movinial.movie.model.vo.Movie;
@@ -363,8 +364,15 @@ public class MemberService {
 			
 		close(conn);
 
-		return list;
+	public ArrayList<ReviewRank> reviewRanking() {
+
+		Connection conn = getConnection();
 		
+		ArrayList<ReviewRank> list = new MemberDao().reviewRanking(conn);
+		
+		close(conn);
+		
+		return list;
 	}
 	
 	//주현 : 내가 누른 영화 좋아요 리스트 수

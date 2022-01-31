@@ -15,6 +15,7 @@ import com.movinial.common.model.vo.PageInfo;
 import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.Reply;
 import com.movinial.member.model.vo.Member;
+import com.movinial.review.model.vo.ReviewRank;
 import com.movinial.member.model.vo.MemberGenre;
 import com.movinial.member.model.vo.MyPageFile;
 import com.movinial.movie.model.vo.Movie;
@@ -408,6 +409,34 @@ public class MemberDao {
 		}
 
 		return memberId;
+	}
+
+	public ArrayList<ReviewRank> reviewRanking(Connection conn) {
+
+		ArrayList<ReviewRank> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewRanking");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new ReviewRank(rset.getString("MEMBER_NAME")
+									   ,rset.getInt("COUNT")
+									   ,rset.getString("PROFILE_IMAGE")
+									   ));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 	public int idCheck(Connection conn, String checkId) {
