@@ -613,6 +613,43 @@ public class MovieDao {
 		
 		
 	}
+	
+	/**
+	 * 선호 장르 없는 회원 추천 영화 가져오기 (5개)
+	 * @param conn
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovieRandom(Connection conn) {
+		
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMemberRecommendMovieRandom");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Movie(rset.getInt("MOVIE_NO"),
+							  	   rset.getInt("MOVIE_ID"),
+							  	   rset.getString("TITLE"),
+							  	   rset.getString("POSTER_PATH")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
 
 	/**
 	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
@@ -690,5 +727,6 @@ public class MovieDao {
 		return m;
 		
 	}
+	
 	
 }

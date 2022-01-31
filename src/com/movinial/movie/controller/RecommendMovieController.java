@@ -38,17 +38,22 @@ public class RecommendMovieController extends HttpServlet {
 		
 		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo(); // 회원 번호
 		
+		ArrayList<Movie> list = new ArrayList<>(); // 추천 영화 리스트
+		ArrayList<Movie> recommendList = new ArrayList<Movie>(); // 포스터 URL 처리 후 추천 영화 리스트
+		
 		// 회원 선호 장르 가져오기
 		String result = new MovieService().selectMemberPreferGenre(memberNo);
 		
-		String regExpGenre = result.replace(',', '|'); // 회원 선호 장르 정규식
-		
-		// 회원 선호 장르 기반 추천 영화 가져오기 (5개)
-		ArrayList<Movie> list = new MovieService().selectMemberRecommendMovie(regExpGenre);
+		if(result == null || result.isEmpty()) { // 선호 장르 없음
+			list = new MovieService().selectMemberRecommendMovieRandom();
+		} else { // 선호 장르 있음
+			String regExpGenre = result.replace(',', '|'); // 회원 선호 장르 정규식
+			
+			// 회원 선호 장르 기반 추천 영화 가져오기 (5개)
+			list = new MovieService().selectMemberRecommendMovie(regExpGenre);
+		}
 		
 		// 포스터 URL 처리
-		ArrayList<Movie> recommendList = new ArrayList<Movie>();
-		
 		for(Movie m: list) {
 			recommendList.add(new Movie(m.getMovieNo(), m.getTitle(), getMoviePosterPath(m.getMovieId(), "w500")));
 		}

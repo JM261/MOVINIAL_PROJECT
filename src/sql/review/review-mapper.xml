@@ -34,7 +34,7 @@
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
-		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, PROFILE_IMAGE
 		                  FROM (SELECT *
 		                          FROM VW_REVIEW_PUBLIC)
 		                 WHERE REF_MNO = ?
@@ -49,7 +49,7 @@
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
-		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, PROFILE_IMAGE
 		                  FROM (SELECT *
 		                          FROM VW_REVIEW_PUBLIC
 		                        UNION

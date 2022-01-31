@@ -18,7 +18,7 @@
 	String productionCountry = "확인 불가"; // 제작 국가
 	String productionCompany = "확인 불가"; // 제작사
 	
-	// JSON 빈 객체 및 배열 확인
+	// JSON 빈 객체 및 빈 배열 확인
 	JSONArray countriesCheck = movieDetail.getJSONArray("production_countries");
 	JSONArray productionCheck = movieDetail.getJSONArray("production_companies");
 	
@@ -69,6 +69,12 @@
 		text-decoration: none;
 		color: black;
 		cursor: pointer;
+	}
+	.profile{
+	  	width:150px;
+	  	height:150px;
+	  	border-radius:60px;
+	  	border: 1px solid lightgray;
 	}
 
 </style>
@@ -206,15 +212,20 @@
 						
 						// 봤어요를 눌렀는지 확인
 						if(lm.seenMovie != null) { 
+							
 							// 해당 회원의 '이영화 봤어요' 영화 번호 뽑아내기 (String[])
 							var seenMovie = lm.seenMovie.split(',');
+							
+							// 영화번호가 이미 있는지 확인
+							if(seenMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
+								iDontSeenIt();
+							}
+							else { // 없다면, 영화 번호 삽입
+								iSeenIt();
+							}
+							
 						}
-						
-						// 영화번호가 이미 있는지 확인
-						if(seenMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
-							iDontSeenIt();
-						}
-						else { // 없다면, 영화 번호 삽입
+						else { // null일 경우
 							iSeenIt();
 						}
 						
@@ -236,7 +247,7 @@
 					},
 					success: function(seen) {
 						
-						if(seen > 0){ // 성공 시
+						if(seen > 0 && movieSeenValue >= 0){ // 성공 시, 현재 봤어요 값이 0보다 크거나 같다면
 							movieSeenValue++; // 봤어요 값 + 1
 							$(".movie-seen-btn").children().eq(1).text(movieSeenValue);
 						}
@@ -260,7 +271,7 @@
 					},
 					success: function(dontSeen) {
 						
-						if(dontSeen > 0){
+						if(dontSeen > 0 && movieSeenValue > 0) { // 성공 시, 현재 봤어요 값이 0보다 크다면
 							movieSeenValue--; // 봤어요 값 - 1
 							$(".movie-seen-btn").children().eq(1).text(movieSeenValue);
 						}
@@ -286,15 +297,19 @@
 						
 						// 좋아요를 눌렀는지 확인
 						if(lm.likesMovie != null) { 
+							
 							// 해당 회원의 '좋아요' 영화 번호 뽑아내기 (String[])
 							var likesMovie = lm.likesMovie.split(',');
+							
+							// 영화번호가 이미 있는지 확인
+							if(likesMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
+								iDontLikeIt();
+							}
+							else { // 없다면, 영화 번호 삽입
+								iLikeIt();
+							}
 						}
-						
-						// 영화번호가 이미 있는지 확인
-						if(likesMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
-							iDontLikeIt();
-						}
-						else { // 없다면, 영화 번호 삽입
+						else { // null일 경우
 							iLikeIt();
 						}
 						
@@ -316,8 +331,8 @@
 					},
 					success: function(like) {
 						
-						if(like > 0){ // 성공 시
-							movieLikesValue++; // 봤어요 값 + 1
+						if(like > 0 && movieLikesValue >= 0) { // 성공 시, 현재 좋아요 값이 0보다 크거나 같다면
+							movieLikesValue++; // 좋아요 값 + 1
 							$(".movie-likes-btn").children().eq(1).text(movieLikesValue);
 						}
 						
@@ -340,8 +355,8 @@
 					},
 					success: function(dislike) {
 						
-						if(dislike > 0){
-							movieLikesValue--; // 봤어요 값 - 1
+						if(dislike > 0 && movieLikesValue > 0) { // 성공 시, 현재 좋아요 값이 0보다 크다면
+							movieLikesValue--; // 좋아요 값 - 1
 							$(".movie-likes-btn").children().eq(1).text(movieLikesValue);
 						}
 						
@@ -358,16 +373,15 @@
 
 
 	<!-- 리뷰 -->
-	<div class="content" style="">
+	<div class="content">
 		<table class="table table-borderless">
 
 			<!-- 리뷰 제목 -->
 			<tr>
-				<td colspan="2" style="border: 1px solid #bcbcbc;">
+				<td colspan="2">
 					<h2 style="font-weight: bold;">리뷰</h2>
 				</td>
-				
-				<td align="right" style="border: 1px solid #bcbcbc;">
+				<td align="right">
 					<h5>
 						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>">MORE</a>
 					</h5>
@@ -390,18 +404,19 @@
            		 <!-- 리뷰 n개 출력 -->
            		<% for(Review r: list) { %>
 	                <tr>
-	                    <td style="width: 20%; border: 1px solid #bcbcbc;">
+	                    <td align="center" style="width: 10%;">
 	                    	<h5><%= r.getReviewWriter() %></h5>
 	                    </td>
-	                    <td style="border: 1px solid #bcbcbc;">
-	                    	작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp
-							
+	                    <td>
+	                    	<h5>작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp</h5>
 	                    </td>
-	                    <td style="border: 1px solid #bcbcbc;"><a type="button" class="mylist" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL --></td>
+	                    <td align="right">
+                    		<a type="button" class="mylist" data-toggle="modal" data-target="#reportForm" style="text-decoration: none; color: white;">신고하기</a><!-- MODAL -->
+	                    </td>
 	                </tr>
 	                <tr>
-	                    <td rowspan="2">
-	                        <img src="" alt="유저 프로필 이미지 경로">
+	                    <td rowspan="2" align="center">
+	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile">
 	                    </td>
 	                    <td>
 	                    	<p>
@@ -455,16 +470,21 @@
 					success: function(lr) {
 						
 						// 좋아요를 눌렀는지 확인
-						if(lr.likesReview != null) { 
+						if(lr.likesReview != null) {
+							
 							// 해당 회원의 '좋아요' 리뷰 번호 뽑아내기 (String[])
 							var likesReview = lr.likesReview.split(',');
+							
+							// 리뷰번호가 이미 있는지 확인
+							if(likesReview.indexOf(reviewNo) != -1) { // 있다면, 리뷰 번호 삭제
+								iDontLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
+							}
+							else { // 없다면, 리뷰 번호 삽입
+								iLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
+							}
+							
 						}
-						
-						// 리뷰번호가 이미 있는지 확인
-						if(likesReview.indexOf(reviewNo) != -1) { // 있다면, 리뷰 번호 삭제
-							iDontLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
-						}
-						else { // 없다면, 리뷰 번호 삽입
+						else { // null일 경우
 							iLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
 						}
 						
@@ -487,8 +507,8 @@
 					},
 					success: function(like) {
 						
-						if(like > 0){ // 성공 시
-							$reviewLikesValue++; // 좋아요 값 - 1
+						if(like > 0 && $reviewLikesValue >= 0){ // 성공 시, 현재 좋아요 값이 0보다 크거나 같다면
+							$reviewLikesValue++; // 좋아요 값 + 1
 							$(reviewLikesBtn).children().eq(1).text($reviewLikesValue);
 						}
 						
@@ -511,7 +531,7 @@
 					},
 					success: function(dislike) {
 						
-						if(dislike > 0){ // 성공 시
+						if(dislike > 0 && $reviewLikesValue > 0){ // 성공 시, 현재 좋아요 값이 0보다 크다면
 							$reviewLikesValue--; // 좋아요 값 - 1
 							$(reviewLikesBtn).children().eq(1).text($reviewLikesValue);
 						}
@@ -526,38 +546,6 @@
 			
 		</script>
 	<% } %>
-
-
-	</script>
-
-	
-	<!-- Modal 영역 -->
-	<!-- 신고하기 -->
-	<div class="modal fade" id="reportForm">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-	
-		<!-- Modal Header -->
-		<div class="modal-header">
-			<h4 class="modal-title">신고 사유</h4>
-			<button type="button" class="close" data-dismiss="modal">&times;</button>
-		</div>
-	
-			<!-- Modal body -->
-			<div class="modal-body">
-				<form action="신고처리할 서블릿" method="post">
-						<table>
-							<textarea name="reportContent" cols="60" rows="10" style="resize: none;"></textarea>
-
-						</table>
-						<br>
-
-						<button type="submit" class="btn btn-info btn-sm">비밀번호 변경</button>
-				</form>
-			</div>
-		</div>
-		</div>
-	</div>
 	
 	<%@ include file="../common/footer.jsp" %>
 
