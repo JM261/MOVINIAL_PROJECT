@@ -9,6 +9,7 @@ import com.movinial.common.model.vo.PageInfo;
 import java.util.ArrayList;
 import com.movinial.member.model.dao.MemberDao;
 import com.movinial.member.model.vo.Member;
+import com.movinial.review.model.vo.ReviewRank;
 
 public class MemberService {
 	public Member loginMember(String userId, String userPwd) {
@@ -140,6 +141,17 @@ public class MemberService {
 		return list;
 		
 	} // searchMember : 키워드로 검색
+
+	public ArrayList<ReviewRank> reviewRanking() {
+
+		Connection conn = getConnection();
+		
+		ArrayList<ReviewRank> list = new MemberDao().reviewRanking(conn);
+		
+		close(conn);
+		
+		return list;
+	}
 
 	
 

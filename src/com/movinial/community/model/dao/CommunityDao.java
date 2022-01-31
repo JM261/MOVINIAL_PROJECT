@@ -800,4 +800,39 @@ public class CommunityDao {
 		return m;
 	}
 
+	public ArrayList<Community> mainPageCommunity(Connection conn) { // 메인 페이지에 띄워줄 커뮤니티 글
+
+		ArrayList<Community> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("mainPageCommunity");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Community(rset.getInt("COMMUNITY_NO")
+									  ,rset.getString("COMMUNITY_TITLE")
+									  ,rset.getString("COMMUNITY_CATEGORY")
+									  ,rset.getString("MEMBER_NAME")
+									  ,rset.getInt("VIEWS")
+									  ,rset.getInt("LIKES")
+									  ,rset.getDate("CREATE_DATE")
+						));	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	} // 메인 페이지에 띄워줄 커뮤니티 글
+
+
 }

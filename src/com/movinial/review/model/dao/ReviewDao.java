@@ -200,6 +200,37 @@ public class ReviewDao {
 		return result;
 		
 	}
+
+	// 메인에 띄울 베스트 리뷰
+	public ArrayList<Review> mainPageReview(Connection conn) {
+		
+		ArrayList<Review> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("mainPageReview");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Review(rset.getInt("REVIEW_NO")
+								   ,rset.getString("MEMBER_NAME")
+								   ,rset.getString("REVIEW_CONTENT")
+								   ,rset.getInt("REF_MNO")
+								   ,rset.getString("POSTER_PATH")
+						));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	} 
 	
 	
 	

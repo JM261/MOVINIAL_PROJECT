@@ -46,6 +46,15 @@ public class Movie {
 		this.movieNo = movieNo;
 		this.posterPath = posterPath;
 	}
+	
+	
+	// movieTopTen : TOP 10 순위
+	public Movie(int movieNo, String title, String posterPath) {
+		super();
+		this.movieNo = movieNo;
+		this.title = title;
+		this.posterPath = posterPath;
+	}
 
 	// 메소드
 	public int getMovieNo() {

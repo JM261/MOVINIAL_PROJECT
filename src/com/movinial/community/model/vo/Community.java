@@ -101,8 +101,22 @@ public class Community {
 		this.memberNo = memberNo;
 	}
 	
+	// 메인 페이지에서 띄우기
+	public Community(int communityNo, String communityTitle, String communityCategory, String communityWriter,
+			int views, int likes, Date createDate) {
+		super();
+		this.communityNo = communityNo;
+		this.communityTitle = communityTitle;
+		this.communityCategory = communityCategory;
+		this.communityWriter = communityWriter;
+		this.views = views;
+		this.likes = likes;
+		this.createDate = createDate;
+	}
+	
 	// 메소드부
 	
+
 	public int getCommunityNo() {
 		return communityNo;
 	}

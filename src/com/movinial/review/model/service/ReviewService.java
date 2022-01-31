@@ -87,6 +87,18 @@ public class ReviewService {
 		return result;
 		
 	}
+
+	// 메인에 띄울 베스트 리뷰
+	public ArrayList<Review> mainPageReview() {
+		
+		Connection conn = getConnection();
+
+		ArrayList<Review> list = new ReviewDao().mainPageReview(conn);
+		
+		close(conn);
+		
+		return list;
+	} 
 	
 	
 	

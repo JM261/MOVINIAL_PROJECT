@@ -117,4 +117,12 @@
    		   OR
    		   	MEMBER_NAME like ?
 	</entry>
+	
+	<entry key="reviewRanking">
+		SELECT MEMBER_NAME, COUNT(*) COUNT, PROFILE_IMAGE
+		FROM REVIEW
+		JOIN MEMBER ON (MEMBER_NO = REVIEW_WRITER)
+		GROUP BY MEMBER_NAME, PROFILE_IMAGE
+		ORDER BY COUNT(*) DESC
+	</entry>
 </properties>

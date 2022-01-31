@@ -74,6 +74,16 @@ public class Review {
 		this.refMno = refMno;
 	}
 	
+	// 메인 페이지에 출력
+	public Review(int reviewNo, String reviewWriter, String reviewContent, int refMno, String reviewTitle) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriter = reviewWriter;
+		this.reviewContent = reviewContent;
+		this.refMno = refMno;
+		this.reviewTitle = reviewTitle;
+	}
+
 	// 메소드부
 	public int getReviewNo() {
 		return reviewNo;
