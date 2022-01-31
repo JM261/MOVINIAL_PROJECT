@@ -12,7 +12,6 @@
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	
-	int cno = list.get(0).getCommunityNo();
 %>
     
 <!DOCTYPE html>
@@ -95,7 +94,7 @@
     	<a class="mybtn2" id="m3" href="<%= contextPath %>/myCommunity.Likes">게시글</a>
     	<br>
       <tr>
-        <th width="10px">글 번호</th>
+        <th width="10px"></th>
         <th width="100px">카테고리</th>
         <th width="300px">리뷰</th>
         <th width="100px">작성자</th>
@@ -109,7 +108,7 @@
 	        </tr>
      <%} else{ %>
      	<% for(Community c : list) { %>
-      <tr>
+      <tr communityNo="<%=c.getCommunityNo()%>">
 	        <td width="10px"><input type="hidden" value="<%= c.getCommunityNo() %>"></td>
 	        <td width="10px"><%= c.getCommunityCategory() %></td>
 	        <td width="300px"><%= c.getCommunityTitle() %></td>
@@ -124,10 +123,18 @@
   <script>
 	
 	$(function(){
-		$(".list-area>tbody>tr").click(function(){
-			//jsp/detail.bo?bno=x
-			location.href = "<%=contextPath%>/detail.cm?cno=<%= cno %>";
-		})
+		
+		var loginUser = '<%= loginUser %>'
+
+        if(loginUser != 'null') {
+		
+			$(".list-area>tbody>tr").click(function(){
+				location.href = "<%=contextPath%>/detail.cm?cno=" + $(this).attr('communityNo');
+			})                                          
+		} else{
+       	 alert("로그인 후 이용해주시기 바랍니다.");
+      	  location.href = "<%= contextPath %>/login.me"
+    }
 	})
 
   </script>
