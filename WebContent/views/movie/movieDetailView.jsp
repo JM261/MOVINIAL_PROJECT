@@ -3,36 +3,38 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.movinial.movie.model.vo.Movie, org.json.JSONObject, java.util.ArrayList,
 				 com.movinial.review.model.vo.Review, static com.movinial.common.MovieTemplate.*,
-				 java.util.Locale"%>
+				 java.util.Locale, org.json.JSONArray"%>
 <%
 	// 영화 DB, 상세정보, 리뷰 가져오기
 	Movie m = (Movie)request.getAttribute("m");
 	JSONObject movieDetail = (JSONObject)request.getAttribute("movieDetail");
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
 	
-	// ISO 3166-1 처리 객체
-	//Locale locale1 = new Locale("ko", "KR");
-	//Locale locale2 = new Locale("ko", "JP");
-	
-	//String nationalname1 = locale1.getDisplayCountry();
-	//String nationalname2 = locale2.getDisplayCountry();
-	
-	
-	// 영화 정보 삽입용 변수
-	String homepage = (String)movieDetail.get("homepage");
-	Locale productionCountries = new Locale("ko", (String)(movieDetail.getJSONArray("production_countries").getJSONObject(0).get("iso_3166_1"))); // 제작 국가
-	String productionCompanies = (String)movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name"); // 제작사
-	
-	
-	
 	// 영화 상세보기 - 영화 포스터 가져오기
 	String moviePosterUrl = getMoviePosterPath(m.getMovieId(), "w780");
+	
+	// 영화 정보 삽입용 변수
+	String homepage = (String)movieDetail.get("homepage"); // 홈페이지
+	String productionCountry = "확인 불가"; // 제작 국가
+	String productionCompany = "확인 불가"; // 제작사
+	
+	// JSON 빈 객체 및 배열 확인
+	JSONArray countriesCheck = movieDetail.getJSONArray("production_countries");
+	JSONArray productionCheck = movieDetail.getJSONArray("production_companies");
+	
+	if(!countriesCheck.isNull(0)) {
+		Locale productionCountries = new Locale("ko", (String)(movieDetail.getJSONArray("production_countries").getJSONObject(0).get("iso_3166_1"))); // 제작 국가
+		productionCountry = productionCountries.getDisplayCountry();
+	}
+	if(!countriesCheck.isNull(0)) {
+		productionCompany = (String)movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name"); // 제작사
+	}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>영화 상세 페이지</title>
+<title><%= m.getTitle() %>의 상세정보</title>
 <style>
  	.mylist{
  		color:white;
@@ -136,7 +138,7 @@
 				<td colspan="5">
 					<br>
 					<h4 style="font-weight: bold;">제작국가</h4>
-					<h5><%= productionCountries.getDisplayCountry() %></h5>
+					<h5><%= productionCountry %></h5>
 					<br>
 				</td>
 			</tr>
@@ -144,7 +146,7 @@
 				<td colspan="5">
 					<br>
 					<h4 style="font-weight: bold;">제작사</h4>
-					<h5><%= productionCompanies %></h5>
+					<h5><%= productionCompany %></h5>
 					<br>
 				</td>
 			</tr>
@@ -159,7 +161,7 @@
 						</h4>
 						<% } else { %>
 						</h4>
-						<h5>없음</h5>
+						<h5>확인 불가</h5>
 					<% } %>
 					
 					<br>

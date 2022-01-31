@@ -40,13 +40,13 @@ public class MovieDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 쿼리스트링 request 값 뽑기
-		int memberNo = 0;
-		
-		if(request.getSession().getAttribute("loginUser") != null) {
-			memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo(); // 회원 번호
-		}
-		
+		int memberNo = 0; // 회원 번호
 		int movieNo = Integer.parseInt(request.getParameter("movieNo")); // 영화 번호
+		
+		// 로그인 여부 확인
+		if(request.getSession().getAttribute("loginUser") != null) {
+			memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		}
 		
 		// 해당 영화 DB 정보 가져오기
 		Movie m = new MovieService().selectMovieDetail(movieNo);
@@ -54,14 +54,21 @@ public class MovieDetailController extends HttpServlet {
 		// TMDB 해당 영화 상세정보 가져오기
 		JSONObject movieDetail = getMovieDetail(m.getMovieId());
 		
-		// 해당 영화 리뷰 정보 받아오기
-		ArrayList<Review> list = new ReviewService().selectMovieReview(memberNo, movieNo);
+		// 로그인 여부에 따른 해당 영화 리뷰 정보 받아오기
+		ArrayList<Review> list = new ArrayList<>();
+		
+		if(memberNo == 0) { // 로그아웃
+			list = new ReviewService().selectMovieReviewLogout(movieNo);
+		} else { // 로그인
+			list = new ReviewService().selectMovieReviewLogin(memberNo, movieNo);
+		}
 		
 		// 값 담기
 		request.setAttribute("m", m);
 		request.setAttribute("movieDetail", movieDetail);
 		request.setAttribute("list", list);
 		
+		// 값  넘기기
 		request.getRequestDispatcher("views/movie/movieDetailView.jsp").forward(request, response);
 		
 	}

@@ -123,19 +123,61 @@ public class ReviewDao {
 	}
 	
 	/**
-	 * 해당 영화의 리뷰 정보 받아오기
+	 * 해당 영화의 리뷰 정보 받아오기 (로그아웃 유저)
 	 * @param conn
+	 * @param memberNo
 	 * @param movieNo
-	 * @param movieNo2 
 	 * @return
 	 */
-	public ArrayList<Review> selectMovieReview(Connection conn, int memberNo, int movieNo) {
+	public ArrayList<Review> selectMovieReviewLogout(Connection conn, int movieNo) {
 		
 		ArrayList<Review> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectMovieReview");
+		String sql = prop.getProperty("selectMovieReviewLogout");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, movieNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(rset.getInt("REVIEW_NO"),
+								    rset.getString("NICKNAME"),
+								    rset.getString("REVIEW_CONTENT"),
+								    rset.getDate("CREATE_DATE"),
+								    rset.getInt("LIKES")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+
+	/**
+	 * 해당 영화의 리뷰 정보 받아오기 (로그인 유저)
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public ArrayList<Review> selectMovieReviewLogin(Connection conn, int memberNo, int movieNo) {
+		
+		ArrayList<Review> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMovieReviewLogin");
 		
 		try {
 			

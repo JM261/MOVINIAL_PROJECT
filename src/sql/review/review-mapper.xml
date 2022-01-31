@@ -28,8 +28,23 @@
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<!-- 해당 영화의 리뷰 정보 받아오기 -->
-	<entry key="selectMovieReview">
+	<!-- 해당 영화의 리뷰 정보 받아오기 (로그아웃 유저) -->
+	<entry key="selectMovieReviewLogout">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES
+		                  FROM (SELECT *
+		                          FROM VW_REVIEW_PUBLIC)
+		                 WHERE REF_MNO = ?
+		                 ORDER
+		                    BY CREATE_DATE DESC) A)
+		 WHERE RNUM &lt;= 5
+	</entry>
+	
+	<!-- 해당 영화의 리뷰 정보 받아오기 (로그인 유저) -->
+	<entry key="selectMovieReviewLogin">
 		SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*

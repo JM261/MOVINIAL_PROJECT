@@ -46,18 +46,36 @@ public class ReviewService {
 		return list;
 		
 	}
-
+	
 	/**
-	 * 해당 영화의 리뷰 정보 받아오기
+	 * 해당 영화의 리뷰 정보 받아오기 (로그아웃 유저)
+	 * @param memberNo
 	 * @param movieNo
-	 * @param movieNo2 
 	 * @return
 	 */
-	public ArrayList<Review> selectMovieReview(int memberNo, int movieNo) {
+	public ArrayList<Review> selectMovieReviewLogout(int movieNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Review> list = new ReviewDao().selectMovieReview(conn, memberNo, movieNo);
+		ArrayList<Review> list = new ReviewDao().selectMovieReviewLogout(conn, movieNo);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+
+	/**
+	 * 해당 영화의 리뷰 정보 받아오기 (로그인 유저)
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public ArrayList<Review> selectMovieReviewLogin(int memberNo, int movieNo) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Review> list = new ReviewDao().selectMovieReviewLogin(conn, memberNo, movieNo);
 		
 		close(conn);
 		
