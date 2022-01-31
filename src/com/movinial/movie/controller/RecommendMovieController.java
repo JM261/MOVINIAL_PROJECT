@@ -37,6 +37,7 @@ public class RecommendMovieController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo(); // 회원 번호
+		
 		ArrayList<Movie> list = new ArrayList<>(); // 추천 영화 리스트
 		ArrayList<Movie> recommendList = new ArrayList<Movie>(); // 포스터 URL 처리 후 추천 영화 리스트
 		

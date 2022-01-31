@@ -317,7 +317,23 @@ public class MovieService {
 		return result;
 		
 	}
-
+	
+	/**
+	 * 선호 장르 없는 회원 추천 영화 가져오기 (5개)
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovieRandom() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().selectMemberRecommendMovieRandom(conn);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+	
 	/**
 	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
 	 * @param regExpGenre
@@ -353,6 +369,9 @@ public class MovieService {
 		return m;
 		
 	}
+
+
+
 
 	
 	

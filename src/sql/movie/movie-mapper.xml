@@ -119,6 +119,15 @@
 		WHERE MEMBER_NO = ?
 	</entry>
 	
+	<!-- 선호 장르 없는 회원 추천 영화 가져오기 (5개) -->
+	<entry key="selectMemberRecommendMovieRandom">
+		SELECT *
+		  FROM (SELECT MOVIE_NO, MOVIE_ID, TITLE, POSTER_PATH
+		          FROM MOVIE
+		         ORDER BY DBMS_RANDOM.RANDOM)
+		 WHERE ROWNUM &lt;= 5
+	</entry>
+	
 	<!-- 회원 선호 장르 기반 추천 영화 가져오기 (5개) -->
 	<entry key="selectMemberRecommendMovie">
 		SELECT *
