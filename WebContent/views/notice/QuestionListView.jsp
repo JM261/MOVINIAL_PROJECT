@@ -21,65 +21,77 @@
 <meta charset="UTF-8">
 <title>나의 문의 내역</title>
 <style>
-.outer{
-    border : 1px solid #bcbcbc;
-    width: 1100px;
-    height: 850px;
-     margin: auto;
-    margin-bottom: 30px;
-
-}
-.list-area{
-    border: 1px solid #bcbcbc; 
-    font-size: 22px;  
-    width: 1000px;
-    margin : auto;
-    text-align: center;
-    
-}
-table{
-	border-bottom : 1px solid #bcbcbc;
-}
-
-.btn-area{
-    width : 800px;
-    height: 80px;
-    align: center;
-}
-.btn-area>a{
-    color:black;
-    font-size: 25px;
-    margin-left: 50px;
-    text-decoration: none;
-    text-align:center;
-
-}
-#titleDate:hover{
-    cursor: pointer;
-    background: #e6e6e6;
-}
-
-td{
-    height: 55px;
-}
-
-#h2{
-    font-weight: bolder;
-}
-
-#qnaNo{
-	display:none;
-}
-#reply{
-	color:rgb(105, 105, 105);
+	.outer{
+	    border : 1px solid #bcbcbc;
+	    width: 1100px;
+	    height: 850px;
+	     margin: auto;
+	    margin-bottom: 30px;
+	
 	}
-tr td{
-	border-bottom: 1px solid #bcbcbc; 
-}  
+	.list-area{
+	    border: 1px solid #bcbcbc; 
+	    font-size: 22px;  
+	    width: 1000px;
+	    margin : auto;
+	    text-align: center;
+	    
+	}
+	table{
+		border-bottom : 1px solid #bcbcbc;
+	}
+	
+	.btn-area{
+	    width : 800px;
+	    height: 80px;
+	    align: center;
+	}
+	.btn-area>a{
+	    color:white;
+	    font-size: 25px;
+	    margin-left: 50px;
+	    text-decoration: none;
+	    text-align:center;
+	
+	}
+	#titleDate:hover{
+	    cursor: pointer;
+	    background: lightgray;
+	}
+	
+	td{
+	    height: 55px;
+	}
+	
+	#h2{
+	    font-weight: bolder;
+	}
+	
+	#qnaNo{
+		display:none;
+	}
+	#reply{
+		color:rgb(105, 105, 105);
+		}
+	tr td{
+		border-bottom: 1px solid #bcbcbc; 
+	}  
+	
+	#Qwriter{
+		display:none;
+	}
 
-#Qwriter{
-	display:none;
-}
+	.pagingation{
+		border:none;
+	}
+	
+	.page-item{
+		border:none;
+		color : black;
+		background-color:white;
+		width:30px;
+	}
+	
 
 </style>
 
@@ -92,12 +104,12 @@ tr td{
         <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
-            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary" style="background: black;">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <%if(loginUser != null){ %>
-            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary" style="background: black;">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">나의 문의내역</a>
             <%} %>
         </div>
         
@@ -125,11 +137,11 @@ tr td{
 					
 		                <tr id="titleDate">
 		                	<td id="qnaNo"><%= q.getQnaNo() %></td>
-		                    <td width="210">[ <%= q.getQnaWriter() %> ]</td> <!-- 카테고리.... 일단하고.. 나중에 수정  -->
-		                    <td id="Qwriter"><%=q.getCategory() %></td> <!-- 작성자 ..... -->
+		                    <td width="210">[ <%= q.getCategory() %> ]</td> 
+		                    <td id="Qwriter"><%=q.getQnaWriter() %></td> 
 		                	<td width="450"><%= q.getQnaTitle() %></td>   
 		                    <td width="150"><%= q.getCreateDate() %></td>
-		                    <td width="90"><a href="" id="reply">답변확인</a></td>
+		                    <td width="90"><a href="<%=contextPath%>/questionDetail.no?qno=<%= q.getQnaNo() %>" id="reply">답변확인</a></td>
 		                </tr>	                	
 		                <%} %>
                 	<%} %>
@@ -146,7 +158,7 @@ tr td{
         
             $(function(){
                 $(".list-area>tbody>tr").click(function(){
-                    // /jsp/ditail.bo?bno=X
+                    // /jsp/ditail.bo?qno=X
 
                     location.href = "<%=contextPath%>/questionDetail.no?qno="+ $(this).children().eq(0).text();             
                 })
@@ -162,26 +174,27 @@ tr td{
 
         
         <!-- 페이징바 -->
-        <div class = "paging-area" align="center">
+        <div class = "paging-area pagingation" align="center">
            <!-- 페이징 버튼 <를 담당 : 이전페이지로 이동 -->
             <%if(currentPage != 1){ %>
-            	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+            	<button class="page-item" onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
           	<%} %>
           	
           <% for(int i = startPage; i <= endPage; i++){ %>
             <%if(i != currentPage){ %>
             						<!-- http://localhost:8001/jsp/list.bo?currentPage=XX -->
-            	<button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= i %>'"><%= i %></button>
+            	<button class="page-item" onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= i %>'"><%= i %></button>
             <%}else{ %>
-            	<button disabled><%= i %></button>
+            	<button class="page-item" style="color:coral"><%= i %></button>
           	<%} %>
           <%} %>  
           
           <!-- 페이징바에서 > 를 담당 : 다음페이지 이동 -->
           <%if(currentPage != maxPage){ %>
-        	   <button onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+        	   <button class="page-item" onclick="location.href='<%= contextPath %>/questionList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
 		  <%} %>
         </div>
+        
  </div>
 
 

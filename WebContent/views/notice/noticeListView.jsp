@@ -43,7 +43,7 @@
  
 }
 .btn-area>a{
-    color:black;
+    color:white;
     font-size: 25px;
     margin-left: 50px;
     text-decoration: none;
@@ -53,7 +53,7 @@
 
 #titleDate:hover{
     cursor: pointer;
-    background: #e6e6e6;
+    background: lightgray;
 }
 
 .noticeTitle{
@@ -81,7 +81,16 @@ td{
     float: right;
     margin-right: 100px;
 }
-
+.pagingation{
+	border:none;
+}
+	
+.page-item{
+	border:none;
+	color : black;
+	background-color:white;
+	width:30px;
+}
 </style>
 
 </head>
@@ -93,17 +102,17 @@ td{
         <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
-            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary" style="background: black;">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <% if(loginUser != null && !loginUser.getMemberId().equals("admin")){ %>
-            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary" style="background: black;">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">나의 문의내역</a>
             <%} %>
             
             <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
-            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary">문의내역</a>  <!-- 문의 내역 조회하기  -->
-                <a href="<%=contextPath%>/enrollForm.no" id="noticeInsertbtn" class="btn btn-sm btn-secondary">추가</a> <!-- 추가 -->
+            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">문의내역</a>  <!-- 문의 내역 조회하기  -->
+                <a href="<%=contextPath%>/enrollForm.no" id="noticeInsertbtn" class="btn btn-sm btn-secondary" style="background: black;">공지사항 추가</a> <!-- 추가 -->
             <% } %>
             
         </div>
@@ -126,7 +135,7 @@ td{
 					<% for(Notice n: list) { %>
 		                <tr id="titleDate">
 		                	<td class="noticeNo"><%= n.getNoticeNo() %></td>		                
-		                    <td class="noticeTitle"><%= n.getNoticeTitle() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? -->
+		                    <td class="noticeTitle"><%= n.getNoticeTitle() %></td>  
 		                    <td class="noticeDate"><%= n.getCreateDate() %></td>
 		                </tr>                       
                 	<%} %>
@@ -162,24 +171,24 @@ td{
         <br><br>
       
         <!-- 페이징바 -->
-        <div class = "paging-area" align="center">
+        <div class = "paging-area pagingation" align="center">
            <!-- 페이징 버튼 <를 담당 : 이전페이지로 이동 -->
             <%if(currentPage != 1){ %>
-            	<button onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+            	<button class="page-item" onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= currentPage - 1 %>'">&lt;</button>
           	<%} %>
           	
           <% for(int i = startPage; i <= endPage; i++){ %>
             <%if(i != currentPage){ %>
             						<!-- http://localhost:8001/jsp/list.bo?currentPage=XX -->
-            	<button onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= i %>'"><%= i %></button>
+            	<button class="page-item" onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= i %>'"><%= i %></button>
             <%}else{ %>
-            	<button disabled><%= i %></button>
+            	<button class="page-item" style="color:coral"><%= i %></button>
           	<%} %>
           <%} %>  
           
           <!-- 페이징바에서 > 를 담당 : 다음페이지 이동 -->
           <%if(currentPage != maxPage){ %>
-        	   <button onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+        	   <button class="page-item" onclick="location.href='<%= contextPath %>/noticeList.no?currentPage=<%= currentPage + 1 %>'">&gt;</button>
 		  <%} %>
         </div>  
        

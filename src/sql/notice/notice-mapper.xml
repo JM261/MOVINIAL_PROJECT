@@ -9,7 +9,8 @@
 	
 	<entry key="selectListCount">
 		SELECT COUNT(*) COUNT
-		  FROM QUESTION Q  
+		  FROM QUESTION Q 
+         
 		 WHERE Q.STATUS = 'Y'
            AND MEMBER_NO = ?
 	</entry>
@@ -142,5 +143,33 @@
 		
 	</entry>
 	
+	<entry key="selectQuestionManagement">
+		SELECT QNA_NO, CATEGORY_NAME, QNA_TITLE, QNA_CONTENT, MEMBER_ID, MEMBER_NO,CREATE_DATE
+		  FROM QUESTION Q
+		  LEFT JOIN CATEGORY USING(CATEGORY_NO)
+		  JOIN MEMBER ON(QNA_WRITER = MEMBER_NO)
+		 WHERE QNA_NO = ?
+		   AND Q.STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectQfileManagement">
+		SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
+		  FROM Q_FILE
+		 WHERE REF_QNO = ?
+	</entry>
+	
+	<entry key="selectAnswerList">
+	SELECT ANSWER_NO, ANSWER_CONTENT, MEMBER_ID, TO_CHAR(CREATE_DATE, 'YY/MM/DD') CREATE_DATE
+	FROM ANSWER
+	JOIN MEMBER ON (ANSWER_WRITER = MEMBER_NO)
+	WHERE REF_QNO = ?
+	ORDER BY CREATE_DATE DESC
+	
+	</entry>
+	
+	<entry key="insertAnswer">
+	INSERT INTO ANSWER(ANSWER_NO,REF_QNO, ANSWER_WRITER, ANSWER_CONTENT)
+		VALUES (SEQ_QNO.NEXTVAL, ?,?,?) 
+	</entry>
 	
 </properties>
