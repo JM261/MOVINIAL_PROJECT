@@ -110,6 +110,36 @@
 	<!-- 영화 봤어요 끝 -->
 	
 	
+	<!-- 회원 추천 영화 시작 -->
 	
-
+	<!-- 회원 선호 장르 가져오기 -->
+	<entry key="selectMemberPreferGenre">
+		SELECT PREFERGENRE
+		FROM MEMBER
+		WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 회원 선호 장르 기반 추천 영화 가져오기 (5개) -->
+	<entry key="selectMemberRecommendMovie">
+		SELECT *
+		  FROM (SELECT MOVIE_NO, MOVIE_ID, TITLE, POSTER_PATH
+		          FROM MOVIE
+		         WHERE REGEXP_LIKE(GENRE_IDS, ?)
+		         ORDER BY DBMS_RANDOM.RANDOM)
+		 WHERE ROWNUM &lt;= 5
+	</entry>
+	
+	<!-- 회원 추천 영화 끝 -->
+	
+	
+	<!-- 메인화면 영화 배경이미지 가져오기 -->
+	<entry key="selectMaingBackgroundImage">
+		SELECT *
+		  FROM (SELECT MOVIE_NO, MOVIE_ID, BACKDROP_PATH
+		          FROM MOVIE
+		         WHERE BACKDROP_PATH IS NOT NULL
+		         ORDER BY DBMS_RANDOM.RANDOM)
+		 WHERE ROWNUM = 1
+	</entry>
+	
 </properties>
