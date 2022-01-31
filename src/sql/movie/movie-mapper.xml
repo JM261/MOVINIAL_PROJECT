@@ -132,4 +132,14 @@
 	<!-- 회원 추천 영화 끝 -->
 	
 	
+	<!-- 메인화면 영화 배경이미지 가져오기 -->
+	<entry key="selectMaingBackgroundImage">
+		SELECT *
+		  FROM (SELECT MOVIE_NO, MOVIE_ID, BACKDROP_PATH
+		          FROM MOVIE
+		         WHERE BACKDROP_PATH IS NOT NULL
+		         ORDER BY DBMS_RANDOM.RANDOM)
+		 WHERE ROWNUM = 1
+	</entry>
+	
 </properties>

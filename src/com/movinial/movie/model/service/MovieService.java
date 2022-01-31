@@ -339,7 +339,22 @@ public class MovieService {
 	// ---------- 회원 추천 영화 끝 ----------
 
 	
-	
+	/**
+	 * 메인화면 영화 배경이미지 가져오기
+	 * @return
+	 */
+	public Movie selectMaingBackgroundImage() {
+		
+		Connection conn = getConnection();
+		
+		Movie m = new MovieDao().selectMaingBackgroundImage(conn);
+		
+		close(conn);
+		
+		return m;
+		
+	}
+
 	
 	
 }

@@ -593,5 +593,39 @@ public class MovieDao {
 	
 	// ---------- 회원 추천 영화 끝 ----------
 	
+
+	/**
+	 * 메인화면 영화 배경이미지 가져오기
+	 * @param conn
+	 * @return
+	 */
+	public Movie selectMaingBackgroundImage(Connection conn) {
+		
+		Movie m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMaingBackgroundImage");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Movie(rset.getInt("MOVIE_NO"), rset.getInt("MOVIE_ID"), rset.getString("BACKDROP_PATH"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+		
+	}
 	
 }

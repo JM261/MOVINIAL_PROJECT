@@ -22,6 +22,10 @@
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
+        
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
       }
 
       #content1 {
@@ -172,17 +176,40 @@
   </head>
   <body>
   
- <%@ include file="/views/common/header.jsp" %> 
+ <%@ include file="/views/common/header.jsp" %>
+
+	<%-- 메인페이지 영화 배경이미지 출력 --%>
+	 <script>
+	  $(function(){
+	  
+	    $.ajax({
+	      url: "mainBackground.mo",
+	      success: function(m) {
+	    	
+	    	// 영화 배경이미지 및 그라데이션 값 변수로 설정
+	    	var backgroundCss = "linear-gradient(rgba(24, 24, 24, 0), rgba(24, 24, 24, 0.534)), url(" + m.backdropPath + ")";
+
+	        $("#content0").css("background-image", backgroundCss);
+	        
+	        // 배경이미지 클릭하면 영화 상세 페이지 넘어가기
+	        $("#content0").click(function() {
+	          location.href = "<%= contextPath %>/detail.mo?movieNo=" + m.movieNo;
+	        })
+	        
+	      }
+	    })
+	    
+	  })
+	</script>
  
+      <!-- 배경화면 부분 -->
       <div id="content0">
-        <!-- 이미지 포스터? -->
-        <!--<a href=""><img src="" alt=""></a>-->
       </div>
-    
-      <!-- 관리자가 아닌 로그인한 회원만 보이는 부분 -->
-      <!-- 회원 추천 영화 -->
+
+      <%-- 관리자가 아닌 로그인한 회원만 보이는 부분 --%>
+      <%-- 회원 추천 영화 --%>
       <% if(loginUser != null && loginUser.getMemberType().equals("U")) { %>
-      	<script>
+    <script>
 			$(function(){
 			
 				$.ajax({
@@ -191,16 +218,21 @@
 						
 						var result = "";
 						
+						// 영화 포스터 뿌려주기
 						for(var i in recommendList) {
 							result += "<img class='movie0' src='" + recommendList[i].posterPath + "' alt='" + recommendList[i].title + "'><input type='hidden' name='movieNo' value='" + recommendList[i].movieNo + "'>";
 						}
 
-						$('#content1').html(result);
+						$("#content1").html(result);
 						
-						// 요소 클릭하면 영화 상세 페이지 넘기기
+						// 영화 포스터 마우스 포인터 추가
+						$(".movie0").css("cursor", "pointer");
+						
+						// 영화 포스터 클릭하면 영화 상세 페이지 넘기기
 						$('.movie0').click(function() {
 							location.href = "<%= contextPath %>/detail.mo?movieNo=" + $(this).next().val();
 						})
+						
 					}
 				})
 				

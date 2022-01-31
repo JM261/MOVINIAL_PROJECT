@@ -18,16 +18,27 @@ public class Movie {
 	private int movieLikes; 			// MOVIE_LIKES	NUMBER
 	private int movieSeen; 				// MOVIE_SEEN	NUMBER
 	
-	
 	// 생성자
 	// mainPage 최신 영화 포스터 이미지경로, 영화번호
-	
 	public Movie(int movieNo, String posterPath) {
 		super();
 		this.movieNo = movieNo;
 		this.posterPath = posterPath;
 	}
 	
+	/**
+	 * 메인화면 영화 배경이미지 가져오기
+	 * @param movieNo
+	 * @param movieId
+	 * @param backdropPath
+	 */
+	public Movie(int movieNo, int movieId, String backdropPath) {
+		super();
+		this.movieNo = movieNo;
+		this.movieId = movieId;
+		this.backdropPath = backdropPath;
+	}
+
 	/**
 	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
 	 * @param movieNo
