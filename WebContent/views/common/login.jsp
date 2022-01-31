@@ -82,11 +82,12 @@
 
       </div>
     </div>
-  </div>
 
 
  	
         <%@ include file="../common/footer.jsp" %>
+          </div>
+        
     </div>
 
 <script>
@@ -106,7 +107,6 @@
 			
 		}
 	</script>
-
 
 </body>
 </html>

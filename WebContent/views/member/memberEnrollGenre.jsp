@@ -176,6 +176,11 @@
    <p> 선호장르는 최대 3가지를 선택할 수 있습니다	<p>
     
     </div>
+    
+            <div class="btn-area" >
+       		<input type="button" value=" < 이전" >
+ 			<input type="button" class="" value="회원가입 > " onclick="fnSubmit();">
+        </div>
 
   <br>
  <script type="text/javascript">
@@ -215,8 +220,8 @@
         	<% for(MemberGenre g: memberGenreList) { %>
         <div id="box3"> <!-- 영화포스터 띄울 화면... -->
             <div id="box3_1">
-            	<div id="box3_check"><p><input type="checkbox" style='zoom:2.0;' value="<%= g.getGenreName() %>" name="genreId"></p></div> <!-- 표시 여부 -->
-                <div id="box3_title"><input type="text" value="<%= g.getGenreName() %>"></input></div> <!-- 리스트 타이틀 -->
+            	<div id="box3_check"><p><input type="checkbox" style='zoom:2.0;' value="<%= g.getGenreId() %>" name="genreId"></p></div> <!-- 표시 여부 -->
+                <div id="box3_title"><input type="text" value="<%= g.getGenreName() %>" readonly></input></div> <!-- 리스트 타이틀 -->
             </div>
             <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
                 <% for(MemberGenre p : memberGenreMovieList) { %>
@@ -233,7 +238,6 @@
         <div class="btn-area" >
        		<input type="button" value=" < 이전" >
  			<input type="button" class="" value="회원가입 > " onclick="fnSubmit();">
-            <input type="submit" class="" value="건너 뛰기 >> ">
         </div>
     </div>
         <td><input type="hidden" name="memberId" maxlength="12" id="memberId" value="<%= memberId %>"></td> 

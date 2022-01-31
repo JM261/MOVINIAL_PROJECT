@@ -76,7 +76,6 @@ public class MemberService {
 
 		close(conn);
 		
-		System.out.println("서비스단에서의 m" + m);
 		
 		return m;
 	}

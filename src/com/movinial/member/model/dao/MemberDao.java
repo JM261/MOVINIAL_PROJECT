@@ -103,7 +103,6 @@ public class MemberDao {
 	}
 	public int insertMemberLikeCommunity(Connection conn, Member m) { 
 		
-		System.out.println("dao커뮤니티에서 m" + m);
 		int result = 0;
 
 		PreparedStatement pstmt = null;
@@ -127,7 +126,6 @@ public class MemberDao {
 	}
 	public int insertMemberLikeMovie(Connection conn, Member m) {
 
-		System.out.println("dao라이크무비에서 m" + m);
 
 		int result = 0;
 
@@ -152,7 +150,6 @@ public class MemberDao {
 	}
 	public int insertMemberLikeReview(Connection conn, Member m) {
 
-		System.out.println("dao라이크리뷰에서 m" + m);
 
 		
 		int result = 0;
@@ -309,7 +306,6 @@ public class MemberDao {
 		} finally {
 			close(pstmt);
 		}
-			System.out.println("DAO단에서의 m" + m);
 			return m;
 		}
 	
@@ -405,7 +401,6 @@ public class MemberDao {
 
 			if (rset.next()) {
 				memberId = (String)rset.getString("MEMBER_ID");
-				System.out.println(memberId);
 			}
 
 		} catch (SQLException e) {
@@ -432,7 +427,7 @@ public class MemberDao {
 					rset = pstmt.executeQuery();
 					
 					if(rset.next()) {
-						count = rset.getInt("COUNT(*)");	
+						count = rset.getInt("COUNT");	
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

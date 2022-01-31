@@ -49,7 +49,7 @@
 									<table width="380px" height="70px" align="center" border="0" style="font-size: 16px;">
 										<tr>
 											<td>이름</td>
-											<td><input type="text" name="memberName" id= "memberId"></td>
+											<td><input type="text" name="memberName" id= "memberId" required></td>
 										</tr>
 										<br>
 										<tr>
@@ -59,8 +59,8 @@
 													<option value="011">011</option>
 													<option value="016">016</option>
 													<option value="017">017</option>
-												</select> - <input type="text" name="phone2" style="width: 70px">
-														- <input type="text" name="phone3" style="width: 70px"></td>
+												</select> - <input type="text" name="phone2" style="width: 70px" required>
+														- <input type="text" name="phone3" style="width: 70px" required></td>
 										</tr>
 									</table>
 								</td>

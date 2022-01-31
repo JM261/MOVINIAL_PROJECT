@@ -205,6 +205,10 @@
                     , DEFAULT
                   )
 	</entry>
+	<entry key="idCheck">
+	SELECT COUNT(*) COUNT FROM MEMBER
+	WHERE MEMBER_ID = ?
+	</entry>
 	
 </properties>
 
