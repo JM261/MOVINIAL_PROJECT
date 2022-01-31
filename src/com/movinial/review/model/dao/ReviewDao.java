@@ -33,10 +33,11 @@ public class ReviewDao {
 		}
 		
 	}
-
+	
 	/**
 	 * 해당 영화의 공개된 리뷰의 총 개수
 	 * @param conn
+	 * @param movieNo
 	 * @return
 	 */
 	public int selectListCount(Connection conn, int movieNo) {
@@ -69,10 +70,11 @@ public class ReviewDao {
 		return listCount;
 		
 	}
-
+	
 	/**
 	 * 해당 영화 리뷰 상세보기 페이지 출력
 	 * @param conn
+	 * @param movieNo
 	 * @param pi
 	 * @return
 	 */
@@ -119,14 +121,15 @@ public class ReviewDao {
 		return list;
 		
 	}
-
+	
 	/**
 	 * 해당 영화의 리뷰 정보 받아오기
 	 * @param conn
-	 * @param reviewNum
+	 * @param movieNo
+	 * @param movieNo2 
 	 * @return
 	 */
-	public ArrayList<Review> selectMovieReview(Connection conn, int movieNo) {
+	public ArrayList<Review> selectMovieReview(Connection conn, int memberNo, int movieNo) {
 		
 		ArrayList<Review> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
@@ -138,7 +141,8 @@ public class ReviewDao {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, movieNo);
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, movieNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -161,8 +165,6 @@ public class ReviewDao {
 		
 	}
 	
-	
-
 	/**
 	 * 리뷰 상세보기 페이지에서 리뷰 작성
 	 * @param conn

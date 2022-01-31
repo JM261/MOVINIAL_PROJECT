@@ -35,14 +35,16 @@
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
 		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES
-		                  FROM REVIEW R
-		                  JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
-		                 WHERE PUBLIC_STATUS = 'Y'
-		                   AND REPORT_COUNT &lt;= 15
-		                   AND REF_MNO = ?
+		                  FROM (SELECT *
+		                          FROM VW_REVIEW_PUBLIC
+		                        UNION
+		                        (SELECT *
+		                           FROM VW_REVIEW_PRIVATE
+		                          WHERE REVIEW_WRITER = ?))
+		                 WHERE REF_MNO = ?
 		                 ORDER
 		                    BY CREATE_DATE DESC) A)
-		WHERE RNUM &lt;= 5
+		 WHERE RNUM &lt;= 5
 	</entry>
 	
 	<!-- 리뷰 상세보기 페이지에서 리뷰 작성 -->

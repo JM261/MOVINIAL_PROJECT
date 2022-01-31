@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.movinial.member.model.vo.Member;
 import com.movinial.movie.model.service.MovieService;
 import com.movinial.movie.model.vo.Movie;
 import com.movinial.review.model.service.ReviewService;
@@ -39,7 +40,13 @@ public class MovieDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// 쿼리스트링 request 값 뽑기
-		int movieNo = Integer.parseInt(request.getParameter("movieNo"));
+		int memberNo = 0;
+		
+		if(request.getSession().getAttribute("loginUser") != null) {
+			memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo(); // 회원 번호
+		}
+		
+		int movieNo = Integer.parseInt(request.getParameter("movieNo")); // 영화 번호
 		
 		// 해당 영화 DB 정보 가져오기
 		Movie m = new MovieService().selectMovieDetail(movieNo);
@@ -48,7 +55,7 @@ public class MovieDetailController extends HttpServlet {
 		JSONObject movieDetail = getMovieDetail(m.getMovieId());
 		
 		// 해당 영화 리뷰 정보 받아오기
-		ArrayList<Review> list = new ReviewService().selectMovieReview(movieNo);
+		ArrayList<Review> list = new ReviewService().selectMovieReview(memberNo, movieNo);
 		
 		// 값 담기
 		request.setAttribute("m", m);

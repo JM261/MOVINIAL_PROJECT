@@ -14,7 +14,8 @@ public class ReviewService {
 	
 	/**
 	 * 해당 영화의 공개된 리뷰의 총 개수
-	 * @return int 총 개수
+	 * @param movieNo
+	 * @return
 	 */
 	public int selectListCount(int movieNo) {
 		
@@ -27,9 +28,10 @@ public class ReviewService {
 		return listCount;
 		
 	}
-
+	
 	/**
 	 * 해당 영화 리뷰 상세보기 페이지 출력
+	 * @param movieNo
 	 * @param pi
 	 * @return
 	 */
@@ -47,21 +49,22 @@ public class ReviewService {
 
 	/**
 	 * 해당 영화의 리뷰 정보 받아오기
-	 * @param reviewNum
+	 * @param movieNo
+	 * @param movieNo2 
 	 * @return
 	 */
-	public ArrayList<Review> selectMovieReview(int movieNo) {
+	public ArrayList<Review> selectMovieReview(int memberNo, int movieNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Review> list = new ReviewDao().selectMovieReview(conn, movieNo);
+		ArrayList<Review> list = new ReviewDao().selectMovieReview(conn, memberNo, movieNo);
 		
 		close(conn);
 		
 		return list;
 		
 	}
-
+	
 	/**
 	 * 리뷰 상세보기 페이지에서 리뷰 작성
 	 * @param memberNo

@@ -5,7 +5,6 @@ import static com.movinial.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.movinial.community.model.dao.CommunityDao;
 import com.movinial.member.model.vo.LikesMovie;
 import com.movinial.movie.model.dao.MovieDao;
 import com.movinial.movie.model.vo.Movie;

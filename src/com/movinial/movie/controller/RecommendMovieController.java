@@ -36,7 +36,7 @@ public class RecommendMovieController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo(); // 회원 번호
 		
 		// 회원 선호 장르 가져오기
 		String result = new MovieService().selectMemberPreferGenre(memberNo);
