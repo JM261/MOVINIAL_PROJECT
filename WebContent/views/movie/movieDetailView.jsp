@@ -206,15 +206,20 @@
 						
 						// 봤어요를 눌렀는지 확인
 						if(lm.seenMovie != null) { 
+							
 							// 해당 회원의 '이영화 봤어요' 영화 번호 뽑아내기 (String[])
 							var seenMovie = lm.seenMovie.split(',');
+							
+							// 영화번호가 이미 있는지 확인
+							if(seenMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
+								iDontSeenIt();
+							}
+							else { // 없다면, 영화 번호 삽입
+								iSeenIt();
+							}
+							
 						}
-						
-						// 영화번호가 이미 있는지 확인
-						if(seenMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
-							iDontSeenIt();
-						}
-						else { // 없다면, 영화 번호 삽입
+						else { // null일 경우
 							iSeenIt();
 						}
 						
@@ -236,7 +241,7 @@
 					},
 					success: function(seen) {
 						
-						if(seen > 0){ // 성공 시
+						if(seen > 0 && movieSeenValue >= 0){ // 성공 시, 현재 봤어요 값이 0보다 크거나 같다면
 							movieSeenValue++; // 봤어요 값 + 1
 							$(".movie-seen-btn").children().eq(1).text(movieSeenValue);
 						}
@@ -260,7 +265,7 @@
 					},
 					success: function(dontSeen) {
 						
-						if(dontSeen > 0){
+						if(dontSeen > 0 && movieSeenValue > 0) { // 성공 시, 현재 봤어요 값이 0보다 크다면
 							movieSeenValue--; // 봤어요 값 - 1
 							$(".movie-seen-btn").children().eq(1).text(movieSeenValue);
 						}
@@ -286,15 +291,19 @@
 						
 						// 좋아요를 눌렀는지 확인
 						if(lm.likesMovie != null) { 
+							
 							// 해당 회원의 '좋아요' 영화 번호 뽑아내기 (String[])
 							var likesMovie = lm.likesMovie.split(',');
+							
+							// 영화번호가 이미 있는지 확인
+							if(likesMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
+								iDontLikeIt();
+							}
+							else { // 없다면, 영화 번호 삽입
+								iLikeIt();
+							}
 						}
-						
-						// 영화번호가 이미 있는지 확인
-						if(likesMovie.indexOf(movieNo) != -1) { // 있다면, 영화 번호 삭제
-							iDontLikeIt();
-						}
-						else { // 없다면, 영화 번호 삽입
+						else { // null일 경우
 							iLikeIt();
 						}
 						
@@ -316,8 +325,8 @@
 					},
 					success: function(like) {
 						
-						if(like > 0){ // 성공 시
-							movieLikesValue++; // 봤어요 값 + 1
+						if(like > 0 && movieLikesValue >= 0) { // 성공 시, 현재 좋아요 값이 0보다 크거나 같다면
+							movieLikesValue++; // 좋아요 값 + 1
 							$(".movie-likes-btn").children().eq(1).text(movieLikesValue);
 						}
 						
@@ -340,8 +349,8 @@
 					},
 					success: function(dislike) {
 						
-						if(dislike > 0){
-							movieLikesValue--; // 봤어요 값 - 1
+						if(dislike > 0 && movieLikesValue > 0) { // 성공 시, 현재 좋아요 값이 0보다 크다면
+							movieLikesValue--; // 좋아요 값 - 1
 							$(".movie-likes-btn").children().eq(1).text(movieLikesValue);
 						}
 						
@@ -455,16 +464,21 @@
 					success: function(lr) {
 						
 						// 좋아요를 눌렀는지 확인
-						if(lr.likesReview != null) { 
+						if(lr.likesReview != null) {
+							
 							// 해당 회원의 '좋아요' 리뷰 번호 뽑아내기 (String[])
 							var likesReview = lr.likesReview.split(',');
+							
+							// 리뷰번호가 이미 있는지 확인
+							if(likesReview.indexOf(reviewNo) != -1) { // 있다면, 리뷰 번호 삭제
+								iDontLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
+							}
+							else { // 없다면, 리뷰 번호 삽입
+								iLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
+							}
+							
 						}
-						
-						// 리뷰번호가 이미 있는지 확인
-						if(likesReview.indexOf(reviewNo) != -1) { // 있다면, 리뷰 번호 삭제
-							iDontLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
-						}
-						else { // 없다면, 리뷰 번호 삽입
+						else { // null일 경우
 							iLikeItReview(reviewNo, reviewLikesBtn, $reviewLikesValue);
 						}
 						
@@ -487,8 +501,8 @@
 					},
 					success: function(like) {
 						
-						if(like > 0){ // 성공 시
-							$reviewLikesValue++; // 좋아요 값 - 1
+						if(like > 0 && $reviewLikesValue >= 0){ // 성공 시, 현재 좋아요 값이 0보다 크거나 같다면
+							$reviewLikesValue++; // 좋아요 값 + 1
 							$(reviewLikesBtn).children().eq(1).text($reviewLikesValue);
 						}
 						
@@ -511,7 +525,7 @@
 					},
 					success: function(dislike) {
 						
-						if(dislike > 0){ // 성공 시
+						if(dislike > 0 && $reviewLikesValue > 0){ // 성공 시, 현재 좋아요 값이 0보다 크다면
 							$reviewLikesValue--; // 좋아요 값 - 1
 							$(reviewLikesBtn).children().eq(1).text($reviewLikesValue);
 						}
