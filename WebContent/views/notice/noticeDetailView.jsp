@@ -32,7 +32,7 @@
     align: center;
 }
 .btn-area>a{
-    color:black;
+    color:white;
     font-size: 25px;
     margin-left: 50px;
     text-decoration: none;
@@ -53,8 +53,8 @@
 td{
     height: 55px;
 }
-h2{
-    font-weight: bold;
+#h2{
+    font-weight: bolder;
 }
 #noticeContent{
     height:400px;
@@ -66,6 +66,10 @@ h2{
 	font-size:22px;
 }
 
+.qbtn{
+	height : 50px;
+	font-size:22px;
+	}
 
 </style>
 
@@ -75,19 +79,19 @@ h2{
 
 	<div class="outer">
         <br>
-        <h2 align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
+        <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
-            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary" style="background: black;">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <% if(loginUser != null && !loginUser.getMemberId().equals("admin")){ %>
-            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary" style="background: black;">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">나의 문의내역</a>
             <%} %>
             
             <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
-            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary">문의내역</a>  <!-- 문의 내역 조회하기  -->
+            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">문의내역</a>  <!-- 문의 내역 조회하기  -->
             <% } %>
             
         </div>
@@ -101,22 +105,22 @@ h2{
             </thead> -->
             <tbody>
 		        <tr>		                
-		            <td id="noticeTitle"><%= n.getNoticeTitle() %></td>  <!-- n.getNoticeTitle  왜 제목이랑.. 내용이... 바뀌어서 나오는거지? 일단하고 나중에 고치기☆★  -->
+		            <td id="noticeTitle"><%= n.getNoticeTitle() %></td> 
 		            <td id="noticeDate"><%= n.getCreateDate() %></td>
 		        </tr> 
                 <tr>
-                    <td colspan="2" id="noticeContent"><%= n.getNoticeContent() %></td> <!-- getNoticeContent 부분인데 얘도 왜 ...? 일단하고 나중에 고치기☆★  -->
+                    <td colspan="2" id="noticeContent"><%= n.getNoticeContent() %></td> 
                 </tr>                      
                 	
             </tbody>
         </table>
         <br>
         <div align="center">
-        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary">목록가기</a>
+        	<a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-secondary qbtn" style="background: black; font-size: 22px;">목록가기</a>
         	 
             <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
-                <a href="<%=contextPath%>/updateForm.no?nno=<%= n.getNoticeNo() %>" id="noticeUpdatebtn"  class="btn btn-sm btn-warning" style="width: 92px; height: 40px;">수정</a> <!-- 수정 -->
-                <a href="<%=contextPath%>/delete.no?nno=<%= n.getNoticeNo() %>" id="noticeDeletebtn" class="btn btn-sm btn-danger" style="width: 92px; height: 40px;">삭제</a> <!-- 삭제 -->
+                <a href="<%=contextPath%>/updateForm.no?nno=<%= n.getNoticeNo() %>" id="noticeUpdatebtn"  class="btn btn-danger" style="background: black; font-size: 22px;">수정</a> <!-- 수정 -->
+                <a href="<%=contextPath%>/delete.no?nno=<%= n.getNoticeNo() %>" id="noticeDeletebtn" class="btn btn-danger" style="background: black; font-size: 22px;">삭제</a> <!-- 삭제 -->
             <% } %>
      
         </div>

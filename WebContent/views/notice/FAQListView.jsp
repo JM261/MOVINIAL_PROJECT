@@ -29,7 +29,7 @@
 	    height: 80px;
 	}
 	.btn-area>a{
-	    color:black;
+	    color:white;
 	    font-size: 25px;
 	    margin-left: 50px;
 	    text-decoration: none;
@@ -44,11 +44,12 @@
 	    padding: 8px;
 	    color:rgb(0, 0, 0);
 	    text-align: left;
+		
 	    
 	}
 	.divQ:hover{
 	    cursor: pointer;
-	    background: #e6e6e6;
+	    background: lightgray
 	}
 	.divA{
 	    width:1000px;
@@ -78,17 +79,17 @@
         <h2 id="h2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고객센터</h2>
         <br>
         <div class="btn-area">
-            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary">공지사항 &nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary">FAQ&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%= contextPath%>/noticeList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">공지사항 &nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/FAQList.no" class="btn btn-sm btn-secondary" style="background: black;">FAQ&nbsp;&nbsp;&nbsp;</a>
             
             <% if(loginUser != null && !loginUser.getMemberId().equals("admin")){ %>
-            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary">문의하기&nbsp;&nbsp;&nbsp;</a>
-            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary">나의 문의내역</a>
+            <a href="<%=contextPath%>/qEnrollForm.no" class="btn btn-sm btn-secondary" style="background: black;">문의하기&nbsp;&nbsp;&nbsp;</a>
+            <a href="<%=contextPath%>/questionList.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">나의 문의내역</a>
             <%} %>
             
             <% if(loginUser != null && loginUser.getMemberId().equals("admin")){ %>
-            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary">문의내역</a>  <!-- 문의 내역 조회하기  -->
-                <a href="<%=contextPath%>/enrollForm.no" id="noticeInsertbtn" class="btn btn-sm btn-secondary">추가</a> <!-- 추가 -->
+            	<a href="<%=contextPath%>/questionListManagement.no?currentPage=1" class="btn btn-sm btn-secondary" style="background: black;">문의내역</a>  <!-- 문의 내역 조회하기  -->
+               
             <% } %>
             
         </div>
@@ -96,26 +97,46 @@
         <div align="center" class="list-area">
             
                 <!-- 게시글 출력 -->
-                <div class="divQ">Q. 반품은 언제되나요?</div>
-                <p class="divA">&nbsp; A. 반품은 평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.</p>
+                <div class="divQ">Q. 아이디를 바꾸고 싶어요. </div>
+                <p class="divA">&nbsp; A. 한번 입력하신 아이디를 바꾸실 수 없습니다.  <br> <br>
+                						 &nbsp;&nbsp;&nbsp;&nbsp;아이디를 바꾸고 싶으신 경우 회원탈퇴 후 새로 회원가입 하셔야 합니다. <br>
+                						 &nbsp;&nbsp;&nbsp;&nbsp;회원탈퇴는 MOVINIAL을 통해서만 가능합니다.</p>
             
-                <div class="divQ">Q. 상품의 위치를 알고 싶습니다평일 A. 반품은 3~4달 정도 소요됩니다.</div>
-                <p class="divA">&nbsp;  A. 택배사에 문의하세요평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.</p>
+                <div class="divQ">Q. 비밀번호를 바꾸고 싶어요.</div>
+                <p class="divA">&nbsp;  A. 비밀번호를 바꾸실 수 있는 방법은 아래와 같습니다. <br> <br>
+											&nbsp;&nbsp;&nbsp;&nbsp;(1) 로그인 > [닉네임] 클릭 > [마이페이지] 이동 <br>
+											&nbsp;&nbsp;&nbsp;&nbsp;(2) [회원정보수정] 클릭 <br>
+											&nbsp;&nbsp;&nbsp;&nbsp;(3) 회원정보 수정 > 비밀번호 입력 <br>
+											&nbsp;&nbsp;&nbsp;&nbsp;(4) 비밀번호 변경 완료</p>
+            	<div class="divQ">Q. 법인 회원으로 가입할 수 있나요?</div>
+                <p class="divA">&nbsp; A. MOVINIAL은 개인고객을 위한 서비스입니다.<br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 따라서 법인으로 회원가입하실 수 없습니다.<br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp; MOVINIAL와의 제휴를 원하실 경우 movinial@mail.com으로 이메일 주시거나<br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 회원가입을 통해 사용하시기 바랍니다. </p>
             
-                <div class="divQ">Q. 이 사이즈가 있나요평일 A. 반품은 3~4달 정도 소요됩니다?</div>
-                <p class="divA">&nbsp; A. 네 있어A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.요.</p>
+                <div class="divQ">Q. 불량 이용자는 어떻게 되나요?</div>
+                <p class="divA">&nbsp; A. MOVINIAL 약관에 명시된 내용에 따라 신고가 누적된 불량 이용자는 서비스 사용 중지<br> 
+                &nbsp;&nbsp;&nbsp;&nbsp;또는 계정이 삭제될 수 있습니다. </p>
             
-                <div class="divQ">Q. 전화통화 A. 반품은 3~4달 정도 소요됩니다.가능한 시간은 언제인가요?</div>
-                <p class="divA">&nbsp; A. 평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소평일 A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.9-6시 입니다.</p>
-            
-                <div class="divQ">Q.판매자의 연A. 반품은 3~4달 정도 소요됩니다.락처를 알고 싶어요</div>
-                <p class="divA">&nbsp; A. 게시판을 이A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.용해주세요.</p>
+                <div class="divQ">Q. 로그인이 안될때 고객문의를 남길 수 있는 방법이 있나요?</div>
+                <p class="divA">&nbsp; A. 로그인이 되지 않으시는 경우<br> <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;아래 MOVINIAL 대표 메일로 이메일 문의를 남겨주시면 성심성의껏 답변 드리겠습니다. <br><br>
+                &nbsp;&nbsp;&nbsp;&nbsp; MOVINIAL 대표메일 : mivinial@mail.net <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 문의 발생시 상세 정보를 남겨조시면 더욱 빠른 조치가 가능합니다.
+                </p>
 
-                <div class="divQ">Q. 이 사이즈가 있나A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.요?</div>
-                <p class="divA">&nbsp; A. 네 있A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.A. 반품은 3~4달 정도 소요됩니다.어요.</p>
+				<div class="divQ">Q. 영화 또는 시리즈를 관심 콘텐츠에 추가하려면 어떻게 하나요?</div>
+                <p class="divA">&nbsp; A. 콘텐츠를 관심 콘텐츠에 추가하는 것은 어렵지 않습니다. <br> <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;영화를 관심 콘텐츠에 추가하려면 다음 단계를 따르세요.<br>
+				&nbsp;&nbsp;&nbsp;&nbsp;관심 콘텐츠에 추가하려는 영화 또는 시리즈를 선택합니다. <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;콘텐츠 정보 페이지에서 좋아요를 선택합니다. <br>
+				&nbsp;&nbsp;&nbsp;&nbsp;콘텐츠가 관심 콘텐츠에 추가되면 마이페이지에서 확인하실 수 있습니다.</p>
+
+                <div class="divQ">Q. 커뮤니티는 아무나 이용할 수 있나요?</div>
+                <p class="divA">&nbsp; A. 커뮤니티는 비회원일 경우, 커뮤니티 메인 글제목만 볼 수 있습니다. <br>
+               &nbsp;&nbsp;&nbsp;&nbsp; 글작성, 좋아요 등의 기능들은 로그인한 회원에 한하여 이용이 가능합니다.   </p>
             
-                <div class="divQ">Q. 전화통화 가능한 A. 반품은 3~4달 정도 소요됩니다.시간은 언제인가요?</div>
-                <p class="divA">&nbsp; A. 평일 9-6시 A. 반품은 3~4달 정도 소요됩니다.입니다.</p>
+                
             
             
          <script>

@@ -6,57 +6,41 @@
 <meta charset="UTF-8">
 <title>공지사항 작성</title>
 <style>
+	#outer{
+     	border: 1px solid #bcbcbc;
+        
+        width: 1100px;
+		height: 600px;
+        margin : auto;
+        
+    }
 
-	div{
-		/* border: 1px solid black; */
-	}
-
-	#allDiv{
-		width: 100%;
-		text-align: center;
-	}
-	.outer{
-		width: 1000px;
-		margin: auto;
-
-	}
-	#div1{
-		width: 100%;
-		height: 40px;
-		border: 1px solid black;
-		margin-bottom: 2px;
-	}
-	#div1_1{
-		width: 20%;
-		float: left;
-	}
-	#div1_2{
-		width: 80%;
-		float: left;
+	#enroll-form>table {border : 1px solid white;  margin : auto;}
+	#enroll-form input, #enroll-form textarea{
+		width: 800px;
+		box-sizing: border-box;
 	}
 
-	#div2{
-		width: 100%;
-		height: 400px;
-		border: 1px solid black;
-	}
-	#div2_1{
-		width: 20%;
-		height: 100%;
-		float: left;
-		margin: auto;
-		padding: auto;
-		text-align: center;
-		vertical-align: middle;
-	}
-	#div2_2{
-		width: 80%;
-		float: left;
+	#enroll-form textarea{
+		height: 300px;
 	}
 
+	.btn1{
+		width: 390px;
+	}
 	
+	#h2{
+    	font-weight: bolder;
+    }
+    
+	table{
+		font-size: 22px;
+	}
 	
-
+	.qbtn{
+		height : 50px;
+		font-size:22px;
+	}
 
 </style>
 </head>
@@ -64,38 +48,44 @@
 
 	 <%@ include file="../common/header.jsp" %>
 	 <br>
-	 <div id="allDiv">
-	 	<div class="outer" align='center'>
+	 <div id="outer">
+	 	
 	
 			<br>
 	
-			<h2 align='center'>공지사항 작성</h2>
+			<h2 id="h2" align="left"> &nbsp; 공지사항 작성</h2>
 			<br>
 			<form id="enroll-form" action="<%= contextPath %>/insert.no" method="post">
+			
+			
+			
 				<input type="hidden" name="memberNo" value="<%= loginUser.getMemberNo() %>">
 
-				<div id="div1">
-					<div id="div1_1">제목</div>
-					<div id="div1_2"><input style="width : 800px; height: 40px;" size="20px" type="text" name="memberTitle" required></div>
-				</div>
+				<table align="center" border="1">
+					<tr>
+						<th>제목</th>
+						<td><input type="text" name="memberTitle" required></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>
+							<textarea name="memberContent" rows="10" style="resize: none" required></textarea>
+						</td>
+					</tr>
 				
-				<div id="div2">
-					<div id="div2_1">내용</div>
-					<div id="div2_1">
-						<textarea name="memberContent" style="width : 800px; height: 400px;" rows="10" style="resize: none;" required></textarea>
-					</div>
-				</div>
-				
-				<br></br>
+				</table>
+	
+	
 	
 				<div align="center">
-					<button type="submit" class="btn btn-secondary">등록하기</button>&nbsp;&nbsp;
-					<button type="button" class="btn btn-secondary" onclick="history.back();">뒤로가기</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" class="btn1 btn-secondary qbtn" style="background: black; font-size: 22px;">등록하기</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn1 btn-secondary qbtn" onclick="history.back();" style="background: black; font-size: 22px;">뒤로가기</button>
 					<!-- history.back() : 이전 페이지로 돌아가게 해주는 함수 -->
 					
 				</div>
 			</form>
-		</div>	 
+			<br>
+		
 	 
 	 
 	 </div>
