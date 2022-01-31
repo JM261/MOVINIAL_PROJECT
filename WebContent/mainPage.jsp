@@ -282,24 +282,7 @@
                  --%>
     
             </tbody> 
-            
-           <script>
-             function mainCommunity(){
-              
-                $.ajax({
-                  url : "mainCommunity.cm",
-                  data : ()
-
-
-
-                })
-             }
-
-
-           </script>
-            
-            
-            
+          
         </table> 
             
             
