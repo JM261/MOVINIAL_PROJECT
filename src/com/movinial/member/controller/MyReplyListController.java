@@ -76,7 +76,6 @@ public class MyReplyListController extends HttpServlet {
 		
 		//댓글
 		list = new MemberService().selectReplyList(pi, memberNo);
-		list.get(0).setReplyWriter(String.valueOf(memberNo));
 		
 		// 5) 응답 뷰 지정 => list, pi를 넘기자
 		
