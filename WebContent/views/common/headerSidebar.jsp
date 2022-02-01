@@ -116,7 +116,7 @@
 		color: coral;
 	}
 
-	/*------------------------  */
+	/*------------------------*/
 	.dt-content {
 		width: 1400px;
 		padding: 20px;
@@ -196,6 +196,11 @@
 		width: 570px;
 	}
 	
+	#deleteForm{
+		margin-top:300px;
+		margin-right: 47%;
+	}
+	
 	/*---------------------------------------------*/
 	
 	/* 비밀번호변경 */
@@ -218,7 +223,7 @@
 		width: 600px;
 		position: relative;
 		margin-top:300px;
-		margin-left: 750px;
+		margin-left: 43%;
 		position:fixed;
 	}
 	
@@ -339,6 +344,7 @@
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 							회원 탈퇴 시, <code>모든 개인정보와 데이터</code>삭제되며 
 							다시 복구할 수 없습니다<br><br>
+							
 							
 							<form action="<%=contextPath%>/delete.me" method="post">
 								<table>

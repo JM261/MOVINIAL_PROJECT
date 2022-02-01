@@ -34,7 +34,7 @@
 		
 	}	
 
-	#selectMV{
+	/* #selectMV{
 		margin-right : 50px;
 		float:right;
 		width:200px;
@@ -44,7 +44,7 @@
 		border-top:none;
 		display:inline-block;
 		text-align: center;
-	}
+	} */
 
  	table{
  		text-align: center;
@@ -52,9 +52,7 @@
 	
 	.pagingation{
 		border:none;
-		float:left;
 		margin-top:50px;
-		margin-left:650px; 
 	}
 	
 	.page-item{
