@@ -117,5 +117,32 @@
 	
 	<!-- 리뷰 좋아요 끝 -->
 	
-
+	
+	<!-- 리뷰 신고 시작 -->
+	
+	<!-- 회원 번호로 '회원' 테이블 '신고한 리뷰' 컬럼 조회 -->
+	<entry key="selectReviewReport">
+		SELECT REPORT_REVIEW
+		  FROM MEMBER
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 해당 리뷰의 신고 횟수 1 증가 -->
+	<entry key="reportReview">
+		UPDATE REVIEW
+		   SET REPORT_COUNT = REPORT_COUNT + 1
+		 WHERE REVIEW_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<!-- 회원 테이블 신고한 리뷰에 해당 리뷰 번호 저장 -->
+	<entry key="reviewReportStore">
+		UPDATE MEMBER
+		   SET REPORT_REVIEW = REPORT_REVIEW || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 리뷰 신고 끝 -->
+	
+	
 </properties>

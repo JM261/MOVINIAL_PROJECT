@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
 import com.movinial.member.model.vo.LikesReview;
+import com.movinial.member.model.vo.Member;
 import com.movinial.review.model.vo.Review;
 
 public class ReviewDao {
@@ -451,6 +452,118 @@ public class ReviewDao {
 	}
 	
 	// ---------- 리뷰 좋아요 끝 ----------
+	
+	
+	// ---------- 리뷰 신고 시작 ----------
+	
+	/**
+	 * 회원 번호로 '회원' 테이블 '신고한 리뷰' 컬럼 조회
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 */
+	public Member selectReviewReport(Connection conn, int memberNo) {
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReviewReport");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				m = new Member();
+				m.setReportReview(rset.getString("REPORT_REVIEW"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		
+		return m;
+		
+	}
+	
+	/**
+	 * 해당 리뷰의 신고 횟수 1 증가
+	 * @param conn
+	 * @param reviewNo
+	 * @return
+	 */
+	public int reportReview(Connection conn, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("reportReview");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reviewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	/**
+	 * 회원 테이블 신고한 리뷰에 해당 리뷰 번호 저장
+	 * @param conn
+	 * @param memberNo
+	 * @param reviewNo
+	 * @return
+	 */
+	public int reviewReportStore(Connection conn, int memberNo, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("reviewReportStore");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(reviewNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	// ---------- 리뷰 신고 끝 ----------
+	
+
 	
 
 }

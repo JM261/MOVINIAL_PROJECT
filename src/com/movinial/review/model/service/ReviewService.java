@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.community.model.dao.CommunityDao;
 import com.movinial.member.model.vo.LikesReview;
+import com.movinial.member.model.vo.Member;
 import com.movinial.review.model.dao.ReviewDao;
 import com.movinial.review.model.vo.Review;
 
@@ -238,6 +240,74 @@ public class ReviewService {
 	
 	// ---------- 리뷰 좋아요 끝 ----------
 	
+	
+	// ---------- 리뷰 신고 시작 ----------
+	
+	/**
+	 * 회원 번호로 '회원' 테이블 '신고한 리뷰' 컬럼 조회
+	 * @param memberNo
+	 * @return
+	 */
+	public Member selectReviewReport(int memberNo) {
+		
+		Connection conn = getConnection();
+
+		Member m = new ReviewDao().selectReviewReport(conn, memberNo);
+		
+		close(conn);
+		
+		return m;
+		
+	}
+	
+	/**
+	 * 해당 리뷰의 신고 횟수 1 증가
+	 * @param reviewNo
+	 * @return
+	 */
+	public int reportReview(int reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().reportReview(conn, reviewNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+
+	/**
+	 * 회원 테이블 신고한 리뷰에 해당 리뷰 번호 저장
+	 * @param memberNo
+	 * @param reviewNo
+	 * @return
+	 */
+	public int reviewReportStore(int memberNo, int reviewNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new ReviewDao().reviewReportStore(conn, memberNo, reviewNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	// ---------- 리뷰 신고 끝 ----------
 	
 	
 }

@@ -410,8 +410,11 @@
 	                    	<h5>작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp</h5>
 	                    </td>
 	                    <td align="right">
-	                    	<!-- 리뷰 신고하기 -->
-                    		<a type="button" class="mylist reportButton" data-toggle="modal" data-review-no="<%= r.getReviewNo() %>" data-target="#reportForm" style="text-decoration: none; color: white;">신고하기</a>
+		                    <% if(loginUser != null) { %>
+		                    	<!-- 리뷰 신고하기 -->
+	                    		<a type="button" class="mylist report-button" data-review-no="<%= r.getReviewNo() %>" data-review-writer="<%= r.getReviewWriter() %>" style="text-decoration: none; color: white;">신고하기</a>
+	                    		<input type="hidden" class="report-modal" data-toggle="modal" data-target="#reportForm">
+	                    	<% } %>
 	                    </td>
 	                </tr>
 	                <tr>
@@ -458,7 +461,7 @@
 					
 					<!-- 신고 제출 버튼 -->
 					<div class="modal-footer">
-						<button type="button" onclick="checkReportReview();" class="btn btn-danger" data-dismiss="modal">제출</button>
+						<button type="button" onclick="reportReview();" class="btn btn-danger" data-dismiss="modal">제출</button>
 					</div>
 					
 				</div>
@@ -466,78 +469,92 @@
 		</div>
 	</div>
 	
-	<%-- 리뷰 신고 --%>
+	<%-- 리뷰 신고: 신고 증가 / 리뷰 번호 저장 처리 --%> 	
+	<% if(loginUser != null) { %>
 	<script>
 	
-		$(document).on("click", ".reportButton", function() {
-			var reviewNo = $(this).data("review-no");
-			$("#reportContent").text(reviewNo);
+		var reviewNo = ""; // 해당 리뷰 번호
+		var reviewWriter = ""; // 해당 리뷰의 닉네임
+		
+		// 신고 버튼 클릭 시, 리뷰 신고 Modal로 해당 리뷰 번호, 닉네임 가져오기
+		$(document).on("click", ".report-button", function() {
+			
+			reviewNo = String($(this).data("review-no")); // Number > String
+			reviewWriter = $(this).data("review-writer"); // 회원번호가 아닌 닉네임
+			
+			// 본인 리뷰인지 확인
+			if(reviewWriter == "<%= loginUser.getMemberNickname() %>") {
+				alert("자신의 리뷰를 신고할 수 없습니다");
+				return;
+			}
+			else {
+				checkReportReview();
+			}
+			
 		})
-	
-	
-	
-	// 매개변수: 현재 리뷰 번호, 사용자가 누른 review-likes-btn 클래스 요소
 		
 		// 리뷰 신고 전 신고 여부 체크
 		function checkReportReview() {
 			
-			var cno = ""
-			
-			$.ajax({ 
-				url : "chkreport.rev",
-				data : {
-
-				},
-				success : function(rc){
-	
-					if(rc.reportCommunity != null){ // 가져온 likesCommunity의 값이 null이 아니면
+			$.ajax({
+				url: "chkreport.rev",
+				data: { mno: <%= loginUser.getMemberNo() %> },
+				success: function(rr){
+					
+					// null이 아닐 경우, 해당 리뷰에 신고를 눌렀는지 확인
+					if(rr.reportReview != null) {
 						
-						var reportCm = rc.reportCommunity.split(',');
-	
-						if(reportCm.indexOf(cno) != -1){ // 배열에 찾는 글번호가 있으면, 이미 좋아요를 누른 것
-							alert("이미 신고한 게시글 입니다.");
+						// 해당 회원의 '신고한 리뷰' 리뷰 번호 뽑아내기 (String[])
+						var reportRr = rr.reportReview.split(',');
+						
+						// 신고한 리뷰 번호가 이미 있는지 확인
+						if(reportRr.indexOf(reviewNo) != -1) {
+							alert("이미 신고한 리뷰입니다");
+							return;
 						}
-						else{ // 배열에 찾는 이 게시글 글번호가 없으면 신고한 적 없는 것
-							reportCommunity() // 그럼 신고하기 실행
+						else { // 없으면, 리뷰 신고 Modal 열기
+							$(".report-modal").click();
 						}
+						
 					}
-					else{// 가져온 reportCommunity의 값이 null 이면, 바로 신고하기 실행
-						reportCommunity()
+					else { // 없으면, 리뷰 신고 Modal 열기
+						$(".report-modal").click();
 					}
+					
 				},
-				error : function(){
-					console.log("게시글 신고 AJAX실패");
+				error: function(){
+					alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 				}
 			})
 			
 		}
 		
 		// 리뷰 신고하기
-		function reportReview(){ 
+		function reportReview() { 
 	
 			$.ajax({
-				url : "report.rev",
-				data : {
-
+				url: "report.rev",
+				data: {
+					mno : <%= loginUser.getMemberNo() %>,
+					reviewNo : reviewNo
 				},
-				success : function(like){
+				success: function(report){
 					
-					if(like > 0){
-						alert("해당 게시글을 신고했습니다.");
+					if(report > 0){
+						alert("해당 리뷰를 신고했습니다");
+						location.href = "<%= contextPath %>/detail.mo?movieNo=<%= m.getMovieNo() %>"
 					}
-					else{
-						console.log('좋아요 실패 ㅜㅜ');
-					}
+					
 				},
-				error : function(){
-					console.log("좋아요 AJAX실패");
+				error: function(){
+					alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 				}	
 			})
 			
 		}
 		
 	</script>
-
+	<% } %>
 
 	<%-- 리뷰 좋아요: 로그인 여부 확인 --%>
 	<% if(loginUser == null) { %>
