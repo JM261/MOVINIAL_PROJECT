@@ -136,7 +136,7 @@ public class Review {
 		this.refMno = refMno;
 		this.profileImage = profileImage;
 	}
-
+	
 	
 	// 메소드
 	public int getReviewNo() {

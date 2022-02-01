@@ -438,33 +438,8 @@ public class MemberDao {
 		
 		return list;
 	}
-
-	public int idCheck(Connection conn, String checkId) {
-		//SELECT => ResultSet => COUNT 함수 이용(숫자 한 개)
-				// 변수
-				int count = 0;
-				PreparedStatement pstmt = null;
-				ResultSet rset = null;
-				String sql = prop.getProperty("idCheck");
-				
-				try {
-					pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, checkId);
-					rset = pstmt.executeQuery();
-					
-					if(rset.next()) {
-						count = rset.getInt("COUNT");	
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					close(rset);
-					close(pstmt);
-				}
-				return count;
-	}
 	
-		// 주현 : 회원탈퇴
+	// 주현 : 회원탈퇴
 	public int deleteMember(Connection conn, String memberId, String memberPwd) {
 
 			int result = 0;
