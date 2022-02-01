@@ -19,7 +19,11 @@ public class Movie {
 	private int movieSeen; 				// MOVIE_SEEN	NUMBER
 	
 	// 생성자
-	// mainPage 최신 영화 포스터 이미지경로, 영화번호
+	/**
+	 * mainPage 최신 영화 포스터 이미지경로, 영화번호
+	 * @param movieNo
+	 * @param posterPath
+	 */
 	public Movie(int movieNo, String posterPath) {
 		super();
 		this.movieNo = movieNo;
@@ -41,6 +45,7 @@ public class Movie {
 
 	/**
 	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
+	 * movieTopTen : TOP 10 순위
 	 * @param movieNo
 	 * @param title
 	 * @param posterPath
@@ -75,22 +80,8 @@ public class Movie {
 		this.backdropPath = backdropPath;
 		this.movieLikes = movieLikes;
 		this.movieSeen = movieSeen;
-	}	
-	
-	// mainPage 최신 영화 포스터 이미지경로, 영화번호
-	public Movie(int movieNo, String posterPath) {
-		super();
-		this.movieNo = movieNo;
-		this.posterPath = posterPath;
 	}
 	
-	// movieTopTen : TOP 10 순위
-	public Movie(int movieNo, String title, String posterPath) {
-		super();
-		this.movieNo = movieNo;
-		this.title = title;
-		this.posterPath = posterPath;
-	}
   
 	// 메소드
 	public int getMovieNo() {
