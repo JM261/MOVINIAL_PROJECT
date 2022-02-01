@@ -972,39 +972,6 @@ public class MemberDao {
 
 	}
 	
-	public ArrayList<MemberGenre> selectGenreList(Connection conn) { // 장르조회
-		
-		ArrayList<MemberGenre> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectGenreList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				MemberGenre m = new MemberGenre(
-						   rset.getString("GENRE_ID")
-						  ,rset.getString("GENRE_NAME"));				
-				list.add(m);				
-			}			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	} // 장르조회
-	
-
 	//주현 : 영화 좋아요 리스트
 	public ArrayList<Movie> myMovieLikesList(Connection conn, PageInfo pi, int memberNo) {
 		
