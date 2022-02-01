@@ -97,11 +97,57 @@
 	 .posters{
 	 	border: 1px solid lightgray;
 	 	border:30px;
-	 	
-	 
-	 }
+	     animation: fadein 4s;
+        -moz-animation: fadein 4s;
+        /* Firefox */
+        -webkit-animation: fadein 4s;
+        /* Safari and Chrome */
+        -o-animation: fadein 4s;
+        /* Opera */
+    }
+ 
+    @keyframes fadein {
+        from {
+            opacity: 0;
+        }
+ 
+        to {
+            opacity: 1;
+        }
+    }
+ 
+    @-moz-keyframes fadein {
+ 
+        /* Firefox */
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+ 
+    @-webkit-keyframes fadein {
+ 
+        /* Safari and Chrome */
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+ 
+    @-o-keyframes fadein {
+        /* Opera */
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
         </style>
-        
   </head>
   <body>
   	<%@ include file="../../views/common/headerSidebar.jsp" %>
@@ -114,17 +160,17 @@
           		
              <div class ="countreview">
               <span id="cntreview">${reviewCount}</span>
-              <span id="cntreviewlabel">review</span>
+              <span id="cntreviewlabel">REVIEW</span>
             </div>
             
             <div class ="countmovie">
               <span id="cntseen">${seenCount}</span>
-              <span id="cntseenlabel">seen</span>
+              <span id="cntseenlabel">SEEN</span>
             </div>
             
             <div class ="countlike">
               <span id="cntlike">${likeCount}</span>
-              <span id="cntlikelabel">like</span>
+              <span id="cntlikelabel">LIKE</span>
             </div>
             
             <div class="profile">
@@ -146,10 +192,10 @@
         <h2>My Posters</h2>
 	        <br>
 	        <div class="posters">
-			  <img src="<%= contextPath %>/resources/images/lala.png" alt="">
-                                                                                                                                                                                      			</div> 
-        </div>
-
+	        
+			  <td><img src="<%= contextPath %>/resources/images/lala.png" alt=""></td>
+       		 </div>
+		</div>
       <!-- --------------------------------------------------------------푸터 시작----------------------- -->
 
 		
@@ -182,6 +228,7 @@
 					$("#img").attr("src", null);
 			}
 		}
+		
 	</script>
   </body>
 </html>

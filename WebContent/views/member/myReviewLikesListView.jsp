@@ -73,7 +73,7 @@
 		background-color:white;
 		width:30px;
 	}
- 	
+ 
 
 
 </style>
