@@ -148,37 +148,7 @@
 	    FROM genre
 	   ORDER BY genre_id
 	</entry>
-	<entry key="selectGenreMoiveList"> 
-		select 
-		       r.genre_id
-		     , r.genre_name
-		     , r.title
-		     , r.movie_id     
-		     , r.poster_path  
-		     , r.rn
-		from (
-		        select a.genre_id
-		             , a.genre_name
-		             , b.title
-		             , b.movie_id             
-		             , b.poster_path     
-		             , row_number() over(partition by a.genre_id order by a.genre_id) rn
-		        from genre a
-		           , (
-		                select 
-		                       title
-		                     , movie_id        
-		                     , case when instr(genre_ids , ',') <![CDATA[>]]> 0  then  substr(genre_ids, 1,instr(genre_ids , ',')-1)  
-		                            when instr(genre_ids , ',') <![CDATA[=]]> 0  then genre_ids end    as genre_id
-		                     , poster_path  
-		                from movie        
-		             ) b
-		        where a.genre_id = b.genre_id
-		        order by a.genre_id  
-		      ) r
-		where r.rn <![CDATA[<=]]>5
-	</entry>
-	
+
 	<entry key="insertMemberLikeCommunity"> <!--회원가입시 커뮤니티 좋아요생성 -->
 	INSERT 
 		   INTO LIKES_COMMUNITY
@@ -443,6 +413,7 @@
 		ORDER
 		BY ROWNUM DESC) A)
 		WHERE RNUM BETWEEN ? AND ?
+        ORDER BY MOVIE_NO DESC
 	
 	</entry>
 	
@@ -472,7 +443,8 @@
                     CONNECT BY  INSTR(SEEN_MOVIE, ',', 1, LEVEL - 1) > 0)
 		ORDER
 		BY ROWNUM DESC) A)
-		WHERE RNUM BETWEEN ? AND ?
+		WHERE RNUM BETWEEN ? AND ? 
+        ORDER BY MOVIE_NO DESC
 	
 	</entry>
 		

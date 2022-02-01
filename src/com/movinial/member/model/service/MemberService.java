@@ -138,6 +138,7 @@ public class MemberService {
 		
 	} // deleteMember : 멤버 삭제
 
+	
 	public ArrayList<Member> searchMember(String keyword) { // searchMember : 키워드로 검색
 		
 		Connection conn = getConnection();
@@ -148,41 +149,9 @@ public class MemberService {
 		
 		return list;
 		
-	} // searchMember : 키워드로 검색
-  
-	public int idCheck(String checkId) { // 아이디 중복 체크
-		
-		Connection conn = getConnection();
-		int count = new MemberDao().idCheck(conn, checkId);
-		close(conn);
-	
-		return count;
+	} 
 
-		
-	}
 	
-	public  ArrayList<MemberGenre> selectGenreList() { // 장르조회
-		
-		Connection conn = getConnection();
-		ArrayList<MemberGenre> memberGenreList = new MemberDao().selectGenreList(conn);
-		close(conn);
-	
-		return memberGenreList;
-
-		
-	}
-  
-	public  ArrayList<MemberGenre> selectGenreMoiveList() { // 장르별영화목록
-		
-		Connection conn = getConnection();
-		ArrayList<MemberGenre> memberGenreMovieList = new MemberDao().selectGenreMoiveList(conn);
-		close(conn);
-	
-		return memberGenreMovieList;
-
-		
-	}
-
 	//주현 : 회원탈퇴
 	public int deleteMember(String memberId, String memberPwd) {
 

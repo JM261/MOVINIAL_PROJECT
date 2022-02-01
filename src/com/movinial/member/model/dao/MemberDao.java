@@ -1004,42 +1004,7 @@ public class MemberDao {
 		return list;
 	} // 장르조회
 	
-public ArrayList<MemberGenre> selectGenreMoiveList(Connection conn) { // 장르별영화조회
-		
-		ArrayList<MemberGenre> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectGenreMoiveList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				MemberGenre m = new MemberGenre(
-						   rset.getString("GENRE_ID")
-						  ,rset.getString("GENRE_NAME")
-						  ,rset.getString("TITLE")
-						  ,rset.getString("MOVIE_ID")
-						  ,rset.getString("POSTER_PATH")
-						  );				
-				list.add(m);				
-			}			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	} // 장르별영화조회
-  
+
 	//주현 : 영화 좋아요 리스트
 	public ArrayList<Movie> myMovieLikesList(Connection conn, PageInfo pi, int memberNo) {
 		
