@@ -25,7 +25,8 @@
 		Locale productionCountries = new Locale("ko", (String)(movieDetail.getJSONArray("production_countries").getJSONObject(0).get("iso_3166_1"))); // 제작 국가
 		productionCountry = productionCountries.getDisplayCountry();
 	}
-	if(!countriesCheck.isNull(0)) {
+	
+	if(!productionCheck.isNull(0)) {
 		productionCompany = (String)movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name"); // 제작사
 	}
 %>
@@ -33,9 +34,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title><%= m.getTitle() %>의 상세정보</title>
+<title><<%= m.getTitle() %>>의 상세 정보</title>
 <style>
- 	.mylist{
+ 	.mylist {
  		color:white;
  		background-color:black;
  		line-height:35px;
@@ -49,7 +50,7 @@
  		margin-top:10px;
  		text-decolation:none;
  	}
- 	.mylist:hover{
+ 	.mylist:hover {
  		text-decolation:none;
  	}
 	.content {
@@ -69,13 +70,19 @@
 		color: black;
 		cursor: pointer;
 	}
-	.profile{
+	.profile {
 	  	width:150px;
 	  	height:150px;
 	  	border-radius:60px;
 	  	border: 1px solid lightgray;
 	}
-
+	.review-content {
+		display: -webkit-box;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
 </style>
 </head>
 <body>
@@ -107,13 +114,13 @@
 				<td>
 					<a class="movie-seen-btn btn-group" onclick="checkSeen()">
 						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘">
-						<h3><%= m.getMovieSeen() %></h3>
+						&nbsp&nbsp<h3><%= m.getMovieSeen() %></h3>
 					</a>
 				</td>
 				<td>
 					<a class="movie-likes-btn btn-group" onclick="checkLikes()">
 						<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘">
-						<h3><%= m.getMovieLikes() %></h3>
+						&nbsp&nbsp<h3><%= m.getMovieLikes() %></h3>
 					</a>
 				</td>
 			</tr>
@@ -419,12 +426,12 @@
 	                </tr>
 	                <tr>
 	                    <td rowspan="2" align="center">
-	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile">
+	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile" onerror="this.onerror=null; this.src='<%= contextPath %>/resources/images/profilePic.png'">
 	                    </td>
 	                    <td>
-	                    	<p>
+	                    	<div class="review-content">
 	                    		<%= r.getReviewContent() %>
-	                    	</p>
+	                    	</div>
 	                    </td>
 	                </tr>
 	                <tr>
@@ -432,7 +439,7 @@
 	                    	<!-- 리뷰 좋아요 -->
 							<a class="review-likes-btn btn-group" onclick="checkReviewLikes('<%= r.getReviewWriter() %>', '<%= r.getReviewNo() %>', this)">
 	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 30px; height: 30px;">&nbsp&nbsp
-								<h4><%= r.getLikes() %></h4>
+								&nbsp<h4><%= r.getLikes() %></h4>
 							</a>
 	                    </td>
 	                </tr>

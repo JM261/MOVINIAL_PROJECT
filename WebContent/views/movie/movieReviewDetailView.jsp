@@ -22,7 +22,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>리뷰 상세보기</title>
+<title><<%= m.getTitle() %>>의 상세 리뷰</title>
 <style>
 	.content {
 		padding: 20px;
@@ -57,6 +57,52 @@
 	.table-size {
 		width: 100%;
 	}
+ 	.mylist {
+ 		color:white;
+ 		background-color:black;
+ 		line-height:35px;
+ 		width:70px;
+ 		list-style:none;
+ 		display:inline-block;
+ 		text-align:center;
+ 		margin-bottom:10px;
+ 		margin-left:10px;
+ 		margin-right:5px;
+ 		margin-top:10px;
+ 		text-decolation:none;
+ 	}
+ 	.mylist:hover{
+ 		text-decolation:none;
+ 	}
+	.table-size td {
+		padding: 10px;
+	}
+	.btn-group {
+		text-decoration: none;
+		color: black;
+	}
+	.btn-group:hover {
+		text-decoration: none;
+		color: black;
+		cursor: pointer;
+	}
+	.profile {
+	  	width:150px;
+	  	height:150px;
+	  	border-radius:60px;
+	  	border: 1px solid lightgray;
+	}
+	.community-category>a {
+	    color: black;
+	    font-weight: bolder;
+	    font-size: 28px;
+	    text-decoration: none;
+        margin: 30px;
+	}
+	.community-category>a:hover {
+		color: black;
+	    text-decoration: none;
+	}
 
 </style>
 </head>
@@ -66,15 +112,14 @@
 
         <!-- 리뷰 상세보기: 영화 상세 정보 -->
         <div class="content">
-
-            <h2>리뷰 상세보기</h2>
-
-            <br><br>
-
+            <h2 style="font-weight: bold;">리뷰 상세보기</h2>
+            
             <table class="table-size">
                 <tr>
                     <td>
-                        <h2><%= m.getTitle() %> &nbsp&nbsp <%= m.getOriginalTitle() %> &nbsp&nbsp <%= m.getReleaseDate() %></h2>
+                        <h2 style="font-weight: bold; margin-left: 40px;"><%= m.getTitle() %></h2><br><br>
+                        <h2 style="font-weight: bold; margin-left: 40px;"><%= m.getOriginalTitle() %></h2><br><br>
+                        <h2 style="font-weight: bold; margin-left: 40px;"><%= m.getReleaseDate() %></h2><br><br><br><br><br><br>
                     </td>
                     <td align="right">
 						<% if(moviePosterUrl != null) { %>
@@ -87,61 +132,84 @@
             </table>
 
 			<br><br>
+		</div>
 
-        <!-- 리뷰 -->
-			<table class="table table-borderless">
-            
-            	<!-- 조회된 리뷰가 없을 때 -->
-            	<% if(list.isEmpty()) { %>
-            	
-	            	<tr>
-	            	    <td colspan="6">조회된 리뷰가 없습니다.</td>
-	            	</tr>
-	            	
-            	<% } else {%>
-            	
-            		 <!-- 리뷰 10개 출력 -->
-            		 
-            		<div class="review-order">
-        				<a href="<%= contextPath %>/list.cm?currentPage=1&cct=공지" style="margin-left: 10px;" >최신순</a>
-        				<a href="<%= contextPath %>/list.cm?currentPage=1&cct=전체" style="margin-left: 10px;">등록순</a>
-        				<a href="<%= contextPath %>/list.cm?currentPage=1&cct=일반" style="margin-left: 10px;" >좋아요순</a>
-        			</div>
+	<!-- 리뷰 -->
+	<div class="content">
+		<br>
+		
+        <div class="community-category" style="margin-left: 30px;">
+        	<a href="<%= contextPath %>/list.cc?currentPage=1&cct=공지" >등록순</a>
+        	<a href="<%= contextPath %>/list.cc?currentPage=1&cct=일반" >최신순</a>
+        	<a href="<%= contextPath %>/list.cc?currentPage=1&cct=정보" >좋아요순</a>
+        </div>
+        
+        <br><br>
+        
+		<table class="table table-borderless">
 
-					<br>
-            		 
-            		<% for(Review r: list) { %>
-            		
-		                <tr>
-		                    <td style="width: 20%;">
-		                    	<%= r.getReviewWriter() %>
-		                    </td>
-		                    <td>
-                                작성일 <%= r.getCreateDate() %> <a type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#reportForm">신고하기</a><!-- MODAL -->
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td rowspan="2">
-		                        <img src="" alt="유저 프로필 이미지 경로">
-		                    </td>
-		                    <td>
-		                    	<p>
-		                    		<%= r.getReviewContent() %>
-		                    	</p>
-		                    </td>
-		                </tr>
-		                <tr>
-		                    <td>
-		                        <img src="" alt="좋아요 아이콘"> 좋아요 <%= r.getLikes() %>
-		                    </td>
-		                </tr>
-	                <% } %>
-	                
+			<!-- 리뷰 게시글 한 개당 목록 -->
+			<!-- 영화 상세 페이지에서는 지정된 개수만큼 출력 -->
+			<!-- 조회된 리뷰가 없을 때 -->
+           	<% if(list.isEmpty()) { %>
+           	
+            	<tr>
+            	    <td colspan="7">
+            	    	<h2 style="text-align: center;">조회된 리뷰가 없습니다</h2>
+            	    </td>
+            	</tr>
+            	
+           	<% } else {%>
+           	
+           		 <!-- 리뷰 n개 출력 -->
+           		<% for(Review r: list) { %>
+	                <tr>
+	                    <td align="center" style="width: 10%;">
+	                    	<h5><%= r.getReviewWriter() %></h5>
+	                    </td>
+	                    <td>
+	                    	<h5>작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp</h5>
+	                    </td>
+	                    <td align="right">
+		                    <% if(loginUser != null) { %>
+		                    	<!-- 리뷰 신고하기 -->
+	                    		<a type="button" class="mylist report-button" data-review-no="<%= r.getReviewNo() %>" data-review-writer="<%= r.getReviewWriter() %>" style="text-decoration: none; color: white;">신고하기</a>
+	                    		<input type="hidden" class="report-modal" data-toggle="modal" data-target="#reportForm">
+	                    	<% } %>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td rowspan="2" align="center">
+	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile" onerror="this.onerror=null; this.src='<%= contextPath %>/resources/images/profilePic.png'">
+	                    </td>
+	                    <td>
+	                    	<div class="review-content">
+	                    		<%= r.getReviewContent() %>
+	                    	</div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                    	<!-- 리뷰 좋아요 -->
+							<a class="review-likes-btn btn-group" onclick="checkReviewLikes('<%= r.getReviewWriter() %>', '<%= r.getReviewNo() %>', this)">
+	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 30px; height: 30px;">&nbsp&nbsp
+								<h4><%= r.getLikes() %></h4>
+							</a>
+	                    </td>
+	                </tr>
                 <% } %>
                 
-            </table>
+               <% } %>
+		</table>
 
-            <br><br>
+            
+            
+            
+            
+            
+            
+            
+            
 
 			<% if(loginUser == null) { %>
 
