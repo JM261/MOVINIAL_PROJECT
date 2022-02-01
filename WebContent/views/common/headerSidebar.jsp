@@ -123,6 +123,7 @@
 		margin-bottom: 20px;
 		float: right;
 		border: 1px solid #bcbcbc;
+		
 	}
 	
 	#dt-sidebar {
@@ -184,7 +185,7 @@
 	
 	/*----------------------------------------------*/
 	#delete_btn, #updatePwd_btn {
-		width: 750px;
+		width: 95%;
 		background-color: black;
 	}
 	
@@ -192,24 +193,43 @@
 	
 	/* 회원탈퇴 */
 	#iptpwd {
-		width: 600px;
+		width: 570px;
 	}
 	
 	/*---------------------------------------------*/
 	
 	/* 비밀번호변경 */
 	#memberPwd, #updatePwd, #checkPwd {
-		width: 400px;
+		width: 300px;
 		float: right;
 		border-left: none;
 		border-top: none;
 		border-right: none;
 		line-height: 31px;
+		text-align:center;
+		margin-left:0px;
 	}
 	
 	input:focus {
 		outline: none;
 	}
+	
+	#updatePwdForm{
+		width: 600px;
+		position: relative;
+		margin-top:300px;
+		margin-left: 750px;
+		position:fixed;
+	}
+	
+	#memberPwdUpdate{
+		margin-left: 50px;
+	}
+	
+	#deleteForm_body{
+		margin-left:30px;
+	}
+
 	
 	</style>
 	
@@ -246,8 +266,8 @@
 						<li><a href="<%=contextPath%>/myPage.me"><%=loginUser.getMemberNickname()%></a>
 							님</li>
 						<li><a href="<%=contextPath%>/logout.me">LOGOUT</a></li>
-						<li><a href="<%=contextPath%>/movie.me">MOVIE</a></li>
-						<li><a href="<%=contextPath%>/community.me">COMMUNITY</a></li>
+						<li><a href="<%=contextPath%>/main.mo">MOVIE</a></li>
+						<li><a href="<%=contextPath%>/list.cm?currentPage=1">COMMUNITY</a></li>
 						<li><input type="search" name="search" id="header_search"></li>
 						<li><button id="header_search_btn"></button></li>
 					</ul>
@@ -262,6 +282,7 @@
 			alert(msg);
 			<% session.removeAttribute("alertMsg"); %>
 		}
+
    	 </script>
 	
 			<div id="dt-sidebar">
@@ -281,7 +302,7 @@
 	
 					<br>
 					<li>회원정보</li>
-					<li><a href="<%=contextPath%>/views/member/updateMember.jsp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내
+					<li><a href="<%=contextPath%>/updateMem.form">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내
 							정보 관리</a></li>
 					<li><a data-toggle="modal" href="#updatePwdForm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;비밀번호
 							변경</a></li>
@@ -312,7 +333,7 @@
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 	
-						<div class="modal-body">
+						<div class="modal-body" id="deleteForm_body">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
@@ -357,37 +378,48 @@
 								<table>
 									<tr>
 										<td><B>현재 비밀번호&nbsp;&nbsp;&nbsp;&nbsp;</B><input
-											type="password" name="memberPwd" id="memberPwd" required></td>
+											type="password" name="memberPwd" id="memberPwd" placeholder="특수문자,영문자,숫자를 포함 8-16자" required></td>
 									</tr>
 	
 									<tr>
 										<td><B>변경할 비밀번호&nbsp;</B><input type="password"
-											name="updatePwd" id="updatePwd" required></td>
+											name="updatePwd" id="updatePwd" placeholder="특수문자,영문자,숫자를 포함 8-16자" required></td>
 									</tr>
 	
 									<tr>
 										<td><B>비밀번호 확인&nbsp;&nbsp;&nbsp;&nbsp;</B><input
-											type="password" name="checkPwd" id="checkPwd" required></td>
+											type="password" name="checkPwd" id="checkPwd" placeholder="특수문자,영문자,숫자를 포함 8-16자" required></td>
 									</tr>
 								</table>
 								<br>
 								<button type="button" class="btn btn-secondary"
 									id="updatePwd_btn" onclick="return validatePwd();">변경</button>
+				
+					<script>
+			
+						var regPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+						
+						function validatePwd() {
+								if ($("input[name='updatePwd']").val() != $("input[name='checkPwd']").val()) {
+									alert("비밀번호가 일치하지 않습니다 \n다시 확인해주세요");
+									return false;
+								} else{
+									if (!regPwd.test($("input[name='updatePwd']").val())) {
+										alert('형식에 맞지 않는 비밀번호입니다. \n다시 입력해 주세요.');
+										return false;
+									}
+
+									$('#memberPwdUpdate').submit();
+									return true;
+								} 
+							}
+						
+					</script>
 							</form>
 						</div>
 	
 					</div>
 				</div>
 			</div>
-					<script>
-						function validatePwd() {
-							if ($("input['name=updatePwd']").val() != $("input['name=checkPwd']".val())) {
-								return false;
-							}
-							$('#memberPwdUpdate').submit();
-							return true;
-					
-						}
-					</script>
 	</body>
 	</html>

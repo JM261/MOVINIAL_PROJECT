@@ -7,6 +7,7 @@ import static com.movinial.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import com.movinial.common.model.vo.PageInfo;
 import com.movinial.community.model.vo.Community;
@@ -397,8 +398,8 @@ public class MemberService {
 		return result;
 	}
 	
-	//주현: 마이페이지 
-	public ArrayList<Movie> searchSeenMovie(int memberNo) { // searchSeenMovie : 키워드로 영화 조회 
+	//주현 : 마이페이지 리뷰쓰기 봤어요 검색 리스트 출력
+	public ArrayList<Movie> searchSeenMovie(int memberNo) { 
 
 		Connection conn = getConnection();
 		
@@ -407,8 +408,21 @@ public class MemberService {
 		close(conn);
 		
 		return list;
+	} 
+
+	
+	//주현 : 닉네임 중복확인
+	public int nicknameCheck(String nicknameUp) {
 		
-	} // searchSeenMovie : 키워드로 영화 조회 
+		Connection conn = getConnection();
+		
+		int count = new MemberDao().nicknameCheck(conn, nicknameUp);
+		
+		close(conn);
+		
+		return count;
+		
+	}
 	
 	
 

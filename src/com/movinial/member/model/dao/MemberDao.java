@@ -559,7 +559,7 @@ public class MemberDao {
 			return listCount;
 		}
 
-		//주현 : 좋아요 누른 리뷰 리스트 가져오기
+		//주현 : 좋아요 누른 리뷰 리스트 가져오기(포스터포함)
 		public ArrayList<Review> myReviewLikesListView(Connection conn, PageInfo pi, int memberNo) {
 
 			ArrayList<Review> list = new ArrayList<>();
@@ -587,7 +587,8 @@ public class MemberDao {
 										rset.getDate("CREATE_DATE"),
 										rset.getInt("LIKES"),
 										rset.getInt("REF_MNO"),
-										rset.getString("REVIEW_CONTENT")));
+										rset.getString("REVIEW_CONTENT"),
+										rset.getString("POSTER_PATH")));
 							}
 
 			} catch (SQLException e) {
@@ -1056,7 +1057,6 @@ public class MemberDao {
 							rset.getInt("MOVIE_LIKES"),
 							rset.getInt("MOVIE_SEEN")
 							);
-				
 				list.add(m);				
 			}
 		} catch (SQLException e) {
@@ -1065,7 +1065,33 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return list;
-	} // searchSeenMovie
+	} 
+	
+	//주현 : 닉네임 중복확인
+	public int nicknameCheck(Connection conn, String nicknameUp) {
+		
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("nicknameCheck"); 
+				
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nicknameUp);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("COUNT(*)");
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
 }

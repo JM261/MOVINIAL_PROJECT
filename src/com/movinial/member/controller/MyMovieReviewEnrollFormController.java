@@ -56,7 +56,7 @@ public class MyMovieReviewEnrollFormController extends HttpServlet {
 		String movieTitle = request.getParameter("movieTitle");
 		String reviewContent = request.getParameter("reviewContent");
 		String reviewShow = request.getParameter("reviewShow");
-		String reviewTitle = loginUser.getMemberNickname() + "의 " + movieTitle + " 리뷰"; // 기본 생성 제목
+		String reviewTitle = loginUser.getMemberNickname() + "의 <" + movieTitle + "> 리뷰"; // 기본 생성 제목
 		
 		
 		int result = new ReviewService().insertMovieReview(memberNo, movieNo, reviewContent, reviewShow, reviewTitle);

@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MOVINIAL[:near]</title>
+<title>MY REVIEW DIARY</title>
 	
 	<style>
 
@@ -45,15 +45,18 @@
 		.review-write-poster, .review-write-info, .review-write-content {
 		    display: inline-block;
 		    vertical-align: top;
-		    border:none;
+		    /* border:none; */
+		   
 		}
 		
 		.review-write-poster > img {
 		    height: 400px;
-		    border: none;
+		   /*  border: none; */
 		    margin-right: 20px;
 		    width: 300px;
 		    display: inline-block;
+		    border-radius: 30px;
+		   
 		    
 		}
 		
@@ -169,7 +172,7 @@
 				</div>
 				<div class="review-write-content">
 					<input type="hidden" name="movieNo" id="movieNo">
-					<textarea name="reviewContent" placeholder="리뷰 내용을 입력해주세요."></textarea>
+					<textarea name="reviewContent" placeholder="리뷰 내용을 입력해주세요." required></textarea>
 					<br>
 
 					<div class="form-check-inline">
@@ -204,6 +207,11 @@
 	            <!-- 검색 결과 -->
                   </div>                    
                </div>
+			
+			      <!-- Modal footer -->
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal" style="background-color:black; border:none;" onclick="$('#insertMovie').hide()">Close</button>
+      		      </div>
              </div>
            </div>
        </div>
@@ -233,7 +241,7 @@
 			
 			      <!-- Modal footer -->
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-danger" data-dismiss="modal" style="background-color:black; border:none;">Close</button>
+			        <button type="button" class="btn btn-danger" data-dismiss="modal" style="background-color:black; border:none;" onclick="$('#seenMovieList').hide()">Close</button>
       		      </div>
       		      
 

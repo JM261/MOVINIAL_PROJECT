@@ -264,13 +264,14 @@
 	
 	<!-- 주현 : 리뷰 좋아요 리스트 -->
 	<entry key="myReviewLikesList">
-	SELECT *
+		SELECT *
 	FROM (
 	    SELECT ROWNUM RNUM, A.*
 	    FROM (
-	        SELECT REVIEW_NO, REVIEW_TITLE, NICKNAME, CREATE_DATE, LIKES, REF_MNO, REVIEW_CONTENT
+	        SELECT REVIEW_NO, REVIEW_TITLE, NICKNAME, CREATE_DATE, LIKES, REF_MNO, REVIEW_CONTENT, POSTER_PATH 
 	        FROM REVIEW R
-	        JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
+	        JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO) 
+            JOIN MOVIE ON (REF_MNO = MOVIE_NO) 
 	        WHERE R.STATUS = 'Y'
 	        AND REVIEW_NO  IN
 	                (SELECT TRIM(REGEXP_SUBSTR(LIKES_REVIEW, '[^,]+', 1, LEVEL)) AS REVIEW_NO
@@ -347,6 +348,7 @@
 	
 	</entry>
 	
+	<!-- 주현 " 영화 좋아요 리스트 수 -->
 	<entry key="selectMovieLikesCount">
 		
 		SELECT COUNT(*) COUNT 
@@ -358,10 +360,9 @@
 	
 	</entry>
 	
-	
 	<!-- 주현 : 봤어요 리스트 -->
 	<entry key="myMovieSeenList">
-SELECT *
+	SELECT *
 		FROM (
 		SELECT ROWNUM RNUM, A.*
             FROM (
@@ -386,24 +387,9 @@ SELECT *
 	                      CONNECT BY  INSTR(SEEN_MOVIE, ',', 1, LEVEL - 1) > 0)
 	</entry>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<entry key="nicknameCheck">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME = ?
+	</entry>
 	
 </properties>
 

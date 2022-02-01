@@ -16,6 +16,7 @@ public class Review {
 	private int reportCount;		// REPORT_COUNT	NUMBER
 	private String status;			// STATUS	VARCHAR2(1 BYTE)
 	private int refMno;				// REF_MNO	NUMBER
+	private String posterPath;
 	
 	// 생성자부
 	public Review() {
@@ -48,7 +49,8 @@ public class Review {
 	 * @param likes
 	 * @param refMno
 	 */
-	public Review(int reviewNo, String reviewWriter, String reviewContent, Date createDate, int likes, int refMno) {
+	public Review(int reviewNo, String reviewWriter, String reviewContent, Date createDate,
+			int likes, int refMno) {
 		super();
 		this.reviewNo = reviewNo;
 		this.reviewWriter = reviewWriter;
@@ -74,6 +76,34 @@ public class Review {
 		this.refMno = refMno;
 	}
 	
+	
+	//주현 : 내 리뷰 글 목록
+	public Review(int reviewNo, String reviewWriter, String reviewTitle, Date createDate, 
+			String posterPath, int refMno) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriter = reviewWriter;
+		this.reviewTitle = reviewTitle;
+		this.createDate = createDate;
+		this.posterPath = posterPath;
+		this.refMno = refMno;
+	}
+	
+
+	//주현 : 내가 좋아요한 글 리뷰 
+	public Review(int reviewNo, String nickname, String reviewTitle, 
+			Date createDate, int likes, int refMno, String reviewContent, String posterPath) {
+		this.reviewNo = reviewNo;
+		this.reviewWriter = nickname;
+		this.reviewTitle = reviewTitle;
+		this.createDate = createDate;
+		this.likes = likes;
+		this.refMno = refMno;
+		this.reviewContent = reviewContent;
+		this.posterPath = posterPath;
+		
+	}
+
 	// 메소드부
 	public int getReviewNo() {
 		return reviewNo;
@@ -169,6 +199,14 @@ public class Review {
 				+ ", reviewContent=" + reviewContent + ", createDate=" + createDate + ", modifyDate=" + modifyDate
 				+ ", publicStatus=" + publicStatus + ", likes=" + likes + ", reportCount=" + reportCount + ", status="
 				+ status + ", refMno=" + refMno + "]";
+	}
+
+	public String getPosterPath() {
+		return posterPath;
+	}
+
+	public void setPosterPath(String posterPath) {
+		this.posterPath = posterPath;
 	}
 	
 }
