@@ -1,4 +1,3 @@
-<%@page import="oracle.net.aso.r"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.movinial.movie.model.vo.Movie, org.json.JSONObject, java.util.ArrayList,
@@ -411,7 +410,8 @@
 	                    	<h5>작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp</h5>
 	                    </td>
 	                    <td align="right">
-                    		<a type="button" class="mylist" data-toggle="modal" data-target="#reportForm" style="text-decoration: none; color: white;">신고하기</a><!-- MODAL -->
+	                    	<!-- 리뷰 신고하기 -->
+                    		<a type="button" class="mylist reportButton" data-toggle="modal" data-review-no="<%= r.getReviewNo() %>" data-target="#reportForm" style="text-decoration: none; color: white;">신고하기</a>
 	                    </td>
 	                </tr>
 	                <tr>
@@ -426,6 +426,7 @@
 	                </tr>
 	                <tr>
 	                    <td>
+	                    	<!-- 리뷰 좋아요 -->
 							<a class="review-likes-btn btn-group" onclick="checkReviewLikes('<%= r.getReviewWriter() %>', '<%= r.getReviewNo() %>', this)">
 	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 30px; height: 30px;">&nbsp&nbsp
 								<h4><%= r.getLikes() %></h4>
@@ -437,6 +438,106 @@
                <% } %>
 		</table>
 	</div>
+
+	<!-- 리뷰 신고 Modal -->
+	<div class="container">
+		<div class="modal fade" id="reportForm">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+				
+					<!-- Modal 헤더 -->
+					<div class="modal-header">
+						<h4 class="modal-title" style="color: red;">신고 사유</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<!-- 리뷰 신고 사유 작성란 -->
+					<div class="modal-body">
+						<textarea id="reportContent" class="form-control" cols="59" rows="5" style="resize: none;"></textarea>
+					</div>
+					
+					<!-- 신고 제출 버튼 -->
+					<div class="modal-footer">
+						<button type="button" onclick="checkReportReview();" class="btn btn-danger" data-dismiss="modal">제출</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%-- 리뷰 신고 --%>
+	<script>
+	
+		$(document).on("click", ".reportButton", function() {
+			var reviewNo = $(this).data("review-no");
+			$("#reportContent").text(reviewNo);
+		})
+	
+	
+	
+	// 매개변수: 현재 리뷰 번호, 사용자가 누른 review-likes-btn 클래스 요소
+		
+		// 리뷰 신고 전 신고 여부 체크
+		function checkReportReview() {
+			
+			var cno = ""
+			
+			$.ajax({ 
+				url : "chkreport.rev",
+				data : {
+
+				},
+				success : function(rc){
+	
+					if(rc.reportCommunity != null){ // 가져온 likesCommunity의 값이 null이 아니면
+						
+						var reportCm = rc.reportCommunity.split(',');
+	
+						if(reportCm.indexOf(cno) != -1){ // 배열에 찾는 글번호가 있으면, 이미 좋아요를 누른 것
+							alert("이미 신고한 게시글 입니다.");
+						}
+						else{ // 배열에 찾는 이 게시글 글번호가 없으면 신고한 적 없는 것
+							reportCommunity() // 그럼 신고하기 실행
+						}
+					}
+					else{// 가져온 reportCommunity의 값이 null 이면, 바로 신고하기 실행
+						reportCommunity()
+					}
+				},
+				error : function(){
+					console.log("게시글 신고 AJAX실패");
+				}
+			})
+			
+		}
+		
+		// 리뷰 신고하기
+		function reportReview(){ 
+	
+			$.ajax({
+				url : "report.rev",
+				data : {
+
+				},
+				success : function(like){
+					
+					if(like > 0){
+						alert("해당 게시글을 신고했습니다.");
+					}
+					else{
+						console.log('좋아요 실패 ㅜㅜ');
+					}
+				},
+				error : function(){
+					console.log("좋아요 AJAX실패");
+				}	
+			})
+			
+		}
+		
+	</script>
+
 
 	<%-- 리뷰 좋아요: 로그인 여부 확인 --%>
 	<% if(loginUser == null) { %>
@@ -545,7 +646,7 @@
 			}
 			
 		</script>
-	<% } %>
+	<% } %>	
 	
 	<%@ include file="../common/footer.jsp" %>
 

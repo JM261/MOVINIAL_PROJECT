@@ -44,7 +44,7 @@ public class MovieReviewInsertController extends HttpServlet {
 		String memberNickname = request.getParameter("memberNickname"); // 회원 닉네임
 		String movieTitle = request.getParameter("movieTitle"); // 국내 영화 번호
 		
-		String reviewTitle = memberNickname + "의 " + movieTitle + " 리뷰"; // 기본 생성 제목
+		String reviewTitle = memberNickname + "의 <" + movieTitle + "> 리뷰"; // 기본 생성 제목
 		
 		// Review 작성
 		int result = new ReviewService().insertMovieReview(memberNo, movieNo, reviewContent, reviewShow, reviewTitle);
