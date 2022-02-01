@@ -28,21 +28,38 @@
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-	<!-- 해당 영화의 리뷰 정보 받아오기 -->
-	<entry key="selectMovieReview">
+	<!-- 해당 영화의 리뷰 정보 받아오기 (로그아웃 유저) -->
+	<entry key="selectMovieReviewLogout">
 		SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
-		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES
-		                  FROM REVIEW R
-		                  JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
-		                 WHERE PUBLIC_STATUS = 'Y'
-		                   AND REPORT_COUNT &lt;= 15
-		                   AND REF_MNO = ?
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, PROFILE_IMAGE
+		                  FROM (SELECT *
+		                          FROM VW_REVIEW_PUBLIC)
+		                 WHERE REF_MNO = ?
 		                 ORDER
 		                    BY CREATE_DATE DESC) A)
-		WHERE RNUM &lt;= 5
+		 WHERE RNUM &lt;= 5
+	</entry>
+	
+	<!-- 해당 영화의 리뷰 정보 받아오기 (로그인 유저) -->
+	<entry key="selectMovieReviewLogin">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, PROFILE_IMAGE
+		                  FROM (SELECT *
+		                          FROM VW_REVIEW_PUBLIC
+		                        UNION
+		                        (SELECT *
+		                           FROM VW_REVIEW_PRIVATE
+		                          WHERE REVIEW_WRITER = ?))
+		                 WHERE REF_MNO = ?
+		                 ORDER
+		                    BY CREATE_DATE DESC) A)
+		 WHERE RNUM &lt;= 5
 	</entry>
 	
 	<!-- 리뷰 상세보기 페이지에서 리뷰 작성 -->
@@ -51,4 +68,54 @@
 		VALUES (SEQ_REVNO.NEXTVAL, ?, ?, ?, DEFAULT, ?, DEFAULT, DEFAULT, ?)
 	</entry>
 	
+	<entry key="mainPageReview">
+		SELECT *
+		FROM(SELECT REVIEW_NO, MEMBER_NAME, REVIEW_CONTENT, POSTER_PATH, REF_MNO
+		FROM REVIEW
+		JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
+		JOIN MOVIE ON (REF_MNO = MOVIE_NO)
+		ORDER BY LIKES DESC)
+		WHERE 5 > ROWNUM
+	</entry>
+	
+	<!-- 리뷰 좋아요 시작 -->
+	
+	<!-- 리뷰 좋아요 테이블 회원번호로 조회 -->
+	<entry key="selectLikesReview">
+		SELECT LIKES_REVIEW
+		  FROM LIKES_REVIEW
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 해당 리뷰의 좋아요 수 증가 -->
+	<entry key="increaseLikes">
+		UPDATE REVIEW
+		   SET LIKES = LIKES + 1
+		 WHERE REVIEW_NO = ?
+	</entry>
+	
+	<!-- 해당 리뷰의 좋아요 수 감소 -->
+	<entry key="decreaseLikes">
+		UPDATE REVIEW
+		   SET LIKES = LIKES - 1
+		 WHERE REVIEW_NO = ?
+	</entry>
+	
+	<!-- 좋아요 누른 리뷰 번호, 리뷰 좋아요 '좋아요' 컬럼에 저장 -->
+	<entry key="likesReviewStore">
+		UPDATE LIKES_REVIEW
+		   SET LIKES_REVIEW = LIKES_REVIEW || ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 좋아요 누른 리뷰 번호, 리뷰 좋아요 '좋아요' 컬럼에서 삭제 -->
+	<entry key="likesReviewRemove">
+		UPDATE LIKES_REVIEW
+		   SET LIKES_REVIEW = REPLACE(LIKES_REVIEW, ?, '')
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<!-- 리뷰 좋아요 끝 -->
+	
+
 </properties>

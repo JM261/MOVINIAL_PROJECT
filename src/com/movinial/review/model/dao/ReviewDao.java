@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.movinial.common.model.vo.PageInfo;
+import com.movinial.member.model.vo.LikesReview;
 import com.movinial.review.model.vo.Review;
 
 public class ReviewDao {
@@ -32,10 +33,11 @@ public class ReviewDao {
 		}
 		
 	}
-
+	
 	/**
 	 * 해당 영화의 공개된 리뷰의 총 개수
 	 * @param conn
+	 * @param movieNo
 	 * @return
 	 */
 	public int selectListCount(Connection conn, int movieNo) {
@@ -68,10 +70,11 @@ public class ReviewDao {
 		return listCount;
 		
 	}
-
+	
 	/**
 	 * 해당 영화 리뷰 상세보기 페이지 출력
 	 * @param conn
+	 * @param movieNo
 	 * @param pi
 	 * @return
 	 */
@@ -118,20 +121,21 @@ public class ReviewDao {
 		return list;
 		
 	}
-
+	
 	/**
-	 * 해당 영화의 리뷰 정보 받아오기
+	 * 해당 영화의 리뷰 정보 받아오기 (로그아웃 유저)
 	 * @param conn
-	 * @param reviewNum
+	 * @param memberNo
+	 * @param movieNo
 	 * @return
 	 */
-	public ArrayList<Review> selectMovieReview(Connection conn, int movieNo) {
+	public ArrayList<Review> selectMovieReviewLogout(Connection conn, int movieNo) {
 		
 		ArrayList<Review> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectMovieReview");
+		String sql = prop.getProperty("selectMovieReviewLogout");
 		
 		try {
 			
@@ -146,7 +150,52 @@ public class ReviewDao {
 								    rset.getString("NICKNAME"),
 								    rset.getString("REVIEW_CONTENT"),
 								    rset.getDate("CREATE_DATE"),
-								    rset.getInt("LIKES")));
+								    rset.getInt("LIKES"),
+								    rset.getString("PROFILE_IMAGE")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+
+	/**
+	 * 해당 영화의 리뷰 정보 받아오기 (로그인 유저)
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public ArrayList<Review> selectMovieReviewLogin(Connection conn, int memberNo, int movieNo) {
+		
+		ArrayList<Review> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMovieReviewLogin");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, movieNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(rset.getInt("REVIEW_NO"),
+								    rset.getString("NICKNAME"),
+								    rset.getString("REVIEW_CONTENT"),
+								    rset.getDate("CREATE_DATE"),
+								    rset.getInt("LIKES"),
+								    rset.getString("PROFILE_IMAGE")));
 			}
 			
 		} catch (SQLException e) {
@@ -160,8 +209,6 @@ public class ReviewDao {
 		
 	}
 	
-	
-
 	/**
 	 * 리뷰 상세보기 페이지에서 리뷰 작성
 	 * @param conn
@@ -200,8 +247,210 @@ public class ReviewDao {
 		return result;
 		
 	}
+
+	// 메인에 띄울 베스트 리뷰
+	public ArrayList<Review> mainPageReview(Connection conn) {
+		
+		ArrayList<Review> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("mainPageReview");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				list.add(new Review(rset.getInt("REVIEW_NO")
+								   ,rset.getString("MEMBER_NAME")
+								   ,rset.getString("REVIEW_CONTENT")
+								   ,rset.getInt("REF_MNO")
+								   ,rset.getString("POSTER_PATH")
+						));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return list;
+	} 
 	
+	// ---------- 리뷰 좋아요 시작 ----------
 	
+	/**
+	 * 리뷰 좋아요 테이블 회원번호로 조회
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 */
+	public LikesReview selectLikesReview(Connection conn, int memberNo) {
+
+		LikesReview lr = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectLikesReview");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				lr = new LikesReview();
+				lr.setLikesReview(rset.getString("LIKES_REVIEW"));
+
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		
+		return lr;
+		
+	}
+
+	/**
+	 * 해당 리뷰의 좋아요 수 증가
+	 * @param conn
+	 * @param reviewNo
+	 * @return
+	 */
+	public int increaseLikes(Connection conn, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseLikes");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reviewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	/**
+	 * 해당 리뷰의 좋아요 수 감소
+	 * @param conn
+	 * @param reviewNo
+	 * @return
+	 */
+	public int decreaseLikes(Connection conn, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("decreaseLikes");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reviewNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	/**
+	 * 좋아요 누른 리뷰 번호, 리뷰 좋아요 '좋아요' 컬럼에 저장
+	 * @param conn
+	 * @param memberNo
+	 * @param reviewNo
+	 * @return
+	 */
+	public int likesReviewStore(Connection conn, int memberNo, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("likesReviewStore");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(reviewNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	/**
+	 * 좋아요 누른 리뷰 번호, 리뷰 좋아요 '좋아요' 컬럼에서 삭제
+	 * @param conn
+	 * @param memberNo
+	 * @param reviewNo
+	 * @return
+	 */
+	public int likesReviewRemove(Connection conn, int memberNo, int reviewNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("likesReviewRemove");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "," + String.valueOf(reviewNo));
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+	// ---------- 리뷰 좋아요 끝 ----------
 	
 
 }

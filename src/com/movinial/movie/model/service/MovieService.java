@@ -3,8 +3,8 @@ package com.movinial.movie.model.service;
 import static com.movinial.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
-import com.movinial.community.model.dao.CommunityDao;
 import com.movinial.member.model.vo.LikesMovie;
 import com.movinial.movie.model.dao.MovieDao;
 import com.movinial.movie.model.vo.Movie;
@@ -297,8 +297,108 @@ public class MovieService {
 	}
 
 	// ---------- 영화 좋아요 끝 ----------
+
+	public ArrayList<Movie> movieTopTen() { // movieTopTen : 좋아요  TOP10 영화
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().movieTopTen(conn);
+		
+		close(conn);
+		
+		return list;
+		
+	} // movieTopTen : 좋아요  TOP10 영화
+
+
+	public ArrayList<Movie> moviePopular() { // MoviePopular : 인기영화
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().moviePopular(conn);
+		
+		close(conn);
+		
+		return list;
+		
+	} // MoviePopular : 인기영화
+
 	
 	
+	// ---------- 회원 추천 영화 시작 ----------
+
+	/**
+	 * 회원 선호 장르 가져오기
+	 * @param memberNo
+	 * @return
+	 */
+	public String selectMemberPreferGenre(int memberNo) {
+		
+		Connection conn = getConnection();
+		
+		String result = new MovieDao().selectMemberPreferGenre(conn, memberNo);
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	/**
+	 * 선호 장르 없는 회원 추천 영화 가져오기 (5개)
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovieRandom() {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().selectMemberRecommendMovieRandom(conn);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+	
+	/**
+	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
+	 * @param regExpGenre
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovie(String regExpGenre) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Movie> list = new MovieDao().selectMemberRecommendMovie(conn, regExpGenre);
+		
+		close(conn);
+		
+		return list;
+		
+	}
+
+	// ---------- 회원 추천 영화 끝 ----------
+
+	
+	/**
+	 * 메인화면 영화 배경이미지 가져오기
+	 * @return
+	 */
+	public Movie selectMaingBackgroundImage() {
+		
+		Connection conn = getConnection();
+		
+		Movie m = new MovieDao().selectMaingBackgroundImage(conn);
+		
+		close(conn);
+		
+		return m;
+		
+	}
+
+
+
+
 	
 	
 }

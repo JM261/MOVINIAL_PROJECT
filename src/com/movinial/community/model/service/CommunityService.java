@@ -339,5 +339,16 @@ public class CommunityService {
 		return m;
 	}
 
+	public ArrayList<Community> mainPageCommunity() { // 메인 페이지에 띄워줄 커뮤니티 글
+
+		Connection conn = getConnection();
+		
+		ArrayList<Community> list = new CommunityDao().mainPageCommunity(conn);
+		
+		close(conn);
+		
+		return list;
+	}  // 메인 페이지에 띄워줄 커뮤니티 글
+
 
 }

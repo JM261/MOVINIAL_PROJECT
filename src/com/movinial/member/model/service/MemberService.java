@@ -14,6 +14,8 @@ import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.Reply;
 import com.movinial.member.model.dao.MemberDao;
 import com.movinial.member.model.vo.Member;
+import com.movinial.review.model.vo.ReviewRank;
+import com.movinial.member.model.vo.MemberGenre;
 import com.movinial.member.model.vo.MyPageFile;
 import com.movinial.movie.model.vo.Movie;
 import com.movinial.review.model.vo.Review;
@@ -43,8 +45,16 @@ public class MemberService {
 		
 		int result = new MemberDao().insertMember(conn, m);
 		
+		
 		// 성공헀으면 1, 실패했다면 0으로 리턴이 되었을 것이다.
 		if(result > 0) { //성공했다면
+			
+		Member mm = new MemberDao().loginMember(conn, m.getMemberId(), m.getMemberPwd());
+		m.setMemberNo(mm.getMemberNo());
+		result += new MemberDao().insertMemberLikeCommunity(conn, m);
+		result += new MemberDao().insertMemberLikeMovie(conn, m);
+	    result += new MemberDao().insertMemberLikeReview(conn, m);
+			
 			commit(conn);
 		} else { // 실패했다면
 			rollback(conn);
@@ -56,7 +66,7 @@ public class MemberService {
 		
 		
 	}
-
+		
 	public String findId(String memberName, String phone) { // 아아디 찾기
 
 		Connection conn = getConnection();
@@ -75,7 +85,7 @@ public class MemberService {
 		Member m = new MemberDao().forgotPwd(conn, memberId, memberName, phone);
 
 		close(conn);
-
+    
 		return m;
 	}
 	
@@ -139,9 +149,43 @@ public class MemberService {
 		return list;
 		
 	} // searchMember : 키워드로 검색
+  
+	public int idCheck(String checkId) { // 아이디 중복 체크
+		
+		Connection conn = getConnection();
+		int count = new MemberDao().idCheck(conn, checkId);
+		close(conn);
+	
+		return count;
+
+		
+	}
+	
+	public  ArrayList<MemberGenre> selectGenreList() { // 장르조회
+		
+		Connection conn = getConnection();
+		ArrayList<MemberGenre> memberGenreList = new MemberDao().selectGenreList(conn);
+		close(conn);
+	
+		return memberGenreList;
+
+		
+	}
+  
+	public  ArrayList<MemberGenre> selectGenreMoiveList() { // 장르별영화목록
+		
+		Connection conn = getConnection();
+		ArrayList<MemberGenre> memberGenreMovieList = new MemberDao().selectGenreMoiveList(conn);
+		close(conn);
+	
+		return memberGenreMovieList;
+
+		
+	}
 
 	//주현 : 회원탈퇴
 	public int deleteMember(String memberId, String memberPwd) {
+
 	
 		Connection conn = getConnection();
 		
@@ -320,9 +364,20 @@ public class MemberService {
 		ArrayList<Community> list = new MemberDao().myCommunityLikesList(conn,pi,memberNo);
 			
 		close(conn);
-
+		
 		return list;
 		
+	}
+
+	public ArrayList<ReviewRank> reviewRanking() {
+
+		Connection conn = getConnection();
+		
+		ArrayList<ReviewRank> list = new MemberDao().reviewRanking(conn);
+		
+		close(conn);
+		
+		return list;
 	}
 	
 	//주현 : 내가 누른 영화 좋아요 리스트 수
