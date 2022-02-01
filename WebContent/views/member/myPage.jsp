@@ -130,7 +130,7 @@
             <div class="profile">
 				<form id="updateForm" action="<%= contextPath %>/myPage.me" method="post" enctype="multipart/form-data">
 	          		
-	          		<img id="img" src="<%= contextPath %>${profileImage}" onerror="this.src='<%= contextPath %>/resources/mypage_upfiles/2022020105405464683.png'" alt="프로필">
+	          		<img id="img" src="<%= contextPath %>${profileImage}" onerror="this.src='<%= contextPath %>/resources/images/profilePic.png'" alt="프로필">
 					<input id="reUpfile" type="file" style="display: none;"
 						class="form-control-file border" name="reUpfile" onchange="contentImg(this);">
 				</form>
