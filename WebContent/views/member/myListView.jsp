@@ -78,8 +78,8 @@
 
   <table class="table list-area">
     <thead>
-    	<a class="mylist" href="<%= contextPath %>/mylist.bo?currentPage=1&userNo=<%= memberNo %>">내 글</a>&nbsp;
-    	<a class="mylist" href="<%= contextPath %>/myReplyList.bo?currentPage=1&userNo=<%= memberNo %>">내 댓글</a>
+    	<a class="mylist" href="<%= contextPath %>/mylist.bo?currentPage=1">내 글</a>&nbsp;
+    	<a class="mylist" href="<%= contextPath %>/myReplyList.bo?currentPage=1">내 댓글</a>
 
 	<!-- 내 글만 보기------------------------------------------ -->
 

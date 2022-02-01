@@ -302,7 +302,7 @@
 							SEEN</a></li>
 					<li><a href="<%=contextPath%>/myMovie.Likes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LIKES
 							LIST</a></li>
-					<li><a href="<%=contextPath%>/mylist.bo?currentPage=1&userNo=<%=memberNo%>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내가
+					<li><a href="<%=contextPath%>/mylist.bo?currentPage=1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내가
 							쓴 글</a></li>
 	
 					<br>

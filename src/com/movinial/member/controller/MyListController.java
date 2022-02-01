@@ -14,6 +14,7 @@ import com.movinial.common.model.vo.PageInfo;
 import com.movinial.community.model.vo.Community;
 import com.movinial.community.model.vo.Reply;
 import com.movinial.member.model.service.MemberService;
+import com.movinial.member.model.vo.Member;
 
 /**
  * Servlet implementation class MyListController
@@ -53,10 +54,10 @@ public class MyListController extends HttpServlet {
 		
 		ArrayList<Community> list = new ArrayList<>();
 		
-		int userNo = Integer.parseInt(request.getParameter("userNo"));
+		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		
 		
-		listCount = new MemberService().selectListCount(userNo);
+		listCount = new MemberService().selectListCount(memberNo);
 		startPage = (currentPage-1) / pageLimit * pageLimit + 1;
 	
 		endPage = startPage + pageLimit -1;
@@ -70,13 +71,7 @@ public class MyListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		//글
-		list = new MemberService().selectList(pi, userNo);
-		
-		/*
-		 * if(!list.isEmpty()) { list.get(0).setCommunityWriter(String.valueOf(userNo));
-		 * }
-		 */
-		// 5) 응답 뷰 지정 => list, pi를 넘기자
+		list = new MemberService().selectList(pi, memberNo);
 		
 		//글
 		request.setAttribute("list", list);
