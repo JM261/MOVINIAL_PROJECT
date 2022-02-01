@@ -19,7 +19,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MOVINIAL&nbsp;[:near]</title>
+<title>MY MOVINIAL</title>
 
  <style>
  

@@ -18,7 +18,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>LIKES LIST&nbsp;[REVIEWS]</title>
 
 <style>
 
@@ -57,6 +57,10 @@
  	 table{
  		text-align: center;
  	} 
+ 	
+ 	.table td, .table th {
+ 	    vertical-align: middle !important;
+    }
 	
 	
 	.pagingation{
@@ -94,7 +98,7 @@
     	<a class="mybtn2" id="m3" href="<%= contextPath %>/myCommunity.Likes">게시글</a>
     	<br>
       <tr>
-        <th width="300px">리뷰</th>
+        <th width="300px" colspan="2">리뷰</th>
         <th width="100px">작성자</th>
         <th width="100px">작성일</th>
       </tr>
@@ -107,6 +111,7 @@
      <%} else{ %>
      	<% for(Review rv : list) { %>
       <tr reviewNo ="<%= rv.getRefMno() %>">
+      		<td width="150px" height="200px"><img src="https://image.tmdb.org/t/p/w185<%= rv.getPosterPath()%>" alt=""></td>
 	        <td width="300px"><%= rv.getReviewTitle() %></td>
 	        <td width="100px"><%= rv.getReviewWriter() %></td>
 	        <td width="100px"><%= rv.getCreateDate() %></td>

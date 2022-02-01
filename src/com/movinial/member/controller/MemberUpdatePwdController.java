@@ -50,7 +50,7 @@ public class MemberUpdatePwdController extends HttpServlet {
 		 if(updateMem == null) { //실패했을때
 			session.setAttribute("alertMsg", "비밀번호가 변경되지 않았습니다. 다시 시도해주세요."); 
 		 } else { //성공했을때
-			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다");
+			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
 			session.setAttribute("loginUser", updateMem);
 		 }
 			

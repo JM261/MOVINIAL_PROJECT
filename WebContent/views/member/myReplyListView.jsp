@@ -17,7 +17,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>MOVINIAL&nbsp;[:near]</title>
+<title>MY MOVINIAL</title>
 
  <style>
  
@@ -85,7 +85,6 @@
     	<a class="mylist" href="<%= contextPath %>/myReplyList.bo?currentPage=1&userNo=<%= memberNo %>">내 댓글</a>
 
       <tr>
-      	<th width="10px"></th>
         <th width="200px">게시글 제목</th>
         <th width="300px">댓글 내용</th>
         <th width="160px">게시글 작성자</th>
@@ -103,7 +102,6 @@
      	<% for(Reply r : list) { %>
      		
       <tr myListReply = <%= r.getReplyNo() %>>
-        <td width="10px"><input type="hidden" value="<%= r.getReplyNo() %>"></td>
         <td width="200px"><%= r.getReplyTitle() %></td>
         <td width="300px"><%= r.getReplyContent() %></td>
         <td width="160px"><%= r.getReplyWriter() %></td>
@@ -124,9 +122,9 @@
 		
 		var loginUser = '<%= loginUser %>'
 
-	    if(loginUser != 'null') {
+	    if(loginUser != null) {
 			$(".list-area>tbody>tr").click(function(){
-				location.href = "<%=contextPath%>/detail.cm?cno=" +  + $(this).attr('myListReply');
+				location.href = "<%=contextPath%>/detail.cm?cno=" + $(this).attr('myListReply');
 			})
 		} else{
 	        alert("로그인 후 이용해주시기 바랍니다.");

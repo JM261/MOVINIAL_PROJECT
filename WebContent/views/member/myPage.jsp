@@ -5,7 +5,7 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>my Page</title>
+    <title>마이페이지</title>
 
     <style>
 
@@ -87,7 +87,7 @@
 	 
 	 .posters>img{
 	 	width:100%;
-	 	height:500px;
+	 	height:680px;
 	 	border-radius:30px;
 	 	
 	 	float:left;
@@ -130,7 +130,7 @@
             <div class="profile">
 				<form id="updateForm" action="<%= contextPath %>/myPage.me" method="post" enctype="multipart/form-data">
 	          		
-	          		<img id="img" src="<%= contextPath %>${profileImage}" alt="프로필">
+	          		<img id="img" src="<%= contextPath %>${profileImage}" onerror="this.src='<%= contextPath %>/resources/mypage_upfiles/2022020105405464683.png'" alt="프로필">
 					<input id="reUpfile" type="file" style="display: none;"
 						class="form-control-file border" name="reUpfile" onchange="contentImg(this);">
 				</form>
@@ -147,16 +147,9 @@
 	        <br>
 	        <div class="posters">
 			  <img src="<%= contextPath %>/resources/images/lala.png" alt="">
-			</div> 
-        </div>
-        
-        <div class="dt-content">
-          <h2>My Contents3</h2>
-          	
-          
+                                                                                                                                                                                      			</div> 
         </div>
 
-		
       <!-- --------------------------------------------------------------푸터 시작----------------------- -->
 
 		

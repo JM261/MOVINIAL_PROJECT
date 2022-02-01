@@ -16,10 +16,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>MOVIE SEEN</title>
 <style>
 	
 	
+	.list-area {
+	    display: inline-block;
+	}
 	.thumbnail{
 		border : 2px solid black;
 		width : 205px;
@@ -36,47 +39,22 @@
 		float:right;
 		width:200px;
 		height:50px;
-		text-align:center;
 		border-left:none;
 		border-right:none;
 		border-top:none;
-
+		display:inline-block;
+		text-align: center;
 	}
 
-	
-	.mylist{
- 		color:white;
- 		background-color:black;
- 		line-height:35px;
- 		width:70px;
- 		list-style:none;
- 		display:inline-block;
- 		text-align:center;
- 		margin-bottom:10px;
- 		margin-left:10px;
- 		margin-right:10px;
- 		margin-top:10px;
- 		text-decolation:none;
- 	}
- 	
- 	.mylist>a:hover{
- 		text-decolation:none;
- 	}
- 	
  	table{
  		text-align: center;
  	}
- 	
- 	.list-area>tbody>tr:hover{
-		cursor :pointer;
-		background : lightgray;
-	}
 	
 	.pagingation{
 		border:none;
 		float:left;
 		margin-top:50px;
-		margin-left:650px;
+		margin-left:650px; 
 	}
 	
 	.page-item{
@@ -85,21 +63,6 @@
 		background-color:white;
 		width:30px;
 	}
-	#m1, #m2, #m3{
- 		color:white;
- 		background-color:black;
- 		line-height:35px;
- 		width:70px;
- 		list-style:none;
- 		display:inline-block;
- 		text-align:center;
- 		margin-bottom:20px;
- 		margin-right:10px;
- 		margin-top:10px;
- 	}
-	
-	
-
 
 </style>
 </head>
@@ -109,7 +72,7 @@
 	<div class="dt-content">
 	
 	<h2>MOVIE SEEN</h2>
-	<select name="preferGenreMV" id="selectMV">
+	<!-- <select name="preferGenreMV" id="selectMV">
 		<option value="전체" selected>전체</option>
 		<option value="28">액션</option>
 		<option value="12">모험</option>
@@ -130,7 +93,7 @@
 		<option value="53">스릴러</option>
 		<option value="10770">전쟁</option>
 		<option value="37">서부</option>
-	</select>
+	</select> -->
 	<br>
 	<p><code><%= loginUser.getMemberNickname() %></code> 님과 함께한 영화들, 기억하시나요?</p>
 	<hr>
@@ -148,10 +111,9 @@
 					<input type="hidden" value="<%= mv.getMovieNo() %>">
 					<img src ="https://image.tmdb.org/t/p/w185<%= mv.getPosterPath() %>" width="200px" height="250px">	
 				</div>
-			</div>
+			</div> 
 		<%} %>
 	<%} %>
-	</div>
 	<script>
 		$(function(){
 			var loginUser = '<%= loginUser %>'
@@ -190,8 +152,9 @@
       	<% if(currentPage!= maxPage){ %>
         		<button class="page-item" onclick="location.href='<%= contextPath%>/myMovie.Seen?currentPage=<%= currentPage +1 %>&userNo=<%= memberNo%>'">&gt;</button>
         <%} %>
-   </div>
 	</div>
+	</div>
+   </div>
 	<%@ include file="../../views/common/footer.jsp" %>
 </body>
 </html>

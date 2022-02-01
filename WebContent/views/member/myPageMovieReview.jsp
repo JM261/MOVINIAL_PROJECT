@@ -11,15 +11,13 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
-	
-
 %>
     
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>YOUR REVIEWS</title>
 
 <style>
 
@@ -32,6 +30,10 @@
  		text-align: center;
  		
  	}
+ 	
+ 	.table td, .table th {
+ 	    vertical-align: middle !important;
+    }
  	
  	.list-area>tbody>tr:hover{
 		cursor :pointer;
@@ -60,11 +62,6 @@
 		text-decoration:none;
 		margin-top:50px;
 		padding-top:5px;
-		
-	
-	/* -----------리뷰작성 모달창-------------- */
-	
-        
 	}
 
 </style>
@@ -74,7 +71,7 @@
 	<%@ include file="../../views/common/headerSidebar.jsp" %>
 	
 	<div class="dt-content">
-	<a class="btn_mr" href="http://localhost:8777/movinial/reviewEnroll.my">리뷰쓰기</a> 
+	<a class="btn_mr" href="<%= contextPath %>/reviewEnroll.my">리뷰쓰기</a> 
 
 	<h2>Your Reviews</h2>
 	<br>

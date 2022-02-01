@@ -72,9 +72,10 @@ public class MyListController extends HttpServlet {
 		//글
 		list = new MemberService().selectList(pi, userNo);
 		
-		if(!list.isEmpty()) {
-			list.get(0).setCommunityWriter(String.valueOf(userNo));
-		}
+		/*
+		 * if(!list.isEmpty()) { list.get(0).setCommunityWriter(String.valueOf(userNo));
+		 * }
+		 */
 		// 5) 응답 뷰 지정 => list, pi를 넘기자
 		
 		//글
