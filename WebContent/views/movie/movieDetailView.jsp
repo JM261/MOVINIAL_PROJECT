@@ -517,7 +517,7 @@
 						}
 						
 					}
-					else { // 없으면, 리뷰 신고 Modal 열기
+					else { // null일 경우, 리뷰 신고 Modal 열기
 						$(".report-modal").click();
 					}
 					
