@@ -138,6 +138,7 @@ public class MemberService {
 		
 	} // deleteMember : 멤버 삭제
 
+	
 	public ArrayList<Member> searchMember(String keyword) { // searchMember : 키워드로 검색
 		
 		Connection conn = getConnection();
@@ -148,41 +149,9 @@ public class MemberService {
 		
 		return list;
 		
-	} // searchMember : 키워드로 검색
-  
-	public int idCheck(String checkId) { // 아이디 중복 체크
-		
-		Connection conn = getConnection();
-		int count = new MemberDao().idCheck(conn, checkId);
-		close(conn);
-	
-		return count;
+	} 
 
-		
-	}
 	
-	public  ArrayList<MemberGenre> selectGenreList() { // 장르조회
-		
-		Connection conn = getConnection();
-		ArrayList<MemberGenre> memberGenreList = new MemberDao().selectGenreList(conn);
-		close(conn);
-	
-		return memberGenreList;
-
-		
-	}
-  
-	public  ArrayList<MemberGenre> selectGenreMoiveList() { // 장르별영화목록
-		
-		Connection conn = getConnection();
-		ArrayList<MemberGenre> memberGenreMovieList = new MemberDao().selectGenreMoiveList(conn);
-		close(conn);
-	
-		return memberGenreMovieList;
-
-		
-	}
-
 	//주현 : 회원탈퇴
 	public int deleteMember(String memberId, String memberPwd) {
 
@@ -203,11 +172,11 @@ public class MemberService {
 	}
 
 	//주현 : 내 글 리스트
-	public ArrayList<Community> selectList(PageInfo pi, int userNo) {
+	public ArrayList<Community> selectList(PageInfo pi, int memberNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Community> list = new MemberDao().selectList(conn,pi,userNo);
+		ArrayList<Community> list = new MemberDao().selectList(conn,pi,memberNo);
 		
 		close(conn);
 		
@@ -216,11 +185,11 @@ public class MemberService {
 	}
 	
 	//주현 : 내 글 수
-	public int selectListCount(int userNo) {
+	public int selectListCount(int memberNo) {
 		
 		Connection conn = getConnection();
 		
-		int listCount = new MemberDao().selectListCount(conn,userNo);
+		int listCount = new MemberDao().selectListCount(conn,memberNo);
 		
 		close(conn);
 		
@@ -228,11 +197,11 @@ public class MemberService {
 	}
 	
 	//주현 : 내 댓글 목록 가져오기
-	public ArrayList<Reply> selectReplyList(PageInfo pi, int userNo) {
+	public ArrayList<Reply> selectReplyList(PageInfo pi, int memberNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Reply> list = new MemberDao().selectReplyList(conn,pi,userNo);
+		ArrayList<Reply> list = new MemberDao().selectReplyList(conn,pi,memberNo);
 		
 		close(conn);
 
@@ -240,11 +209,11 @@ public class MemberService {
 	}
 
 	//주현 : 내 댓글 수 가져오기
-	public int selectReplyListCount(int userNo) {
+	public int selectReplyListCount(int memberNo) {
 		
 		Connection conn = getConnection();
 		
-		int listCount = new MemberDao().selectReplyListCount(conn,userNo);
+		int listCount = new MemberDao().selectReplyListCount(conn,memberNo);
 
 		close(conn);
 		

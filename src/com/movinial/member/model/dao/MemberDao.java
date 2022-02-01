@@ -492,7 +492,7 @@ public class MemberDao {
 		}
 
 		// 주현 : 내 글 목록(커뮤니티)
-	public ArrayList<Community> selectList(Connection conn, PageInfo pi, int userNo) {
+	public ArrayList<Community> selectList(Connection conn, PageInfo pi, int memberNo) {
 
 			ArrayList<Community> list = new ArrayList<>();
 			// select문 => ResultSet=> 여러행으로 돌아옴 ArrayList에 담자
@@ -507,7 +507,7 @@ public class MemberDao {
 				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 				int endRow = startRow + pi.getBoardLimit() - 1;
 
-				pstmt.setInt(1, userNo);
+				pstmt.setInt(1, memberNo);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 
@@ -532,7 +532,7 @@ public class MemberDao {
 		}
 
 		// 주현 : 내 글 수
-	public int selectListCount(Connection conn, int userNo) {
+	public int selectListCount(Connection conn, int memberNo) {
 			// SELECT문을 쓰지만 값은 정수가 필요함(총 게시글의 갯수)
 			// 변수
 			int listCount = 0;
@@ -545,7 +545,7 @@ public class MemberDao {
 			try {
 				pstmt = conn.prepareStatement(sql);
 
-				pstmt.setInt(1, userNo);
+				pstmt.setInt(1, memberNo);
 
 				rset = pstmt.executeQuery();
 
@@ -563,7 +563,7 @@ public class MemberDao {
 		}
 
 		// 주현 : 내 댓글 목록
-	public ArrayList<Reply> selectReplyList(Connection conn, PageInfo pi, int userNo) {
+	public ArrayList<Reply> selectReplyList(Connection conn, PageInfo pi, int memberNo) {
 
 			ArrayList<Reply> list = new ArrayList<>();
 
@@ -578,7 +578,7 @@ public class MemberDao {
 				int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 				int endRow = startRow + pi.getBoardLimit() - 1;
 
-				pstmt.setInt(1, userNo);
+				pstmt.setInt(1, memberNo);
 				pstmt.setInt(2, startRow);
 				pstmt.setInt(3, endRow);
 
@@ -603,7 +603,7 @@ public class MemberDao {
 		}
 
 		// 주현 : 내 댓글 수
-	public int selectReplyListCount(Connection conn, int userNo) {
+	public int selectReplyListCount(Connection conn, int memberNo) {
 
 			int listCount = 0;
 
@@ -616,7 +616,7 @@ public class MemberDao {
 
 				pstmt = conn.prepareStatement(sql);
 
-				pstmt.setInt(1, userNo);
+				pstmt.setInt(1, memberNo);
 
 				rset = pstmt.executeQuery();
 
@@ -972,74 +972,6 @@ public class MemberDao {
 
 	}
 	
-	public ArrayList<MemberGenre> selectGenreList(Connection conn) { // 장르조회
-		
-		ArrayList<MemberGenre> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectGenreList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				MemberGenre m = new MemberGenre(
-						   rset.getString("GENRE_ID")
-						  ,rset.getString("GENRE_NAME"));				
-				list.add(m);				
-			}			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	} // 장르조회
-	
-public ArrayList<MemberGenre> selectGenreMoiveList(Connection conn) { // 장르별영화조회
-		
-		ArrayList<MemberGenre> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		
-		String sql = prop.getProperty("selectGenreMoiveList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				MemberGenre m = new MemberGenre(
-						   rset.getString("GENRE_ID")
-						  ,rset.getString("GENRE_NAME")
-						  ,rset.getString("TITLE")
-						  ,rset.getString("MOVIE_ID")
-						  ,rset.getString("POSTER_PATH")
-						  );				
-				list.add(m);				
-			}			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
-	} // 장르별영화조회
-  
 	//주현 : 영화 좋아요 리스트
 	public ArrayList<Movie> myMovieLikesList(Connection conn, PageInfo pi, int memberNo) {
 		

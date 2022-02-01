@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList, com.movinial.movie.model.vo.Movie,com.movinial.common.model.vo.PageInfo" %>" %>
+<%@page import="java.util.ArrayList, com.movinial.movie.model.vo.Movie,com.movinial.common.model.vo.PageInfo" %>
 <%
 	ArrayList<Movie> list = (ArrayList<Movie>)request.getAttribute("list");
 		

@@ -302,7 +302,7 @@
 							SEEN</a></li>
 					<li><a href="<%=contextPath%>/myMovie.Likes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LIKES
 							LIST</a></li>
-					<li><a href="<%=contextPath%>/mylist.bo?currentPage=1&userNo=<%=memberNo%>">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내가
+					<li><a href="<%=contextPath%>/mylist.bo?currentPage=1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;내가
 							쓴 글</a></li>
 	
 					<br>
@@ -384,17 +384,17 @@
 								<table>
 									<tr>
 										<td><B>현재 비밀번호&nbsp;&nbsp;&nbsp;&nbsp;</B><input
-											type="password" name="memberPwd" id="memberPwd" placeholder="특수문자,영문자,숫자를 포함 8-16자" required></td>
+											type="password" name="memberPwd" id="memberPwd" placeholder="특수문자,영문자,숫자 포함 8-16자" required></td>
 									</tr>
 	
 									<tr>
 										<td><B>변경할 비밀번호&nbsp;</B><input type="password"
-											name="updatePwd" id="updatePwd" placeholder="특수문자,영문자,숫자를 포함 8-16자" required></td>
+											name="updatePwd" id="updatePwd" placeholder="특수문자,영문자,숫자 포함 8-16자" required></td>
 									</tr>
 	
 									<tr>
 										<td><B>비밀번호 확인&nbsp;&nbsp;&nbsp;&nbsp;</B><input
-											type="password" name="checkPwd" id="checkPwd" placeholder="특수문자,영문자,숫자를 포함 8-16자" required></td>
+											type="password" name="checkPwd" id="checkPwd" placeholder="특수문자,영문자,숫자 포함 8-16자" required></td>
 									</tr>
 								</table>
 								<br>
