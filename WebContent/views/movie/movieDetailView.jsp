@@ -50,10 +50,10 @@
  		margin-left:10px;
  		margin-right:5px;
  		margin-top:10px;
- 		text-decolation:none;
+ 		text-decoration: none;
  	}
  	.mylist:hover {
- 		text-decolation:none;
+		text-decoration: none;
  	}
 	.content {
 		padding: 20px;
@@ -93,6 +93,7 @@
 
 	<!-- 영화 상세 정보 -->
 	<div class="content">
+
 		<table class="table-size">
 			<tr>
 				<td rowspan="7" style="width: 30%;">
@@ -169,21 +170,26 @@
 					<br>
 					<h4 style="font-weight: bold;">공식 홈페이지 &nbsp&nbsp
 					<% if(!homepage.equals("")) { %>
+
 						<a href="<%= homepage %>" target="_blank">
 							<img src="<%= contextPath %>/resources/images/external-link-btn.png" alt="<%= m.getTitle() %> 공식 홈페이지로 이동" style="width: 30px; height: 30px;">
 						</a>
 						</h4>
-						<% } else { %>
+
+					<% } else { %>
+
 						</h4>
 						<h5>확인 불가</h5>
+
 					<% } %>
 					
 					<br>
+
 				</td>
 			</tr>
 		</table>
-	</div>
 
+	</div>
 
 	<%-- 영화 봤어요 & 좋아요: 로그인 여부 확인 --%>
 	<% if(loginUser == null) { %>
@@ -199,9 +205,10 @@
 			}
 		</script>
 		
-	<%-- 영화 봤어요 & 좋아요: 증감 처리 --%> 
+	<%-- 영화 봤어요 & 좋아요: 증감 처리 --%>
 	<%-- 회원 봤어요 & 좋아요: 영화 번호 저장/삭제 처리 --%>
 	<% } else { %>
+
 		<script>
 			
 			var movieNo = "<%= m.getMovieNo() %>"; // 현재 영화 번호
@@ -242,6 +249,7 @@
 						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 					}
 				})
+
 			}
 			
 			// 해당 영화 '봤어요' 체크 
@@ -326,6 +334,7 @@
 						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 					}
 				})
+
 			}
 			
 			// 해당 영화 '좋아요' 체크 
@@ -377,11 +386,12 @@
 			}
 			
 		</script>
-	<% } %>
 
+	<% } %>
 
 	<!-- 리뷰 -->
 	<div class="content">
+
 		<table class="table table-borderless">
 
 			<!-- 리뷰 제목 -->
@@ -420,9 +430,11 @@
 	                    </td>
 	                    <td align="right">
 		                    <% if(loginUser != null) { %>
+
 		                    	<!-- 리뷰 신고하기 -->
 	                    		<a type="button" class="mylist report-button" data-review-no="<%= r.getReviewNo() %>" data-review-writer="<%= r.getReviewWriter() %>" style="text-decoration: none; color: white;">신고하기</a>
 	                    		<input type="hidden" class="report-modal" data-toggle="modal" data-target="#reportForm">
+
 	                    	<% } %>
 	                    </td>
 	                </tr>
@@ -446,9 +458,10 @@
 	                    </td>
 	                </tr>
                 <% } %>
-                
-               <% } %>
+				
+			<% } %>
 		</table>
+
 	</div>
 
 	<!-- 리뷰 신고 Modal -->
@@ -480,89 +493,89 @@
 	
 	<%-- 리뷰 신고: 신고 증가 / 리뷰 번호 저장 처리 --%> 	
 	<% if(loginUser != null) { %>
-	<script>
-	
-		var reviewNo = ""; // 해당 리뷰 번호
-		var reviewWriter = ""; // 해당 리뷰의 닉네임
+		<script>
 		
-		// 신고 버튼 클릭 시, 리뷰 신고 Modal로 해당 리뷰 번호, 닉네임 가져오기
-		$(document).on("click", ".report-button", function() {
+			var reviewNo = ""; // 해당 리뷰 번호
+			var reviewWriter = ""; // 해당 리뷰의 닉네임
 			
-			reviewNo = String($(this).data("review-no")); // Number > String
-			reviewWriter = $(this).data("review-writer"); // 회원번호가 아닌 닉네임
+			// 신고 버튼 클릭 시, 리뷰 신고 Modal로 해당 리뷰 번호, 닉네임 가져오기
+			$(document).on("click", ".report-button", function() {
+				
+				reviewNo = String($(this).data("review-no")); // Number > String
+				reviewWriter = $(this).data("review-writer"); // 회원번호가 아닌 닉네임
+				
+				// 본인 리뷰인지 확인
+				if(reviewWriter == "<%= loginUser.getMemberNickname() %>") {
+					alert("자신의 리뷰를 신고할 수 없습니다");
+					return;
+				}
+				else {
+					checkReportReview();
+				}
+				
+			})
 			
-			// 본인 리뷰인지 확인
-			if(reviewWriter == "<%= loginUser.getMemberNickname() %>") {
-				alert("자신의 리뷰를 신고할 수 없습니다");
-				return;
-			}
-			else {
-				checkReportReview();
-			}
-			
-		})
-		
-		// 리뷰 신고 전 신고 여부 체크
-		function checkReportReview() {
-			
-			$.ajax({
-				url: "chkreport.rev",
-				data: { mno: <%= loginUser.getMemberNo() %> },
-				success: function(rr){
-					
-					// null이 아닐 경우, 해당 리뷰에 신고를 눌렀는지 확인
-					if(rr.reportReview != null) {
+			// 리뷰 신고 전 신고 여부 체크
+			function checkReportReview() {
+				
+				$.ajax({
+					url: "chkreport.rev",
+					data: { mno: <%= loginUser.getMemberNo() %> },
+					success: function(rr){
 						
-						// 해당 회원의 '신고한 리뷰' 리뷰 번호 뽑아내기 (String[])
-						var reportRr = rr.reportReview.split(',');
-						
-						// 신고한 리뷰 번호가 이미 있는지 확인
-						if(reportRr.indexOf(reviewNo) != -1) {
-							alert("이미 신고한 리뷰입니다");
-							return;
+						// null이 아닐 경우, 해당 리뷰에 신고를 눌렀는지 확인
+						if(rr.reportReview != null) {
+							
+							// 해당 회원의 '신고한 리뷰' 리뷰 번호 뽑아내기 (String[])
+							var reportRr = rr.reportReview.split(',');
+							
+							// 신고한 리뷰 번호가 이미 있는지 확인
+							if(reportRr.indexOf(reviewNo) != -1) {
+								alert("이미 신고한 리뷰입니다");
+								return;
+							}
+							else { // 없으면, 리뷰 신고 Modal 열기
+								$(".report-modal").click();
+							}
+							
 						}
-						else { // 없으면, 리뷰 신고 Modal 열기
+						else { // null일 경우, 리뷰 신고 Modal 열기
 							$(".report-modal").click();
 						}
 						
+					},
+					error: function(){
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 					}
-					else { // null일 경우, 리뷰 신고 Modal 열기
-						$(".report-modal").click();
-					}
-					
-				},
-				error: function(){
-					alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
-				}
-			})
+				})
+				
+			}
 			
-		}
+			// 리뷰 신고하기
+			function reportReview() { 
 		
-		// 리뷰 신고하기
-		function reportReview() { 
-	
-			$.ajax({
-				url: "report.rev",
-				data: {
-					mno : <%= loginUser.getMemberNo() %>,
-					reviewNo : reviewNo
-				},
-				success: function(report){
-					
-					if(report > 0){
-						alert("해당 리뷰를 신고했습니다");
-						location.href = "<%= contextPath %>/detail.mo?movieNo=<%= m.getMovieNo() %>"
-					}
-					
-				},
-				error: function(){
-					alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
-				}	
-			})
+				$.ajax({
+					url: "report.rev",
+					data: {
+						mno : <%= loginUser.getMemberNo() %>,
+						reviewNo : reviewNo
+					},
+					success: function(report){
+						
+						if(report > 0){
+							alert("해당 리뷰를 신고했습니다");
+							location.href = "<%= contextPath %>/detail.mo?movieNo=<%= m.getMovieNo() %>"
+						}
+						
+					},
+					error: function(){
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+					}	
+				})
+				
+			}
 			
-		}
-		
-	</script>
+		</script>
 	<% } %>
 
 	<%-- 리뷰 좋아요: 로그인 여부 확인 --%>
