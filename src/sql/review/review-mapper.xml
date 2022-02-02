@@ -76,7 +76,7 @@
 		JOIN MOVIE ON (REF_MNO = MOVIE_NO)
 		WHERE PUBLIC_STATUS = 'Y'
 		ORDER BY LIKES DESC)
-		WHERE 5 > ROWNUM
+		WHERE 5 > ROWNUM 
 	</entry>
 	
 	<!-- 리뷰 좋아요 시작 -->
