@@ -148,7 +148,8 @@ public class ReviewDao {
 					    			rset.getString("REVIEW_CONTENT"),
 					    			rset.getDate("CREATE_DATE"),
 					    			rset.getInt("LIKES"),
-					    			rset.getInt("REF_MNO")));
+					    			rset.getInt("REF_MNO"),
+					    			rset.getString("PROFILE_IMAGE")));
 			}
 			
 		} catch (SQLException e) {
@@ -203,7 +204,8 @@ public class ReviewDao {
 					    			rset.getString("REVIEW_CONTENT"),
 					    			rset.getDate("CREATE_DATE"),
 					    			rset.getInt("LIKES"),
-					    			rset.getInt("REF_MNO")));
+					    			rset.getInt("REF_MNO"),
+					    			rset.getString("PROFILE_IMAGE")));
 			}
 			
 		} catch (SQLException e) {
