@@ -1,4 +1,3 @@
-<%@page import="oracle.net.aso.r"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.movinial.movie.model.vo.Movie, org.json.JSONObject, java.util.ArrayList,
@@ -22,11 +21,14 @@
 	JSONArray countriesCheck = movieDetail.getJSONArray("production_countries");
 	JSONArray productionCheck = movieDetail.getJSONArray("production_companies");
 	
+	// 제작국가 확인
 	if(!countriesCheck.isNull(0)) {
 		Locale productionCountries = new Locale("ko", (String)(movieDetail.getJSONArray("production_countries").getJSONObject(0).get("iso_3166_1"))); // 제작 국가
 		productionCountry = productionCountries.getDisplayCountry();
 	}
-	if(!countriesCheck.isNull(0)) {
+	
+	// 제작사 확인
+	if(!productionCheck.isNull(0)) {
 		productionCompany = (String)movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name"); // 제작사
 	}
 %>
@@ -34,9 +36,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title><%= m.getTitle() %>의 상세정보</title>
+<title><<%= m.getTitle() %>>의 상세 정보</title>
 <style>
- 	.mylist{
+ 	.mylist {
  		color:white;
  		background-color:black;
  		line-height:35px;
@@ -48,10 +50,10 @@
  		margin-left:10px;
  		margin-right:5px;
  		margin-top:10px;
- 		text-decolation:none;
+ 		text-decoration: none;
  	}
- 	.mylist:hover{
- 		text-decolation:none;
+ 	.mylist:hover {
+		text-decoration: none;
  	}
 	.content {
 		padding: 20px;
@@ -70,13 +72,19 @@
 		color: black;
 		cursor: pointer;
 	}
-	.profile{
+	.profile {
 	  	width:150px;
 	  	height:150px;
 	  	border-radius:60px;
 	  	border: 1px solid lightgray;
 	}
-
+	.review-content {
+		display: -webkit-box;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		-webkit-line-clamp: 3;
+		-webkit-box-orient: vertical;
+	}
 </style>
 </head>
 <body>
@@ -85,6 +93,7 @@
 
 	<!-- 영화 상세 정보 -->
 	<div class="content">
+
 		<table class="table-size">
 			<tr>
 				<td rowspan="7" style="width: 30%;">
@@ -108,13 +117,13 @@
 				<td>
 					<a class="movie-seen-btn btn-group" onclick="checkSeen()">
 						<img src="<%= contextPath %>/resources/images/movie_seen_icon.png" alt="봤어요 아이콘">
-						<h3><%= m.getMovieSeen() %></h3>
+						&nbsp&nbsp<h3><%= m.getMovieSeen() %></h3>
 					</a>
 				</td>
 				<td>
 					<a class="movie-likes-btn btn-group" onclick="checkLikes()">
 						<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘">
-						<h3><%= m.getMovieLikes() %></h3>
+						&nbsp&nbsp<h3><%= m.getMovieLikes() %></h3>
 					</a>
 				</td>
 			</tr>
@@ -161,21 +170,26 @@
 					<br>
 					<h4 style="font-weight: bold;">공식 홈페이지 &nbsp&nbsp
 					<% if(!homepage.equals("")) { %>
+
 						<a href="<%= homepage %>" target="_blank">
 							<img src="<%= contextPath %>/resources/images/external-link-btn.png" alt="<%= m.getTitle() %> 공식 홈페이지로 이동" style="width: 30px; height: 30px;">
 						</a>
 						</h4>
-						<% } else { %>
+
+					<% } else { %>
+
 						</h4>
 						<h5>확인 불가</h5>
+
 					<% } %>
 					
 					<br>
+
 				</td>
 			</tr>
 		</table>
-	</div>
 
+	</div>
 
 	<%-- 영화 봤어요 & 좋아요: 로그인 여부 확인 --%>
 	<% if(loginUser == null) { %>
@@ -191,9 +205,10 @@
 			}
 		</script>
 		
-	<%-- 영화 봤어요 & 좋아요: 증감 처리 --%> 
+	<%-- 영화 봤어요 & 좋아요: 증감 처리 --%>
 	<%-- 회원 봤어요 & 좋아요: 영화 번호 저장/삭제 처리 --%>
 	<% } else { %>
+
 		<script>
 			
 			var movieNo = "<%= m.getMovieNo() %>"; // 현재 영화 번호
@@ -234,6 +249,7 @@
 						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 					}
 				})
+
 			}
 			
 			// 해당 영화 '봤어요' 체크 
@@ -318,6 +334,7 @@
 						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
 					}
 				})
+
 			}
 			
 			// 해당 영화 '좋아요' 체크 
@@ -369,11 +386,12 @@
 			}
 			
 		</script>
-	<% } %>
 
+	<% } %>
 
 	<!-- 리뷰 -->
 	<div class="content">
+
 		<table class="table table-borderless">
 
 			<!-- 리뷰 제목 -->
@@ -383,7 +401,7 @@
 				</td>
 				<td align="right">
 					<h5>
-						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>">MORE</a>
+						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>&sort=1">MORE</a>
 					</h5>
 				</td>
 			</tr>
@@ -411,32 +429,154 @@
 	                    	<h5>작성일 &nbsp&nbsp <%= r.getCreateDate() %> &nbsp&nbsp</h5>
 	                    </td>
 	                    <td align="right">
-                    		<a type="button" class="mylist" data-toggle="modal" data-target="#reportForm" style="text-decoration: none; color: white;">신고하기</a><!-- MODAL -->
+		                    <% if(loginUser != null) { %>
+
+		                    	<!-- 리뷰 신고하기 -->
+	                    		<a type="button" class="mylist report-button" data-review-no="<%= r.getReviewNo() %>" data-review-writer="<%= r.getReviewWriter() %>" style="text-decoration: none; color: white;">신고하기</a>
+	                    		<input type="hidden" class="report-modal" data-toggle="modal" data-target="#reportForm">
+
+	                    	<% } %>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td rowspan="2" align="center">
-	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile">
+	                        <img src="<%= contextPath %><%= r.getProfileImage() %>" alt="유저 프로필 이미지" class="profile" onerror="this.onerror=null; this.src='<%= contextPath %>/resources/images/profilePic.png'">
 	                    </td>
 	                    <td>
-	                    	<p>
+	                    	<div class="review-content">
 	                    		<%= r.getReviewContent() %>
-	                    	</p>
+	                    	</div>
 	                    </td>
 	                </tr>
 	                <tr>
 	                    <td>
+	                    	<!-- 리뷰 좋아요 -->
 							<a class="review-likes-btn btn-group" onclick="checkReviewLikes('<%= r.getReviewWriter() %>', '<%= r.getReviewNo() %>', this)">
 	                        	<img src="<%= contextPath %>/resources/images/movie_likes_icon.png" alt="좋아요 아이콘" style="width: 30px; height: 30px;">&nbsp&nbsp
-								<h4><%= r.getLikes() %></h4>
+								&nbsp<h4><%= r.getLikes() %></h4>
 							</a>
 	                    </td>
 	                </tr>
                 <% } %>
-                
-               <% } %>
+				
+			<% } %>
 		</table>
+
 	</div>
+
+	<!-- 리뷰 신고 Modal -->
+	<div class="container">
+		<div class="modal fade" id="reportForm">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+				
+					<!-- Modal 헤더 -->
+					<div class="modal-header">
+						<h4 class="modal-title" style="color: red;">신고 사유</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					
+					<!-- 리뷰 신고 사유 작성란 -->
+					<div class="modal-body">
+						<textarea id="reportContent" class="form-control" cols="59" rows="5" style="resize: none;"></textarea>
+					</div>
+					
+					<!-- 신고 제출 버튼 -->
+					<div class="modal-footer">
+						<button type="button" onclick="reportReview();" class="btn btn-danger" data-dismiss="modal">제출</button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<%-- 리뷰 신고: 신고 증가 / 리뷰 번호 저장 처리 --%> 	
+	<% if(loginUser != null) { %>
+		<script>
+		
+			var reviewNo = ""; // 해당 리뷰 번호
+			var reviewWriter = ""; // 해당 리뷰의 닉네임
+			
+			// 신고 버튼 클릭 시, 리뷰 신고 Modal로 해당 리뷰 번호, 닉네임 가져오기
+			$(document).on("click", ".report-button", function() {
+				
+				reviewNo = String($(this).data("review-no")); // Number > String
+				reviewWriter = $(this).data("review-writer"); // 회원번호가 아닌 닉네임
+				
+				// 본인 리뷰인지 확인
+				if(reviewWriter == "<%= loginUser.getMemberNickname() %>") {
+					alert("자신의 리뷰를 신고할 수 없습니다");
+					return;
+				}
+				else {
+					checkReportReview();
+				}
+				
+			})
+			
+			// 리뷰 신고 전 신고 여부 체크
+			function checkReportReview() {
+				
+				$.ajax({
+					url: "chkreport.rev",
+					data: { mno: <%= loginUser.getMemberNo() %> },
+					success: function(rr){
+						
+						// null이 아닐 경우, 해당 리뷰에 신고를 눌렀는지 확인
+						if(rr.reportReview != null) {
+							
+							// 해당 회원의 '신고한 리뷰' 리뷰 번호 뽑아내기 (String[])
+							var reportRr = rr.reportReview.split(',');
+							
+							// 신고한 리뷰 번호가 이미 있는지 확인
+							if(reportRr.indexOf(reviewNo) != -1) {
+								alert("이미 신고한 리뷰입니다");
+								return;
+							}
+							else { // 없으면, 리뷰 신고 Modal 열기
+								$(".report-modal").click();
+							}
+							
+						}
+						else { // null일 경우, 리뷰 신고 Modal 열기
+							$(".report-modal").click();
+						}
+						
+					},
+					error: function(){
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+					}
+				})
+				
+			}
+			
+			// 리뷰 신고하기
+			function reportReview() { 
+		
+				$.ajax({
+					url: "report.rev",
+					data: {
+						mno : <%= loginUser.getMemberNo() %>,
+						reviewNo : reviewNo
+					},
+					success: function(report){
+						
+						if(report > 0){
+							alert("해당 리뷰를 신고했습니다");
+							location.href = "<%= contextPath %>/detail.mo?movieNo=<%= m.getMovieNo() %>"
+						}
+						
+					},
+					error: function(){
+						alert("서버와 접속이 원활하지 않습니다 \n 잠시 후 다시 시도해주세요");
+					}	
+				})
+				
+			}
+			
+		</script>
+	<% } %>
 
 	<%-- 리뷰 좋아요: 로그인 여부 확인 --%>
 	<% if(loginUser == null) { %>
@@ -545,7 +685,7 @@
 			}
 			
 		</script>
-	<% } %>
+	<% } %>	
 	
 	<%@ include file="../common/footer.jsp" %>
 
