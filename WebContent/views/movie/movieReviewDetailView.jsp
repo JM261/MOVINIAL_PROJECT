@@ -438,13 +438,8 @@
 
 		<!-- 리뷰 작성란 -->
 
-		<!-- 로그아웃 -->
-		<% if(loginUser == null) { %>
-			
-			<textarea class="enroll-form form-control" cols="200" rows="7" placeholder="리뷰를 작성하려면 로그인이 필요합니다." disabled></textarea>
-
-		<!-- 로그인 -->
-		<% } else { %>
+		<!-- 로그인 유저 -->
+		<% if(loginUser != null) { %>
 
 			<!-- 리뷰 작성폼 -->
 			<form action="<%= contextPath %>/insertReview.mo" method="post" class="enroll-form">
@@ -483,9 +478,7 @@
 			</form>
 
 		<% } %>
-
-
-
+		
 		<!-- 페이징바 -->
 		<div class="paging-area" align="center">
 
@@ -515,7 +508,7 @@
 		</div>
 
     </div>
-	
+
     <%@ include file="../common/footer.jsp" %>
 
 </body>
