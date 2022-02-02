@@ -36,7 +36,9 @@ public class insertCurationListController extends HttpServlet {
 		String listName = (String)request.getParameter("listName");
 		String[] listMovieIdArr = request.getParameterValues("listMovieId");
 		String[] posterPathArr = request.getParameterValues("posterPath");
-
+		String[] listMovieNoArr = request.getParameterValues("listMovieNo");
+		
+		
 		/*
 			System.out.println(request.getParameter("listName"));
 			System.out.println(listMovieNoArr[1]); // 첫번째로 선택한 영화 번호
@@ -49,6 +51,7 @@ public class insertCurationListController extends HttpServlet {
 		
 		String listMovieId = "";
 		String posterPath = "";
+		String listMovieNo = "";
 		
 		if(listMovieIdArr != null) {
 			listMovieId = String.join(",", listMovieIdArr);
@@ -57,7 +60,11 @@ public class insertCurationListController extends HttpServlet {
 			posterPath = String.join(",", posterPathArr);
 		}
 		
-		CurationList cl = new CurationList(listName, listMovieId, posterPath);
+		if(listMovieNoArr != null) {
+			listMovieNo = String.join(",", listMovieNoArr);
+		}
+		
+		CurationList cl = new CurationList(listName, listMovieId, posterPath, listMovieNo);
 		
 		int result = new CurationService().insertCurationList(cl);
 		

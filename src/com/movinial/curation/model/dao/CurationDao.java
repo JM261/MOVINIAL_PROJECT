@@ -92,6 +92,7 @@ public class CurationDao {
 			pstmt.setString(1, cl.getListName());
 			pstmt.setString(2, cl.getListMovieId());
 			pstmt.setString(3, cl.getPosterPath());
+			pstmt.setString(4, cl.getListMovieNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -185,7 +186,8 @@ public class CurationDao {
 													rset.getString("LIST_NAME"),
 													rset.getString("LIST_MOVIE_ID"),
 													rset.getString("STATUS"),
-													rset.getString("LIST_POSTER_PATH")
+													rset.getString("LIST_POSTER_PATH"),
+													rset.getString("LIST_MOVIE_NO")
 												  );
 				list.add(cl);
 			}

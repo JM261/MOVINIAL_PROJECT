@@ -193,7 +193,20 @@
             </div>
             <div id="box2" style="background: black; color: white;"><p id="box2_title" style="padding-top: 5px;">관리자 추천 리스트</p></div>
 
-	    <form action="<%= contextPath %>/insertList.cu" method="post">
+
+            <script> /* 큐레이션 영화 6개 미만으로 채울 시 false return */
+                function check(){
+                   
+                    var check = document.getElementsByName('listMovieId');
+                    if(check.length != 6){
+                        alert("영화를 모두 채워주세요.")
+                        return false;
+                    }
+                    return true;
+                }
+            </script>
+
+	    <form action="<%= contextPath %>/insertList.cu" method="post" name="checkForm" onsubmit="return check();">
 	            <div id="box3"> <!-- 큐레이션... -->
 	                <div id="box3_1">
 	                    <div id="box3_title"><input type="text" name="listName" placeholder="리스트 타이틀을 입력하세요." required></input></div> <!-- 리스트 타이틀 -->
@@ -251,7 +264,7 @@
                   <h4 class="modal-title">영화 추가 <%=i%></h4>
                 </div>          
                 <div class="modal-body">                    
-		            검색할 영화명 <input type="text" class="searchMovie<%=i%>" required>
+		            검색할 영화명 <input type="text" class="searchMovie<%=i%>" onKeypress="javascript:if(event.keyCode==13) {selectMovie<%=i%>()}"/ required>
 		           <button onclick="selectMovie<%=i%>();">검색</button><br><br>
 		           <div class="selectResult">
 		            <!-- 검색 결과 -->
@@ -268,8 +281,10 @@
             function selectMovie<%=i%>(){        	
             	
             	var $keyword = $(".searchMovie<%=i%>").val();
-            	console.log($keyword);
-            	
+            	if($keyword == ""){
+                    $(".selectResult").html("");
+                    return false;
+                }
                 $.ajax({
 	                url : "<%= contextPath %>/search.cu",
 	                data : {movieKeyword : $keyword},
