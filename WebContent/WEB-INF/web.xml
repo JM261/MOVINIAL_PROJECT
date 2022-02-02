@@ -6,7 +6,7 @@
   </welcome-file-list>
   
   <!-- 에러 페이지 -->
-  <!-- <error-page>
+  <error-page>
   	<error-code>500</error-code>
   	<location>/views/common/errorPage.jsp</location>
   </error-page>
@@ -14,6 +14,5 @@
   	<error-code>404</error-code>
   	<location>/views/common/errorPage.jsp</location>
   </error-page>
-   -->
   
 </web-app>
