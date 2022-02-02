@@ -176,9 +176,11 @@
 	                    </td>
 	                    <td align="right">
 		                    <% if(loginUser != null) { %>
+
 		                    	<!-- 리뷰 신고하기 -->
 	                    		<a type="button" class="mylist report-button" data-review-no="<%= r.getReviewNo() %>" data-review-writer="<%= r.getReviewWriter() %>" style="text-decoration: none; color: white;">신고하기</a>
 	                    		<input type="hidden" class="report-modal" data-toggle="modal" data-target="#reportForm">
+								
 	                    	<% } %>
 	                    </td>
 	                </tr>
@@ -310,7 +312,7 @@
 							
 							if(report > 0){
 								alert("해당 리뷰를 신고했습니다");
-								location.href = "<%= contextPath %>/detail.mo?movieNo=<%= m.getMovieNo() %>"
+								location.href = "<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>&sort=<%= sort %>"
 							}
 							
 						},
@@ -478,7 +480,7 @@
 			</form>
 
 		<% } %>
-		
+
 		<!-- 페이징바 -->
 		<div class="paging-area" align="center">
 
