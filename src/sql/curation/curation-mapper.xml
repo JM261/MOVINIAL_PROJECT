@@ -3,17 +3,20 @@
 <properties>
 	<comment>큐레이션 관련 쿼리문들</comment>
 	
+	<!-- 키워드로 검색 -->
 	<entry key="searchMovie">
 		SELECT *
 		FROM MOVIE
 		WHERE TITLE LIKE ? OR ORIGINAL_TITLE LIKE ?	
 	</entry>
 	
+	<!-- 큐레이션 삽입 -->
 	<entry key="insertCurationList">
-		INSERT INTO CURATIONLIST(LIST_NO, LIST_NAME, LIST_MOVIE_ID, LIST_POSTER_PATH, STATUS)
-		VALUES(SEQ_CUNO.NEXTVAL, ?, ?, ?, 'Y')
+		INSERT INTO CURATIONLIST(LIST_NO, LIST_NAME, LIST_MOVIE_ID, LIST_POSTER_PATH, STATUS, LIST_MOVIE_NO)
+		VALUES(SEQ_CUNO.NEXTVAL, ?, ?, ?, 'Y', ?)
 	</entry>
 	
+	<!-- 영화 화면단에 출력 -->
 	<entry key="selectCurationList">
 		SELECT *
 		FROM CURATIONLIST
@@ -21,12 +24,14 @@
 		ORDER BY LIST_NO DESC
 	</entry>
 	
+	<!-- 큐레이션 삭제 -->	
 	<entry key="deleteCuration">
 		UPDATE CURATIONLIST
 		SET STATUS = 'N'
 		WHERE LIST_NO = ?
 	</entry>
 	
+	<!-- 랜덤으로 큐레이션 출력 -->
 	<entry key="randomList">
 		SELECT *
 		FROM(SELECT *
@@ -35,6 +40,7 @@
 		WHERE 5 > ROWNUM AND STATUS = 'Y'
 	</entry>
 	
+	<!-- 최신 영화로 출력 -->
 	<entry key="latestList">
 		SELECT *
 		FROM (SELECT *

@@ -151,6 +151,9 @@
         height: 215px;
         margin-right: 10px;
       }
+      img:hover{
+      	cursor : pointer;
+      }
 
       </style>
   </head>
@@ -239,7 +242,7 @@
   
       <div><a class="title">MOVINIAL 추천 영화 <br></a></div>
       <div id="div1">
-        <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
+        <a href="" class="title" style="font-size: medium;"></a>
         
         <div class="moviecontent2">
          
@@ -251,7 +254,7 @@
       </div>
 
       <div id="div2">
-        <a class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
+        <a class="title"  style="font-size: medium;"></a>
        
         <div class="moviecontent4">
           
@@ -275,16 +278,24 @@
 		            	<% for(int i=0; i<2; i++){ %>
 		            		var randomId = randomList[<%=j*2+i%>].listMovieId.split(',');
 		            		var posterPath = randomList[<%=j*2+i%>].posterPath.split(',');
+		            		var randomNo = randomList[<%=j*2+i%>].listMovieNo.split(',');
 		            		console.log(posterPath[0]);
-		            		result = "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[0] +"'>"
-			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[1] +"'>"
-			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[2] +"'>"
-			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[3] +"'>"
-			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[4] +"'>";
+		            		result = "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[0] +"'><input type='hidden' value='"+ randomNo[0] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[1] +"'><input type='hidden' value='"+ randomNo[1] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[2] +"'><input type='hidden' value='"+ randomNo[2] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[3] +"'><input type='hidden' value='"+ randomNo[3] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[4] +"'><input type='hidden' value='"+ randomNo[4] +"'>";
 		            		
-			            		$('.moviecontent<%=j*2+i+2%>').html(result);
+			            	$('.moviecontent<%=j*2+i+2%>').html(result);
 		            	<% } %>
 	            	<% } %>
+	            	
+	            	$('.movie3').click(function(){
+	            		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+	            	})
+	            	$('.movie4').click(function(){
+	            		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+	            	})
 	            	
 	            } // success
 	          }) // ajax

@@ -362,19 +362,22 @@
 	            	<% for(int i=0; i<2; i++){ %>
 	            		var randomId = randomList[<%=i%>].listMovieId.split(',');
 	            		var posterPath = randomList[<%=i%>].posterPath.split(',');
+	            		var randomNo = randomList[<%=i%>].listMovieNo.split(',');
 	            		result = "<a href='' class='title' style='font-size: medium;'>"+randomList[<%=i%>].listName+"</a>"
 	            					+ "<div class='mCenter'>"
-		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[0] +"'>"
-		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[1] +"'>"
-		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[2] +"'>"
-		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[3] +"'>"
-		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[4] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[0] +"'><input type='hidden' value='"+ randomNo[0] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[1] +"'><input type='hidden' value='"+ randomNo[1] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[2] +"'><input type='hidden' value='"+ randomNo[2] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[3] +"'><input type='hidden' value='"+ randomNo[3] +"'>"
+		            					+ "<img class='movie<%=i+2%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[4] +"'><input type='hidden' value='"+ randomNo[4] +"'>"
 	            					+ "</div>";
 	            		
 		            		$('.div<%=i+1%>').html(result);
 	            		
 	            	<% } %>
-	            	
+	            	$(".mCenter>img").click(function(){
+	            		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+	            	})
 	            } // success
 	          }) // ajax
 	        })
@@ -454,8 +457,8 @@
               <% } %>
               $('#div5').html(result);
                     
-              $('#div5>div').click(function(){                  		
-                location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).children('input').val();
+              $('#div5>div>img').click(function(){                  		
+                location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().next().val();
               })
 
             }

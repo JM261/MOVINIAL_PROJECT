@@ -37,6 +37,7 @@ public class randomListController extends HttpServlet {
 		ArrayList<CurationList> randomList = new CurationService().randomList();
 		
 		response.setContentType("application/json; charset=UTF-8");
+		
 		new Gson().toJson(randomList, response.getWriter());
 	}
 

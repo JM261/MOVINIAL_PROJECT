@@ -8,23 +8,12 @@ public class CurationList {
 	private String listMovieId;
 	private String status;
 	private String posterPath;
-	
+	private String listMovieNo;
 	
 	public CurationList() {
 		super();
 	}	
 	
-	
-
-	public CurationList(String listName, String listMovieId, String posterPath) {
-		super();
-		this.listName = listName;
-		this.listMovieId = listMovieId;
-		this.posterPath = posterPath;
-	}
-
-
-
 	public CurationList(int listNo, String listName, String listMovieId, String status) {
 		super();
 		this.listNo = listNo;
@@ -34,15 +23,26 @@ public class CurationList {
 	}
 	
 
-	public CurationList(int listNo, String listName, String listMovieId, String status, String posterPath) {
+	public CurationList(int listNo, String listName, String listMovieId, String status, String posterPath, String listMovieNo) {
 		super();
 		this.listNo = listNo;
 		this.listName = listName;
 		this.listMovieId = listMovieId;
 		this.status = status;
 		this.posterPath = posterPath;
+		this.listMovieNo = listMovieNo;
 	}
-
+	
+	// 큐레이션 저장용 
+	public CurationList(String listName, String listMovieId, String posterPath, String listMovieNo) {
+		super();
+		this.listName = listName;
+		this.listMovieId = listMovieId;
+		this.posterPath = posterPath;
+		this.listMovieNo = listMovieNo;
+	}
+	
+	// g/s
 	public int getListNo() {
 		return listNo;
 	}
@@ -82,6 +82,18 @@ public class CurationList {
 	public void setPosterPath(String posterPath) {
 		this.posterPath = posterPath;
 	}
+
+	public String getListMovieNo() {
+		return listMovieNo;
+	}
+
+	public void setListMovieNo(String listMovieNo) {
+		this.listMovieNo = listMovieNo;
+	}
+
+
+
+	
 
 	
 	
