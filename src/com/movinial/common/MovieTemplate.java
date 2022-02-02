@@ -34,6 +34,7 @@ public class MovieTemplate {
 		String apiKey = "";
 		
 		try {
+			
 			prop.load(new FileInputStream(fileName));
 			
 			apiKey = prop.getProperty("api_key");
@@ -58,6 +59,7 @@ public class MovieTemplate {
 	public static JSONObject getMovieDetail(int movieId) throws JSONException, IOException {
 		
 		String url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + getApiKey() + "&language=ko-KR";
+		
 		JSONObject json = readJsonFromUrl(url);
 		
 		return json;
@@ -86,7 +88,6 @@ public class MovieTemplate {
 		return url;
 		
 	}
-	
 
 	/**
 	 * 영화 배경 가져오기
@@ -111,12 +112,6 @@ public class MovieTemplate {
 		
 	}
 	
-	
-	
-	// -------------------- 국가명 처리 상수 --------------------
-	
-	
-
     // -------------------- JSON 처리용 시작 --------------------
 	
     /**
@@ -126,10 +121,13 @@ public class MovieTemplate {
      * @throws IOException
      */
     private static String jsonReadAll(Reader reader) throws IOException{
+    	
         StringBuilder sb = new StringBuilder();
 
         int cp;
+        
         while((cp = reader.read()) != -1){
+        	
             sb.append((char) cp);
         }
 
@@ -145,15 +143,19 @@ public class MovieTemplate {
      * @throws JSONException
      */
     private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException{
+    	
         InputStream is = new URL(url).openStream();
 
         try{
         	
             BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+            
             String jsonText = jsonReadAll(br);
+            
             JSONObject json = new JSONObject(jsonText);
             
             return json;
+            
         } finally {
             is.close();
         }
@@ -161,5 +163,6 @@ public class MovieTemplate {
     }
 	
     // -------------------- JSON 처리용 끝 --------------------
-
+    
+    
 }

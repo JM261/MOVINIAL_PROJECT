@@ -17,7 +17,7 @@ public class Review {
 	private String status;			// STATUS	VARCHAR2(1 BYTE)
 	private int refMno;				// REF_MNO	NUMBER
 	
-  private String posterPath;
+	private String posterPath;
 	private String profileImage;	// MEMBER TALBE		PROFILE_IMAGE	VARCHAR2(200 BYTE)
 	
 	
@@ -26,7 +26,7 @@ public class Review {
 		super();
 	}
   
-  // 메인 페이지에 출력
+	// 메인 페이지에 출력
 	public Review(int reviewNo, String reviewWriter, String reviewContent, int refMno, String reviewTitle) {
 		super();
 		this.reviewNo = reviewNo;
@@ -253,10 +253,9 @@ public class Review {
 
 	public void setRefMno(int refMno) {
 		this.refMno = refMno;
-  }
-  
-  
-  public String getPosterPath() {
+	}
+	
+	public String getPosterPath() {
 		return posterPath;
 	}
   
@@ -271,13 +270,13 @@ public class Review {
 	public void setProfileImage(String profileImage) {
 		this.profileImage = profileImage;
 	}
-  
+
 	@Override
 	public String toString() {
 		return "Review [reviewNo=" + reviewNo + ", reviewWriter=" + reviewWriter + ", reviewTitle=" + reviewTitle
 				+ ", reviewContent=" + reviewContent + ", createDate=" + createDate + ", modifyDate=" + modifyDate
 				+ ", publicStatus=" + publicStatus + ", likes=" + likes + ", reportCount=" + reportCount + ", status="
-				+ status + ", refMno=" + refMno + ", profileImage=" + profileImage + "]";
+				+ status + ", refMno=" + refMno + ", posterPath=" + posterPath + ", profileImage=" + profileImage + "]";
 	}
   
 }
