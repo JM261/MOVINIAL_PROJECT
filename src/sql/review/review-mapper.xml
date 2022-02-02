@@ -3,28 +3,57 @@
 <properties>
 	<comment>리뷰 관련 쿼리문들</comment>
 	
-	<!-- 해당 영화의 공개된 리뷰의 총 개수 -->
-	<entry key="selectListCount">
+	<!-- 해당 영화 리뷰의 총 개수 (로그아웃 유저) -->
+	<entry key="selectListCountLogout">
 		SELECT COUNT(*) COUNT
-		  FROM REVIEW
-		 WHERE PUBLIC_STATUS = 'Y'
-		   AND REF_MNO = ?
+		  FROM (SELECT *
+		  		  FROM VW_REVIEW_PUBLIC)
+		 WHERE REF_MNO = ?
 	</entry>
 	
-	<!-- 해당 영화 리뷰 상세보기 페이지 출력 -->
-	<entry key="selectMovieReviewList">
+	<!-- 해당 영화 리뷰의 총 개수 (로그인 유저) -->
+	<entry key="selectListCountLogin">
+		SELECT COUNT(*) COUNT
+		  FROM (SELECT *
+                  FROM VW_REVIEW_PUBLIC
+                UNION
+                (SELECT *
+                   FROM VW_REVIEW_PRIVATE
+                  WHERE REVIEW_WRITER = ?))
+		 WHERE REF_MNO = ?
+	</entry>
+	
+	<!-- 해당 영화 리뷰 상세보기 페이지 출력 (로그아웃 유저) -->
+	<entry key="selectMovieReviewListLogout">
 		SELECT *
 		  FROM (
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
 		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, REF_MNO
-		                  FROM REVIEW R
-		                  JOIN MEMBER ON (REVIEW_WRITER = MEMBER_NO)
-		                 WHERE PUBLIC_STATUS = 'Y'
-		                   AND REPORT_COUNT &lt;= 15
-		                   AND REF_MNO = ?
+		                  FROM (SELECT *
+		                          FROM VW_REVIEW_PUBLIC)
+		                 WHERE REF_MNO = ?
 		                 ORDER
-		                    BY CREATE_DATE DESC) A)
+		                    BY %s) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<!-- 해당 영화 리뷰 상세보기 페이지 출력 (로그인 유저) -->
+	<entry key="selectMovieReviewListLogin">
+		SELECT *
+		  FROM (
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                SELECT REVIEW_NO, NICKNAME, REVIEW_CONTENT, CREATE_DATE, LIKES, REF_MNO
+		                  FROM (SELECT *
+		                          FROM VW_REVIEW_PUBLIC
+		                        UNION
+		                        (SELECT *
+		                           FROM VW_REVIEW_PRIVATE
+		                          WHERE REVIEW_WRITER = ?))
+		                 WHERE REF_MNO = ?
+		                 ORDER
+		                    BY %s) A)
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
@@ -77,7 +106,8 @@
 		ORDER BY LIKES DESC)
 		WHERE 5 > ROWNUM
 	</entry>
-	
+
+
 	<!-- 리뷰 좋아요 시작 -->
 	
 	<!-- 리뷰 좋아요 테이블 회원번호로 조회 -->

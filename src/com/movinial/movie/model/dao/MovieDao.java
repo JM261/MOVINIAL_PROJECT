@@ -714,7 +714,10 @@ public class MovieDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Movie(rset.getInt("MOVIE_NO"), rset.getInt("MOVIE_ID"), rset.getString("BACKDROP_PATH"));
+				m = new Movie(rset.getInt("MOVIE_NO"),
+							  rset.getInt("MOVIE_ID"),
+							  rset.getString("BACKDROP_PATH"));
+				
 			}
 			
 		} catch (SQLException e) {

@@ -21,11 +21,13 @@
 	JSONArray countriesCheck = movieDetail.getJSONArray("production_countries");
 	JSONArray productionCheck = movieDetail.getJSONArray("production_companies");
 	
+	// 제작국가 확인
 	if(!countriesCheck.isNull(0)) {
 		Locale productionCountries = new Locale("ko", (String)(movieDetail.getJSONArray("production_countries").getJSONObject(0).get("iso_3166_1"))); // 제작 국가
 		productionCountry = productionCountries.getDisplayCountry();
 	}
 	
+	// 제작사 확인
 	if(!productionCheck.isNull(0)) {
 		productionCompany = (String)movieDetail.getJSONArray("production_companies").getJSONObject(0).get("name"); // 제작사
 	}
@@ -389,7 +391,7 @@
 				</td>
 				<td align="right">
 					<h5>
-						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>">MORE</a>
+						<a style="text-decoration: none; color: black;" href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>&sort=1">MORE</a>
 					</h5>
 				</td>
 			</tr>

@@ -4,7 +4,7 @@
 				com.movinial.common.model.vo.PageInfo, com.movinial.review.model.vo.Review,
 				static com.movinial.common.MovieTemplate.*" %>
 <%
-	//영화 DB, 상세정보, 리뷰 가져오기
+	// 해당 영화 모든 리뷰, 영화 DB 가져오기
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Review> list = (ArrayList<Review>)request.getAttribute("list");
 	Movie m = (Movie)request.getAttribute("m");
@@ -17,6 +17,9 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
+	// 리뷰 정렬용
+	int sort = (int)request.getAttribute("sort");
 %>
 <!DOCTYPE html>
 <html>
@@ -92,14 +95,14 @@
 	  	border-radius:60px;
 	  	border: 1px solid lightgray;
 	}
-	.community-category>a {
+	.review-sort>a {
 	    color: black;
 	    font-weight: bolder;
 	    font-size: 28px;
 	    text-decoration: none;
         margin: 30px;
 	}
-	.community-category>a:hover {
+	.review-sort>a:hover {
 		color: black;
 	    text-decoration: none;
 	}
@@ -138,10 +141,10 @@
 	<div class="content">
 		<br>
 		
-        <div class="community-category" style="margin-left: 30px;">
-        	<a href="<%= contextPath %>/list.cc?currentPage=1&cct=공지" >등록순</a>
-        	<a href="<%= contextPath %>/list.cc?currentPage=1&cct=일반" >최신순</a>
-        	<a href="<%= contextPath %>/list.cc?currentPage=1&cct=정보" >좋아요순</a>
+        <div class="review-sort" style="margin-left: 30px;">
+        	<a href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>&sort=1" >최신순</a>
+        	<a href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>&sort=2" >등록순</a>
+        	<a href="<%= contextPath %>/reviewList.mo?currentPage=1&movieNo=<%= m.getMovieNo() %>&sort=3" >좋아요순</a>
         </div>
         
         <br><br>
@@ -226,6 +229,9 @@
 					<input type="hidden" name="memberNickname" value= "<%= loginUser.getMemberNickname() %>">					
 					<input type="hidden" name="movieNo" value="<%= m.getMovieNo() %>">
 					<input type="hidden" name="movieTitle" value="<%= m.getTitle() %>">
+					
+					<!-- 리뷰 작성 시점 정렬 정보 확인 -->
+					<input type="hidden" name="sort" value="<%= sort %>">
 
 					<textarea class="enroll-form form-control" name="reviewContent" cols="200" rows="7" required placeholder="해당 영화에 관련된 리뷰만 작성하시기 바랍니다.&#13;&#10;광고성 글, 비방글, 욕설 등 부적절한 내용이 포함될 시 신고 될 수 있으며, 부적절한 컨텐츠로 판단되면 별도의 안내없이 삭제 조치 될 수 있습니다."></textarea>
 
@@ -261,12 +267,12 @@
 				<!-- 페이징 버튼 -->
 				<!-- 페이징바에서 < 를 담당: 이전페이지 이동 -->
 				<% if(currentPage != 1) { %>
-					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>&movieNo=<%= m.getMovieNo() %>'">&lt;</a>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage - 1 %>&movieNo=<%= m.getMovieNo() %>&sort=<%= sort %>'">&lt;</a>
 				<% } %>
 				
 				<% for(int i = startPage; i <= endPage; i++) { %>
 					<% if(i != currentPage) { %>
-						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>&movieNo=<%= m.getMovieNo() %>'"><%= i %></a>
+						<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= i %>&movieNo=<%= m.getMovieNo() %>&sort=<%= sort %>'"><%= i %></a>
 					<% } else { %>
 						<a class="btn-secondary btn-sm" disabled><%= i %></a>
 					<% } %>
@@ -274,41 +280,13 @@
 				
 				<!-- 페이징바에서 > 를 담당: 다음페이지 이동 -->
 				<% if(currentPage != maxPage && maxPage != 0) { %>
-					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>&movieNo=<%= m.getMovieNo() %>'">&gt;</a>
+					<a class="btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/reviewList.mo?currentPage=<%= currentPage + 1 %>&movieNo=<%= m.getMovieNo() %>&sort=<%= sort %>'">&gt;</a>
 				<% } %>
 
 			</div>
 
         </div>
 
-        <!-- 리뷰 신고 Modal -->
-        <div class="modal fade" id="reportForm">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-		
-			        <!-- Modal Header -->
-			        <div class="modal-header">
-				        <h4 class="modal-title">신고 사유</h4>
-				        <button type="button" class="close" data-dismiss="modal">&times;</button>
-			        </div>
-		
-				    <!-- Modal body -->
-				    <div class="modal-body">
-					    <form action="신고처리할 서블릿" method="post">
-							<table>
-								<textarea name="reportContent" cols="60" rows="10" style="resize: none;"></textarea>
-							</table>
-
-							<br>
-	
-							<button type="submit" class="btn btn-secondary">신고</button>
-                            <!-- <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">취소</button> -->
-					    </form>
-				    </div>
-
-			    </div>
-			</div>
-		</div>
 
     <%@ include file="../common/footer.jsp" %>
 

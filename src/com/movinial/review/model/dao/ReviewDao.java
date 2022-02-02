@@ -36,20 +36,19 @@ public class ReviewDao {
 	}
 	
 	/**
-	 * 해당 영화의 공개된 리뷰의 총 개수
+	 * 해당 영화 리뷰의 총 개수 (로그아웃 유저)
 	 * @param conn
 	 * @param movieNo
 	 * @return
 	 */
-	public int selectListCount(Connection conn, int movieNo) {
+	public int selectListCountLogout(Connection conn, int movieNo) {
 		
-		// 변수
 		int listCount = 0;
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectListCount");
+		String sql = prop.getProperty("selectListCountLogout");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -73,23 +72,63 @@ public class ReviewDao {
 	}
 	
 	/**
-	 * 해당 영화 리뷰 상세보기 페이지 출력
+	 * 해당 영화 리뷰의 총 개수 (로그인 유저)
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @return
+	 */
+	public int selectListCountLogin(Connection conn, int memberNo, int movieNo) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCountLogin");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, movieNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	/**
+	 * 해당 영화 리뷰 상세보기 페이지 출력 (로그아웃 유저)
 	 * @param conn
 	 * @param movieNo
 	 * @param pi
 	 * @return
 	 */
-	public ArrayList<Review> selectMovieReviewList(Connection conn, int movieNo, PageInfo pi) {
+	public ArrayList<Review> selectMovieReviewListLogout(Connection conn, int movieNo, PageInfo pi, String orderBy) {
 		
 		ArrayList<Review> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectMovieReviewList");
+		String sql = prop.getProperty("selectMovieReviewListLogout");
 		
 		try {
 			
-			pstmt = conn.prepareStatement(sql);
+			String sqlOrderBy = String.format(sql, orderBy);
+			
+			pstmt = conn.prepareStatement(sqlOrderBy);
 			
 			// 페이지의 시작 리뷰 번호
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
@@ -100,6 +139,61 @@ public class ReviewDao {
 			pstmt.setInt(1, movieNo);
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Review(rset.getInt("REVIEW_NO"),
+					    			rset.getString("NICKNAME"),
+					    			rset.getString("REVIEW_CONTENT"),
+					    			rset.getDate("CREATE_DATE"),
+					    			rset.getInt("LIKES"),
+					    			rset.getInt("REF_MNO")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	/**
+	 * 해당 영화 리뷰 상세보기 페이지 출력 (로그인 유저)
+	 * @param conn
+	 * @param memberNo
+	 * @param movieNo
+	 * @param pi
+	 * @return
+	 */
+	public ArrayList<Review> selectMovieReviewListLogin(Connection conn, int memberNo, int movieNo, PageInfo pi, String orderBy) {
+		
+		ArrayList<Review> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMovieReviewListLogin");
+		
+		try {
+			
+			String sqlOrderBy = String.format(sql, orderBy);
+			
+			pstmt = conn.prepareStatement(sqlOrderBy);
+			
+			// 페이지의 시작 리뷰 번호
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			
+			// 페이지의 끝 리뷰 번호
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, movieNo);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -562,8 +656,6 @@ public class ReviewDao {
 	}
 
 	// ---------- 리뷰 신고 끝 ----------
-	
-
 	
 
 }

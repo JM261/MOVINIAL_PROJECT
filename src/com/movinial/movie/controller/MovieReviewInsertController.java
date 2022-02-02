@@ -35,6 +35,8 @@ public class MovieReviewInsertController extends HttpServlet {
 		// POST UTF-8 인코딩
 		request.setCharacterEncoding("UTF-8");
 		
+		int sort = Integer.parseInt(request.getParameter("sort")); // 리뷰 작성시 정렬 정보
+		
 		int memberNo = Integer.parseInt(request.getParameter("memberNo")); // 회원 번호
 		int movieNo = Integer.parseInt(request.getParameter("movieNo")); // 영화 번호
 		String reviewContent = request.getParameter("reviewContent"); // 리뷰 내용
@@ -49,6 +51,8 @@ public class MovieReviewInsertController extends HttpServlet {
 		// Review 작성
 		int result = new ReviewService().insertMovieReview(memberNo, movieNo, reviewContent, reviewShow, reviewTitle);
 		
+		// 리뷰 작성시 정렬 정보 보내기
+		request.setAttribute("sort", sort);
 		
 		if(result > 0) { // 성공
 			
