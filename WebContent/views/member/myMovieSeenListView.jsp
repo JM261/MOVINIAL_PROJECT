@@ -23,14 +23,19 @@
 	.list-area {
 	    display: inline-block;
 	}
+	
+	.list-area img{
+		border-radius:15px;
+	}
 	.thumbnail{
-		border : 2px solid black;
+		border : 1px solid lightgray;
 		width : 205px;
 		height : 255px;
 		display : inline-block;
 		margin-left: 55px;
 		margin-top : 25px;
 		float:left;
+		border-radius:20px;
 		
 	}	
 
