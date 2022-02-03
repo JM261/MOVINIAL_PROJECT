@@ -423,7 +423,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new ReviewRank(rset.getString("MEMBER_NAME")
+				list.add(new ReviewRank(rset.getString("NICKNAME")
 									   ,rset.getInt("COUNT")
 									   ,rset.getString("PROFILE_IMAGE")
 									   ));

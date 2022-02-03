@@ -134,12 +134,15 @@
    		   	MEMBER_NAME like ?
 	</entry>
 	
+	<!-- 승원 : 메인페이지 리뷰 랭킹 -->
 	<entry key="reviewRanking">
-		SELECT MEMBER_NAME, COUNT(*) COUNT, PROFILE_IMAGE
-		FROM REVIEW
-		JOIN MEMBER ON (MEMBER_NO = REVIEW_WRITER)
-		GROUP BY MEMBER_NAME, PROFILE_IMAGE
-		ORDER BY COUNT(*) DESC
+		SELECT *
+		FROM (SELECT NICKNAME, COUNT(*) COUNT, PROFILE_IMAGE
+		FROM REVIEW        
+		JOIN MEMBER ON (MEMBER_NO = REVIEW_WRITER)       
+		GROUP BY NICKNAME, PROFILE_IMAGE        
+		ORDER BY COUNT(*) DESC)
+        WHERE 5 > ROWNUM
 	</entry>
 
 	<!--  회원가입 장르선택을위한 장를별 영화포스터 조회 -->
