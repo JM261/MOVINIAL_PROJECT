@@ -56,6 +56,7 @@ public class MemberManagementController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
+		System.out.println(endPage);
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
