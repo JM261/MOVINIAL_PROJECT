@@ -159,7 +159,7 @@
           <h2>My Contents</h2>
           		
              <div class ="countreview">
-              <span id="cntreview">${reviewCount-1}</span>
+              <span id="cntreview">${reviewCount}</span>
               <span id="cntreviewlabel">REVIEW</span>
             </div>
             
@@ -169,7 +169,7 @@
             </div>
             
             <div class ="countlike">
-              <span id="cntlike">${likeCount-1}</span>
+              <span id="cntlike">${likeCount-3}</span>
               <span id="cntlikelabel">LIKE</span>
             </div>
             
