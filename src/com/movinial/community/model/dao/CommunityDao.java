@@ -1159,7 +1159,7 @@ public class CommunityDao {
 				list.add(new Community(rset.getInt("COMMUNITY_NO")
 									  ,rset.getString("COMMUNITY_TITLE")
 									  ,rset.getString("COMMUNITY_CATEGORY")
-									  ,rset.getString("MEMBER_NAME")
+									  ,rset.getString("NICKNAME")
 									  ,rset.getInt("VIEWS")
 									  ,rset.getInt("LIKES")
 									  ,rset.getDate("CREATE_DATE")
