@@ -160,7 +160,7 @@
 			
 			<div class="review-write-area">
 				<div class="review-write-poster">
-					<img src="" id="moviePoster" width="300px" height="400px" alt="">
+					<img src="" id="moviePoster" width="300px" height="400px" alt="" onerror="this.src='<%= contextPath %>/resources/images/white.PNG'">
 				</div>
 				<div class="review-write-info">
 					<input id="movieTitle" name="movieTitle" type="text" value="" readonly>
