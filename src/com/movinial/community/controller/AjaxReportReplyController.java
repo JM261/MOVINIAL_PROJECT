@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.movinial.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class AjaxLikesCommunityController
+ * Servlet implementation class AjaxReportReplyController
  */
-@WebServlet("/like.cm")
-public class AjaxLikesCommunityController extends HttpServlet {
+@WebServlet("/report.re")
+public class AjaxReportReplyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxLikesCommunityController() {
+    public AjaxReportReplyController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,27 +28,27 @@ public class AjaxLikesCommunityController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		// GET 방식 -> 인코딩 X
 		
 		// AJAX 요청시 넘겨 받은 값 뽑기
 		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원번호
-		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
+		int replyNo = Integer.parseInt(request.getParameter("rno")); // 댓글번호
 		
-		int result1 = new CommunityService().increaseLike(communityNo); // 게시글의 좋아요 수 증가
+		// reply 테이블의 REPORT_COUNT 컬럼 값 1 증가 시켜줘야 한다
+		int result1 = new CommunityService().reportReply(replyNo);
 		
-		if(result1 > 0) { // 게시글의 좋아요 수 증가 처리가 성공하면, 커뮤니티 좋아요 테이블에 회원번호로 게시글 번호 저장
+		if(result1 > 0) { // 댓글 신고누적횟수 증가 처리가 성공하면, 회원의 신고한 댓글 컬럼에 댓글번호 누적 저장
 			
-			int result2 = new CommunityService().communityLikesStore(memberNo,communityNo);
+			int result2 = new CommunityService().replyReportStore(memberNo,replyNo);
 			
 			response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
 			
-			response.getWriter().print(result2); // 응답 , 값 넘기기
+			response.getWriter().print(result2); // 응답, 값 넘기기
 			
-		} else { // 게시글의 좋아요 수 증가 처리가 실패하면, 에러페이지로 보내기
+		} else { // 댓글의 신고누적횟수 증가 처리가 실패하면, 에러페이지로 보내기
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**

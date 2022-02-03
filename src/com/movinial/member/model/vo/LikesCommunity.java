@@ -3,15 +3,19 @@ package com.movinial.member.model.vo;
 public class LikesCommunity {
 	
 	// 필드부
+	
 	private int memberNo; //MEMBER_NO	NUMBER
  	private String likesCommunity; //LIKES_COMMUNITY	VARCHAR2(1000 BYTE)
  	
  	
  	// 생성자부
+ 	
+ 	// 기본 생성자
 	public LikesCommunity() {
 		super();
 	}
 	
+	// 모든 매개변수가 있는 생성자
 	public LikesCommunity(int memberNo, String likesCommunity) {
 		super();
 		this.memberNo = memberNo;

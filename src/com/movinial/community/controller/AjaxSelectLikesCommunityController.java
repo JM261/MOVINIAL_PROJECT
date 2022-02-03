@@ -31,19 +31,17 @@ public class AjaxSelectLikesCommunityController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1) GET 방식 => 인코딩 X
+		// GET 방식 -> 인코딩 X
 		
-		// 2) 넘긴 값 뽑기 
+		// AJAX 요청시 넘겨 받은 값 뽑기
 		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원번호
 		
 		// 회원번호를 가지고 게시글 좋아요 테이블을 조회하여 온다
 		LikesCommunity lc = new CommunityService().selectCommunityLikes(memberNo);
 		
-		System.out.println(lc);
+		response.setContentType("application/json; charset=UTF-8"); // 처리 형식, 인코딩 지정
 		
-		// GSON 사용해서 응답하기 => lc를 자바스크립트 객체형태로 변환
-		response.setContentType("application/json; charset=UTF-8");
-		
+		// GSON 사용해서 응답하기 => 객체 lc을 자바스크립트 객체형태로 변환
 		new Gson().toJson(lc, response.getWriter());
 	}
 

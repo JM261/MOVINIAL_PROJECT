@@ -33,21 +33,17 @@ public class AjaxReplyListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// GET방식 => 인코딩 안함
+		// GET 방식 -> 인코딩 X
 		
-		// 값 뽑기
-		int communityNo = Integer.parseInt(request.getParameter("cno")); // : String
+		// AJAX 요청시 넘겨 받은 값 뽑기
+		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
 		
-		// VO 가공 => 패스 ~
-		
-		// Service단으로 토스 ~ => 게시판 관련 기능
+		// Service단 호출
 		ArrayList<Reply> list = new CommunityService().selectReplyList(communityNo);
-//		System.out.println(list);
+		
+		response.setContentType("application/json; charset=UTF-8"); // 처리 형식, 인코딩 지정
 		
 		// GSON 사용해서 응답하기 => ArrayList를 자바스크립트의 배열형태로 변환
-									  // 형식,     인코딩 지정
-		response.setContentType("application/json; charset=UTF-8");
-		
 		new Gson().toJson(list, response.getWriter());
 	}
 

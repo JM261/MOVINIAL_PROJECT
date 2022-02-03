@@ -1,6 +1,7 @@
 package com.movinial.community.model.vo;
 
-public class Reply {
+public class Reply {// 커뮤니티 게시글 댓글
+	
 	// 필드부
 	private int replyNo;//REPLY_NO	NUMBER
 	private int refCno;//REF_CNO	NUMBER
@@ -11,20 +12,31 @@ public class Reply {
 	private int reportCount;//REPORT_COUNT	NUMBER
 	private String status;//STATUS	VARCHAR2(1 BYTE)
 	private String replyTitle; // 주현님 요청 마이페이지에 필요 *
+	private int memberNo; // 댓글 작성자 확인용
+	private int isReply; // 대댓글 여부 및 원 댓글번호 저장 목적  0 == 대댓글 X ,  0 != 대댓글 O
 	
 	// 생성자부
+	
+	// 기본 생성자
 	public Reply() {
 		super();
 	}
-	
-	// 댓글 작성용도
+	// 댓글등록 용도 생성자
 	public Reply(int refCno, String replyWriter, String replyContent) {
 		super();
 		this.refCno = refCno;
 		this.replyWriter = replyWriter;
 		this.replyContent = replyContent;
 	}
-	// 주현님 요청 생성자
+	// 대댓글등록 용도 생성자
+	public Reply(int refCno, String replyWriter, String replyContent, int isReply) {
+		super();
+		this.refCno = refCno;
+		this.replyWriter = replyWriter;
+		this.replyContent = replyContent;
+		this.isReply = isReply;
+	}
+	// 주현님 요청 마이페이지 내 댓글 불러오기 용도 생성자
 	public Reply(int replyNo, int refCno, String replyWriter, String replyContent, String createDate, String replyTitle) {
 		super();
 		this.replyNo = replyNo;
@@ -34,18 +46,20 @@ public class Reply {
 		this.createDate = createDate;
 		this.replyTitle = replyTitle;
 	}
-
-	public Reply(int replyNo, String replyWriter, String replyContent, String createDate, int reportCount) {
+	// 댓글조회 용도 생성자
+	public Reply(int replyNo, String replyWriter, String replyContent, String createDate, String modifyDate, int reportCount, int memberNo) {
 		super();
 		this.replyNo = replyNo;
 		this.replyWriter = replyWriter;
 		this.replyContent = replyContent;
 		this.createDate = createDate;
+		this.modifyDate = modifyDate;
 		this.reportCount = reportCount;
+		this.memberNo = memberNo;
 	}
 	// 모든 매개변수가 있는 생성자
 	public Reply(int replyNo, int refCno, String replyWriter, String replyContent, String createDate, String modifyDate,
-			int reportCount, String status, String replyTitle) {
+			int reportCount, String status, String replyTitle, int memberNo, int isReply) {
 		super();
 		this.replyNo = replyNo;
 		this.refCno = refCno;
@@ -56,6 +70,8 @@ public class Reply {
 		this.reportCount = reportCount;
 		this.status = status;
 		this.replyTitle = replyTitle;
+		this.memberNo = memberNo;
+		this.isReply = isReply;
 	}
 	
 	// 메소드부
@@ -119,23 +135,39 @@ public class Reply {
 		return status;
 	}
 
-	public void setReplyTitle(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public String getReplyTitle() {
 		return replyTitle;
 	}
 
-	public void setStatus(String replyTitle) {
+	public void setReplyTitle(String replyTitle) {
 		this.replyTitle = replyTitle;
+	}
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
+	public int getIsReply() {
+		return isReply;
+	}
+
+	public void setIsReply(int isReply) {
+		this.isReply = isReply;
 	}
 
 	@Override
 	public String toString() {
 		return "Reply [replyNo=" + replyNo + ", refCno=" + refCno + ", replyWriter=" + replyWriter + ", replyContent="
 				+ replyContent + ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", reportCount="
-				+ reportCount + ", status=" + status + ", replyTitle=" + replyTitle + "]";
+				+ reportCount + ", status=" + status + ", replyTitle=" + replyTitle + ", memberNo=" + memberNo
+				+ ", isReply=" + isReply + "]";
 	}
-	
 }

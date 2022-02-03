@@ -37,42 +37,28 @@ public class CommunityInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1) 게시글작성 내용 POST 방식으로 전달 -> 인코딩 설정
+		// POST방식 -> 인코딩
 		request.setCharacterEncoding("UTF-8");
 		
-		// 2) 값 뽑기
-		// 폼 전송할 때 일반방식이 아닌 multipart/form-data방식으로 전송하는 경우 // null
-		// request.getParameter로 리퀘스트 객체에서 값 뽑기가 불가능!!
-		// => multipart라는 객체에 값을 이관시켜서 다뤄야 한다.
+		// 요청시 넘겨받은 값 뽑기
 		
-		// 스텝 0) enctype이 multipart/form-data로 잘 전송되었을 경우
+		// form태그 값 전송할 때 일반방식이 아닌 multipart/form-data방식으로 전송하는 경우 // null
+		
+		// request.getParameter로 리퀘스트 객체에서 값 뽑기 *불가능
+		
+		// => multipart라는 객체에 값을 옮겨서 다뤄야 함.
+		
+		// enctype이 multipart/form-data로 잘 전송되었을 경우
 		//					전반적인 내용들이 수정되도록 조건을 걸어줌
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
-			// 파일 업로드를 위한 라이브러리 다운로드(http://www.servlets.com/)
-			// 파일 업로드를 위한 라이브러리명 : cos.jar(com.oreilly.servlet의 약자)
+			int maxSize = 1024 * 1024 * 10; // 10Mbyte - > 파일 업로드 제한 용량
 			
-			// 스텝 1) 전송되는 파일의 처리할 작업내용
-			// 		(용량 제한, 전달된 파일을 저장할 경로)
-			// 1_1. 전송파일 용량 제한
-			//			(int maxSize => 10Mbyte로 제한)
-
-			int maxSize = 1024 * 1024 * 10; // 10Mbyte
-			
-			// 1_2. 전달된 파일을 저장할 서버의 폴더 경로 알아내기
-			//			 (String savePath)
-			// => getRealPath메소드를 통해 알아내기
-			// 		다만 인자로 WebContent 폴더로부터 board_upfiles 폴더까지의 경로를 제시
-			
-			// ServletContext application
-			// HttpSession session
-			// HttpServletRequest request
-			
+			// 입력받은 첨부파일을 저장할 서버의 폴더 경로 찾아서, 변수에 저장
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/community_upfiles/");
 			
-			// 스텝 2) 전달된 파일명 수정 및 서버에 업로드 작업
-			
+			// 전달된 파일명 수정 및 서버에 업로드 작업
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			String communityTitle = multiRequest.getParameter("title"); // 글제목
@@ -82,9 +68,9 @@ public class CommunityInsertController extends HttpServlet {
 			String spoiler =  multiRequest.getParameter("spoiler"); // 스포일러 포함여부
 			int isNotice = 0; // 공지사항여부
 			
-			if(spoiler != null) {
+			if(spoiler != null) { // 스포일러 값이 비어 있지 않으면, 'Y'로 값 대입
 				spoiler = "Y";
-			} else {
+			} else { // 스포일러 값이 비어 있으면, 'N'로 값 대입
 				spoiler = "N";
 			}
 			
@@ -92,7 +78,7 @@ public class CommunityInsertController extends HttpServlet {
 				isNotice = 1;
 			}
 			
-			// 3) VO 객체로 가공 => Community 객체로 만들자
+			// VO 객체로 가공 => Community 객체로.
 			Community c = new Community(communityTitle,category,communityWriter,communityContent,spoiler,isNotice);
 			
 			// 두번째 INSERT => 선택적(첨부파일이 있을 경우에만 INSERT)
@@ -118,16 +104,16 @@ public class CommunityInsertController extends HttpServlet {
 
 			}
 			
-			// 4) Service 단으로 넘기기
+			// Service 단으로 요청 보내기
 			int result = new CommunityService().insertCommunity(c, cf);
 			
-			// 5) 응답페이지 결정
-			if(result > 0) { // 게시글 등록 성공 => 알림 띄우고 커뮤니티 메인으로 이동
+			// 처리 결과에 따른 응답 뷰 지정
+			if(result > 0) { // 커뮤니티 글 등록 성공 -> 알림 띄우고 커뮤니티 메인으로 이동
 				
-				request.getSession().setAttribute("alertMsg", "게시글이 등록 되었습니다");
+				request.getSession().setAttribute("alertMsg", "게시글이 등록 되었습니다.");
 				response.sendRedirect(request.getContextPath() + "/list.cm?currentPage=1");
 				
-			} else { // 게시글 등록 실패 => 저장한 첨부파일 삭제 후 에러페이지로 이동
+			} else { // 커뮤니티 글 등록 실패 => 저장한 첨부파일 삭제 후 에러페이지로 이동
 				
 				if(cf != null) { // 첨부파일이 있었을 경우 이미 업로드된 첨부파일을 굳이 서버에 저장해둘 필요가 없음
 					new File(savePath + cf.getChangeName()).delete(); // File 클래스의 delete 메소드 호출

@@ -29,7 +29,7 @@ public class CommunityEnrollFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 커뮤니티 게시글 작성 폼 띄우기
+		// 커뮤니티 글 작성 폼 띄우기 -> 포워딩 방식
 		request.getRequestDispatcher("views/community/communityEnrollForm.jsp").forward(request, response);
 	}
 

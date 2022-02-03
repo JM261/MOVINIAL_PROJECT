@@ -29,20 +29,20 @@ public class CommunityDeleteController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// 1) GET방식 => 인코딩 생략
+		// GET 방식 -> 인코딩 X
 		
-		// 2) 값 뽑기
-		int communityNo = Integer.parseInt(request.getParameter("cno"));
+		// request로 부터 값 뽑기
+		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
 		
-		// 3) VO 가공 패스~
-		
-		// 4) Service단으로 토스~
+		// Service단으로 요청 보내기
 		int result = new CommunityService().deleteCommunity(communityNo);
 		
-		// 5) 결과에 따른 응답 뷰 지정
+		// 결과에 따른 응답 뷰 지정
 		if(result > 0) { // 성공 => alert띄워주고 공지사항 리스트 화면으로 응답
-//			request.getSession().setAttribute("alertMsg", "게시글이 삭제 되었습니다.");
+			
+			request.getSession().setAttribute("alertMsg", "게시글이 삭제 되었습니다.");
 			response.sendRedirect(request.getContextPath()+ "/list.cm?currentPage=1");
+			
 		} else { // 실패시 에러페이지로 이동
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}

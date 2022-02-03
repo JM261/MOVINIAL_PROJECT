@@ -34,12 +34,13 @@ public class CommunityListSearchController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1) 인코딩 설정
+		// POST방식 -> 인코딩
 		request.setCharacterEncoding("UTF-8");
 		
-		// 2) request로 부터 값 뽑기
+		// request로 부터 값 뽑기
 		
 		// ------- 페이징처리 -------
+		
 		// 필요한 변수들
 		int listCount; // 현재 일반게시판의 게시글 총 갯수 => BOARD 테이블로부터 조회 COUNT(*)활용
 		int currentPage; // 현재페이지(사용자가 요청한 페이지)
@@ -82,20 +83,19 @@ public class CommunityListSearchController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		// 7개의 변수를 가지고 해당되는 범위에 따른 게시글 10개씩만
-		// 3) VO로 가공
+		// Service 요청 보내기전 VO로 가공 (넘길 값이 많아서 생성자 이용하여 객체에 담기)
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		// 4) Service 단으로 토스
+		// Service단으로 요청 보내기
 		ArrayList<Community> list = new CommunityService().selectListSearch(pi, searchType, keyword);
 		
-		// 5) 응답 뷰 지정 => list, pi, 검색항목,검색어 넘기기
+		// 응답 뷰 지정시 값 넘기기 => list, pi, searchType, keyword
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		request.getSession().setAttribute("searchType", searchType);
 		request.getSession().setAttribute("keyword", keyword);
 		
-		// views/board/boardListView.jsp로 포워딩~
+		// 포워딩 방식으로 페이지 이동
 		request.getRequestDispatcher("views/community/communityListSearchView.jsp").forward(request, response);
 	}
 
