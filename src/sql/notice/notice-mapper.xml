@@ -10,7 +10,7 @@
 	<entry key="selectListCount">
 		SELECT COUNT(*) COUNT
 		  FROM QUESTION Q 
-         
+         JOIN MEMBER ON (MEMBER_NO = Q.QNA_WRITER)
 		 WHERE Q.STATUS = 'Y'
            AND MEMBER_NO = ?
 	</entry>
