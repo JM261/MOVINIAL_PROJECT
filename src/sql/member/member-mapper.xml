@@ -354,9 +354,9 @@
 	<entry key="searchSeenMovie">
 		SELECT * FROM MOVIE
 		WHERE MOVIE_NO IN
-           (SELECT TRIM(REGEXP_SUBSTR(likes_movie, '[^,]+', 1, LEVEL)) AS REVIEW_NO
-           FROM (SELECT likes_movie FROM likes_movie WHERE MEMBER_NO = ?)
-           CONNECT BY  INSTR(likes_movie, ',', 1, LEVEL - 1) > 0)
+           (SELECT TRIM(REGEXP_SUBSTR(seen_movie, '[^,]+', 1, LEVEL)) AS REVIEW_NO
+           FROM (SELECT seen_movie FROM likes_movie WHERE MEMBER_NO = ?)
+           CONNECT BY  INSTR(seen_movie, ',', 1, LEVEL - 1) > 0) 
 
 	</entry>
 	

@@ -281,16 +281,17 @@
             	$(".selectResult").html(result);
             	
             	$('.selectbtn').click(function(){
-            		
+            		console.log(list);
             		var url = "http://image.tmdb.org/t/p/" + "w154" + $(this).attr('value1');
             		
             		$('#moviePoster').attr('src', url);
             		$('#movieTitle').val($(this).text());
             		$('#movieNo').val($(this).attr('value2'));
-            		$('#movieContent').val($(this).attr('value3'));
+            		$('#movieContent').val(list[0].overview);
             		$(".selectResult").html("");
             		$(".searchMovie").val("");
             		$('#insertMovie').hide();
+            		//overview
             	})
             	
             } // success               
@@ -304,7 +305,7 @@
 		$('#moviePoster').attr('src', url);
 		$('#movieTitle').val($(this).text());
 		$('#movieNo').val($(this).attr('value2'));
-		$('#movieContent').val($(this).attr('value3') != 'null' ? $(this).attr('value3') : '');
+		$('#movieContent').val($(this).attr('value3') != 'null' ? $(this).attr('value3') : ''); 
 		$('#seenMovieList').hide(); 
 	})
 	</script>
