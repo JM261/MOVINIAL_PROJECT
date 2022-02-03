@@ -395,10 +395,5 @@ public class MovieService {
 		return m;
 		
 	}
-
-
-
-
-	
 	
 }

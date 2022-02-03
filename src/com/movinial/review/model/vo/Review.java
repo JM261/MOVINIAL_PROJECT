@@ -55,7 +55,7 @@ public class Review {
 		this.likes = likes;
 		this.profileImage = profileImage;
 	}
-
+	
 	/**
 	 * 해당 영화 리뷰 상세보기 페이지 출력
 	 * @param reviewNo
@@ -64,9 +64,10 @@ public class Review {
 	 * @param createDate
 	 * @param likes
 	 * @param refMno
+	 * @param profileImage
 	 */
-	public Review(int reviewNo, String reviewWriter, String reviewContent, Date createDate,
-			int likes, int refMno) {
+	public Review(int reviewNo, String reviewWriter, String reviewContent, Date createDate, int likes, int refMno,
+			String profileImage) {
 		super();
 		this.reviewNo = reviewNo;
 		this.reviewWriter = reviewWriter;
@@ -74,6 +75,7 @@ public class Review {
 		this.createDate = createDate;
 		this.likes = likes;
 		this.refMno = refMno;
+		this.profileImage = profileImage;
 	}
 
 	/**
@@ -105,7 +107,7 @@ public class Review {
 		this.status = status;
 		this.refMno = refMno;
 	}
-  
+	
 	/**
 	 * 리뷰 전체 + 프로필 사진 포함
 	 * @param reviewNo
