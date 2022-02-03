@@ -42,7 +42,7 @@
        				<br>
        				
        				<tr>
-            			<td><input type="submit" value="로그인 페이지로 이동" id="btn"></td>
+            			<td><input type="submit" value="로그인 페이지로" id="btn"></td>
        				</tr>
        				
        				<tr align=center>
@@ -60,7 +60,7 @@
 		       		<tr align=center>
 		       			<td>
 		       			<div name="loginPage" align=center>
-               			<input type="button" value="로그인 페이지로 이동" id="btn" onclick="location.href ='http://localhost:8777/movinial/login.me'" >
+               			<input type="button" value="로그인 페이지로" id="btn" onclick="location.href ='http://localhost:8777/movinial/login.me'" >
                			</td>
 		       			</div>
 		       		
@@ -72,8 +72,7 @@
  	</form>
  
  	       <%@ include file="../common/footer.jsp" %>
- 
-	 
+
 
 </body>
 </html>
