@@ -42,7 +42,7 @@
        <tr align=center>
         <td style="font-size: 20px"><%=memberId%> <br><br><br><br><br>
         
-                <input type="submit" value="로그인 페이지로 이동" id="btn">
+                <input type="button" value="로그인 페이지로 이동" id="btn" onclick="location.href ='http://localhost:8777/movinial/login.me'" >
         </td>
        </tr>
       </table> <%

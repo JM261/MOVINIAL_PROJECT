@@ -1198,4 +1198,71 @@ public class MemberDao {
 		}
 		return count;
 	}
+
+	public ArrayList<MemberGenre> selectGenreMoiveList(Connection conn) {
+		ArrayList<MemberGenre> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectGenreMoiveList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+
+				MemberGenre m = new MemberGenre(
+						   rset.getString("GENRE_ID")
+						  ,rset.getString("GENRE_NAME")
+						  ,rset.getString("TITLE")
+						  ,rset.getString("MOVIE_ID")
+						  ,rset.getString("POSTER_PATH")
+						  );				
+				list.add(m);				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public ArrayList<MemberGenre> selectGenreList(Connection conn) {
+
+		ArrayList<MemberGenre> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectGenreList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+
+				MemberGenre m = new MemberGenre(
+						   rset.getString("GENRE_ID")
+						  ,rset.getString("GENRE_NAME"));				
+				list.add(m);				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
 }

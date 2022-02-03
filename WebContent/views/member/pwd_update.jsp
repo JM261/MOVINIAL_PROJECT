@@ -53,13 +53,17 @@
       			<table width="550px" align=center border="0" style="color: black; font-size: 30px;">
 
 		       		<tr align=center>
+        				<td style="height: 170px">* 회원님의 비밀번호가 수정되었습니다! *</td>
+		       		</tr>
+		       		
+		       		
+		       		<tr align=center>
+		       			<td>
 		       			<div name="loginPage" align=center>
-		       				<a href="<%= contextPath %>/login.me">로그인페이지 돌아가기</a>
+               			<input type="button" value="로그인 페이지로 이동" id="btn" onclick="location.href ='http://localhost:8777/movinial/login.me'" >
+               			</td>
 		       			</div>
 		       		
-		       		</tr>
-		       		<tr align=center>
-        				<td style="height: 170px">* 회원님의 비밀번호가 수정되었습니다! *</td>
 		       		</tr>
       			</table> 
       
