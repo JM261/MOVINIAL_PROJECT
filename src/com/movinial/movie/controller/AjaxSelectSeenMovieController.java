@@ -34,10 +34,10 @@ public class AjaxSelectSeenMovieController extends HttpServlet {
 		
 		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원 번호
 		
-		// 회원 번호로 '영화 좋아요' 테이블 '이영화 봤어요' 컬럼 조회		
+		// 회원 번호로 '영화 좋아요' 테이블 '이영화 봤어요' 컬럼 조회
 		LikesMovie lm = new MovieService().selectSeenMovie(memberNo);
 		
-		// JSON 객체 GSON으로 넘기기
+		// GSON으로 넘기기
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(lm, response.getWriter());
 		

@@ -131,6 +131,7 @@
 		div>img{
 			width : 154px;
 			height : 220px;
+            
 			
 		}
 
@@ -168,6 +169,15 @@
         .cl2>img{
             margin: 30px 15px 15px;
         }
+        .modal-content{
+            overflow:auto;
+        }
+        .modal1, .modal2, .modal3, .modal4, .modal5, .modal6{
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        } 
     </style>
 </head>
 <body>
@@ -178,17 +188,30 @@
         <div id="box">
             <div id="box1"> <!-- 상단 -->            
                 <div id="box1_2">
-                    <button id="box1_plus" class="btn btn-dark" style="width: 75px; height: 45px; font-size: 20px;">추가</button>
+                    <button id="box1_plus" class="btn btn-dark" style="background: black; color: white;  width: 75px; height: 45px; font-size: 20px;">추가</button>
                 </div>
             </div>
-            <div id="box2" class="btn btn-dark"><p id="box2_title">관리자 추천 리스트</p></div>
+            <div id="box2" style="background: black; color: white;"><p id="box2_title" style="padding-top: 5px;">관리자 추천 리스트</p></div>
 
-	    <form action="<%= contextPath %>/insertList.cu" method="post">
+
+            <script> /* 큐레이션 영화 6개 미만으로 채울 시 false return */
+                function check(){
+                   
+                    var check = document.getElementsByName('listMovieId');
+                    if(check.length != 6){
+                        alert("영화를 모두 채워주세요.")
+                        return false;
+                    }
+                    return true;
+                }
+            </script>
+
+	    <form action="<%= contextPath %>/insertList.cu" method="post" name="checkForm" onsubmit="return check();">
 	            <div id="box3"> <!-- 큐레이션... -->
 	                <div id="box3_1">
 	                    <div id="box3_title"><input type="text" name="listName" placeholder="리스트 타이틀을 입력하세요." required></input></div> <!-- 리스트 타이틀 -->
 	                    <div id="box3_check">
-	                        <button type="submit" class="btn btn-dark" style="width: 75px; height: 45px; font-size: 20px;">저장</button>&nbsp;&nbsp;&nbsp; <!-- 저장 -->
+	                        <button type="submit" class="btn btn-dark" style="background: black; color: white; width: 75px; height: 45px; font-size: 20px;">저장</button>&nbsp;&nbsp;&nbsp; <!-- 저장 -->
 	                    </div> 
 	                </div>
 	                <div id="box3_2"> <!-- 큐레이션에 영화 추가 -->
@@ -215,7 +238,7 @@
 
                         <div class="cl1">
                             <div class="cl1_1" style="text-decoration: underline;">No.<%= list.get(i).getListNo() %> &nbsp;&nbsp; <%= list.get(i).getListName() %></div>
-                            <div class="cl1_2"><a href="<%= contextPath %>/delete.cu?cno=<%= list.get(i).getListNo() %>" class="btn btn-dark"  style="width: 75px; height: 45px; font-size: 20px;">삭제</a></div>
+                            <div class="cl1_2"><a href="<%= contextPath %>/delete.cu?cno=<%= list.get(i).getListNo() %>" class="btn btn-dark"  style="background: black; color: white; width: 75px; height: 45px; font-size: 20px;">삭제</a></div>
                         </div>
                         <div class="cl2">
                             <img src='<%= getMoviePosterPath(Integer.parseInt(movieId[0]), "w154") %>'>
@@ -241,7 +264,7 @@
                   <h4 class="modal-title">영화 추가 <%=i%></h4>
                 </div>          
                 <div class="modal-body">                    
-		            검색할 영화명 <input type="text" class="searchMovie<%=i%>" required>
+		            검색할 영화명 <input type="text" class="searchMovie<%=i%>" onKeypress="javascript:if(event.keyCode==13) {selectMovie<%=i%>()}"/ required>
 		           <button onclick="selectMovie<%=i%>();">검색</button><br><br>
 		           <div class="selectResult">
 		            <!-- 검색 결과 -->
@@ -258,8 +281,10 @@
             function selectMovie<%=i%>(){        	
             	
             	var $keyword = $(".searchMovie<%=i%>").val();
-            	console.log($keyword);
-            	
+            	if($keyword == ""){
+                    $(".selectResult").html("");
+                    return false;
+                }
                 $.ajax({
 	                url : "<%= contextPath %>/search.cu",
 	                data : {movieKeyword : $keyword},
@@ -268,7 +293,7 @@
 	                	                	                 	
 		                var result = "";
 		                for(var i in list){
-	                		 result += "<button class='selectbtn' value1='"+ list[i].posterPath +"' value2='"+ list[i].movieId +"'>"+ list[i].title +"("+ list[i].originalTitle +")</button><br><hr>"
+	                		 result += "<button class='selectbtn' value1='"+ list[i].posterPath +"'value2='"+ list[i].movieId +"'value3='"+ list[i].movieNo +"'>"+ list[i].title +"("+ list[i].originalTitle +")</button><br><hr>"
 	                        /* 영화명을 검색하여 해당되는 영화들을 불러와서 영화 정보(제목, 감독, 장르 등만 불러온다.) */
 	                        
 	                    } 	                	
@@ -278,7 +303,7 @@
 	                		
 	                		var url = "http://image.tmdb.org/t/p/" + "w154" + $(this).attr('value1');
 	                		
-	                		$('.modal<%=i%>').html("<img src="+ url +"><input type='hidden' name='listMovieId' value='"+ $(this).attr('value2') + "'>" );
+	                		$('.modal<%=i%>').html("<img src="+ url +"><input type='hidden' name='listMovieId' value='"+ $(this).attr('value2') + "'><input type='hidden' name='listMovieNo' value='"+ $(this).attr('value3') + "'><input type='hidden' name='posterPath' value='"+ $(this).attr('value1') + "'>" );
 	                		
 	                		$(".selectResult").html("");
 	                		$(".searchMovie<%=i%>").val("");

@@ -19,6 +19,7 @@ public class Member {
 	private String reportReview;
 	private String reportCommunity;
 	private String reportReply;
+	private String profileImage;
 	
 	//기본 생성자
 	public Member() {
@@ -80,11 +81,10 @@ public class Member {
 	}
 
 	//주현 : 회원정보 수정
-	public Member(String memberId, String memberName, String memberNickname, String email, String phone,
+	public Member(String memberId, String memberNickname, String email, String phone,
 			String preferGenre) {
 		super();
 		this.memberId = memberId;
-		this.memberName = memberName;
 		this.memberNickname = memberNickname;
 		this.email = email;
 		this.phone = phone;
@@ -218,6 +218,14 @@ public class Member {
 				+ ", memberType=" + memberType + ", status=" + status + ", enrollDate=" + enrollDate + ", modifyDate="
 				+ modifyDate + ", preferGenre=" + preferGenre + ", reportReview=" + reportReview + ", reportCommunity="
 				+ reportCommunity + ", reportReply=" + reportReply + "]";
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 	
 }

@@ -151,6 +151,9 @@
         height: 215px;
         margin-right: 10px;
       }
+      img:hover{
+      	cursor : pointer;
+      }
 
       </style>
   </head>
@@ -166,75 +169,139 @@
 
       <a class="title">최신 개봉 영화</a>
       <div id="content2">
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        <div class="movie1"> </div>
-        
+                
       </div>
+      
+      <script>
+          $(function(){
+			
+            $.ajax({
+                url : "<%= contextPath %>/latest.cu",
+                success : function(latestList){
+                    var result = "";
+                    <% for(int i=0; i<5; i++){ %>
+                      result += "<img class='movie1' src='http://image.tmdb.org/t/p/w154"+ latestList[<%=i%>].posterPath +"'><input type='hidden' name='movieNo' value='"+latestList[<%=i%>].movieNo+"'>"
+                    <% } %>
+                    $('#content2').html(result);
+                    
+                    $('.movie1').click(function(){                  		
+                  		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+                    })
+                    
+                } // success
+            }) // ajax
+          })
+          
+      </script>
 
 
       <a class="title">이번주 인기 영화</a>
       <div id="content3">
-        <div class="moviecontent">
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-        </div>
-        <div class="moviecontent">
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-          <div class="movie2"></div>
-        </div>
+      
+	        <div class="moviecontent">
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	        </div>
+	        <div class="moviecontent">
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	          <div class="movie2"></div>
+	        </div>
         
       </div>
+
+	  <script>
+          $(function(){
+			
+            $.ajax({
+                url : "<%= contextPath %>/popular.mo",
+                success : function(list){
+                    var result = "";
+                    <% for(int j=0; j<2; j++){ %>
+	                    <% for(int i=0; i<5; i++){ %>
+	                      result += "<img class='movie2' src='http://image.tmdb.org/t/p/w154"+ list[<%=(j*5)+i%>].posterPath +"'><input type='hidden' name='movieNo' value='"+list[<%=(j*5)+i%>].movieNo+"'>"
+	                    <% } %>
+                    <% } %>
+                    $('#content3').html(result);
+                    
+                    $('.movie2').click(function(){                  		
+                  		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+                    })
+                    
+                } // success
+            }) // ajax
+          })
+          
+      </script>
 
   
       <div><a class="title">MOVINIAL 추천 영화 <br></a></div>
       <div id="div1">
-        <a href="" class="title" style="font-size: medium;">색감이 예쁜 영화가 보고 싶다면?</a>
+        <a href="" class="title" style="font-size: medium;"></a>
         
         <div class="moviecontent2">
-          <div class="movie3"></div>
-          <div class="movie3"></div>
-          <div class="movie3"></div>
-          <div class="movie3"></div>
-          <div class="movie3"></div>
+         
         </div>
-        <div class="moviecontent2">
-          <div class="movie3"></div>
-          <div class="movie3"></div>
-          <div class="movie3"></div>
-          <div class="movie3"></div>
-          <div class="movie3"></div>
+        <div class="moviecontent3">
+          
         </div>
         
       </div>
 
       <div id="div2">
-        <a class="title"  style="font-size: medium;">액션 영화가 보고 싶다면?</a>
+        <a class="title"  style="font-size: medium;"></a>
        
-        <div class="moviecontent3">
-          <div class="movie4"></div>
-          <div class="movie4"></div>
-          <div class="movie4"></div>
-          <div class="movie4"></div>
-          <div class="movie4"></div>
+        <div class="moviecontent4">
+          
         </div>
-        <div class="moviecontent3">
-          <div class="movie4"></div>
-          <div class="movie4"></div>
-          <div class="movie4"></div>
-          <div class="movie4"></div>
-          <div class="movie4"></div>
+        <div class="moviecontent5">
+          
         </div>
         
       </div>
+      
+      <script>  	
+	  	 
+	        $(function(){
+	        	
+	          $.ajax({
+	            url : "<%= contextPath %>/random.cu",
+	            success : function(randomList){
+	            	var result = "";
+	            	console.log(randomList);
+	            	<% for(int j=0; j<2; j++) {%>
+		            	<% for(int i=0; i<2; i++){ %>
+		            		var randomId = randomList[<%=j*2+i%>].listMovieId.split(',');
+		            		var posterPath = randomList[<%=j*2+i%>].posterPath.split(',');
+		            		var randomNo = randomList[<%=j*2+i%>].listMovieNo.split(',');
+		            		console.log(posterPath[0]);
+		            		result = "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[0] +"'><input type='hidden' value='"+ randomNo[0] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[1] +"'><input type='hidden' value='"+ randomNo[1] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[2] +"'><input type='hidden' value='"+ randomNo[2] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[3] +"'><input type='hidden' value='"+ randomNo[3] +"'>"
+			            			+ "<img class='movie<%=j+3%>' src='http://image.tmdb.org/t/p/w154"+ posterPath[4] +"'><input type='hidden' value='"+ randomNo[4] +"'>";
+		            		
+			            	$('.moviecontent<%=j*2+i+2%>').html(result);
+		            	<% } %>
+	            	<% } %>
+	            	
+	            	$('.movie3').click(function(){
+	            		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+	            	})
+	            	$('.movie4').click(function(){
+	            		location.href = "<%= contextPath %>/detail.mo?movieNo="+$(this).next().val();
+	            	})
+	            	
+	            } // success
+	          }) // ajax
+	        })
+	       
+	      </script>
 
     <%@ include file="../common/footer.jsp" %>
     

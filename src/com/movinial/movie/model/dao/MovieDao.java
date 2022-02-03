@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
-import com.movinial.member.model.vo.LikesCommunity;
 import com.movinial.member.model.vo.LikesMovie;
 import com.movinial.movie.model.vo.Movie;
 
@@ -508,10 +508,228 @@ public class MovieDao {
 		return result;
 		
 	}
-	
+
 	// ---------- 영화 좋아요 끝 ----------
+
+	public ArrayList<Movie> movieTopTen(Connection conn) { // movieTopTen : 좋아요  TOP10 영화
+
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("movieTopTen");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Movie m = new Movie(rset.getInt("MOVIE_NO")
+						           ,rset.getString("TITLE")
+						           ,rset.getString("POSTER_PATH"));
+				
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	} // movieTopTen : 좋아요  TOP10 영화
+
+
+	public ArrayList<Movie> moviePopular(Connection conn) { // MoviePopular : 인기영화
+
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("moviePopular");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Movie m = new Movie(rset.getInt("MOVIE_NO")
+						           ,rset.getString("POSTER_PATH"));
+				
+				list.add(m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}  // MoviePopular : 인기영화
 	
 	
+	
+	// ---------- 회원 추천 영화 시작 ----------
+	
+	/**
+	 * 회원 선호 장르 가져오기
+	 * @param conn
+	 * @param memberNo
+	 * @return
+	 */
+	public String selectMemberPreferGenre(Connection conn, int memberNo) {
+		
+		String result = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMemberPreferGenre");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getString("PREFERGENRE");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+		
+		
+	}
+	
+	/**
+	 * 선호 장르 없는 회원 추천 영화 가져오기 (5개)
+	 * @param conn
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovieRandom(Connection conn) {
+		
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMemberRecommendMovieRandom");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Movie(rset.getInt("MOVIE_NO"),
+							  	   rset.getInt("MOVIE_ID"),
+							  	   rset.getString("TITLE"),
+							  	   rset.getString("POSTER_PATH")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+
+	/**
+	 * 회원 선호 장르 기반 추천 영화 가져오기 (5개)
+	 * @param conn
+	 * @param regExpGenre
+	 * @return
+	 */
+	public ArrayList<Movie> selectMemberRecommendMovie(Connection conn, String regExpGenre) {
+		
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMemberRecommendMovie");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, regExpGenre);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Movie(rset.getInt("MOVIE_NO"),
+							  	   rset.getInt("MOVIE_ID"),
+							  	   rset.getString("TITLE"),
+							  	   rset.getString("POSTER_PATH")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	// ---------- 회원 추천 영화 끝 ----------
+	
+
+	/**
+	 * 메인화면 영화 배경이미지 가져오기
+	 * @param conn
+	 * @return
+	 */
+	public Movie selectMaingBackgroundImage(Connection conn) {
+		
+		Movie m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMaingBackgroundImage");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Movie(rset.getInt("MOVIE_NO"),
+							  rset.getInt("MOVIE_ID"),
+							  rset.getString("BACKDROP_PATH"));
+				
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+		
+	}
 	
 	
 }

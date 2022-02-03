@@ -1,5 +1,7 @@
 package com.movinial.curation.model.dao;
 
+import static com.movinial.common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -11,7 +13,6 @@ import java.util.Properties;
 
 import com.movinial.curation.model.vo.CurationList;
 import com.movinial.movie.model.vo.Movie;
-import static com.movinial.common.JDBCTemplate.*;
 
 public class CurationDao {
 
@@ -90,6 +91,8 @@ public class CurationDao {
 			
 			pstmt.setString(1, cl.getListName());
 			pstmt.setString(2, cl.getListMovieId());
+			pstmt.setString(3, cl.getPosterPath());
+			pstmt.setString(4, cl.getListMovieNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -122,7 +125,7 @@ public class CurationDao {
 				CurationList cl = new CurationList(
 													rset.getInt("LIST_NO"),
 													rset.getString("LIST_NAME"),
-													rset.getString("LIST_MOVIE_NO"),
+													rset.getString("LIST_MOVIE_Id"),
 													rset.getString("STATUS")
 												  );
 				list.add(cl);
@@ -162,6 +165,73 @@ public class CurationDao {
 		return result;
 		
 	} // deleteCuration : 큐레이션 삭제
+
+	public ArrayList<CurationList> randomList(Connection conn) {
+		
+		ArrayList<CurationList> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("randomList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				CurationList cl = new CurationList(
+													rset.getInt("LIST_NO"),
+													rset.getString("LIST_NAME"),
+													rset.getString("LIST_MOVIE_ID"),
+													rset.getString("STATUS"),
+													rset.getString("LIST_POSTER_PATH"),
+													rset.getString("LIST_MOVIE_NO")
+												  );
+				list.add(cl);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<Movie> latestList(Connection conn) { // latestList : 가장 최신 영화 조회하기
+		
+		ArrayList<Movie> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("latestList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Movie m = new Movie(
+									rset.getInt("MOVIE_NO"),
+									rset.getString("POSTER_PATH")
+									);
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}  // latestList : 가장 최신 영화 조회하기
 	
 	
 	

@@ -477,7 +477,7 @@ public class CommunityService {
 		
 		return result; // 처리된 행의 개수 반환
 	}
-
+  
 	public int decreaseReplyCount(int communityNo) { // 댓글삭제 완료시 , 댓글 개수 감소
 
 		Connection conn = getConnection();
@@ -495,5 +495,16 @@ public class CommunityService {
 		
 		return result; // 처리된 행의 개수 반환
 	}
+
+	public ArrayList<Community> mainPageCommunity() { // 메인 페이지에 띄워줄 커뮤니티 글
+
+		Connection conn = getConnection();
+		
+		ArrayList<Community> list = new CommunityDao().mainPageCommunity(conn);
+		
+		close(conn);
+		
+		return list;
+	}  // 메인 페이지에 띄워줄 커뮤니티 글
 
 }

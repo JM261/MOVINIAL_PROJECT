@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import com.movinial.common.model.vo.PageInfo;
 import com.movinial.member.model.vo.Member;
+
 import com.movinial.notice.model.dao.NoticeDao;
+import com.movinial.notice.model.vo.Answer;
 import com.movinial.notice.model.vo.Category;
 import com.movinial.notice.model.vo.Notice;
 import com.movinial.notice.model.vo.Qfile;
@@ -217,5 +219,54 @@ public class NoticeService {
 	}
 	
 	
+	public Question selectQuestionManagement(int questionNo) {
+		
+		Connection conn = getConnection();
+		
+		Question q = new NoticeDao().selectQuestionManagement(conn, questionNo);
+		
+		close(conn);
+		
+		return q;
+	}
+	
+	public Qfile selectQfileManagement(int questionNo) {	
+		
+		Connection conn = getConnection();
+		
+		Qfile at = new NoticeDao().selectQfileManagement(conn, questionNo);
+		
+		close(conn);
+		
+		return at;
+		
+	}
 
+	public ArrayList<Answer> selectAnswerList(int qnaNo) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Answer> list = new NoticeDao().selectAnswerList(conn, qnaNo);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public int insertAnswer(Answer a) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().insertAnswer(conn,a);
+		
+		if(result > 0 ) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+	
+		return result;
+	}
+	
 }

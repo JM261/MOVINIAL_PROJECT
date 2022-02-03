@@ -47,7 +47,6 @@ public class CurationListController extends HttpServlet {
 		*/
 		
 		
-		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("views/curation/curation.jsp").forward(request, response);
 	
