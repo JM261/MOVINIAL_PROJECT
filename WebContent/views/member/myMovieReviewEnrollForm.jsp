@@ -160,7 +160,7 @@
 			
 			<div class="review-write-area">
 				<div class="review-write-poster">
-					<img src="" id="moviePoster" width="300px" height="400px" alt="">
+					<img src="" id="moviePoster" width="300px" height="400px" alt="" onerror="this.src='<%= contextPath %>/resources/images/white.PNG'">
 				</div>
 				<div class="review-write-info">
 					<input id="movieTitle" name="movieTitle" type="text" value="" readonly>
@@ -264,8 +264,7 @@
 	function selectMovie(){
     	
     	var $keyword = $(".searchMovie").val();
-    	console.log($keyword);
-    	
+        	
         $.ajax({
             url : "<%= contextPath %>/search.cu",
             data : {movieKeyword : $keyword},
@@ -281,16 +280,16 @@
             	$(".selectResult").html(result);
             	
             	$('.selectbtn').click(function(){
-            		
             		var url = "http://image.tmdb.org/t/p/" + "w154" + $(this).attr('value1');
             		
             		$('#moviePoster').attr('src', url);
             		$('#movieTitle').val($(this).text());
             		$('#movieNo').val($(this).attr('value2'));
-            		$('#movieContent').val($(this).attr('value3'));
+            		$('#movieContent').val(list[0].overview);
             		$(".selectResult").html("");
             		$(".searchMovie").val("");
             		$('#insertMovie').hide();
+            		//overview
             	})
             	
             } // success               
@@ -304,7 +303,7 @@
 		$('#moviePoster').attr('src', url);
 		$('#movieTitle').val($(this).text());
 		$('#movieNo').val($(this).attr('value2'));
-		$('#movieContent').val($(this).attr('value3') != 'null' ? $(this).attr('value3') : '');
+		$('#movieContent').val($(this).attr('value3') != 'null' ? $(this).attr('value3') : ''); 
 		$('#seenMovieList').hide(); 
 	})
 	</script>
