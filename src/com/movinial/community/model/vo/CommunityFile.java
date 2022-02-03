@@ -2,9 +2,10 @@ package com.movinial.community.model.vo;
 
 import java.sql.Date;
 
-public class CommunityFile {
+public class CommunityFile { // 커뮤니티 게시글 첨부파일
 	
 	// 필드부
+	
 	private int fileNo;//	FILE_NO	NUMBER
 	private int refNo;//	REF_CNO	NUMBER
 	private String originName;//	ORIGIN_NAME	VARCHAR2(500 BYTE)
@@ -15,10 +16,13 @@ public class CommunityFile {
 	private String status;//	STATUS	VARCHAR2(1 BYTE)
 	
 	// 생성자부
+	
+	// 기본 생성자
 	public CommunityFile() {
 		super();
 	}
-
+	
+	// 모든 매개변수가 있는 생성자
 	public CommunityFile(int fileNo, int refNo, String originName, String changeName, String filePath, Date uploadDate,
 			Date modifyDate, String status) {
 		super();
@@ -31,6 +35,7 @@ public class CommunityFile {
 		this.modifyDate = modifyDate;
 		this.status = status;
 	}
+	
 	// 메소드부
 	public int getFileNo() {
 		return fileNo;
@@ -102,5 +107,4 @@ public class CommunityFile {
 				+ changeName + ", filePath=" + filePath + ", uploadDate=" + uploadDate + ", modifyDate=" + modifyDate
 				+ ", status=" + status + "]";
 	}
-
 }

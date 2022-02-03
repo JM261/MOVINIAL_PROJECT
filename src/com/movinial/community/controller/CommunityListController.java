@@ -34,11 +34,12 @@ public class CommunityListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 쿼리스트링으로 요청 GET방식 인코딩 X
+		// GET 방식 -> 인코딩 X	
 		
-		// 2) request로 부터 값 뽑기
+		// request로 부터 값 뽑기
 		
 		// ------- 페이징처리 -------
+		
 		// 필요한 변수들
 		int listCount; // 현재 일반게시판의 게시글 총 갯수 => BOARD 테이블로부터 조회 COUNT(*)활용
 		int currentPage; // 현재페이지(사용자가 요청한 페이지)
@@ -49,19 +50,19 @@ public class CommunityListController extends HttpServlet {
 		int startPage; // 페이지 하단에 보여질 첫번째 페이징바
 		int endPage; // 페이지 하단에 보여질 마지막 페이징바
 		
-		// *listCount : 총 게시글 갯수
+		// *listCount : 총 게시글 개수
 		listCount = new CommunityService().selectListCount();
 		
 		// * currentPage : 현재페이지 (== 사용자가 요청한 페이지)
 		currentPage = Integer.parseInt(request.getParameter("currentPage")); // : String
 		
-		// * pageLimit : 페이징바의 최대 갯수
+		// * pageLimit : 페이징바의 최대 개수
 		pageLimit = 10;
 		
-		// * boardLimit : 한 페이지에 보여질 게시글의 최대 갯수
+		// * boardLimit : 한 페이지에 보여질 게시글의 최대 개수
 		boardLimit = 30;
 		
-		// maxPage : 가장 마지막 페이지가 몇번 페이지 인지 (총 페이지의 갯수)
+		// maxPage : 가장 마지막 페이지가 몇번 페이지 인지 (총 페이지의 개수)
 		maxPage = (int)Math.ceil((double)listCount / boardLimit); 
 		
 		// startPage : 페이지 하단에 보여질 페이징바의 시작수
@@ -77,20 +78,17 @@ public class CommunityListController extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		// 7개의 변수를 가지고 해당되는 범위에 따른 게시글 10개씩만
-		// Service단으로 토스 => 7개의 변수
-		
-		// 3) VO로 가공
+		// Service 요청 보내기전 VO로 가공 (넘길 값이 많아서 생성자 이용하여 객체에 담기)
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		// 4) Service 단으로 토스
+		// Service단으로 요청 보내기
 		ArrayList<Community> list = new CommunityService().selectList(pi);
 		
-		// 5) 응답 뷰 지정 => list, pi를 넘기자
+		// 응답 뷰 지정시 값 넘기기 => list, pi
 		request.setAttribute("list", list);
 		request.setAttribute("pi", pi);
 		
-		// views/board/boardListView.jsp로 포워딩~
+		// 포워딩 방식으로 페이지 이동
 		request.getRequestDispatcher("views/community/communityListView.jsp").forward(request, response);
 	}
 

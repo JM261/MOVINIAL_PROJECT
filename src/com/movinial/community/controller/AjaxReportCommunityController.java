@@ -29,9 +29,9 @@ public class AjaxReportCommunityController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1) GET 방식 => 인코딩 X
+		// GET 방식 -> 인코딩 X
 		
-		// 2) 넘긴 값 뽑기
+		// AJAX 요청시 넘겨 받은 값 뽑기
 		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원번호
 		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
 		
@@ -42,14 +42,13 @@ public class AjaxReportCommunityController extends HttpServlet {
 			
 			int result2 = new CommunityService().communityReportStore(memberNo,communityNo);
 			
-			response.setContentType("text/html; charset=UTF-8");
+			response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
 			
-			response.getWriter().print(result2); // 값 넘기기
+			response.getWriter().print(result2); // 응답, 값 넘기기
 			
 		} else { // 게시글의 신고누적횟수 증가 처리가 실패하면, 에러페이지로 보내기
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**

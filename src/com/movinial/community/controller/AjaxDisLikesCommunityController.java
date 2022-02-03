@@ -29,14 +29,11 @@ public class AjaxDisLikesCommunityController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// 1) GET 방식 => 인코딩 X
+		// GET 방식 -> 인코딩 X
 		
-		// 2) 값 뽑기
+		// AJAX 요청시 넘겨 받은 값 뽑기
 		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원번호
 		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
-		
-		// LIKES_COMMUNITY 테이블에 회원번와 글번호 저장
-		// 커뮤니티 테이블의 LIKES 컬럼 값 1 감소 시켜줘야 한다
 		
 		int result1 = new CommunityService().decreaseLike(communityNo); // 게시글의 좋아요 수 감소
 		
@@ -44,9 +41,9 @@ public class AjaxDisLikesCommunityController extends HttpServlet {
 			
 			int result2 = new CommunityService().communityLikesRemove(memberNo,communityNo);
 			
-			response.setContentType("text/html; charset=UTF-8");
+			response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
 			
-			response.getWriter().print(result2); // 값 넘기기
+			response.getWriter().print(result2); // 응답 , 값 넘기기
 			
 		} else { // 게시글의 좋아요 수 감소 처리가 실패하면, 에러페이지로 보내기
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);

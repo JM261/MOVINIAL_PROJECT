@@ -41,6 +41,12 @@
 	    text-decoration: none;
         margin-left: 10px;
 	}
+	.page-item{
+		border:none;
+		color : black;
+		background-color:white;
+		width:30px;
+	}
 </style>
 </head>
 <body>
@@ -58,7 +64,7 @@
         <a href="<%= contextPath %>/list.cc?currentPage=1&cct=정보" >정보</a>
         <a href="<%= contextPath %>/list.cc?currentPage=1&cct=리뷰" >리뷰</a>
         <% if(loginUser != null) { %>
-        <a align="right" style="color: white; font-weight: lighter; margin-left: 518px;" href="<%= contextPath %>/enrollForm.cm" class="btn btn-sm btn-secondary">글쓰기</a>
+        <a align="right" style="color: white; background-color: black; font-weight: lighter; margin-left: 518px;" href="<%= contextPath %>/enrollForm.cm" class="btn btn-sm btn-secondary">글쓰기</a>
         <% } %>
         </div>
 
@@ -75,10 +81,10 @@
                 </tr>
             </thead>
             <tbody>
-            	<!-- 게시글 출력 -->
+            	<!-- 게시글 리스트 영역 -->
             	<% if(list.isEmpty()) { %>
                     <tr>
-                        <td colspan="6">조회된 게시글이 없습니다.</td>
+                        <td colspan="6" style="pointer-events: none;">조회되는 게시글이 없습니다.</td>
                     </tr>
                     <% } else { %>
                     <!-- 향상된 for문(읽어오기만 할 것이기 때문)으로 list에 있는 값 순차적으로 출력 -->
@@ -91,7 +97,11 @@
                             <% } %>
                                     <td><%= c.getCommunityNo() %></td>
                                     <td><%= c.getCommunityCategory() %></td>
-                                    <td><%= c.getCommunityTitle() %></td>
+                                    <% if(c.getReplyCount() == 0) { %> <!-- 댓글 개수가 0이면 글 제목만 노출-->
+                                        <td><%= c.getCommunityTitle() %></td>
+                                    <% } else { %> <!-- 댓글 개수가 0이 아니면(1이상) 글 제목 + [댓글 개수] 노출-->
+                                        <td><%= c.getCommunityTitle() %> [<%=c.getReplyCount()%>]</td>
+                                    <% } %>
                                     <td><%= c.getCommunityWriter() %></td>
                                     <td><%= c.getCreateDate() %></td>
                                     <td><%= c.getViews() %></td>
@@ -111,11 +121,11 @@
                     
                     var loginUser = '<%= loginUser %>'
 
-                	if(loginUser != 'null') { // 로그인정보가 있으면 게시글을 열람할 수 있게 요청
+                	if(loginUser != 'null') { // 회원의 로그인정보가 있으면 게시글을 열람할 수 있게 요청
 
                     location.href = "<%= contextPath %>/detail.cm?cno=" + $(this).children().eq(0).text();
                     }
-                    else{ // 로그인정보가 없으면 로그인 화면으로 보내버리기
+                    else{ // 로그인 정보가 없으면 로그인 화면으로 보내기
                         alert("로그인 후 이용해주시기 바랍니다.");
                         location.href = "<%= contextPath %>/login.me"
                     }
@@ -151,7 +161,7 @@
 						</script>
                         </td>
 						<td><input type="text" class="" name="keyword" maxlength="10" value="<%= keyword %>"></td>
-						<td><button type="submit" class="btn btn-secondary btn-sm"><img src="resources/images/searchbtn.png" width="15px" height="15px"  alt="검색버튼"></button></td>
+						<td><button type="submit" style="background-color: white; width: 29px; height: 29px;" class="btn btn-secondary btn-sm"><img src="resources/images/searchbtn.png" width="15px" height="15px"  alt="검색버튼"></button></td>
                     </tr>
 				</table>
             </form>
@@ -164,18 +174,18 @@
 
             <% if(currentPage != 1) { %>
             <!-- 이전 페이지로 이동 -->
-            <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= currentPage - 1 %>&searchType=<%= searchType%>&keyword=<%= keyword%>'">&lt;</button>
+            <button class="page-item" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= currentPage - 1 %>&searchType=<%= searchType%>&keyword=<%= keyword%>'">&lt;</button>
             <% } %>
             <% for(int i = startPage; i <= endPage; i++) { %>
                 <% if(i != currentPage) { %>
-                    <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= i %>&searchType=<%= searchType%>&keyword=<%= keyword%>'"><%= i %></button>
+                    <button class="page-item" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= i %>&searchType=<%= searchType%>&keyword=<%= keyword%>'"><%= i %></button>
                 <%} else { %>
-                    <button class="btn btn-secondary btn-sm" disabled><%= i %></button>
+                    <button class="page-item" disabled><%= i %></button>
                 <% } %>
             <% } %>
             <!-- 다음 페이지로 이동 -->
             <% if(currentPage != maxPage) { %>
-            <button class="btn btn-secondary btn-sm" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= currentPage + 1 %>&searchType=<%= searchType%>&keyword=<%= keyword%>'">&gt;</button>
+            <button class="page-item" onclick="location.href='<%= contextPath %>/search.cm?currentPage=<%= currentPage + 1 %>&searchType=<%= searchType%>&keyword=<%= keyword%>'">&gt;</button>
             <% } %>
             </div>
         <br>

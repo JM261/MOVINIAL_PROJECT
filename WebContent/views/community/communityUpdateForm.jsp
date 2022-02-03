@@ -44,13 +44,13 @@
 			<table align="center" border="1">
 				<tr>
 					<th width="100">제목</th>
-					<td colspan="6" width="800"><input type="text" name="title" value="<%= c.getCommunityTitle() %>" class="form-control" placeholder="제목을 입력해 주세요 ^_^" maxlength="80" required></td>
+					<td colspan="6" width="800"><input type="text" name="title" value="<%= c.getCommunityTitle() %>" class="form-control" placeholder="제목을 입력해 주세요 ^_^" maxlength="70" required></td>
 				</tr>
 				<tr>
 					<th>말머리</th>
 					<td colspan="6">
 						<select class="form-control" name="category">
-							<!-- <option value="notice">공지</option> --> <!-- 로그인 아이디가 관리자면 보여지도록 -->
+	<!-- <option value="notice">공지</option> --> <!-- 공지 글 작성은 관리자만 가능 -> 로그인 아이디가 관리자면 보여지도록 -->
 							<% if(loginUser.getMemberId().equals("admin")) { %>
 								<option>공지</option>
 							<% } %>
@@ -125,9 +125,8 @@
 			<br>
 
 			<div align="center">
-				<button type="submit" class="btn btn-warning">게시글 수정</button>
-				<a href="<%= contextPath %>/list.cm?currentPage=1" class="btn btn-secondary">목록으로 돌아가기</a>
-                <button type="button" class="btn btn-secondary" onclick="history.back();">이전 페이지로 이동</button>
+				<button type="submit" class="btn btn-secondary" style="background-color: black; color: white;">게시글 수정</button>
+                <button type="button" class="btn btn-secondary" style="background-color: rgb(80, 80, 80); color: white;" onclick="history.back();">이전 페이지로 이동</button>
 			</div>
 			<br><br>
 		</form>

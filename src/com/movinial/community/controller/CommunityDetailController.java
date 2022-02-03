@@ -33,19 +33,17 @@ public class CommunityDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1) GET 방식 => 인코딩 X
+		// GET 방식 -> 인코딩 X
 		
-		// 2) 뽑기
-		int communityNo = Integer.parseInt(request.getParameter("cno"));
+		//  request로 부터 값 뽑기
+		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
 		
-		// 3) 가공 패스~
-		
-		// 4) Service 단으로 토스~ => 조회수 증가처리
+		// Service단으로 요청 보내기 -> 조회수 증가처리
 		CommunityService cService = new CommunityService();
 		
-		int result = cService.increaseCount(communityNo);
+		int result = cService.increaseView(communityNo);
 		
-		// 조회수  증가가 성공하면 => Community, File 조회
+		// 조회수  증가가 성공하면 => Community, CommunityFile 조회
 		if(result > 0) {
 			// Community 조회
 			Community c = cService.selectCommunity(communityNo);
@@ -59,13 +57,13 @@ public class CommunityDetailController extends HttpServlet {
 			
 			if(request.getSession().getAttribute("loginUser") == null) { // 로그인 없이 주소 이용하여 접근하려 하면 강제로 메인 페이지로 이동시키기
 				
-				response.sendRedirect(request.getContextPath()+"/login.me");
+				response.sendRedirect(request.getContextPath()+"/login.me"); // 강제로 로그인 화면으로 이동
+				
 			} else { // 정상적으로 로그인 해서 게시글 열람을 요청할 경우에는 포워딩으로 게시글 상세화면 보여주기
-				// 응답뷰 지정 => 포워딩방식
+				
 				request.getRequestDispatcher("views/community/communityDetailView.jsp").forward(request, response);
 			}
-			
-		} else { // 에러 페이지로 넘기기
+		} else { // 실패 시 에러 페이지로 넘기기
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

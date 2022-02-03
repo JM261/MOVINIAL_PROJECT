@@ -1,25 +1,29 @@
 package com.movinial.community.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.movinial.community.model.service.CommunityService;
+import com.movinial.community.model.vo.Reply;
 
 /**
- * Servlet implementation class AjaxLikesCommunityController
+ * Servlet implementation class AjaxReplyDeleteController
  */
-@WebServlet("/like.cm")
-public class AjaxLikesCommunityController extends HttpServlet {
+@WebServlet("/rdelete.cm")
+public class AjaxReplyDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxLikesCommunityController() {
+    public AjaxReplyDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,24 +36,31 @@ public class AjaxLikesCommunityController extends HttpServlet {
 		// GET 방식 -> 인코딩 X
 		
 		// AJAX 요청시 넘겨 받은 값 뽑기
-		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원번호
 		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
+		int replyNo = Integer.parseInt(request.getParameter("rno")); // 댓글번호
 		
-		int result1 = new CommunityService().increaseLike(communityNo); // 게시글의 좋아요 수 증가
+		int result = 0; // 댓글 작성 결과 담아서 반환할 변수 선언 및 초기화
 		
-		if(result1 > 0) { // 게시글의 좋아요 수 증가 처리가 성공하면, 커뮤니티 좋아요 테이블에 회원번호로 게시글 번호 저장
+		// Service단 호출
+		int result1 = new CommunityService().deleteReply(replyNo);
+		
+		response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
+		
+		response.getWriter().print(result); // 응답 , 값 넘기기
+		
+		if(result1 > 0) { // 댓글 insert 성공시 글에 달린 댓글 개수 증가 요청
 			
-			int result2 = new CommunityService().communityLikesStore(memberNo,communityNo);
+			int result2 = new CommunityService().decreaseReplyCount(communityNo);
 			
-			response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
-			
-			response.getWriter().print(result2); // 응답 , 값 넘기기
-			
-		} else { // 게시글의 좋아요 수 증가 처리가 실패하면, 에러페이지로 보내기
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			result = result1 * result2; // 댓글 작성 결과  * 댓글 개수 증가 결과 
 		}
 		
+		response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
+		
+		response.getWriter().print(result); // 응답 , 값 넘기기
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

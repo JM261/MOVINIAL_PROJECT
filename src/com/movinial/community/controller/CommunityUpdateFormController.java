@@ -31,8 +31,9 @@ public class CommunityUpdateFormController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 수정할 게시글 글번호 (cno로 넘긴 값)
-		int communityNo = Integer.parseInt(request.getParameter("cno"));
+		// GET 방식 -> 인코딩 X	
+		
+		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
 		
 		// Community - 글번호, 글제목, 작성자, 카테고리, 글내용, 작성일
 		Community c = new CommunityService().selectCommunity(communityNo);
@@ -40,11 +41,11 @@ public class CommunityUpdateFormController extends HttpServlet {
 		// CommunityFile - 원본명, 수정명, 파일경로
 		CommunityFile cf = new CommunityService().selectCommunityFile(communityNo);
 		
-		// 게시글 수정 form 페이지로 값 넘기기
+		// 글 수정 form 페이지로 값 넘기기
 		request.setAttribute("c", c);
 		request.setAttribute("cf", cf);
 		
-		// 포워딩
+		// 포워딩방식으로 글 수정페이지로 이동
 		request.getRequestDispatcher("views/community/communityUpdateForm.jsp").forward(request, response);
 	}
 

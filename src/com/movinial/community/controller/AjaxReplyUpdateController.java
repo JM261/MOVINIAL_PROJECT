@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 import com.movinial.community.model.service.CommunityService;
 
 /**
- * Servlet implementation class AjaxLikesCommunityController
+ * Servlet implementation class AjaxReplyUpdateController
  */
-@WebServlet("/like.cm")
-public class AjaxLikesCommunityController extends HttpServlet {
+@WebServlet("/rupdate.cm")
+public class AjaxReplyUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxLikesCommunityController() {
+    public AjaxReplyUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,26 +29,19 @@ public class AjaxLikesCommunityController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// GET 방식 -> 인코딩 X
+		// POST방식 -> 인코딩
+		request.setCharacterEncoding("UTF-8");
 		
 		// AJAX 요청시 넘겨 받은 값 뽑기
-		int memberNo = Integer.parseInt(request.getParameter("mno")); // 회원번호
-		int communityNo = Integer.parseInt(request.getParameter("cno")); // 글번호
+		int replyNo = Integer.parseInt(request.getParameter("rno")); // 댓글번호
+		String replyContent = request.getParameter("content"); // 댓글내용
 		
-		int result1 = new CommunityService().increaseLike(communityNo); // 게시글의 좋아요 수 증가
+		// Service단 호출
+		int result = new CommunityService().updateReply(replyNo, replyContent);
 		
-		if(result1 > 0) { // 게시글의 좋아요 수 증가 처리가 성공하면, 커뮤니티 좋아요 테이블에 회원번호로 게시글 번호 저장
-			
-			int result2 = new CommunityService().communityLikesStore(memberNo,communityNo);
-			
-			response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
-			
-			response.getWriter().print(result2); // 응답 , 값 넘기기
-			
-		} else { // 게시글의 좋아요 수 증가 처리가 실패하면, 에러페이지로 보내기
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		response.setContentType("text/html; charset=UTF-8"); // 처리 형식 , 인코딩 지정
 		
+		response.getWriter().print(result); // 응답, 값 넘기기
 	}
 
 	/**

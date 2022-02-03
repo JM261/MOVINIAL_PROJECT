@@ -36,10 +36,10 @@ public class CommunityUpdateController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// 1) POST 방식 => 인코딩설정
+		// POST방식 -> 인코딩
 		request.setCharacterEncoding("UTF-8");
 		
-		// 2) 값 뽑기 => 파일이 전송될 것인가 <<< 파악하고 난 뒤에
+		// 값 뽑기 => 파일이 전송될 것인가 <<< 파악하고 난 뒤에
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
 			
@@ -53,14 +53,13 @@ public class CommunityUpdateController extends HttpServlet {
 			// MultipartRequest객체를 생성함으로써 서버에 파일이 잘감
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
-			// Update Community
 			
-			// 2) 값뽑기 request => mutiRequest
-			int communityNo = Integer.parseInt(multiRequest.getParameter("cno"));
-			String category = multiRequest.getParameter("category");
-			String communityTitle = multiRequest.getParameter("title");
-			String communityContent = multiRequest.getParameter("content");
-			String spoiler =  multiRequest.getParameter("spoiler");
+			// 값 뽑기 request => mutiRequest
+			int communityNo = Integer.parseInt(multiRequest.getParameter("cno")); // 글번호
+			String category = multiRequest.getParameter("category"); // 카테고리
+			String communityTitle = multiRequest.getParameter("title"); // 글제목
+			String communityContent = multiRequest.getParameter("content"); // 글내용
+			String spoiler =  multiRequest.getParameter("spoiler"); // 스포일러포함여부
 			
 			if(spoiler != null) {
 				spoiler = "Y";
@@ -68,7 +67,7 @@ public class CommunityUpdateController extends HttpServlet {
 				spoiler = "N";
 			}
 			
-			// 3) VO 가공 - Community 관련
+			// VO 가공 - Community 관련
 			Community c = new Community();
 			c.setCommunityNo(communityNo);
 			c.setCommunityCategory(category);
@@ -76,8 +75,8 @@ public class CommunityUpdateController extends HttpServlet {
 			c.setCommounityContent(communityContent);
 			c.setSpoiler(spoiler);
 			
-			// Attachment 와 관련된 것도 처리하고 토스~
-			// Attachment 객체 선언만(null)
+			// 첨부파일 과 관련된 것도 처리하고 Service 단으로 요청,
+			// CommunityFile 객체 선언만(null)
 			// 실제 첨부파일이 있다면 => 객체 생성
 			// 없다면 => null
 			CommunityFile cf = null;
@@ -111,22 +110,22 @@ public class CommunityUpdateController extends HttpServlet {
 				}
 			}
 			
-			// 4) Service 단으로 토스
+			// Service 단으로 요청
 			
 			// Service 단 작성 전 나올 수 있는 경우의 수 정리
-			// case 1 : 새로운 첨부파일이 X => b, null => BOARD UPDATE
-			// case 2 : 새로운 첨부파일이 O, 기존 첨부파일도 O => BOARD UPDATE, ATTACHMENT UPDATE
-			// case 3 : 새로운 첨부파일 O , 기존 첨부파일은 X =>  BOARD UPDATE, ATTACHMENT INSERT
+			// case 1 : 새로운 첨부파일이 X => c, null => COMMUNITY UPDATE
+			// case 2 : 새로운 첨부파일이 O, 기존 첨부파일도 O => COMMUNITY UPDATE, C_FILE UPDATE
+			// case 3 : 새로운 첨부파일 O , 기존 첨부파일은 X =>  COMMUNITY UPDATE, C_FILE INSERT
 			// 경우를 모두 따져서 트랜잭션 처리
 			
 			int result = new CommunityService().updateCommunity(c, cf);
 			
-			// 5) 결과에 따른 응답뷰 지정
-			if(result > 0) {// 성공 => 상세보기 페이지 이동
-//				request.getSession().setAttribute("alertMsg", "게시글 수정이 완료 되었습니다.");
+			// 결과에 따른 응답뷰 지정
+			if(result > 0) {// 성공 -> 글 상세보기 페이지 이동
+				request.getSession().setAttribute("alertMsg", "게시글 수정이 완료 되었습니다.");
 				response.sendRedirect(request.getContextPath()+ "/detail.cm?cno=" + communityNo);
 				
-			} else { // 실패 => 에러페이지로 이동
+			} else { // 실패  -> 에러페이지로 이동
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 			
