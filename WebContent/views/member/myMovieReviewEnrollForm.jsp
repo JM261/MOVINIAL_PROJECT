@@ -264,8 +264,7 @@
 	function selectMovie(){
     	
     	var $keyword = $(".searchMovie").val();
-    	console.log($keyword);
-    	
+        	
         $.ajax({
             url : "<%= contextPath %>/search.cu",
             data : {movieKeyword : $keyword},
@@ -281,7 +280,6 @@
             	$(".selectResult").html(result);
             	
             	$('.selectbtn').click(function(){
-            		console.log(list);
             		var url = "http://image.tmdb.org/t/p/" + "w154" + $(this).attr('value1');
             		
             		$('#moviePoster').attr('src', url);
