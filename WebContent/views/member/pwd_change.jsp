@@ -41,7 +41,11 @@
       		 	<table width="400px"  border="0" style="margin-top:3%">
        			 <tr>
         		  </td>
-        		  <td><div id="middle-title">&nbsp;변경할 비밀번호를 입력하세요.</div>
+        		  <td><div id="middle-title">&nbsp;<b>변경할 비밀번호를 입력하세요.</b><br><br>
+        		  비밀번호는 특수기호,영문,숫자를 포함한<br>
+        		   최소 8자이상, 최대 16자까지 설정할 수 있습니다.
+        		  
+        		  </div>
         		  </td>
        			</tr>
       			</table>
@@ -53,7 +57,7 @@
       			<table width="380px" align="center" border="0" style="font-size:19px">
        			 <tr>
         		  <td>수정할 비밀번호</td>
-        		  <td><input type="password" name="newPwd" id="newPwd" required>
+        		  <td><input type="password" name="newPwd" id="newPwd" placeholder="기호,영자,숫자 8-16자" required>
         		      <input type="hidden" name="memberId"   value="<%= m.getMemberId() %>" >
         		  	  <input type="hidden" name="memberNo"  value="<%= m.getMemberNo() %>">
        			</td>
@@ -72,8 +76,9 @@
     			<td>
       				<table width="150px"  align="center" border="0" style="margin-top:1%">
        				 <tr>
-        				<td><input type="submit" name="enter2" value="  새로운 비밀번호 설정하기  " align="center" style="cursor:pointer; border-color:black; background:white; color:black;" >
-         				</td>
+         				<td><button type="submit" onclick="return validatePwd();" name="enter2" align="center">
+         				**새 비밀번호 설정</button> </td>
+         				
        				</tr>
       				</table>
      			</td>
@@ -89,6 +94,31 @@
 	</form>
 	
 	       <%@ include file="../common/footer.jsp" %>
+	       
+	       
+	<script>
+	
+	
+		
+	var regPwd = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/;
+		
+		function validatePwd() {
+			if ($("input[name='newPwd']").val() != $("input[name='newPwd']").val()) {
+				alert("비밀번호가 일치하지 않습니다 \n다시 확인해주세요");
+				return false;
+			} else{
+				if (!regPwd.test($("input[name='newPwd']").val())) {
+					alert('형식에 맞지 않는 비밀번호입니다. \n다시 입력해 주세요.');
+					return false;
+				}
+	
+				$('#updatePwd').submit();
+				return true;
+			} 
+		}
+    
+    
+	</script>
 	
 </body>
 </html>

@@ -44,6 +44,7 @@ pageEncoding="UTF-8"%>
 
     <%@ include file = "../common/header.jsp" %> <!-- header -->
 
+
     <div class=terms>
         <form id="enroll-form" action="<%= contextPath %>/GenreNext.me" method="post">
         <fieldset> 
@@ -142,7 +143,7 @@ pageEncoding="UTF-8"%>
                 </tr>
                 <tr>
                     <td>* 비밀번호</td>
-                    <td><input type="password" name="memberPwd" maxlength="15" id="memberPwd1" placeholder="특수문자,영문자,숫자 포함 8-16자" required></td>
+                    <td><input type="password" name="memberPwd" maxlength="15" id="memberPwd1" placeholder="기호,영자,숫자 8-16자" required></td>
                     <td></td>
                 </tr>
                 <tr>
