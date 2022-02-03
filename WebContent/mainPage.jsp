@@ -400,6 +400,7 @@
                     result += "<div class='reviewer'><img class='review1' src='"+list[i].profileImage+"'><div class='review2'>"+list[i].memberName+"</div><div class='review3'>"+list[i].count+"회</div></div>";
                   }
                   $('#div3').html(result);
+                  
                   $('.review1').attr('onerror',"this.onerror=null; this.src='<%= contextPath %>/resources/images/profilePic.png'");
                } // success
             }) // ajax
