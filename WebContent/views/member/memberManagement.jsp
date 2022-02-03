@@ -115,7 +115,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width:10px;"><input type="checkbox" id="allCheck" style='zoom:2.0;'></th>
+                                <th style="width:10px;"></th>
                                 <th style="width:60px;">번호</th>
                                 <th style="width:150px;">아이디</th>
                                 <th style="width:100px;">이름</th>
@@ -126,7 +126,6 @@
                                 <th style="width:60px;">상태</th>
                                 <th style="width:110px;">가입일</th>
                                 <th style="width:110px;">수정일</th>
-                                <th>선호장르</th>
                             </tr>
                         </thead>                        
                         <tbody>                           
@@ -138,7 +137,7 @@
                             <%} else { %>
                                 <%for(Member m : list) { %>                                        
                                     <tr>
-                                            <td><input type="checkbox" class="check" name="check" style='zoom:2.0;' value="<%= m.getMemberNo() %>"></td>
+                                            <td><% if(!m.getMemberId().equals("admin")){ %><input type="checkbox" class="check" name="check" style='zoom:2.0;' value="<%= m.getMemberNo() %>"><%} %></td>
                                             <td><%= m.getMemberNo() %></td>
                                             <td><%= m.getMemberId() %></td>
                                             <td><%= m.getMemberName() %></td>
@@ -149,7 +148,6 @@
                                             <td><%= m.getMemberType() %></td>
                                             <td><%= m.getEnrollDate() %></td>
                                             <td><%= m.getModifyDate() %></td>
-                                            <td><%= m.getPreferGenre() %></td>
                                     </tr>                                        
                                 <%} %>
                             <%} %>
@@ -162,17 +160,6 @@
                         
            <script> 
            
-                $('#allCheck').click(function(){                    
-                    
-                    if($('#allCheck').prop("checked")){
-                        $('.check').prop("checked", true);
-                    } else {
-                        $('.check').prop("checked", false);
-                    }
-                    
-                })
-
-                
                 $("#search").click(function(){
                 		
 	                  $.ajax({
@@ -196,7 +183,6 @@
 				                      "<td>"+ list[i].memberType +"</td>"+
 				                      "<td>"+ list[i].enrollDate +"</td>"+
 				                      "<td>"+ list[i].modifyDate +"</td>"+
-				                      "<td>"+ list[i].preferGenre +"</td>"+
 			                		"</tr>";	                		
 		                        }
 		                        if(result != null){
