@@ -59,7 +59,6 @@ public class insertCurationListController extends HttpServlet {
 		if(posterPathArr != null) {
 			posterPath = String.join(",", posterPathArr);
 		}
-		
 		if(listMovieNoArr != null) {
 			listMovieNo = String.join(",", listMovieNoArr);
 		}
