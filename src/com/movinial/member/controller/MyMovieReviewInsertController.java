@@ -55,12 +55,12 @@ public class MyMovieReviewInsertController extends HttpServlet {
 		if(result > 0) { // 성공
 			
 			request.getSession().setAttribute("alertMsg", "리뷰가 정상적으로 작성되었습니다");
-			request.getRequestDispatcher("/reviewList.mo?currentPage=1&movieNo=" + movieNo).forward(request, response);
+			request.getRequestDispatcher("/reviewList.mo?currentPage=1&movieNo=" + movieNo + "&sort=" + 1).forward(request, response);
 			
 		} else { // 실패
 			
 			request.getSession().setAttribute("alertMsg", "리뷰 작성에 실패했습니다");
-			request.getRequestDispatcher("/reviewList.mo?currentPage=1&movieNo=" + movieNo).forward(request, response);
+			request.getRequestDispatcher("/reviewList.mo?currentPage=1&movieNo=" + movieNo + "&sort=" + 1).forward(request, response);
 			
 		}
 		
