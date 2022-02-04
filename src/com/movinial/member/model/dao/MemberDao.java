@@ -366,9 +366,9 @@ public class MemberDao {
 						  ,rset.getString("PHONE")
 						  ,rset.getString("MEMBER_TYPE")
 						  ,rset.getString("STATUS")
-						  ,rset.getDate("ENROLL_DATE")
 						  ,rset.getDate("MODIFY_DATE")
-						  ,rset.getString("PREFERGENRE"));
+						  ,rset.getString("PREFERGENRE")
+						  ,rset.getString("ENROLL_DATE"));
 				
 				list.add(m);				
 			}			

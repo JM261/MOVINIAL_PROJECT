@@ -21,6 +21,11 @@ public class Member {
 	private String reportReply;
 	private String profileImage;
 	
+	// 회원관리(관리자)
+	private String mainPageEnrollDate;
+	
+	
+
 	//기본 생성자
 	public Member() {
 		super();
@@ -90,7 +95,34 @@ public class Member {
 		this.phone = phone;
 		this.preferGenre = preferGenre;
 	}
+	
+	// 승원 : 회원관리
+	public Member(int memberNo, String memberId, String memberPwd, String memberName, String memberNickname,
+			String email, String phone, String memberType, String status, Date modifyDate, String preferGenre,
+			String mainPageEnrollDate) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberPwd = memberPwd;
+		this.memberName = memberName;
+		this.memberNickname = memberNickname;
+		this.email = email;
+		this.phone = phone;
+		this.memberType = memberType;
+		this.status = status;
+		this.modifyDate = modifyDate;
+		this.preferGenre = preferGenre;
+		this.mainPageEnrollDate = mainPageEnrollDate;
+	}
 
+	public String getMainPageEnrollDate() {
+		return mainPageEnrollDate;
+	}
+
+	public void setMainPageEnrollDate(String mainPageEnrollDate) {
+		this.mainPageEnrollDate = mainPageEnrollDate;
+	}
+	
 	public int getMemberNo() {
 		return memberNo;
 	}
