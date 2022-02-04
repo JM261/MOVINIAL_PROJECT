@@ -111,10 +111,11 @@
 	
 	<!-- 영화 좋아요 순 TOP 10 -->
 	<entry key="movieTopTen">
-		SELECT MOVIE_NO, TITLE, POSTER_PATH
-		FROM MOVIE
-		WHERE 11 > ROWNUM 
-		ORDER BY MOVIE_LIKES DESC
+		SELECT *
+		FROM(SELECT MOVIE_NO, TITLE, POSTER_PATH
+     	FROM MOVIE		
+     	ORDER BY MOVIE_LIKES DESC)
+		WHERE 11 > ROWNUM
 	</entry>
 	
 	<entry key="moviePopular">
