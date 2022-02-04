@@ -3,11 +3,8 @@
 	<%@ page import="com.movinial.member.model.vo.Member"%>
 	<%
 		String contextPath = request.getContextPath();
-		
 		Member loginUser = (Member) session.getAttribute("loginUser"); // : Object
-		
 		String alertMsg = (String) session.getAttribute("alertMsg");
-		
 		int memberNo = loginUser.getMemberNo();
 	%>
 	
@@ -241,6 +238,8 @@
 	</head>
 	
 	<body>
+	
+	
 		<div id="container">
 		<div id="header">
 				<% if (loginUser == null) { %>

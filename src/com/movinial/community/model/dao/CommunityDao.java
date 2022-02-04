@@ -950,7 +950,7 @@ public class CommunityDao {
 		
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectRereplyList");
+		String sql = prop.getProperty("selectReplyOfReplyList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

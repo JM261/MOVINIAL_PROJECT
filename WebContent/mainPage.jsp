@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import = "java.util.ArrayList, com.movinial.community.model.vo.Community, com.movinial.curation.model.vo.CurationList, static com.movinial.common.MovieTemplate.*" %>
+
+
 <%
 	ArrayList<Community> list = (ArrayList<Community>)request.getAttribute("list");
 	
@@ -13,16 +15,17 @@
     <meta charset="utf-8">
     
     <title>MOVINIAL</title>
-    
+	<link href="https://hangeul.pstatic.net/hangeul_static/css/NanumSoMiCe.css" rel="stylesheet">    
+
+   
+   
     <style>
-    
-      #content0 {
+     #content0 {
       	width: 1805px;
         height: 600px;
         padding: 20px;
         margin-bottom: 20px;
         border: 1px solid #bcbcbc;
-        
         background-repeat: no-repeat;
         background-size: cover;
         cursor: pointer;
@@ -74,7 +77,6 @@
         height: 950px;
         padding: 20px;
         margin-bottom: 20px; 
-         
         border: 1px solid #bcbcbc;
       }
 
@@ -83,10 +85,9 @@
         height: 950px;
         padding: 20px;
         margin-bottom: 20px;   
-          
         border: 1px solid #bcbcbc;
-      }
-
+		}
+	  
       #div5 {
         width: 890px;
         height: 1950px;
@@ -96,7 +97,7 @@
         border: 1px solid #bcbcbc;
         text-align: center;
       }
-
+      
       #div6{
         clear: both;
       }
@@ -137,20 +138,21 @@
         margin-top: 15px;
         display: inline-block;
         border: 1px solid #bcbcbc;
+        border-radius: 10px;
         width:150px;
         height: 210px;
         margin-left: 7px;
       }
       .movie2>img{
       	width:150px;
-        height: 210px;	
-      
+        height: 210px;
       }
 
       .movie3{
         margin-top: 15px;
         display: inline-block;
         border: 1px solid #bcbcbc;
+        border-radius:10px;
         width:150px;
         height: 210px;
         margin-left: 7px;
@@ -186,6 +188,7 @@
         width: 150px;
         height: 180px;
         float: left;
+        border-radius:10px;
         
       }
       #div5>div>h2{
@@ -203,13 +206,16 @@
         width: 100%;
         height: 25%;
       }
+      
       #div4>div>img{
         width: 170px;
         height: 200px;
         margin-top: 12px;
         margin-left: 100px;
         float: left;
+        border-radius:10px;
       }
+      
       #div4>div>div{
         width: 500px;
         height: 150px;
@@ -227,12 +233,14 @@
       }
 
       .review1{
+        border: 1px solid black;
         float: left;
         margin-left: 130px;
         margin-top: 25px;
         width: 170px;
         height: 170px;
         display: inline-block;
+        border:none;
       }
       .review2{
         float: left;
@@ -249,9 +257,14 @@
         margin-left: 45px;
         font-size: 30px;
         margin-top: 10px;
-        
+        font-style: italic;
       }
-
+	
+	   img:hover{
+		transform: scale(1.2);
+		transition: .5s;
+	   }
+		
       </style>
   </head>
   <body>
@@ -480,7 +493,8 @@
             url : "<%= contextPath %>/mainPage.co",
             success : function(list){
                var result ="";
-               for(var i in list){                 
+               
+               for(var i in list){
                   result += "<tr class='pageInfoCommunity' style='background-color: white;'>"+
                                 "<td width='100'>"+ list[i].communityNo +"</td>"+
                                 "<td width='100'>"+ list[i].communityCategory +"</td>"+

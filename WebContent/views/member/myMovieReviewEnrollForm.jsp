@@ -143,6 +143,21 @@
 	    table{
 	    	text-align:center;
 	    }
+	    
+	    
+	    .searchMovie{
+	    	border-left:none;
+	    	border-right:none;
+	    	border-top:none;
+	    	margin-left: 150px;
+	    	text-align:center;
+	    }
+	
+		.subSerarchMV{
+			color: white;
+			background:black;
+			margin-left:35px;
+		}
 	 
 
 	</style>
@@ -198,11 +213,11 @@
            <div class="modal-dialog">
              <div class="modal-content" style="width: 600px; height:800px">
                <div class="modal-header">
-                 <h4 class="modal-title">영화 추가</h4>
+                 <h4 class="modal-title">MOVIE</h4>
                </div>          
                <div class="modal-body">                    
-	            검색할 영화명 <input type="text" class="searchMovie" required>
-	           <button clsss="subSerarchMV"onclick="selectMovie();">검색</button><br><br>
+	            <input type="text" class="searchMovie" required>
+	           <button class="subSerarchMV"onclick="selectMovie();">검색</button><br><br>
 	           <div class="selectResult">
 	            <!-- 검색 결과 -->
                   </div>                    
