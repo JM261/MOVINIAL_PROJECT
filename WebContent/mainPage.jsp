@@ -227,7 +227,6 @@
       }
 
       .review1{
-        border: 1px solid black;
         float: left;
         margin-left: 130px;
         margin-top: 25px;
@@ -481,14 +480,13 @@
             url : "<%= contextPath %>/mainPage.co",
             success : function(list){
                var result ="";
-               
-               for(var i in list){
+               for(var i in list){                 
                   result += "<tr class='pageInfoCommunity' style='background-color: white;'>"+
                                 "<td width='100'>"+ list[i].communityNo +"</td>"+
                                 "<td width='100'>"+ list[i].communityCategory +"</td>"+
                                 "<td width='810'>"+ list[i].communityTitle +"</td>"+
                                 "<td width='320'>"+ list[i].communityWriter +"</td>"+
-                                "<td width='250'>"+ list[i].createDate +"</td>"+
+                                "<td width='250'>"+ list[i].mainPageCreateDate +"</td>"+
                                 "<td width='100'>"+ list[i].views +"</td>"+
                                 "<td width='100'>"+ list[i].likes +"</td>"+
                             "</tr>"+              ////createDate
