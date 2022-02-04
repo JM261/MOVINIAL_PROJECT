@@ -202,6 +202,12 @@ pageEncoding="UTF-8"%>
             		// name이 memberId인 요소가 menubar.jsp에도 있기 때문에
             		// 조금 더 디테일하게 선택해야함
             		
+            		 if($('#memberId').val() == null || $('#memberId').val() == "" || $('#memberId').val() == undefined){
+                         alert("아이디를 입력해주세요");
+                          $('#memberId').focus(); 
+                          return;
+                     }
+            		
             		// ajax로 컨트롤러에 요청하기
             		$.ajax({
             			url : "<%=request.getContextPath()%>/idCheck.me",
