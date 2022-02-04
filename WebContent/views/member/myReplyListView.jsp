@@ -101,7 +101,7 @@
      <%} else{ %>
      	<% for(Reply r : list) { %>
      		
-      <tr myListReply = <%= r.getReplyNo() %>>
+      <tr myListReply = <%= r.getRefCno() %>>
         <td width="200px"><%= r.getReplyTitle() %></td>
         <td width="300px"><%= r.getReplyContent() %></td>
         <td width="160px"><%= r.getReplyWriter() %></td>
