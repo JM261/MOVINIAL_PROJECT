@@ -102,7 +102,7 @@
 					<!-- 댓글 등록 폼 영역 -->
 					<tr>
 						<td colspan="6">
-							<textarea id="replyContent" class="form-control" cols="120" rows="3" maxlength="600" style="resize: none; background-color: rgb(250, 250, 250);"></textarea>
+							<textarea id="replyContent" class="form-control" cols="120" rows="3" maxlength="600" style="resize: none; background-color: rgb(250, 250, 250);" placeholder="타인의 권리를 침해하거나 명예를 훼손하는 댓글은 사이트 운영원칙 및 관련 법률에 제재를 받을 수 있습니다."></textarea>
 							<td style="background-color: black;"><button style="height: 85px; background-color: black; color: white;" onclick="insertReply()" class="btn btn-sm">등록</button></td>
 						</td>
 					</tr>
@@ -388,7 +388,7 @@
 							var result = "";
 
 							result += "<td class='replyEditForm' style='text-align:center; width:70px'>" + r.replyWriter + "</td>"
-							result += "<td><textarea id='updateReplyContent'cols='70' class='form-control' rows='2' maxlength='600' style='resize: none; background-color: rgb(250, 250, 250); margin-top : 5px; margin-bottom : 5px'>" + r.replyContent + "</textarea></td>"
+							result += "<td><textarea id='updateReplyContent'cols='70' class='form-control' rows='2' maxlength='600' style='resize: none; background-color: rgb(250, 250, 250); margin-top : 5px; margin-bottom : 5px;' placeholder='타인의 권리를 침해하거나 명예를 훼손하는 댓글은 사이트 운영원칙 및 관련 법률에 제재를 받을 수 있습니다.'>" + r.replyContent + "</textarea></td>"
 							result += "<td style='text-align:center; width:100px;'>" + r.createDate + "</td>"
 							result += "<td class='replyNo' style='display:none;'>" + rno + "</td>"
 							result += "<td align='center'><a onclick='updateReply();' class='replyBtns'>수정</a></td>"
@@ -462,7 +462,7 @@
 		
 				result += "<td class='replyOfReplyForm'>"
 				result += "<td colspan='2'>"
-				result += "<textarea id='reReplyContent' class='form-control' cols='120' rows='2' maxlength='600' style='resize: none; background-color: rgb(250, 250, 250);'></textarea>"
+				result += "<textarea id='reReplyContent' class='form-control' cols='120' rows='2' maxlength='600' style='resize: none; background-color: rgb(250, 250, 250);' placeholder='타인의 권리를 침해하거나 명예를 훼손하는 댓글은 사이트 운영원칙 및 관련 법률에 제재를 받을 수 있습니다.'></textarea>"
 				result += "<td align='center'><a class='replyBtns' onclick='insertReplyOfReply("+ rno +");'>등록</a></td>"
 				result += "<td align='center'><a class='replyBtns' onclick='selectReplyList();'>취소</a></td>"
 				result += "</td>"
