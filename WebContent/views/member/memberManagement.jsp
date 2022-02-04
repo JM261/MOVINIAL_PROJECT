@@ -188,7 +188,7 @@
                                             "<td>"+ list[i].phone +"</td>"+
                                             "<td>"+ list[i].status +"</td>"+
                                             "<td>"+ list[i].memberType +"</td>"+
-                                            "<td>"+ list[i].enrollDate +"</td>"+
+                                            "<td>"+ list[i].mainPageEnrollDate.substring(0,10) +"</td>"+
                                             "<td>"+ list[i].modifyDate +"</td>"+
                                             "</tr>";                           
 
