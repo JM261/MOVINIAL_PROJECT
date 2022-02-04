@@ -308,6 +308,8 @@
 	                		$(".selectResult").html("");
 	                		$(".searchMovie<%=i%>").val("");
 	                		$('#insertMovie<%=i%>').modal('hide');
+                            
+                            
 	                	})
 	                	
 	                } // success               
