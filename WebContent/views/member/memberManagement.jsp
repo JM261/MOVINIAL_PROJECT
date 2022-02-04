@@ -115,7 +115,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th style="width:10px;"></th>
+                                <th style="width:50px;"></th>
                                 <th style="width:60px;">번호</th>
                                 <th style="width:150px;">아이디</th>
                                 <th style="width:100px;">이름</th>
@@ -147,7 +147,7 @@
                                             <td><%= m.getStatus() %></td>
                                             <td><%= m.getMemberType() %></td>
                                             <td><%= m.getEnrollDate() %></td>
-                                            <td><%= m.getModifyDate() %></td>
+                                            <td><% if(m.getModifyDate() == null){ %> 수정없음 <% } else { %> <%= m.getModifyDate() %> <% } %></td>
                                     </tr>                                        
                                 <%} %>
                             <%} %>
@@ -170,25 +170,33 @@
 		                  success : function(list){ 
 		                      var result = "";
 		                      for(var i in list){
-		                        	
-			                   result += "<tr style='height:60px'>"+
-				                      "<td><input type='checkbox' class='check' name='check' style='zoom:2.0;' value='" + list[i].memberNo + "'></td>"+
-				                      "<td>"+ list[i].memberNo +"</td>"+
-				                      "<td>"+ list[i].memberId +"</td>"+
-				                      "<td>"+ list[i].memberName +"</td>"+
-				                      "<td>"+ list[i].memberNickname +"</td>"+
-				                      "<td>"+ list[i].email +"</td>"+
-				                      "<td>"+ list[i].phone +"</td>"+
-				                      "<td>"+ list[i].status +"</td>"+
-				                      "<td>"+ list[i].memberType +"</td>"+
-				                      "<td>"+ list[i].enrollDate +"</td>"+
-				                      "<td>"+ list[i].modifyDate +"</td>"+
-			                		"</tr>";	                		
+
+		                       if(list[i].modifyDate == null){
+                                    list[i].modifyDate = "수정없음";
+                               } 
+
+                                    result += "<tr style='height:60px'><td>";
+                               if(list[i].memberNo != 1){
+                                    result += "<input type='checkbox' class='check' name='check' style='zoom:2.0;' value='" + list[i].memberNo + "'>";
+                               }
+
+                                    result += "</td><td>"+ list[i].memberNo +"</td>"+
+                                            "<td>"+ list[i].memberId +"</td>"+
+                                            "<td>"+ list[i].memberName +"</td>"+
+                                            "<td>"+ list[i].memberNickname +"</td>"+
+                                            "<td>"+ list[i].email +"</td>"+
+                                            "<td>"+ list[i].phone +"</td>"+
+                                            "<td>"+ list[i].status +"</td>"+
+                                            "<td>"+ list[i].memberType +"</td>"+
+                                            "<td>"+ list[i].enrollDate +"</td>"+
+                                            "<td>"+ list[i].modifyDate +"</td>"+
+                                            "</tr>";                           
+
 		                        }
-		                        if(result != null){
-		                        	
+		                        if(result != null){		                        	
 			                        $("tbody").html(result);           	
 		                        }
+
 		                    } // success
 		                    
 	                    }) // ajax

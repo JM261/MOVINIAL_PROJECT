@@ -500,7 +500,7 @@
                                 "<td width='100'>"+ list[i].communityCategory +"</td>"+
                                 "<td width='810'>"+ list[i].communityTitle +"</td>"+
                                 "<td width='320'>"+ list[i].communityWriter +"</td>"+
-                                "<td width='250'>"+ list[i].createDate +"</td>"+
+                                "<td width='250'>"+ list[i].mainPageCreateDate +"</td>"+
                                 "<td width='100'>"+ list[i].views +"</td>"+
                                 "<td width='100'>"+ list[i].likes +"</td>"+
                             "</tr>"+              ////createDate

@@ -1162,7 +1162,7 @@ public class CommunityDao {
 									  ,rset.getString("NICKNAME")
 									  ,rset.getInt("VIEWS")
 									  ,rset.getInt("LIKES")
-									  ,rset.getDate("CREATE_DATE")
+									  ,rset.getString("CREATE_DATE").substring(0,10)
 						));	
 			}
 		} catch (SQLException e) {
