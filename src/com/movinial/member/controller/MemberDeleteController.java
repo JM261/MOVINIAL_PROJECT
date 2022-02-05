@@ -46,15 +46,14 @@ public class MemberDeleteController extends HttpServlet {
 				// 5) 결과에 따른 응답페이지 지정
 				
 				if(result>0) { 
-							
 					session.removeAttribute("loginUser");
-					request.setAttribute("alertMsg", "회원 탈퇴 되었습니다. 이용해주셔서 감사합니다");
-					response.sendRedirect(request.getContextPath());
-
+					request.getSession().setAttribute("alertMsg", "회원 탈퇴 되었습니다. 이용해주셔서 감사합니다");
+					request.getRequestDispatcher("views/common/headerSidebarAlert.jsp").forward(request, response);
+				
 				} else { 
-					request.setAttribute("alertMsg", "회원탈퇴에 실패했습니다");
-					
-					response.sendRedirect(request.getContextPath());
+					request.getSession().setAttribute("alertMsg", "회원탈퇴에 실패했습니다");
+					request.getRequestDispatcher("views/common/headerSidebarAlert.jsp").forward(request, response);
+
 					
 				}
 	

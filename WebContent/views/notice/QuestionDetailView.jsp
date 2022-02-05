@@ -21,7 +21,7 @@
     .outer{
         border: 1px solid #bcbcbc; 
     	width: 1100px; 
-    	height:1300px;
+    	height:1000px;
     	margin: auto;
     	margin-bottom: 30px;
     }
@@ -267,7 +267,7 @@
         
         
     
-	<br><br><br><br>
+	<br>
 
         <div align="center"> <br>
 			<%if(loginUser.getMemberId().equals("admin")){ %>

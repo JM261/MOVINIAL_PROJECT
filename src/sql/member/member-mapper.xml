@@ -61,6 +61,45 @@
  		  	STATUS = 'Y'
 	</entry>
 	
+	<entry key="selectGenreList"> 
+     SELECT *
+       FROM genre
+      ORDER BY genre_id
+   </entry>
+	
+	
+	
+<entry key="selectGenreMoiveList"> 
+      select 
+             r.genre_id
+           , r.genre_name
+           , r.title
+           , r.movie_id     
+           , r.poster_path  
+           , r.rn
+      from (
+              select a.genre_id
+                   , a.genre_name
+                   , b.title
+                   , b.movie_id             
+                   , b.poster_path     
+                   , row_number() over(partition by a.genre_id order by a.genre_id) rn
+              from genre a
+                 , (
+                      select 
+                             title
+                           , movie_id        
+                           , case when instr(genre_ids , ',') <![CDATA[>]]> 0  then  substr(genre_ids, 1,instr(genre_ids , ',')-1)  
+                                  when instr(genre_ids , ',') <![CDATA[=]]> 0  then genre_ids end    as genre_id
+                           , poster_path  
+                      from movie        
+                   ) b
+              where a.genre_id = b.genre_id
+              order by a.genre_id  
+            ) r
+      where r.rn <![CDATA[<=]]>5
+   </entry>
+	
 	<entry key ="updateMemberPwd"><!-- 주현 : 비밀번호 변경 -->
 	UPDATE
 	    MEMBER 
@@ -134,12 +173,15 @@
    		   	MEMBER_NAME like ?
 	</entry>
 	
+	<!-- 승원 : 메인페이지 리뷰 랭킹 -->
 	<entry key="reviewRanking">
-		SELECT MEMBER_NAME, COUNT(*) COUNT, PROFILE_IMAGE
-		FROM REVIEW
-		JOIN MEMBER ON (MEMBER_NO = REVIEW_WRITER)
-		GROUP BY MEMBER_NAME, PROFILE_IMAGE
-		ORDER BY COUNT(*) DESC
+		SELECT *
+		FROM (SELECT NICKNAME, COUNT(*) COUNT, PROFILE_IMAGE
+		FROM REVIEW        
+		JOIN MEMBER ON (MEMBER_NO = REVIEW_WRITER)       
+		GROUP BY NICKNAME, PROFILE_IMAGE        
+		ORDER BY COUNT(*) DESC)
+        WHERE 5 > ROWNUM
 	</entry>
 
 	<!--  회원가입 장르선택을위한 장를별 영화포스터 조회 -->
@@ -354,9 +396,9 @@
 	<entry key="searchSeenMovie">
 		SELECT * FROM MOVIE
 		WHERE MOVIE_NO IN
-           (SELECT TRIM(REGEXP_SUBSTR(likes_movie, '[^,]+', 1, LEVEL)) AS REVIEW_NO
-           FROM (SELECT likes_movie FROM likes_movie WHERE MEMBER_NO = ?)
-           CONNECT BY  INSTR(likes_movie, ',', 1, LEVEL - 1) > 0)
+           (SELECT TRIM(REGEXP_SUBSTR(seen_movie, '[^,]+', 1, LEVEL)) AS REVIEW_NO
+           FROM (SELECT seen_movie FROM likes_movie WHERE MEMBER_NO = ?)
+           CONNECT BY  INSTR(seen_movie, ',', 1, LEVEL - 1) > 0) 
 
 	</entry>
 	

@@ -448,6 +448,43 @@ public class MemberService {
 		
 	}
 	
+public int idCheck(String checkId) { // 아이디 중복 체크
+		
+		Connection conn = getConnection();
+		int count = new MemberDao().idCheck(conn, checkId);
+		close(conn);
+	
+		return count;
+
+		
+	}
+
+public  ArrayList<MemberGenre> selectGenreMoiveList() { // 장르별영화목록
+	
+	Connection conn = getConnection();
+	ArrayList<MemberGenre> memberGenreMovieList = new MemberDao().selectGenreMoiveList(conn);
+	close(conn);
+
+	return memberGenreMovieList;
+
+	
+}
+
+public  ArrayList<MemberGenre> selectGenreList() { // 장르조회
+	
+	Connection conn = getConnection();
+	ArrayList<MemberGenre> memberGenreList = new MemberDao().selectGenreList(conn);
+	close(conn);
+
+	return memberGenreList;
+
+	
+}
+
+
+
+
+	
 	
 
 }

@@ -143,6 +143,21 @@
 	    table{
 	    	text-align:center;
 	    }
+	    
+	    
+	    .searchMovie{
+	    	border-left:none;
+	    	border-right:none;
+	    	border-top:none;
+	    	margin-left: 150px;
+	    	text-align:center;
+	    }
+	
+		.subSerarchMV{
+			color: white;
+			background:black;
+			margin-left:35px;
+		}
 	 
 
 	</style>
@@ -160,7 +175,7 @@
 			
 			<div class="review-write-area">
 				<div class="review-write-poster">
-					<img src="" id="moviePoster" width="300px" height="400px" alt="">
+					<img src="" id="moviePoster" width="300px" height="400px" alt="" onerror="this.src='<%= contextPath %>/resources/images/white.PNG'">
 				</div>
 				<div class="review-write-info">
 					<input id="movieTitle" name="movieTitle" type="text" value="" readonly>
@@ -198,11 +213,11 @@
            <div class="modal-dialog">
              <div class="modal-content" style="width: 600px; height:800px">
                <div class="modal-header">
-                 <h4 class="modal-title">영화 추가</h4>
+                 <h4 class="modal-title">MOVIE</h4>
                </div>          
                <div class="modal-body">                    
-	            검색할 영화명 <input type="text" class="searchMovie" required>
-	           <button clsss="subSerarchMV"onclick="selectMovie();">검색</button><br><br>
+	            <input type="text" class="searchMovie" required>
+	           <button class="subSerarchMV"onclick="selectMovie();">검색</button><br><br>
 	           <div class="selectResult">
 	            <!-- 검색 결과 -->
                   </div>                    
@@ -264,8 +279,7 @@
 	function selectMovie(){
     	
     	var $keyword = $(".searchMovie").val();
-    	console.log($keyword);
-    	
+        	
         $.ajax({
             url : "<%= contextPath %>/search.cu",
             data : {movieKeyword : $keyword},
@@ -281,16 +295,16 @@
             	$(".selectResult").html(result);
             	
             	$('.selectbtn').click(function(){
-            		
             		var url = "http://image.tmdb.org/t/p/" + "w154" + $(this).attr('value1');
             		
             		$('#moviePoster').attr('src', url);
             		$('#movieTitle').val($(this).text());
             		$('#movieNo').val($(this).attr('value2'));
-            		$('#movieContent').val($(this).attr('value3'));
+            		$('#movieContent').val(list[0].overview);
             		$(".selectResult").html("");
             		$(".searchMovie").val("");
             		$('#insertMovie').hide();
+            		//overview
             	})
             	
             } // success               
@@ -304,7 +318,7 @@
 		$('#moviePoster').attr('src', url);
 		$('#movieTitle').val($(this).text());
 		$('#movieNo').val($(this).attr('value2'));
-		$('#movieContent').val($(this).attr('value3') != 'null' ? $(this).attr('value3') : '');
+		$('#movieContent').val($(this).attr('value3') != 'null' ? $(this).attr('value3') : ''); 
 		$('#seenMovieList').hide(); 
 	})
 	</script>

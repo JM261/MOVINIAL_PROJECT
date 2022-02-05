@@ -366,9 +366,9 @@ public class MemberDao {
 						  ,rset.getString("PHONE")
 						  ,rset.getString("MEMBER_TYPE")
 						  ,rset.getString("STATUS")
-						  ,rset.getDate("ENROLL_DATE")
 						  ,rset.getDate("MODIFY_DATE")
-						  ,rset.getString("PREFERGENRE"));
+						  ,rset.getString("PREFERGENRE")
+						  ,rset.getString("ENROLL_DATE"));
 				
 				list.add(m);				
 			}			
@@ -423,7 +423,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new ReviewRank(rset.getString("MEMBER_NAME")
+				list.add(new ReviewRank(rset.getString("NICKNAME")
 									   ,rset.getInt("COUNT")
 									   ,rset.getString("PROFILE_IMAGE")
 									   ));
@@ -1197,5 +1197,72 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return count;
+	}
+
+	public ArrayList<MemberGenre> selectGenreMoiveList(Connection conn) {
+		ArrayList<MemberGenre> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectGenreMoiveList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+
+				MemberGenre m = new MemberGenre(
+						   rset.getString("GENRE_ID")
+						  ,rset.getString("GENRE_NAME")
+						  ,rset.getString("TITLE")
+						  ,rset.getString("MOVIE_ID")
+						  ,rset.getString("POSTER_PATH")
+						  );				
+				list.add(m);				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public ArrayList<MemberGenre> selectGenreList(Connection conn) {
+
+		ArrayList<MemberGenre> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectGenreList");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+
+			rset = pstmt.executeQuery();
+
+			while(rset.next()) {
+
+				MemberGenre m = new MemberGenre(
+						   rset.getString("GENRE_ID")
+						  ,rset.getString("GENRE_NAME"));				
+				list.add(m);				
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
 	}
 }

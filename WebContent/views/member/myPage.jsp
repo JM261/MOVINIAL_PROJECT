@@ -164,12 +164,12 @@
             </div>
             
             <div class ="countmovie">
-              <span id="cntseen">${seenCount}</span>
+              <span id="cntseen">${seenCount-1}</span>
               <span id="cntseenlabel">SEEN</span>
             </div>
             
             <div class ="countlike">
-              <span id="cntlike">${likeCount}</span>
+              <span id="cntlike">${likeCount-3}</span>
               <span id="cntlikelabel">LIKE</span>
             </div>
             

@@ -23,6 +23,7 @@ public class Community { // 커뮤니티 (자유게시판)
 	
 	private int memberNo; // 커뮤니티 글 작성자 확인 용도
 	
+	private String mainPageCreateDate;//MAIN PAGE CREATE_DATE
 	
 	// 생성자부
 	
@@ -134,7 +135,20 @@ public class Community { // 커뮤니티 (자유게시판)
 		this.likes = likes;
 		this.createDate = createDate;
 	}
-  
+	
+   // 메인 페이지에서 띄우기
+	public Community(int communityNo, String communityTitle, String communityCategory, String communityWriter, int views,
+		int likes, String mainPageCreateDate) {
+	super();
+	this.communityNo = communityNo;
+	this.communityTitle = communityTitle;
+	this.communityCategory = communityCategory;
+	this.communityWriter = communityWriter;
+	this.views = views;
+	this.likes = likes;
+	this.mainPageCreateDate = mainPageCreateDate;
+}
+
 	// 메소드부
 	public int getCommunityNo() {
 		return communityNo;
@@ -225,6 +239,13 @@ public class Community { // 커뮤니티 (자유게시판)
 	}
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
+	}
+	
+	public String getMainPageCreateDate() {
+		return mainPageCreateDate;
+	}
+	public void setMainPageCreateDate(String mainPageCreateDate) {
+		this.mainPageCreateDate = mainPageCreateDate;
 	}
 
 	@Override

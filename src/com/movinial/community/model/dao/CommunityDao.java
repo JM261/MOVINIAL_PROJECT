@@ -950,7 +950,7 @@ public class CommunityDao {
 		
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("selectRereplyList");
+		String sql = prop.getProperty("selectReplyOfReplyList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1159,10 +1159,10 @@ public class CommunityDao {
 				list.add(new Community(rset.getInt("COMMUNITY_NO")
 									  ,rset.getString("COMMUNITY_TITLE")
 									  ,rset.getString("COMMUNITY_CATEGORY")
-									  ,rset.getString("MEMBER_NAME")
+									  ,rset.getString("NICKNAME")
 									  ,rset.getInt("VIEWS")
 									  ,rset.getInt("LIKES")
-									  ,rset.getDate("CREATE_DATE")
+									  ,rset.getString("CREATE_DATE").substring(0,10)
 						));	
 			}
 		} catch (SQLException e) {

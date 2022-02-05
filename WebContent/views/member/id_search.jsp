@@ -23,10 +23,9 @@
  
 </head>
 <body>
-
-	 <form name="idsearch" method="post">
-	 
 	 <%@ include file="../common/header.jsp" %>
+	 
+	 <form action = "<%= contextPath %>/login.me">
 	 
 	  <table width="1330px" height="530px" align="center">
     <tr>
@@ -42,7 +41,7 @@
        <tr align=center>
         <td style="font-size: 20px"><%=memberId%> <br><br><br><br><br>
         
-                <input type="submit" value="로그인 페이지로 이동" id="btn">
+                <input type="submit" value="로그인 페이지로 이동" id="btn" >
         </td>
        </tr>
       </table> <%
@@ -61,7 +60,7 @@
       
 <% } %>
 
- </form>
+	 </form>
 	 
 
 </body>

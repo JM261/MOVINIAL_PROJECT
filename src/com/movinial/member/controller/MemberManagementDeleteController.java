@@ -42,8 +42,16 @@ public class MemberManagementDeleteController extends HttpServlet {
 					
 				result *= new MemberService().deleteMember(memberNo[i]);
 				
+				if(result > 0) {
+					
+					request.getSession().setAttribute("alertMsg", "차단 되었습니다.");
+					response.sendRedirect(request.getContextPath() + "/manage.mem?currentPage=1");
+				}
 			}
-		}		
+		}else {
+			request.getSession().setAttribute("alertMsg", "차단할 회원을 선택해주세요.");
+			response.sendRedirect(request.getContextPath() + "/manage.mem?currentPage=1");
+		}
 		
 	}
 
